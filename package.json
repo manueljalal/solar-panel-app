@@ -1,0 +1,19 @@
+{
+  "name": "solary-platform",
+  "private": true,
+  "version": "0.0.1",
+  "workspaces": [
+    "apps/web-admin",
+    "apps/web-vendor",
+    "apps/web-storefront",
+    "backend/functions",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:admin": "npm run dev --workspace=apps/web-admin",
+    "dev:vendor": "npm run dev --workspace=apps/web-vendor",
+    "dev:storefront": "npm run dev --workspace=apps/web-storefront",
+    "dev:functions": "npm run build:watch --workspace=backend/functions",
+    "emulators": "firebase emulators:start"
+  }
+}

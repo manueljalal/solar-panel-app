@@ -1,0 +1,38 @@
+{
+  "functions": [
+    {
+      "source": "backend/functions",
+      "codebase": "default",
+      "predeploy": ["npm --prefix backend/functions run build"]
+    }
+  ],
+  "firestore": {
+    "rules": "backend/firestore/firestore.rules",
+    "indexes": "backend/firestore/firestore.indexes.json"
+  },
+  "hosting": [
+    {
+      "target": "admin",
+      "public": "apps/web-admin/out",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    },
+    {
+      "target": "vendor",
+      "public": "apps/web-vendor/out",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    },
+    {
+      "target": "storefront",
+      "public": "apps/web-storefront/out",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    }
+  ],
+  "emulators": {
+    "auth": { "port": 9099 },
+    "functions": { "port": 5001 },
+    "firestore": { "port": 8080 },
+    "hosting": { "port": 5000 },
+    "storage": { "port": 9199 },
+    "ui": { "enabled": true }
+  }
+}

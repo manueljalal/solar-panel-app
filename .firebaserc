@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "solary-platform-dev"
+  },
+  "targets": {
+    "solary-platform-dev": {
+      "hosting": {
+        "admin": ["solary-admin-dev"],
+        "vendor": ["solary-vendor-dev"],
+        "storefront": ["solary-storefront-dev"]
+      }
+    }
+  }
+}

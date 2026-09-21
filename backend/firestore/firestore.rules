@@ -1,0 +1,45 @@
+rules_version = '2';
+
+// Skeleton only — deny-by-default. Fill in per-collection rules as
+// admin / vendor / storefront APIs are implemented.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function role() {
+      return request.auth.token.role; // 'super_admin' | 'vendor' | 'customer'
+    }
+
+    // users/{uid}
+    match /users/{userId} {
+      allow read: if isSignedIn() && (request.auth.uid == userId || role() == 'super_admin');
+      allow write: if false; // writes go through Functions only
+    }
+
+    // vendors/{vendorId}
+    match /vendors/{vendorId} {
+      allow read: if true; // public storefront needs vendor profiles
+      allow write: if false;
+    }
+
+    // products/{productId}
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // orders/{orderId}
+    match /orders/{orderId} {
+      allow read: if false; // enforced in Functions (owner/vendor/admin only)
+      allow write: if false;
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
