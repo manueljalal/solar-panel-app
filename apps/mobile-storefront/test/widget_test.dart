@@ -3,9 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:solary_marketplace/main.dart';
 
+import 'support/fake_home_repository.dart';
+
 void main() {
   testWidgets('App opens straight to the marketplace home, no login wall', (tester) async {
-    await tester.pumpWidget(const SolaryMarketplaceApp());
+    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository()));
     await tester.pumpAndSettle();
 
     expect(find.text('Solary'), findsOneWidget);

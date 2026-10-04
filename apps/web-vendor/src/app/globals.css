@@ -1,0 +1,251 @@
+:root {
+  --ink-900: #16201c;
+  --ink-600: #5b6863;
+  --ink-400: #8d9691;
+  --line: #e3e1db;
+  --surface: #ffffff;
+  --surface-sunken: #f5f4f0;
+  --accent: #c69049;
+  --success: #3a7d5c;
+  --warning: #b3502f;
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--surface-sunken);
+  color: var(--ink-900);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+.content {
+  flex: 1;
+  padding: 28px;
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--ink-600);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--surface);
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--ink-900);
+  color: white;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--warning);
+  border: 1px solid var(--warning);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-600);
+  border: 1px solid var(--line);
+}
+
+.error-text {
+  color: var(--warning);
+  font-size: 13px;
+}
+
+.muted {
+  color: var(--ink-600);
+  font-size: 13px;
+}
+
+.app-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.app-row + .app-row {
+  margin-top: 10px;
+}
+
+.app-row-title {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.app-row-meta {
+  color: var(--ink-600);
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.app-row-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--ink-600);
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  cursor: pointer;
+  color: var(--ink-600);
+}
+
+.tab.active {
+  background: var(--ink-900);
+  color: white;
+  border-color: var(--ink-900);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+.product-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--surface-sunken);
+  flex-shrink: 0;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pill-success {
+  background: color-mix(in srgb, var(--success) 15%, transparent);
+  color: var(--success);
+}
+
+.pill-warning {
+  background: color-mix(in srgb, var(--warning) 15%, transparent);
+  color: var(--warning);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}

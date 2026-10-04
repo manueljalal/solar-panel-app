@@ -1,1 +1,4 @@
-// Barrel for vendor functions. Add `export * from "./<module>";` per file.
+export * from "./create_product";
+export * from "./update_product";
+export * from "./delete_product";
+export * from "./submit_application";

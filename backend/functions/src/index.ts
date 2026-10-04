@@ -5,3 +5,4 @@
 export * as admin from "./admin";
 export * as vendor from "./vendor";
 export * as storefront from "./storefront";
+export * as auth from "./auth";

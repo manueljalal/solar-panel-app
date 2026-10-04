@@ -1,3 +1,5 @@
+import "./globals.css";
+
 export const metadata = {
   title: "Solary — Vendor Portal",
   description: "Manage your listings, orders, and installs",

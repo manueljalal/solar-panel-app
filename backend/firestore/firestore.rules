@@ -9,14 +9,33 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    // Anonymous accounts (the storefront's default — every guest gets one
+    // silently on launch) have no custom claim yet, so this must not error
+    // when request.auth.token.role is absent.
     function role() {
-      return request.auth.token.role; // 'super_admin' | 'vendor' | 'customer'
+      return isSignedIn() ? request.auth.token.get('role', 'customer') : null;
     }
 
-    // users/{uid}
+    // users/{uid} — holds passwordHash (see backend/functions/src/auth/
+    // sign_up.ts) and knownDeviceIds, both security-sensitive: client
+    // writes are refused entirely so they can only change through a
+    // Cloud Function (signUp/signIn/signInOtpStepUp/verifyPhoneOtp, all
+    // Admin SDK, which bypasses these rules). Reads are refused too —
+    // even to the doc's own owner — since passwordHash must never reach
+    // the client; a profile-viewing feature should read via a Function
+    // that omits that field, not direct Firestore access to this
+    // collection. super_admin has no read path here either, by the same
+    // logic — an admin tool that needs profile info should go through a
+    // Function that strips passwordHash before returning it.
     match /users/{userId} {
-      allow read: if isSignedIn() && (request.auth.uid == userId || role() == 'super_admin');
-      allow write: if false; // writes go through Functions only
+      allow read, write: if false;
+    }
+
+    // usernames/{username} -> {uid} — the uniqueness index signUp
+    // reserves transactionally. Admin SDK only; never read or written by
+    // a client directly.
+    match /usernames/{username} {
+      allow read, write: if false;
     }
 
     // vendors/{vendorId}
@@ -34,6 +53,27 @@ service cloud.firestore {
     // orders/{orderId}
     match /orders/{orderId} {
       allow read: if false; // enforced in Functions (owner/vendor/admin only)
+      allow write: if false;
+    }
+
+    // quoteRequests/{requestId} — submitted from the product detail
+    // screen's "Request quote" button, via the
+    // storefront-submitQuoteRequest callable (Admin SDK, bypasses these
+    // rules) — not a direct client write, so `create` is refused here.
+    // Reads stay owner-scoped so a signed-in user can see their own past
+    // requests.
+    match /quoteRequests/{requestId} {
+      allow read: if isSignedIn() && resource.data.uid == request.auth.uid;
+      allow write: if false;
+    }
+
+    // vendorApplications/{applicationId} — submitted from the home
+    // screen's "Own a solar business? Apply" card and the web vendor
+    // portal's /apply page, via the vendor-submitApplication callable —
+    // not a direct client write. Reviewed by an admin later (see
+    // backend/functions/src/admin). Reads stay owner-scoped.
+    match /vendorApplications/{applicationId} {
+      allow read: if isSignedIn() && resource.data.uid == request.auth.uid;
       allow write: if false;
     }
 

@@ -31,6 +31,13 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # i18n — English, Arabic, Sorani Kurdish (both ar/ckb are RTL, so real
+  # bidi support is needed, not just string swapping). See lib/l10n/ for
+  # the .arb source files and l10n.yaml for codegen config.
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
@@ -46,6 +53,11 @@ dependencies:
 
   flutter_riverpod: ^2.6.1
   go_router: ^14.6.1
+  shared_preferences: ^2.5.5
+  flutter_map: ^8.3.2
+  latlong2: ^0.10.1
+  geolocator: ^14.1.1
+  geocoding: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +75,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true # turns on AppLocalizations codegen from lib/l10n/*.arb, per l10n.yaml
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

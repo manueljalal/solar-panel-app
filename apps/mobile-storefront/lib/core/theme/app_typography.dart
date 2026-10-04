@@ -52,7 +52,7 @@ class AppTypography {
     fontSize: 12.5,
     height: 1.2,
     fontWeight: FontWeight.w700,
-    color: AppColors.gold,
+    color: AppColors.accent,
   );
 
   static const link = TextStyle(
@@ -60,7 +60,7 @@ class AppTypography {
     fontSize: 14,
     height: 1.2,
     fontWeight: FontWeight.w700,
-    color: AppColors.gold,
+    color: AppColors.accent,
   );
 
   static const price = TextStyle(

@@ -1,0 +1,40 @@
+# Flutter / Dart
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/build/
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/android/.gradle/
+**/*.iml
+**/.idea/
+
+# Node
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Firebase
+.firebase/
+*.log
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# Never commit service account keys if one is ever added
+**/serviceAccountKey*.json
+
+# OS
+.DS_Store

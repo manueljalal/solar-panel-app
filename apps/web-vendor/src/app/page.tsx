@@ -1,4 +1,21 @@
-// Redirect target once auth is wired: vendor -> /dashboard, else -> /login
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useVendorAuth } from "@/lib/use_auth";
+
 export default function Home() {
-  return <main>Solary Vendor Portal — placeholder</main>;
+  const auth = useVendorAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (auth.status === "signed-in-vendor") router.replace("/dashboard");
+    else if (auth.status === "signed-out" || auth.status === "signed-in-not-vendor") router.replace("/login");
+  }, [auth.status, router]);
+
+  return (
+    <div className="content">
+      <p className="muted">Loading…</p>
+    </div>
+  );
 }

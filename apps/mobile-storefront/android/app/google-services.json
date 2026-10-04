@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "603525561386",
+    "project_id": "flutter-firebase-connect-ec83e",
+    "storage_bucket": "flutter-firebase-connect-ec83e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603525561386:android:11256f8c71df0aa3801753",
+        "android_client_info": {
+          "package_name": "com.solary.solary_marketplace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdCLZ7aCitrfixiwqlPZucruOeXwpdgKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

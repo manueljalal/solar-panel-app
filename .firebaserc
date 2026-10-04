@@ -1,14 +1,21 @@
 {
   "projects": {
-    "default": "solary-platform-dev"
+    "default": "flutter-firebase-connect-ec83e"
   },
   "targets": {
-    "solary-platform-dev": {
+    "flutter-firebase-connect-ec83e": {
       "hosting": {
-        "admin": ["solary-admin-dev"],
-        "vendor": ["solary-vendor-dev"],
-        "storefront": ["solary-storefront-dev"]
+        "admin": [
+          "solary-admin-dev"
+        ],
+        "vendor": [
+          "solary-vendor-dev"
+        ],
+        "storefront": [
+          "solary-storefront-dev"
+        ]
       }
     }
-  }
+  },
+  "etags": {}
 }

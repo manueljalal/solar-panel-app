@@ -1,4 +1,21 @@
-// Redirect target once auth is wired: super_admin -> /dashboard, else -> /login
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAdminAuth } from "@/lib/use_auth";
+
 export default function Home() {
-  return <main>Solary Super Admin — placeholder</main>;
+  const auth = useAdminAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (auth.status === "signed-in-admin") router.replace("/dashboard");
+    else if (auth.status === "signed-out" || auth.status === "signed-in-not-admin") router.replace("/login");
+  }, [auth.status, router]);
+
+  return (
+    <div className="content">
+      <p className="muted">Loading…</p>
+    </div>
+  );
 }

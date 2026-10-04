@@ -1,3 +1,5 @@
+import "./globals.css";
+
 export const metadata = {
   title: "Solary — Super Admin",
   description: "Platform administration console",

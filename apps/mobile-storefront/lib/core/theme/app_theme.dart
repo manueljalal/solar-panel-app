@@ -12,10 +12,10 @@ class AppTheme {
       brightness: Brightness.light,
       scaffoldBackgroundColor: AppColors.surfaceSunken,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.forest,
+        seedColor: AppColors.ink,
         brightness: Brightness.light,
-        primary: AppColors.forest,
-        secondary: AppColors.gold,
+        primary: AppColors.ink900,
+        secondary: AppColors.accent,
         surface: AppColors.surface,
       ),
       fontFamily: 'Inter',
@@ -59,7 +59,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadii.searchBar),
-          borderSide: const BorderSide(color: AppColors.forest, width: 1.5),
+          borderSide: const BorderSide(color: AppColors.ink900, width: 1.5),
         ),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
