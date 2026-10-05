@@ -54,6 +54,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get seeAll => 'عرض الكل';
 
   @override
+  String get homeLoadError => 'تعذّر تحميل المحتوى. تحقق من اتصالك.';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
   String get bestMatch => 'الأنسب';
 
   @override
@@ -556,7 +562,36 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get applicationSubmittedBody =>
-      'سنراجعه ونتواصل معك على رقم الهاتف الذي قدّمته.';
+      'سنراجع طلبك ونرسل لك القرار عبر البريد الإلكتروني. بعد الموافقة، سجّل الدخول إلى بوابة البائع باسم المستخدم وكلمة المرور.';
+
+  @override
+  String get vendorApplySignInIntro =>
+      'للتقديم كبائع تحتاج إلى حساب في سولاري مع رقم هاتف موثّق.';
+
+  @override
+  String get vendorApplySignInButton => 'تسجيل الدخول أو إنشاء حساب';
+
+  @override
+  String get vendorApplyVerifiedPhoneLabel => 'رقم الهاتف الموثّق';
+
+  @override
+  String get vendorApplyPendingTitle => 'الطلب قيد المراجعة';
+
+  @override
+  String vendorApplyPendingBody(String business) {
+    return 'نقوم بمراجعة $business. بعد الموافقة، سجّل الدخول إلى بوابة البائع باسم المستخدم وكلمة المرور.';
+  }
+
+  @override
+  String get vendorApplyApprovedTitle => 'تمت الموافقة عليك';
+
+  @override
+  String get vendorApplyApprovedBody =>
+      'حساب البائع جاهز. افتح تبويب الحساب لإدارة منتجاتك.';
+
+  @override
+  String get vendorApplyRejectedNotice =>
+      'لم تتم الموافقة على طلبك السابق. يمكنك التقديم مرة أخرى.';
 
   @override
   String get addressLabel => 'العنوان التفصيلي';

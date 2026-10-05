@@ -6,11 +6,9 @@ import '../../../../shared/widgets/placeholder_image.dart';
 import '../../domain/home_company.dart';
 
 /// Horizontal-scroll row of vendor tiles for the "Companies" section.
-/// [companies] defaults to the hardcoded fallback list — HomeScreen passes
-/// live Firestore data once it has loaded; widget tests get the fallback
-/// automatically by not passing anything.
+/// HomeScreen passes live Firestore data once it has loaded.
 class CompanyRow extends StatelessWidget {
-  const CompanyRow({super.key, this.companies = homeCompanies});
+  const CompanyRow({super.key, required this.companies});
 
   final List<HomeCompany> companies;
 

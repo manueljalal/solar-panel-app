@@ -14,6 +14,8 @@
   "bannerVendorsTitle": "كل بائع،\nتم التحقق من موقعه",
   "bannerMeetVendors": "تعرّف على البائعين",
 
+  "homeLoadError": "تعذّر تحميل المحتوى. تحقق من اتصالك.",
+  "retry": "إعادة المحاولة",
   "sectionCompanies": "الشركات",
   "sectionFeatured": "مميز",
   "sectionBestSellers": "الأكثر مبيعًا",
@@ -184,7 +186,18 @@
   "whatDoYouSellLabel": "ماذا تبيع؟ (اختياري)",
   "submitApplication": "إرسال الطلب",
   "applicationSubmittedTitle": "تم إرسال الطلب",
-  "applicationSubmittedBody": "سنراجعه ونتواصل معك على رقم الهاتف الذي قدّمته.",
+  "applicationSubmittedBody": "سنراجع طلبك ونرسل لك القرار عبر البريد الإلكتروني. بعد الموافقة، سجّل الدخول إلى بوابة البائع باسم المستخدم وكلمة المرور.",
+  "vendorApplySignInIntro": "للتقديم كبائع تحتاج إلى حساب في سولاري مع رقم هاتف موثّق.",
+  "vendorApplySignInButton": "تسجيل الدخول أو إنشاء حساب",
+  "vendorApplyVerifiedPhoneLabel": "رقم الهاتف الموثّق",
+  "vendorApplyPendingTitle": "الطلب قيد المراجعة",
+  "vendorApplyPendingBody": "نقوم بمراجعة {business}. بعد الموافقة، سجّل الدخول إلى بوابة البائع باسم المستخدم وكلمة المرور.",
+  "@vendorApplyPendingBody": {
+    "placeholders": {"business": {"type": "String"}}
+  },
+  "vendorApplyApprovedTitle": "تمت الموافقة عليك",
+  "vendorApplyApprovedBody": "حساب البائع جاهز. افتح تبويب الحساب لإدارة منتجاتك.",
+  "vendorApplyRejectedNotice": "لم تتم الموافقة على طلبك السابق. يمكنك التقديم مرة أخرى.",
 
   "addressLabel": "العنوان التفصيلي",
   "addressValidator": "أدخل عنوانك التفصيلي",

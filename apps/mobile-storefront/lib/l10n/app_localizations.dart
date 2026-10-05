@@ -190,6 +190,18 @@ abstract class AppLocalizations {
   /// **'See all'**
   String get seeAll;
 
+  /// No description provided for @homeLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load content. Check your connection.'**
+  String get homeLoadError;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
   /// No description provided for @bestMatch.
   ///
   /// In en, this message translates to:
@@ -1081,8 +1093,56 @@ abstract class AppLocalizations {
   /// No description provided for @applicationSubmittedBody.
   ///
   /// In en, this message translates to:
-  /// **'We\'ll review it and follow up on the phone number you provided.'**
+  /// **'We\'ll review it and email you the decision. Once approved, sign in to the vendor portal with your username and password.'**
   String get applicationSubmittedBody;
+
+  /// No description provided for @vendorApplySignInIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'To apply as a vendor you need a Solary account with a verified phone number.'**
+  String get vendorApplySignInIntro;
+
+  /// No description provided for @vendorApplySignInButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in or create an account'**
+  String get vendorApplySignInButton;
+
+  /// No description provided for @vendorApplyVerifiedPhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified phone number'**
+  String get vendorApplyVerifiedPhoneLabel;
+
+  /// No description provided for @vendorApplyPendingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Application under review'**
+  String get vendorApplyPendingTitle;
+
+  /// No description provided for @vendorApplyPendingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'re reviewing {business}. Once approved, sign in to the vendor portal with your username and password.'**
+  String vendorApplyPendingBody(String business);
+
+  /// No description provided for @vendorApplyApprovedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re approved'**
+  String get vendorApplyApprovedTitle;
+
+  /// No description provided for @vendorApplyApprovedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your vendor account is ready. Open the Account tab to manage your products.'**
+  String get vendorApplyApprovedBody;
+
+  /// No description provided for @vendorApplyRejectedNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Your previous application wasn\'t approved. You\'re welcome to apply again.'**
+  String get vendorApplyRejectedNotice;
 
   /// No description provided for @addressLabel.
   ///

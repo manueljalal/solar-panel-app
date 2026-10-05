@@ -12,6 +12,7 @@ import 'widgets/filter_chip_row.dart';
 import 'widgets/home_app_bar.dart';
 import 'widgets/home_search_field.dart';
 import 'widgets/product_row.dart';
+import 'widgets/skeletons.dart';
 import 'widgets/section_header.dart';
 
 /// Marketplace home — a dense, info-first layout rather than
@@ -24,9 +25,10 @@ import 'widgets/section_header.dart';
 ///    row, not just price below an image — see widgets/product_row.dart
 /// No auth wall — browsing works as a guest from the first frame.
 ///
-/// Companies and products load live from Firestore via [HomeRepository];
-/// the hardcoded lists in domain/ are the fallback shown while loading and
-/// on any read error, so the screen never renders blank.
+/// Companies and products load live from Firestore via [HomeRepository].
+/// While loading, each section shows a skeleton; on a read error it shows a
+/// retry prompt; an empty companies collection hides that section. There is
+/// no sample/fallback data in production.
 ///
 /// This file only composes the section widgets; each section's own logic
 /// and styling lives in presentation/widgets/, and its placeholder/fallback
@@ -45,8 +47,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final HomeRepository _repository = widget._repository ?? HomeRepository();
 
-  List<HomeCompany> _companies = homeCompanies;
-  List<HomeProduct> _products = homeProducts;
+  // null = still loading. Never pre-filled with sample data.
+  List<HomeCompany>? _companies;
+  List<HomeProduct>? _products;
+  bool _companiesFailed = false;
+  bool _productsFailed = false;
 
   @override
   void initState() {
@@ -54,18 +59,50 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadLiveData();
   }
 
-  Future<void> _loadLiveData() async {
-    final results = await Future.wait([_repository.fetchCompanies(), _repository.fetchProducts()]);
-    if (!mounted) return;
+  /// Companies and products load independently so one failing (or being
+  /// slow) doesn't block or blank the other.
+  void _loadLiveData() {
     setState(() {
-      _companies = results[0] as List<HomeCompany>;
-      _products = results[1] as List<HomeProduct>;
+      _companies = null;
+      _products = null;
+      _companiesFailed = false;
+      _productsFailed = false;
     });
+    _repository.fetchCompanies().then((value) {
+      if (mounted) setState(() => _companies = value);
+    }, onError: (_) {
+      if (mounted) setState(() => _companiesFailed = true);
+    });
+    _repository.fetchProducts().then((value) {
+      if (mounted) setState(() => _products = value);
+    }, onError: (_) {
+      if (mounted) setState(() => _productsFailed = true);
+    });
+  }
+
+  Widget _error(AppLocalizations l10n) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+      child: Row(
+        children: [
+          Expanded(child: Text(l10n.homeLoadError, style: AppTypography.bodyMuted)),
+          TextButton(onPressed: _loadLiveData, child: Text(l10n.retry)),
+        ],
+      ),
+    );
+  }
+
+  Widget _companiesSection(AppLocalizations l10n) {
+    if (_companiesFailed) return _error(l10n);
+    final companies = _companies;
+    if (companies == null) return const CompanyRowSkeleton();
+    return CompanyRow(companies: companies);
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final products = _products ?? const <HomeProduct>[];
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -87,10 +124,12 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.xl, AppSpacing.lg, 0),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
-                  SectionHeader(title: l10n.sectionCompanies),
-                  const SizedBox(height: AppSpacing.md),
-                  CompanyRow(companies: _companies),
-                  const SizedBox(height: AppSpacing.xl),
+                  if (!(_companies?.isEmpty ?? false)) ...[
+                    SectionHeader(title: l10n.sectionCompanies),
+                    const SizedBox(height: AppSpacing.md),
+                    _companiesSection(l10n),
+                    const SizedBox(height: AppSpacing.xl),
+                  ],
                   SectionHeader(title: l10n.sectionFeatured),
                   const SizedBox(height: AppSpacing.md),
                   const FeaturedMasonry(),
@@ -106,15 +145,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 ]),
               ),
             ),
+            if (_productsFailed)
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+                sliver: SliverToBoxAdapter(child: _error(l10n)),
+              )
+            else if (_products == null)
+              const SliverPadding(
+                padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+                sliver: SliverToBoxAdapter(child: ProductListSkeleton()),
+              ),
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, i) => Padding(
                     padding: const EdgeInsets.only(bottom: AppSpacing.md),
-                    child: ProductRow(product: _products[i]),
+                    child: ProductRow(product: products[i]),
                   ),
-                  childCount: _products.length,
+                  childCount: products.length,
                 ),
               ),
             ),

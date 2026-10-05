@@ -148,9 +148,14 @@ class _AccountScreenState extends State<AccountScreen> {
               icon: Icons.storefront_outlined,
               label: l10n.accountOwnBusiness,
               trailing: l10n.accountApply,
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const VendorApplyScreen()),
-              ),
+              onTap: () async {
+                await Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const VendorApplyScreen()),
+                );
+                // Verifying a phone inside the apply flow swaps the guest
+                // session for a real account — refresh role/claims.
+                _loadClaims();
+              },
             ),
           _AccountRow(
             icon: Icons.language_outlined,

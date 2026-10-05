@@ -54,6 +54,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get seeAll => 'See all';
 
   @override
+  String get homeLoadError => 'Couldn\'t load content. Check your connection.';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
   String get bestMatch => 'Best match';
 
   @override
@@ -551,7 +557,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get applicationSubmittedBody =>
-      'We\'ll review it and follow up on the phone number you provided.';
+      'We\'ll review it and email you the decision. Once approved, sign in to the vendor portal with your username and password.';
+
+  @override
+  String get vendorApplySignInIntro =>
+      'To apply as a vendor you need a Solary account with a verified phone number.';
+
+  @override
+  String get vendorApplySignInButton => 'Sign in or create an account';
+
+  @override
+  String get vendorApplyVerifiedPhoneLabel => 'Verified phone number';
+
+  @override
+  String get vendorApplyPendingTitle => 'Application under review';
+
+  @override
+  String vendorApplyPendingBody(String business) {
+    return 'We\'re reviewing $business. Once approved, sign in to the vendor portal with your username and password.';
+  }
+
+  @override
+  String get vendorApplyApprovedTitle => 'You\'re approved';
+
+  @override
+  String get vendorApplyApprovedBody =>
+      'Your vendor account is ready. Open the Account tab to manage your products.';
+
+  @override
+  String get vendorApplyRejectedNotice =>
+      'Your previous application wasn\'t approved. You\'re welcome to apply again.';
 
   @override
   String get addressLabel => 'Street address';

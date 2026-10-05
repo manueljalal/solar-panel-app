@@ -55,6 +55,13 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get seeAll => 'هەمووی ببینە';
 
   @override
+  String get homeLoadError =>
+      'نەتوانرا ناوەڕۆک باربکرێت. پەیوەندییەکەت بپشکنە.';
+
+  @override
+  String get retry => 'دووبارە هەوڵبدەرەوە';
+
+  @override
   String get bestMatch => 'باشترین گونجاو';
 
   @override
@@ -558,7 +565,36 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get applicationSubmittedBody =>
-      'پێداچوونەوەی پێدەکەین و پەیوەندیت پێوە دەکەین لەسەر ئەو ژمارە مۆبایلەی کە پێشکەشت کرد.';
+      'پێداچوونەوەی بۆ دەکەین و بڕیارەکەت بە ئیمەیڵ بۆ دەنێرین. دوای پەسەندکردن، بە ناوی بەکارهێنەر و وشەی نهێنی بچۆ ژوورەوە بۆ پۆرتاڵی فرۆشیار.';
+
+  @override
+  String get vendorApplySignInIntro =>
+      'بۆ ئەوەی وەک فرۆشیار داواکاری بکەیت پێویستت بە هەژمارێکی سولاری هەیە لەگەڵ ژمارەی مۆبایلی پشتڕاستکراو.';
+
+  @override
+  String get vendorApplySignInButton => 'بچۆ ژوورەوە یان هەژمار دروست بکە';
+
+  @override
+  String get vendorApplyVerifiedPhoneLabel => 'ژمارەی مۆبایلی پشتڕاستکراو';
+
+  @override
+  String get vendorApplyPendingTitle => 'داواکارییەکە لە ژێر پێداچوونەوەدایە';
+
+  @override
+  String vendorApplyPendingBody(String business) {
+    return 'پێداچوونەوە بۆ $business دەکەین. دوای پەسەندکردن، بە ناوی بەکارهێنەر و وشەی نهێنی بچۆ ژوورەوە بۆ پۆرتاڵی فرۆشیار.';
+  }
+
+  @override
+  String get vendorApplyApprovedTitle => 'پەسەند کرایت';
+
+  @override
+  String get vendorApplyApprovedBody =>
+      'هەژماری فرۆشیارەکەت ئامادەیە. تابی هەژمار بکەرەوە بۆ بەڕێوەبردنی بەرهەمەکانت.';
+
+  @override
+  String get vendorApplyRejectedNotice =>
+      'داواکارییە پێشووەکەت پەسەند نەکرا. دەتوانیت دووبارە داوا بکەیتەوە.';
 
   @override
   String get addressLabel => 'ناونیشانی وردی شەقام';

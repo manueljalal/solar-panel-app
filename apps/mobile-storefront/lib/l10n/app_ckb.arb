@@ -14,6 +14,8 @@
   "bannerVendorsTitle": "هەموو فرۆشیارێک،\nشوێنی کارەکەی پشتڕاستکراوەتەوە",
   "bannerMeetVendors": "فرۆشیارەکان بناسە",
 
+  "homeLoadError": "نەتوانرا ناوەڕۆک باربکرێت. پەیوەندییەکەت بپشکنە.",
+  "retry": "دووبارە هەوڵبدەرەوە",
   "sectionCompanies": "کۆمپانیاکان",
   "sectionFeatured": "تایبەت",
   "sectionBestSellers": "زۆرترین فرۆشراو",
@@ -184,7 +186,18 @@
   "whatDoYouSellLabel": "چی دەفرۆشیت؟ (ئارەزوومەندانە)",
   "submitApplication": "ناردنی داواکاری",
   "applicationSubmittedTitle": "داواکاری نێردرا",
-  "applicationSubmittedBody": "پێداچوونەوەی پێدەکەین و پەیوەندیت پێوە دەکەین لەسەر ئەو ژمارە مۆبایلەی کە پێشکەشت کرد.",
+  "applicationSubmittedBody": "پێداچوونەوەی بۆ دەکەین و بڕیارەکەت بە ئیمەیڵ بۆ دەنێرین. دوای پەسەندکردن، بە ناوی بەکارهێنەر و وشەی نهێنی بچۆ ژوورەوە بۆ پۆرتاڵی فرۆشیار.",
+  "vendorApplySignInIntro": "بۆ ئەوەی وەک فرۆشیار داواکاری بکەیت پێویستت بە هەژمارێکی سولاری هەیە لەگەڵ ژمارەی مۆبایلی پشتڕاستکراو.",
+  "vendorApplySignInButton": "بچۆ ژوورەوە یان هەژمار دروست بکە",
+  "vendorApplyVerifiedPhoneLabel": "ژمارەی مۆبایلی پشتڕاستکراو",
+  "vendorApplyPendingTitle": "داواکارییەکە لە ژێر پێداچوونەوەدایە",
+  "vendorApplyPendingBody": "پێداچوونەوە بۆ {business} دەکەین. دوای پەسەندکردن، بە ناوی بەکارهێنەر و وشەی نهێنی بچۆ ژوورەوە بۆ پۆرتاڵی فرۆشیار.",
+  "@vendorApplyPendingBody": {
+    "placeholders": {"business": {"type": "String"}}
+  },
+  "vendorApplyApprovedTitle": "پەسەند کرایت",
+  "vendorApplyApprovedBody": "هەژماری فرۆشیارەکەت ئامادەیە. تابی هەژمار بکەرەوە بۆ بەڕێوەبردنی بەرهەمەکانت.",
+  "vendorApplyRejectedNotice": "داواکارییە پێشووەکەت پەسەند نەکرا. دەتوانیت دووبارە داوا بکەیتەوە.",
 
   "addressLabel": "ناونیشانی وردی شەقام",
   "addressValidator": "ناونیشانی وردی شەقامت بنووسە",

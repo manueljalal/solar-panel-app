@@ -56,7 +56,12 @@ class _SearchScreenState extends State<SearchScreen> {
       return;
     }
     setState(() => _loading = true);
-    final results = await _repository.search(query);
+    List<HomeProduct> results;
+    try {
+      results = await _repository.search(query);
+    } catch (_) {
+      results = const [];
+    }
     if (!mounted) return;
     setState(() {
       _results = results;

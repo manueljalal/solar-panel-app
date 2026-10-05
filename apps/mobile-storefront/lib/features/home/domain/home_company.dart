@@ -23,27 +23,3 @@ class HomeCompany {
   final String logoUrl;
 }
 
-// Fallback content only — used by widget tests (no Firestore in the test
-// environment) and as an offline/error fallback in CompanyRow. The backend
-// exists now: real reads go through HomeRepository against the `vendors`
-// collection, seeded via scripts/seed-firestore.mjs with this exact data.
-const homeCompanies = [
-  HomeCompany(
-    name: 'SunBridge Energy',
-    city: 'Erbil',
-    rating: 4.9,
-    logoUrl: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=400&q=80',
-  ),
-  HomeCompany(
-    name: 'Helios Power Co.',
-    city: 'Sulaymaniyah',
-    rating: 4.8,
-    logoUrl: 'https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=400&q=80',
-  ),
-  HomeCompany(
-    name: 'GreenTech Iraq',
-    city: 'Basra',
-    rating: 4.7,
-    logoUrl: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=400&q=80',
-  ),
-];

@@ -18,6 +18,8 @@
   "sectionFeatured": "Featured",
   "sectionBestSellers": "Best sellers",
   "seeAll": "See all",
+  "homeLoadError": "Couldn't load content. Check your connection.",
+  "retry": "Retry",
   "bestMatch": "Best match",
 
   "wattageCalculatorTitle": "Wattage calculator",
@@ -215,7 +217,18 @@
   "whatDoYouSellLabel": "What do you sell? (optional)",
   "submitApplication": "Submit application",
   "applicationSubmittedTitle": "Application submitted",
-  "applicationSubmittedBody": "We'll review it and follow up on the phone number you provided.",
+  "applicationSubmittedBody": "We'll review it and email you the decision. Once approved, sign in to the vendor portal with your username and password.",
+  "vendorApplySignInIntro": "To apply as a vendor you need a Solary account with a verified phone number.",
+  "vendorApplySignInButton": "Sign in or create an account",
+  "vendorApplyVerifiedPhoneLabel": "Verified phone number",
+  "vendorApplyPendingTitle": "Application under review",
+  "vendorApplyPendingBody": "We're reviewing {business}. Once approved, sign in to the vendor portal with your username and password.",
+  "@vendorApplyPendingBody": {
+    "placeholders": {"business": {"type": "String"}}
+  },
+  "vendorApplyApprovedTitle": "You're approved",
+  "vendorApplyApprovedBody": "Your vendor account is ready. Open the Account tab to manage your products.",
+  "vendorApplyRejectedNotice": "Your previous application wasn't approved. You're welcome to apply again.",
 
   "addressLabel": "Street address",
   "addressValidator": "Enter your street address",
