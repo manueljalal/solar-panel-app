@@ -7,6 +7,7 @@ const firebase_1 = require("../shared/firebase");
 const require_role_1 = require("../shared/auth/require_role");
 const send_mail_1 = require("../shared/mail/send_mail");
 const vendor_application_emails_1 = require("../shared/mail/vendor_application_emails");
+const password_setup_token_1 = require("../shared/auth/password_setup_token");
 /// Admin-only. Turns a pending vendorApplications/{id} doc into a real
 /// vendors/{vendorId} doc, and grants the applicant's account the
 /// 'vendor' role + vendorId custom claim so they can call vendor-scoped
@@ -57,8 +58,16 @@ exports.approveVendorApplication = (0, https_1.onCall)({ region: "us-central1", 
         role: "vendor",
         vendorId: vendorRef.id,
     });
+    // Denormalized onto users/{uid} so vendorPasswordSignIn can look the
+    // account up by email once a password is set — vendorApplications
+    // itself isn't client-readable (see firestore.rules) and isn't keyed
+    // by email anyway.
     if (application.email) {
-        await (0, vendor_application_emails_1.sendVendorApprovedEmail)(application.email, application.businessName);
+        await firebase_1.db.collection("users").doc(application.uid).set({ email: application.email }, { merge: true });
+    }
+    if (application.email) {
+        const passwordSetupToken = await (0, password_setup_token_1.createPasswordSetupToken)(application.uid);
+        await (0, vendor_application_emails_1.sendVendorApprovedEmail)(application.email, application.businessName, passwordSetupToken);
     }
     return { vendorId: vendorRef.id };
 });

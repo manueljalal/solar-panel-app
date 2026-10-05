@@ -4,6 +4,7 @@ import { db, auth } from "../shared/firebase";
 import { requireRole } from "../shared/auth/require_role";
 import { smtpUser, smtpPass } from "../shared/mail/send_mail";
 import { sendVendorApprovedEmail } from "../shared/mail/vendor_application_emails";
+import { createPasswordSetupToken } from "../shared/auth/password_setup_token";
 
 interface ApproveInput {
   applicationId: string;
@@ -68,8 +69,17 @@ export const approveVendorApplication = onCall<ApproveInput>(
       vendorId: vendorRef.id,
     });
 
+    // Denormalized onto users/{uid} so vendorPasswordSignIn can look the
+    // account up by email once a password is set — vendorApplications
+    // itself isn't client-readable (see firestore.rules) and isn't keyed
+    // by email anyway.
     if (application.email) {
-      await sendVendorApprovedEmail(application.email, application.businessName);
+      await db.collection("users").doc(application.uid).set({ email: application.email }, { merge: true });
+    }
+
+    if (application.email) {
+      const passwordSetupToken = await createPasswordSetupToken(application.uid);
+      await sendVendorApprovedEmail(application.email, application.businessName, passwordSetupToken);
     }
 
     return { vendorId: vendorRef.id };

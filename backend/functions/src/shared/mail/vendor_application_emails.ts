@@ -4,16 +4,22 @@ const VENDOR_PORTAL_URL = "https://solary-vendor-dev.web.app";
 const COMPANY_FOOTER_NAME = "Solary, a Quadcores product";
 const COMPANY_FOOTER_CONTACT = "info@quadcores.com";
 
-export async function sendVendorApprovedEmail(to: string, businessName: string): Promise<void> {
-  const loginUrl = `${VENDOR_PORTAL_URL}/login`;
+export async function sendVendorApprovedEmail(
+  to: string,
+  businessName: string,
+  passwordSetupToken: string,
+): Promise<void> {
+  const setupUrl = `${VENDOR_PORTAL_URL}/set-password?token=${encodeURIComponent(passwordSetupToken)}`;
   await sendMail({
     to,
     subject: "Your Solary vendor application has been approved",
     text:
       `Hello ${businessName},\n\n` +
       `Your vendor application for Solary has been reviewed and approved. ` +
-      `You can now sign in to the vendor portal using the phone number on your application.\n\n` +
-      `Vendor portal: ${loginUrl}\n\n` +
+      `Set a password for your vendor account to get started — you can also still sign in with your ` +
+      `phone number at any time.\n\n` +
+      `Set your password: ${setupUrl}\n\n` +
+      `This link expires in 24 hours.\n\n` +
       `If you have any questions, reply to this email and we'll help.\n\n` +
       `Thank you,\nThe Solary Team\n\n` +
       `--\n${COMPANY_FOOTER_NAME}\n${COMPANY_FOOTER_CONTACT}`,
@@ -22,10 +28,13 @@ export async function sendVendorApprovedEmail(to: string, businessName: string):
       bodyHtml:
         `<p style="margin:0 0 16px;">Hello ${escapeHtml(businessName)},</p>` +
         `<p style="margin:0 0 16px;">Your vendor application for Solary has been reviewed and approved. ` +
-        `You can now sign in to the vendor portal using the phone number on your application.</p>`,
-      buttonLabel: "Sign in to vendor portal",
-      buttonUrl: loginUrl,
-      closingHtml: `<p style="margin:16px 0 0;">If you have any questions, reply to this email and we'll help.</p>`,
+        `Set a password for your vendor account to get started — you can also still sign in with your ` +
+        `phone number at any time.</p>`,
+      buttonLabel: "Set your password",
+      buttonUrl: setupUrl,
+      closingHtml:
+        `<p style="margin:16px 0 0;font-size:13px;color:#5b6863;">This link expires in 24 hours.</p>` +
+        `<p style="margin:16px 0 0;">If you have any questions, reply to this email and we'll help.</p>`,
     }),
   });
 }
