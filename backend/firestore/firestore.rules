@@ -1,7 +1,8 @@
 rules_version = '2';
 
-// Skeleton only — deny-by-default. Fill in per-collection rules as
-// admin / vendor / storefront APIs are implemented.
+// Deny-by-default. Public catalogue data is client-readable; everything
+// private (users, orders, disputes, bulk) goes through Cloud Functions,
+// which use the Admin SDK and bypass these rules.
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -73,9 +74,35 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // orders/{orderId}
+    // orders/{orderId} — carry the customer's phone + address and the
+    // vendor's details, so no direct client access at all. Customers read
+    // theirs via storefront-listMyOrders, vendors via vendor-listOrders,
+    // admins via admin-listOrders; every status change goes through
+    // shared/orders/order_store.ts's changeOrderStatus.
     match /orders/{orderId} {
-      allow read: if false; // enforced in Functions (owner/vendor/admin only)
+      allow read, write: if false;
+    }
+
+    // disputes/{orderId} — opened by storefront-openDispute, resolved by
+    // admin-resolveDispute. The outcome is copied onto the order, so the
+    // customer never needs to read this collection directly.
+    match /disputes/{disputeId} {
+      allow read, write: if false;
+    }
+
+    // reviews/{orderId_productId} — verified-purchase reviews written by
+    // storefront-submitReview. Public read so the product page can list
+    // them; reviewerName is a first name only.
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // settings/platform — delivery fees / ordering switch, edited via
+    // admin-updateSettings. Public read so checkout can show the fee
+    // before placing the order (placeOrder re-reads it server-side).
+    match /settings/{settingId} {
+      allow read: if true;
       allow write: if false;
     }
 
@@ -84,7 +111,7 @@ service cloud.firestore {
     // storefront-submitQuoteRequest callable (Admin SDK, bypasses these
     // rules) — not a direct client write, so `create` is refused here.
     // Reads stay owner-scoped so a signed-in user can see their own past
-    // requests.
+    // requests; vendors read theirs via vendor-listQuoteRequests.
     match /quoteRequests/{requestId} {
       allow read: if isSignedIn() && resource.data.uid == request.auth.uid;
       allow write: if false;

@@ -9,11 +9,12 @@
 // that signUp/signIn use, so it is the same single credential — the vendor
 // can then sign in with their username + that password everywhere.
 //
-// Deliberately NOT exported anymore (files left on disk, safe to delete):
 // verify_phone_otp (passwordless phone login) and vendor_password_sign_in
-// (separate email+password vendor credential).
+// (a separate email+password vendor credential) were removed.
 export * from "./request_phone_otp";
 export * from "./sign_up";
 export * from "./sign_in";
 export * from "./sign_in_otp_step_up";
 export * from "./set_vendor_password";
+// Forgot password, profile, change password, delete account.
+export * from "./account";

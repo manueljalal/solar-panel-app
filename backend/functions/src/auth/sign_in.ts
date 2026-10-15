@@ -66,6 +66,12 @@ export const signIn = onCall<SignInInput>({ region: "us-central1" }, async (requ
     throw new HttpsError("permission-denied", "Incorrect username or password.");
   }
 
+  // Suspended by an admin (admin-setUserDisabled). Checked only after
+  // the password matched, so it doesn't reveal anything to a guesser.
+  if (user.disabled === true) {
+    throw new HttpsError("permission-denied", "This account is suspended. Contact support.");
+  }
+
   const knownDeviceIds = (user.knownDeviceIds ?? []) as string[];
   if (!knownDeviceIds.includes(deviceId)) {
     // Correct credentials, unrecognized device — require a fresh phone
