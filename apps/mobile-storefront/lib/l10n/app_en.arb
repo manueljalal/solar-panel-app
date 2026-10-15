@@ -158,7 +158,6 @@
       }
     }
   },
-  "checkoutNotBuiltYet": "Checkout isn't built yet — coming next.",
   "checkout": "Checkout",
   "perUnit": "/ unit",
   "description": "Description",
@@ -220,7 +219,7 @@
   "wattageDisclaimer": "Estimate only — a vendor will confirm exact sizing after a site visit.",
   "ordersTitle": "Orders",
   "ordersEmptyTitle": "No orders yet",
-  "ordersEmptyBody": "Orders will show up here once checkout is built.",
+  "ordersEmptyBody": "Orders you place will show up here.",
   "learnTitle": "Learn",
   "learnArticleWattageTitle": "Choosing the right wattage",
   "learnArticleWattageBody": "A typical home uses 10–15 kWh per day. Divide your daily usage by your roof's peak sunlight hours (usually 4–6 in Iraq) to estimate the system size in kW. Use the Wattage calculator on Home for a quick estimate — a vendor will confirm exact sizing after a site visit, since roof angle, shading, and panel efficiency all matter.",
@@ -436,5 +435,110 @@
   "bulkFormPhotoLabel": "Photo (optional)",
   "bulkFormPhotoAdd": "Add a photo",
   "bulkFormPhotoChange": "Change photo",
-  "bulkTitleNeeded": "Add a title in at least one language."
+  "bulkTitleNeeded": "Add a title in at least one language.",
+  "save": "Save",
+  "confirm": "Confirm",
+  "fieldRequired": "Required.",
+  "checkoutTitle": "Checkout",
+  "checkoutDeliveryDetails": "Delivery details",
+  "checkoutName": "Full name",
+  "checkoutPhone": "Phone (WhatsApp)",
+  "checkoutPhoneInvalid": "Enter a valid number, e.g. 0750 123 4567.",
+  "checkoutCity": "City",
+  "checkoutAddress": "Address",
+  "checkoutNote": "Note for the installer (optional)",
+  "checkoutSummary": "Order summary",
+  "checkoutDeliveryFee": "Delivery",
+  "checkoutFree": "Free",
+  "checkoutTotal": "Total",
+  "checkoutCashOnDelivery": "Cash on delivery",
+  "checkoutCashOnDeliveryBody": "Pay the installer in cash when your order arrives. Online payment is coming soon.",
+  "checkoutPlaceOrder": "Place order",
+  "checkoutFailed": "Couldn't place your order. Check your connection and try again.",
+  "orderStatusPlaced": "Placed",
+  "orderStatusConfirmed": "Confirmed",
+  "orderStatusScheduled": "Installation scheduled",
+  "orderStatusEnRoute": "Installer on the way",
+  "orderStatusInstalled": "Installed",
+  "orderStatusCancelled": "Cancelled",
+  "orderCancel": "Cancel order",
+  "orderCancelTitle": "Cancel this order?",
+  "orderCancelBody": "The vendor hasn't confirmed it yet, so nothing has been scheduled.",
+  "orderCancelledBody": "This order was cancelled.",
+  "orderConfirmInstall": "Confirm installation is done",
+  "orderConfirmInstallTitle": "Installation complete?",
+  "orderConfirmInstallBody": "Confirm only once the system is installed and working.",
+  "orderWriteReview": "Write a review",
+  "orderReviewed": "Reviewed — thank you",
+  "orderReviewHint": "What went well, or what didn't? (optional)",
+  "orderSubmitReview": "Submit review",
+  "orderReportProblem": "Report a problem",
+  "orderReportProblemBody": "Tell us what went wrong. Our team will look into it and follow up.",
+  "orderSendReport": "Send report",
+  "orderDisputeOpen": "Problem reported — under review",
+  "orderDisputeClosed": "Reported problem — closed",
+  "editProfileTitle": "Edit profile",
+  "profileSaved": "Profile saved.",
+  "changePasswordTitle": "Change password",
+  "currentPasswordLabel": "Current password",
+  "newPasswordLabel": "New password",
+  "passwordChanged": "Password changed.",
+  "deleteAccountTitle": "Delete account",
+  "deleteAccountBody": "This permanently deletes your account. Past orders stay with the vendor without your name or phone. Enter your password to confirm.",
+  "deleteAccountConfirm": "Delete",
+  "deleteAccountDone": "Your account was deleted.",
+  "forgotPasswordLink": "Forgot password?",
+  "forgotPasswordTitle": "Reset password",
+  "forgotPasswordBody": "Enter your username. We'll send a code to the WhatsApp number on your account.",
+  "forgotPasswordSendCode": "Send code",
+  "forgotPasswordCodeSent": "If that account exists, a 6-digit code was sent to its WhatsApp.",
+  "forgotPasswordReset": "Set new password",
+  "forgotPasswordResend": "Send a new code",
+  "myQuotesTitle": "My quotes",
+  "myQuotesEmpty": "You haven't requested any quotes yet.",
+  "quoteStatusWaiting": "Waiting for the vendor",
+  "quoteStatusResponded": "Vendor replied",
+  "quoteStatusDeclined": "Vendor declined",
+  "quotePhoneHint": "Phone for the vendor to call back (optional)",
+  "reviewVerifiedBuyer": "Verified buyer",
+  "checkoutSplitNotice": "{count, plural, other {Your cart has items from different sellers, so it will be sent as {count} separate orders.}}",
+  "@checkoutSplitNotice": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "checkoutSuccess": "{count, plural, one {Order placed.} other {{count} orders placed.}}",
+  "@checkoutSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ordersItemCount": "{count, plural, one {1 item} other {{count} items}}",
+  "@ordersItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "orderNumber": "Order #{id}",
+  "@orderNumber": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "reviewsTitle": "{count, plural, one {Reviews (1)} other {Reviews ({count})}}",
+  "@reviewsTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -16,9 +16,11 @@ void main() {
     expect(find.text('Wattage calculator'), findsOneWidget);
     expect(tester.takeException(), isNull);
 
-    await tester.scrollUntilVisible(find.text('Best sellers'), 300, scrollable: scrollable);
+    // Small steps: a 300px drag flings straight past this header.
+    await tester.scrollUntilVisible(find.text('Best sellers'), 100, scrollable: scrollable);
     expect(find.text('Best sellers'), findsOneWidget);
-    expect(find.textContaining('sold'), findsWidgets);
+    await tester.scrollUntilVisible(find.text('\$189'), 100, scrollable: scrollable);
+    expect(find.text('\$189'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

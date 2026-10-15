@@ -109,12 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
         .then(
           (value) {
             // Ignore a stale response if the user switched category meanwhile.
-            if (mounted && requested == _selectedCategory)
+            if (mounted && requested == _selectedCategory) {
               setState(() => _products = value);
+            }
           },
           onError: (_) {
-            if (mounted && requested == _selectedCategory)
+            if (mounted && requested == _selectedCategory) {
               setState(() => _productsFailed = true);
+            }
           },
         );
   }

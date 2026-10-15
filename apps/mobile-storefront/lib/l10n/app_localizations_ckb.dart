@@ -396,9 +396,6 @@ class AppLocalizationsCkb extends AppLocalizations {
   }
 
   @override
-  String get checkoutNotBuiltYet => 'پارەدان هێشتا دروست نەکراوە — بەم زووانە.';
-
-  @override
   String get checkout => 'پارەدان';
 
   @override
@@ -501,8 +498,7 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get ordersEmptyTitle => 'هێشتا هیچ داواکارییەک نییە';
 
   @override
-  String get ordersEmptyBody =>
-      'داواکارییەکان لێرە دەردەکەون کاتێک پارەدان دروست بکرێت.';
+  String get ordersEmptyBody => 'ئەو داواکارییانەی دەینێریت لێرە دەردەکەون.';
 
   @override
   String get learnTitle => 'فێربوون';
@@ -975,4 +971,257 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get bulkTitleNeeded => 'ناونیشانێک بە لانی کەم بە یەک زمان زیاد بکە.';
+
+  @override
+  String get save => 'پاشەکەوتکردن';
+
+  @override
+  String get confirm => 'دڵنیاکردنەوە';
+
+  @override
+  String get fieldRequired => 'پێویستە.';
+
+  @override
+  String get checkoutTitle => 'تەواوکردنی داواکاری';
+
+  @override
+  String get checkoutDeliveryDetails => 'وردەکاری گەیاندن';
+
+  @override
+  String get checkoutName => 'ناوی تەواو';
+
+  @override
+  String get checkoutPhone => 'تەلەفۆن (واتسئاپ)';
+
+  @override
+  String get checkoutPhoneInvalid =>
+      'ژمارەیەکی دروست بنووسە، بۆ نموونە 0750 123 4567.';
+
+  @override
+  String get checkoutCity => 'شار';
+
+  @override
+  String get checkoutAddress => 'ناونیشان';
+
+  @override
+  String get checkoutNote => 'تێبینی بۆ دامەزرێنەر (دڵخوازانە)';
+
+  @override
+  String get checkoutSummary => 'پوختەی داواکاری';
+
+  @override
+  String get checkoutDeliveryFee => 'گەیاندن';
+
+  @override
+  String get checkoutFree => 'بێبەرامبەر';
+
+  @override
+  String get checkoutTotal => 'کۆی گشتی';
+
+  @override
+  String get checkoutCashOnDelivery => 'پارەدان لە کاتی گەیاندن';
+
+  @override
+  String get checkoutCashOnDeliveryBody =>
+      'کاتێک داواکارییەکەت گەیشت بە پارەی نەختینە بە دامەزرێنەر بدە. پارەدانی ئۆنلاین بەم زووانە.';
+
+  @override
+  String get checkoutPlaceOrder => 'ناردنی داواکاری';
+
+  @override
+  String get checkoutFailed =>
+      'نەتوانرا داواکارییەکەت بنێردرێت. پەیوەندییەکەت بپشکنە و دووبارە هەوڵ بدەرەوە.';
+
+  @override
+  String get orderStatusPlaced => 'نێردرا';
+
+  @override
+  String get orderStatusConfirmed => 'پشتڕاستکرایەوە';
+
+  @override
+  String get orderStatusScheduled => 'کاتی دامەزراندن دیاریکرا';
+
+  @override
+  String get orderStatusEnRoute => 'دامەزرێنەر لە ڕێگایە';
+
+  @override
+  String get orderStatusInstalled => 'دامەزرا';
+
+  @override
+  String get orderStatusCancelled => 'هەڵوەشێنرایەوە';
+
+  @override
+  String get orderCancel => 'هەڵوەشاندنەوەی داواکاری';
+
+  @override
+  String get orderCancelTitle => 'ئەم داواکارییە هەڵبوەشێنرێتەوە؟';
+
+  @override
+  String get orderCancelBody =>
+      'فرۆشیار هێشتا پشتڕاستی نەکردووەتەوە، بۆیە هیچ کاتێک دیاری نەکراوە.';
+
+  @override
+  String get orderCancelledBody => 'ئەم داواکارییە هەڵوەشێنرایەوە.';
+
+  @override
+  String get orderConfirmInstall => 'پشتڕاستکردنەوەی تەواوبوونی دامەزراندن';
+
+  @override
+  String get orderConfirmInstallTitle => 'دامەزراندن تەواو بوو؟';
+
+  @override
+  String get orderConfirmInstallBody =>
+      'تەنها دوای دامەزراندن و کارکردنی سیستەمەکە پشتڕاستی بکەرەوە.';
+
+  @override
+  String get orderWriteReview => 'هەڵسەنگاندن بنووسە';
+
+  @override
+  String get orderReviewed => 'هەڵسەنگێنرا — سوپاس';
+
+  @override
+  String get orderReviewHint => 'چی باش بوو، یان چی باش نەبوو؟ (دڵخوازانە)';
+
+  @override
+  String get orderSubmitReview => 'ناردنی هەڵسەنگاندن';
+
+  @override
+  String get orderReportProblem => 'ڕاپۆرتکردنی کێشە';
+
+  @override
+  String get orderReportProblemBody =>
+      'پێمان بڵێ چی ڕوویدا. تیمەکەمان سەیری دەکات و بەدواداچوونی بۆ دەکات.';
+
+  @override
+  String get orderSendReport => 'ناردنی ڕاپۆرت';
+
+  @override
+  String get orderDisputeOpen => 'کێشە ڕاپۆرت کرا — لە ژێر پێداچوونەوەدایە';
+
+  @override
+  String get orderDisputeClosed => 'کێشەی ڕاپۆرتکراو — داخرا';
+
+  @override
+  String get editProfileTitle => 'دەستکاریکردنی پرۆفایل';
+
+  @override
+  String get profileSaved => 'پرۆفایل پاشەکەوت کرا.';
+
+  @override
+  String get changePasswordTitle => 'گۆڕینی وشەی نهێنی';
+
+  @override
+  String get currentPasswordLabel => 'وشەی نهێنی ئێستا';
+
+  @override
+  String get newPasswordLabel => 'وشەی نهێنی نوێ';
+
+  @override
+  String get passwordChanged => 'وشەی نهێنی گۆڕدرا.';
+
+  @override
+  String get deleteAccountTitle => 'سڕینەوەی هەژمار';
+
+  @override
+  String get deleteAccountBody =>
+      'ئەمە هەژمارەکەت بە یەکجاری دەسڕێتەوە. داواکارییە پێشووەکان بەبێ ناو و ژمارەکەت لای فرۆشیار دەمێننەوە. بۆ پشتڕاستکردنەوە وشەی نهێنی بنووسە.';
+
+  @override
+  String get deleteAccountConfirm => 'سڕینەوە';
+
+  @override
+  String get deleteAccountDone => 'هەژمارەکەت سڕایەوە.';
+
+  @override
+  String get forgotPasswordLink => 'وشەی نهێنیت لەبیرچووە؟';
+
+  @override
+  String get forgotPasswordTitle => 'ڕێکخستنەوەی وشەی نهێنی';
+
+  @override
+  String get forgotPasswordBody =>
+      'ناوی بەکارهێنەرەکەت بنووسە. کۆدێک بۆ ژمارەی واتسئاپی هەژمارەکەت دەنێرین.';
+
+  @override
+  String get forgotPasswordSendCode => 'ناردنی کۆد';
+
+  @override
+  String get forgotPasswordCodeSent =>
+      'ئەگەر ئەو هەژمارە هەبێت، کۆدێکی ٦ ژمارەیی بۆ واتسئاپەکەی نێردرا.';
+
+  @override
+  String get forgotPasswordReset => 'دانانی وشەی نهێنی نوێ';
+
+  @override
+  String get forgotPasswordResend => 'ناردنی کۆدێکی نوێ';
+
+  @override
+  String get myQuotesTitle => 'نرخنامەکانم';
+
+  @override
+  String get myQuotesEmpty => 'هێشتا داوای هیچ نرخنامەیەکت نەکردووە.';
+
+  @override
+  String get quoteStatusWaiting => 'چاوەڕێی فرۆشیار';
+
+  @override
+  String get quoteStatusResponded => 'فرۆشیار وەڵامی دایەوە';
+
+  @override
+  String get quoteStatusDeclined => 'فرۆشیار ڕەتی کردەوە';
+
+  @override
+  String get quotePhoneHint =>
+      'ژمارەی تەلەفۆن بۆ ئەوەی فرۆشیار پەیوەندیت پێوە بکات (دڵخوازانە)';
+
+  @override
+  String get reviewVerifiedBuyer => 'کڕیاری پشتڕاستکراو';
+
+  @override
+  String checkoutSplitNotice(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'سەبەتەکەت بەرهەمی چەند فرۆشیارێکی تێدایە، بۆیە وەک $count داواکاری جیا دەنێردرێت.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String checkoutSuccess(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count داواکاری نێردران.',
+      one: 'داواکاری نێردرا.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ordersItemCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count بەرهەم',
+      one: '١ بەرهەم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String orderNumber(String id) {
+    return 'داواکاری ژمارە $id';
+  }
+
+  @override
+  String reviewsTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'هەڵسەنگاندنەکان ($count)',
+    );
+    return '$_temp0';
+  }
 }

@@ -4,6 +4,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import '../../../core/auth/auth_repository.dart';
 import '../../../core/auth/friendly_function_error.dart';
+import '../../../core/auth/password_rules.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
@@ -16,18 +17,6 @@ import 'widgets/auth_text_field.dart';
 const _e164Pattern = r'^\+[1-9]\d{6,14}$';
 const _resendCooldownSeconds = 30;
 
-/// Mirrors backend/functions/src/shared/auth/password.ts's isValidPassword
-/// exactly — this is fast client-side feedback only; the backend is the
-/// real enforcement and re-checks this independently, so there's no
-/// security reliance on this copy staying in sync (a stale client check
-/// would just show a confusing error, not let a weak password through).
-bool _isValidPassword(String password) {
-  return password.length >= 8 &&
-      RegExp(r'[A-Z]').hasMatch(password) &&
-      RegExp(r'[a-z]').hasMatch(password) &&
-      RegExp(r'[0-9]').hasMatch(password) &&
-      RegExp(r'[^A-Za-z0-9]').hasMatch(password);
-}
 
 /// Real registration: name, username, password, phone, location — the
 /// phone is proven via a WhatsApp-delivered OTP in the same flow before
@@ -216,7 +205,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _passwordController,
                   obscureText: true,
                   autofillHints: const [AutofillHints.newPassword],
-                  validator: (v) => _isValidPassword(v ?? '') ? null : l10n.passwordValidator,
+                  validator: (v) => isValidPassword(v ?? '') ? null : l10n.passwordValidator,
                 ),
                 const SizedBox(height: AppSpacing.md),
                 AuthTextField(

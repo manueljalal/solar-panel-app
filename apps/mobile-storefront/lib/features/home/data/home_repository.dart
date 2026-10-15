@@ -76,7 +76,8 @@ class HomeRepository {
   }
 
   /// Best sellers, optionally restricted to one category. The filtered query
-  /// skips orderBy (which would need a composite index) and sorts in memory.
+  /// uses the (category, sold desc) composite index in firestore.indexes.json
+  /// so the top N are really the top N, not N arbitrary docs sorted locally.
   Future<List<HomeProduct>> fetchProducts({String? categoryId}) async {
     if (categoryId == null) {
       final snapshot = await _db
@@ -89,11 +90,10 @@ class HomeRepository {
     final snapshot = await _db
         .collection('products')
         .where('category', isEqualTo: categoryId)
+        .orderBy('sold', descending: true)
         .limit(_maxProducts)
         .get();
-    final products = await _withVendorNames(snapshot.docs);
-    products.sort((a, b) => b.sold.compareTo(a.sold));
-    return products;
+    return _withVendorNames(snapshot.docs);
   }
 
   /// Every product a single vendor sells — the contents of that company's
@@ -109,7 +109,7 @@ class HomeRepository {
         snapshot.docs
             .map(
               (d) =>
-                  HomeProduct.fromFirestore(d.data(), vendorName: vendor.name),
+                  HomeProduct.fromFirestore(d.data(), vendorName: vendor.name, id: d.id),
             )
             .toList()
           ..sort((a, b) => b.sold.compareTo(a.sold));
@@ -148,6 +148,7 @@ class HomeRepository {
       final data = d.data();
       return HomeProduct.fromFirestore(
         data,
+        id: d.id,
         vendorName: known[data['vendorId']] ?? 'Unknown vendor',
       );
     }).toList();

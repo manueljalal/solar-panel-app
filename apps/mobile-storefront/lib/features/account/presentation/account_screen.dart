@@ -5,12 +5,14 @@ import '../../../core/auth/auth_claims.dart';
 import '../../../core/auth/auth_repository.dart';
 import '../../../core/l10n/locale_controller.dart';
 import '../../../core/l10n/locale_scope.dart';
+import '../../../core/navigation/root_shell.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../vendor/presentation/vendor_apply_screen.dart';
 import '../../vendor/presentation/vendor_dashboard_screen.dart';
+import 'account_settings_screens.dart';
 import 'sign_in_screen.dart';
 
 /// Account tab. Shows the real signed-in state from AuthRepository, and —
@@ -65,6 +67,8 @@ class _AccountScreenState extends State<AccountScreen> {
     await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SignInScreen()));
     _loadClaims();
   }
+
+  Future<void> _push(Widget screen) => Navigator.of(context).push(MaterialPageRoute(builder: (_) => screen));
 
   Future<void> _signOut() async {
     await _repo.signOut();
@@ -132,8 +136,25 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
           ),
           const SizedBox(height: AppSpacing.xl),
-          _AccountRow(icon: Icons.location_on_outlined, label: l10n.accountLocation, trailing: l10n.accountChange),
-          _AccountRow(icon: Icons.receipt_long_outlined, label: l10n.accountOrderHistory, trailing: l10n.accountView),
+          if (isRealAccount)
+            _AccountRow(
+              icon: Icons.person_outline,
+              label: l10n.editProfileTitle,
+              trailing: l10n.accountChange,
+              onTap: () => _push(const EditProfileScreen()),
+            ),
+          _AccountRow(
+            icon: Icons.receipt_long_outlined,
+            label: l10n.accountOrderHistory,
+            trailing: l10n.accountView,
+            onTap: () => RootShell.selectTab(context, RootShell.ordersTab),
+          ),
+          _AccountRow(
+            icon: Icons.request_quote_outlined,
+            label: l10n.myQuotesTitle,
+            trailing: l10n.accountView,
+            onTap: () => _push(const MyQuotesScreen()),
+          ),
           if (claims?.role == AppRole.vendor && claims?.vendorId != null)
             _AccountRow(
               icon: Icons.storefront_outlined,
@@ -164,6 +185,27 @@ class _AccountScreenState extends State<AccountScreen> {
             onTap: () => _pickLanguage(context, l10n),
           ),
           _AccountRow(icon: Icons.info_outline, label: l10n.accountAbout, trailing: 'v1.0.0'),
+          if (isRealAccount) ...[
+            _AccountRow(
+              icon: Icons.lock_outline,
+              label: l10n.changePasswordTitle,
+              trailing: l10n.accountChange,
+              onTap: () => _push(const ChangePasswordScreen()),
+            ),
+            if (claims?.role == AppRole.customer)
+              _AccountRow(
+                icon: Icons.delete_outline,
+                label: l10n.deleteAccountTitle,
+                trailing: '',
+                onTap: () async {
+                  final messenger = ScaffoldMessenger.of(context);
+                  if (await showDeleteAccountDialog(context)) {
+                    messenger.showSnackBar(SnackBar(content: Text(l10n.deleteAccountDone)));
+                    _loadClaims();
+                  }
+                },
+              ),
+          ],
         ],
       ),
     );

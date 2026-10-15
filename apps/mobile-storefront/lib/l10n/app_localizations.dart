@@ -790,12 +790,6 @@ abstract class AppLocalizations {
   /// **'{count, plural, one {Subtotal (1 item)} other {Subtotal ({count} items)}}'**
   String cartSubtotal(int count);
 
-  /// No description provided for @checkoutNotBuiltYet.
-  ///
-  /// In en, this message translates to:
-  /// **'Checkout isn\'t built yet — coming next.'**
-  String get checkoutNotBuiltYet;
-
   /// No description provided for @checkout.
   ///
   /// In en, this message translates to:
@@ -979,7 +973,7 @@ abstract class AppLocalizations {
   /// No description provided for @ordersEmptyBody.
   ///
   /// In en, this message translates to:
-  /// **'Orders will show up here once checkout is built.'**
+  /// **'Orders you place will show up here.'**
   String get ordersEmptyBody;
 
   /// No description provided for @learnTitle.
@@ -1851,6 +1845,426 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add a title in at least one language.'**
   String get bulkTitleNeeded;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Required.'**
+  String get fieldRequired;
+
+  /// No description provided for @checkoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout'**
+  String get checkoutTitle;
+
+  /// No description provided for @checkoutDeliveryDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery details'**
+  String get checkoutDeliveryDetails;
+
+  /// No description provided for @checkoutName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get checkoutName;
+
+  /// No description provided for @checkoutPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone (WhatsApp)'**
+  String get checkoutPhone;
+
+  /// No description provided for @checkoutPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid number, e.g. 0750 123 4567.'**
+  String get checkoutPhoneInvalid;
+
+  /// No description provided for @checkoutCity.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get checkoutCity;
+
+  /// No description provided for @checkoutAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get checkoutAddress;
+
+  /// No description provided for @checkoutNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note for the installer (optional)'**
+  String get checkoutNote;
+
+  /// No description provided for @checkoutSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Order summary'**
+  String get checkoutSummary;
+
+  /// No description provided for @checkoutDeliveryFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery'**
+  String get checkoutDeliveryFee;
+
+  /// No description provided for @checkoutFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get checkoutFree;
+
+  /// No description provided for @checkoutTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get checkoutTotal;
+
+  /// No description provided for @checkoutCashOnDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash on delivery'**
+  String get checkoutCashOnDelivery;
+
+  /// No description provided for @checkoutCashOnDeliveryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay the installer in cash when your order arrives. Online payment is coming soon.'**
+  String get checkoutCashOnDeliveryBody;
+
+  /// No description provided for @checkoutPlaceOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Place order'**
+  String get checkoutPlaceOrder;
+
+  /// No description provided for @checkoutFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t place your order. Check your connection and try again.'**
+  String get checkoutFailed;
+
+  /// No description provided for @orderStatusPlaced.
+  ///
+  /// In en, this message translates to:
+  /// **'Placed'**
+  String get orderStatusPlaced;
+
+  /// No description provided for @orderStatusConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get orderStatusConfirmed;
+
+  /// No description provided for @orderStatusScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Installation scheduled'**
+  String get orderStatusScheduled;
+
+  /// No description provided for @orderStatusEnRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Installer on the way'**
+  String get orderStatusEnRoute;
+
+  /// No description provided for @orderStatusInstalled.
+  ///
+  /// In en, this message translates to:
+  /// **'Installed'**
+  String get orderStatusInstalled;
+
+  /// No description provided for @orderStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get orderStatusCancelled;
+
+  /// No description provided for @orderCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel order'**
+  String get orderCancel;
+
+  /// No description provided for @orderCancelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this order?'**
+  String get orderCancelTitle;
+
+  /// No description provided for @orderCancelBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The vendor hasn\'t confirmed it yet, so nothing has been scheduled.'**
+  String get orderCancelBody;
+
+  /// No description provided for @orderCancelledBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This order was cancelled.'**
+  String get orderCancelledBody;
+
+  /// No description provided for @orderConfirmInstall.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm installation is done'**
+  String get orderConfirmInstall;
+
+  /// No description provided for @orderConfirmInstallTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Installation complete?'**
+  String get orderConfirmInstallTitle;
+
+  /// No description provided for @orderConfirmInstallBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm only once the system is installed and working.'**
+  String get orderConfirmInstallBody;
+
+  /// No description provided for @orderWriteReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a review'**
+  String get orderWriteReview;
+
+  /// No description provided for @orderReviewed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewed — thank you'**
+  String get orderReviewed;
+
+  /// No description provided for @orderReviewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What went well, or what didn\'t? (optional)'**
+  String get orderReviewHint;
+
+  /// No description provided for @orderSubmitReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit review'**
+  String get orderSubmitReview;
+
+  /// No description provided for @orderReportProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Report a problem'**
+  String get orderReportProblem;
+
+  /// No description provided for @orderReportProblemBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us what went wrong. Our team will look into it and follow up.'**
+  String get orderReportProblemBody;
+
+  /// No description provided for @orderSendReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Send report'**
+  String get orderSendReport;
+
+  /// No description provided for @orderDisputeOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem reported — under review'**
+  String get orderDisputeOpen;
+
+  /// No description provided for @orderDisputeClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported problem — closed'**
+  String get orderDisputeClosed;
+
+  /// No description provided for @editProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get editProfileTitle;
+
+  /// No description provided for @profileSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile saved.'**
+  String get profileSaved;
+
+  /// No description provided for @changePasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get changePasswordTitle;
+
+  /// No description provided for @currentPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get currentPasswordLabel;
+
+  /// No description provided for @newPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get newPasswordLabel;
+
+  /// No description provided for @passwordChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed.'**
+  String get passwordChanged;
+
+  /// No description provided for @deleteAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get deleteAccountTitle;
+
+  /// No description provided for @deleteAccountBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently deletes your account. Past orders stay with the vendor without your name or phone. Enter your password to confirm.'**
+  String get deleteAccountBody;
+
+  /// No description provided for @deleteAccountConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteAccountConfirm;
+
+  /// No description provided for @deleteAccountDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account was deleted.'**
+  String get deleteAccountDone;
+
+  /// No description provided for @forgotPasswordLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get forgotPasswordLink;
+
+  /// No description provided for @forgotPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset password'**
+  String get forgotPasswordTitle;
+
+  /// No description provided for @forgotPasswordBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your username. We\'ll send a code to the WhatsApp number on your account.'**
+  String get forgotPasswordBody;
+
+  /// No description provided for @forgotPasswordSendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Send code'**
+  String get forgotPasswordSendCode;
+
+  /// No description provided for @forgotPasswordCodeSent.
+  ///
+  /// In en, this message translates to:
+  /// **'If that account exists, a 6-digit code was sent to its WhatsApp.'**
+  String get forgotPasswordCodeSent;
+
+  /// No description provided for @forgotPasswordReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Set new password'**
+  String get forgotPasswordReset;
+
+  /// No description provided for @forgotPasswordResend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a new code'**
+  String get forgotPasswordResend;
+
+  /// No description provided for @myQuotesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My quotes'**
+  String get myQuotesTitle;
+
+  /// No description provided for @myQuotesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t requested any quotes yet.'**
+  String get myQuotesEmpty;
+
+  /// No description provided for @quoteStatusWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the vendor'**
+  String get quoteStatusWaiting;
+
+  /// No description provided for @quoteStatusResponded.
+  ///
+  /// In en, this message translates to:
+  /// **'Vendor replied'**
+  String get quoteStatusResponded;
+
+  /// No description provided for @quoteStatusDeclined.
+  ///
+  /// In en, this message translates to:
+  /// **'Vendor declined'**
+  String get quoteStatusDeclined;
+
+  /// No description provided for @quotePhoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone for the vendor to call back (optional)'**
+  String get quotePhoneHint;
+
+  /// No description provided for @reviewVerifiedBuyer.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified buyer'**
+  String get reviewVerifiedBuyer;
+
+  /// No description provided for @checkoutSplitNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other {Your cart has items from different sellers, so it will be sent as {count} separate orders.}}'**
+  String checkoutSplitNotice(int count);
+
+  /// No description provided for @checkoutSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {Order placed.} other {{count} orders placed.}}'**
+  String checkoutSuccess(int count);
+
+  /// No description provided for @ordersItemCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {1 item} other {{count} items}}'**
+  String ordersItemCount(int count);
+
+  /// No description provided for @orderNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Order #{id}'**
+  String orderNumber(String id);
+
+  /// No description provided for @reviewsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {Reviews (1)} other {Reviews ({count})}}'**
+  String reviewsTitle(int count);
 }
 
 class _AppLocalizationsDelegate

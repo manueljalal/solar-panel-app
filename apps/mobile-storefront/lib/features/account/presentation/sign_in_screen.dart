@@ -8,6 +8,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
+import 'account_settings_screens.dart';
 import 'sign_up_screen.dart';
 import 'widgets/auth_text_field.dart';
 
@@ -200,6 +201,21 @@ class _SignInScreenState extends State<SignInScreen> {
             obscureText: true,
             autofillHints: const [AutofillHints.password],
             validator: (v) => (v == null || v.isEmpty) ? l10n.passwordValidator : null,
+          ),
+          Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: TextButton(
+              onPressed: () async {
+                final navigator = Navigator.of(context);
+                final signedIn = await navigator.push<bool>(
+                  MaterialPageRoute(
+                    builder: (_) => ForgotPasswordScreen(initialIdentifier: _usernameController.text.trim()),
+                  ),
+                );
+                if (signedIn == true && mounted) navigator.pop();
+              },
+              child: Text(l10n.forgotPasswordLink),
+            ),
           ),
           if (_error != null) ...[
             const SizedBox(height: AppSpacing.sm),

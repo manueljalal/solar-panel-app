@@ -25,6 +25,14 @@ class RootShell extends StatefulWidget {
 
   final HomeRepository? homeRepository;
 
+  static const ordersTab = 3;
+
+  /// Switches the bottom-nav tab from anywhere below the shell (e.g. after
+  /// checkout, jump to Orders). No-op when there's no shell above.
+  static void selectTab(BuildContext context, int index) {
+    context.findAncestorStateOfType<_RootShellState>()?._select(index);
+  }
+
   @override
   State<RootShell> createState() => _RootShellState();
 }
@@ -37,6 +45,11 @@ class _RootShellState extends State<RootShell> {
   // competing for the network and slowing the first screen down. Once built
   // a tab is kept alive (IndexedStack) so it retains its scroll/state.
   final _visited = <int>{0};
+
+  void _select(int i) => setState(() {
+        _visited.add(i);
+        _index = i;
+      });
 
   Widget _buildTab(int i) {
     switch (i) {
@@ -68,10 +81,7 @@ class _RootShellState extends State<RootShell> {
         builder: (context, _) {
           return BottomNavigationBar(
             currentIndex: _index,
-            onTap: (i) => setState(() {
-              _visited.add(i);
-              _index = i;
-            }),
+            onTap: _select,
             type: BottomNavigationBarType.fixed,
             backgroundColor: AppColors.surface,
             selectedItemColor: AppColors.primary,

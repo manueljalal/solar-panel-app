@@ -3,15 +3,18 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../core/navigation/root_shell.dart';
 import '../../../shared/widgets/placeholder_image.dart';
+import '../../../shared/widgets/primary_button.dart';
+import '../../checkout/presentation/checkout_screen.dart';
+import '../../home/domain/home_product.dart';
 import '../data/cart_scope.dart';
 import '../domain/cart_item.dart';
 
-/// Real cart screen — reads live from CartScope, so it always reflects
-/// whatever was added from product detail. Quantity can be changed or
-/// removed inline; "Checkout" is a real navigation target (checkout
-/// screen still needs to be built — this button surfaces that instead of
-/// hiding it as a silent no-op).
+/// Cart screen — reads live from CartScope, so it always reflects whatever
+/// was added from product detail. Quantity can be changed or removed
+/// inline; "Checkout" opens CheckoutScreen and, once the order is placed,
+/// jumps to the Orders tab.
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
@@ -42,7 +45,7 @@ class CartScreen extends StatelessWidget {
                   itemBuilder: (context, i) => _CartRow(item: cart.items[i]),
                 ),
               ),
-              _CartSummary(subtotal: cart.subtotal, itemCount: cart.itemCount),
+              _CartSummary(subtotals: cart.subtotals, itemCount: cart.itemCount),
             ],
           );
         },
@@ -111,7 +114,7 @@ class _CartRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(item.product.title, style: AppTypography.cardTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                Text(item.product.titleFor(Localizations.localeOf(context).languageCode), style: AppTypography.cardTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 2),
                 Text(item.product.vendor, style: AppTypography.bodyMuted),
                 const SizedBox(height: 8),
@@ -163,10 +166,21 @@ class _QtyButton extends StatelessWidget {
 }
 
 class _CartSummary extends StatelessWidget {
-  const _CartSummary({required this.subtotal, required this.itemCount});
+  const _CartSummary({required this.subtotals, required this.itemCount});
 
-  final double subtotal;
+  final Map<String, double> subtotals;
   final int itemCount;
+
+  Future<void> _checkout(BuildContext context) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final placed = await Navigator.of(context).push<List<String>>(
+      MaterialPageRoute(builder: (_) => const CheckoutScreen()),
+    );
+    if (placed == null || !context.mounted) return;
+    messenger.showSnackBar(SnackBar(content: Text(l10n.checkoutSuccess(placed.length))));
+    RootShell.selectTab(context, RootShell.ordersTab);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -187,25 +201,14 @@ class _CartSummary extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(l10n.cartSubtotal(itemCount), style: AppTypography.bodyMuted),
-                  Text('\$${subtotal.toStringAsFixed(2)}', style: AppTypography.price),
+                  Text(
+                    subtotals.entries.map((e) => formatMoney(e.value, e.key)).join(' + '),
+                    style: AppTypography.price,
+                  ),
                 ],
               ),
               const SizedBox(height: AppSpacing.md),
-              ElevatedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(l10n.checkoutNotBuiltYet)),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.ink,
-                  foregroundColor: Colors.white,
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.chip)),
-                ),
-                child: Text(l10n.checkout, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
-              ),
+              PrimaryButton(label: l10n.checkout, onPressed: () => _checkout(context)),
             ],
           ),
         ),

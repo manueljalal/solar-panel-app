@@ -7,6 +7,7 @@ import '../../cart/data/cart_scope.dart';
 import '../../home/domain/home_product.dart';
 import 'widgets/product_action_bar.dart';
 import 'widgets/product_image_header.dart';
+import 'widgets/product_reviews.dart';
 import 'widgets/product_spec_row.dart';
 import 'widgets/product_vendor_row.dart';
 import 'widgets/quote_request_sheet.dart';
@@ -85,6 +86,7 @@ class ProductDetailScreen extends StatelessWidget {
                             description ?? l10n.noDescriptionYet,
                             style: AppTypography.body.copyWith(color: AppColors.ink600, height: 1.55),
                           ),
+                          ProductReviews(productId: product.id, reviewCount: product.reviewCount),
                         ],
                       ),
                     ),

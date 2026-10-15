@@ -12,12 +12,19 @@ class QuoteRequestRepository {
 
   final FirebaseFunctions _functions;
 
-  Future<void> submit({required HomeProduct product, required String note}) async {
+  /// [phone] is an optional callback number (E.164) — guests have none on
+  /// file, and the vendor needs a way to answer.
+  Future<void> submit({required HomeProduct product, required String note, String phone = ''}) async {
     final callable = _functions.httpsCallable('storefront-submitQuoteRequest');
     await callable.call({
-      'productTitle': product.title,
-      'vendor': product.vendor,
+      // With a product id the server resolves the vendor itself, so the
+      // request lands in that vendor's inbox.
+      if (product.id.isNotEmpty) 'productId': product.id else ...{
+        'productTitle': product.title,
+        'vendor': product.vendor,
+      },
       'note': note,
+      if (phone.isNotEmpty) 'phone': phone,
     });
   }
 }

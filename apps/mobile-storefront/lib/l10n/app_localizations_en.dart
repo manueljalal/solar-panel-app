@@ -388,9 +388,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get checkoutNotBuiltYet => 'Checkout isn\'t built yet — coming next.';
-
-  @override
   String get checkout => 'Checkout';
 
   @override
@@ -493,8 +490,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ordersEmptyTitle => 'No orders yet';
 
   @override
-  String get ordersEmptyBody =>
-      'Orders will show up here once checkout is built.';
+  String get ordersEmptyBody => 'Orders you place will show up here.';
 
   @override
   String get learnTitle => 'Learn';
@@ -965,4 +961,257 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bulkTitleNeeded => 'Add a title in at least one language.';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get fieldRequired => 'Required.';
+
+  @override
+  String get checkoutTitle => 'Checkout';
+
+  @override
+  String get checkoutDeliveryDetails => 'Delivery details';
+
+  @override
+  String get checkoutName => 'Full name';
+
+  @override
+  String get checkoutPhone => 'Phone (WhatsApp)';
+
+  @override
+  String get checkoutPhoneInvalid =>
+      'Enter a valid number, e.g. 0750 123 4567.';
+
+  @override
+  String get checkoutCity => 'City';
+
+  @override
+  String get checkoutAddress => 'Address';
+
+  @override
+  String get checkoutNote => 'Note for the installer (optional)';
+
+  @override
+  String get checkoutSummary => 'Order summary';
+
+  @override
+  String get checkoutDeliveryFee => 'Delivery';
+
+  @override
+  String get checkoutFree => 'Free';
+
+  @override
+  String get checkoutTotal => 'Total';
+
+  @override
+  String get checkoutCashOnDelivery => 'Cash on delivery';
+
+  @override
+  String get checkoutCashOnDeliveryBody =>
+      'Pay the installer in cash when your order arrives. Online payment is coming soon.';
+
+  @override
+  String get checkoutPlaceOrder => 'Place order';
+
+  @override
+  String get checkoutFailed =>
+      'Couldn\'t place your order. Check your connection and try again.';
+
+  @override
+  String get orderStatusPlaced => 'Placed';
+
+  @override
+  String get orderStatusConfirmed => 'Confirmed';
+
+  @override
+  String get orderStatusScheduled => 'Installation scheduled';
+
+  @override
+  String get orderStatusEnRoute => 'Installer on the way';
+
+  @override
+  String get orderStatusInstalled => 'Installed';
+
+  @override
+  String get orderStatusCancelled => 'Cancelled';
+
+  @override
+  String get orderCancel => 'Cancel order';
+
+  @override
+  String get orderCancelTitle => 'Cancel this order?';
+
+  @override
+  String get orderCancelBody =>
+      'The vendor hasn\'t confirmed it yet, so nothing has been scheduled.';
+
+  @override
+  String get orderCancelledBody => 'This order was cancelled.';
+
+  @override
+  String get orderConfirmInstall => 'Confirm installation is done';
+
+  @override
+  String get orderConfirmInstallTitle => 'Installation complete?';
+
+  @override
+  String get orderConfirmInstallBody =>
+      'Confirm only once the system is installed and working.';
+
+  @override
+  String get orderWriteReview => 'Write a review';
+
+  @override
+  String get orderReviewed => 'Reviewed — thank you';
+
+  @override
+  String get orderReviewHint => 'What went well, or what didn\'t? (optional)';
+
+  @override
+  String get orderSubmitReview => 'Submit review';
+
+  @override
+  String get orderReportProblem => 'Report a problem';
+
+  @override
+  String get orderReportProblemBody =>
+      'Tell us what went wrong. Our team will look into it and follow up.';
+
+  @override
+  String get orderSendReport => 'Send report';
+
+  @override
+  String get orderDisputeOpen => 'Problem reported — under review';
+
+  @override
+  String get orderDisputeClosed => 'Reported problem — closed';
+
+  @override
+  String get editProfileTitle => 'Edit profile';
+
+  @override
+  String get profileSaved => 'Profile saved.';
+
+  @override
+  String get changePasswordTitle => 'Change password';
+
+  @override
+  String get currentPasswordLabel => 'Current password';
+
+  @override
+  String get newPasswordLabel => 'New password';
+
+  @override
+  String get passwordChanged => 'Password changed.';
+
+  @override
+  String get deleteAccountTitle => 'Delete account';
+
+  @override
+  String get deleteAccountBody =>
+      'This permanently deletes your account. Past orders stay with the vendor without your name or phone. Enter your password to confirm.';
+
+  @override
+  String get deleteAccountConfirm => 'Delete';
+
+  @override
+  String get deleteAccountDone => 'Your account was deleted.';
+
+  @override
+  String get forgotPasswordLink => 'Forgot password?';
+
+  @override
+  String get forgotPasswordTitle => 'Reset password';
+
+  @override
+  String get forgotPasswordBody =>
+      'Enter your username. We\'ll send a code to the WhatsApp number on your account.';
+
+  @override
+  String get forgotPasswordSendCode => 'Send code';
+
+  @override
+  String get forgotPasswordCodeSent =>
+      'If that account exists, a 6-digit code was sent to its WhatsApp.';
+
+  @override
+  String get forgotPasswordReset => 'Set new password';
+
+  @override
+  String get forgotPasswordResend => 'Send a new code';
+
+  @override
+  String get myQuotesTitle => 'My quotes';
+
+  @override
+  String get myQuotesEmpty => 'You haven\'t requested any quotes yet.';
+
+  @override
+  String get quoteStatusWaiting => 'Waiting for the vendor';
+
+  @override
+  String get quoteStatusResponded => 'Vendor replied';
+
+  @override
+  String get quoteStatusDeclined => 'Vendor declined';
+
+  @override
+  String get quotePhoneHint => 'Phone for the vendor to call back (optional)';
+
+  @override
+  String get reviewVerifiedBuyer => 'Verified buyer';
+
+  @override
+  String checkoutSplitNotice(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Your cart has items from different sellers, so it will be sent as $count separate orders.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String checkoutSuccess(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count orders placed.',
+      one: 'Order placed.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ordersItemCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String orderNumber(String id) {
+    return 'Order #$id';
+  }
+
+  @override
+  String reviewsTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Reviews ($count)',
+      one: 'Reviews (1)',
+    );
+    return '$_temp0';
+  }
 }

@@ -158,6 +158,72 @@ class AuthRepository {
     final credential = await _auth.signInWithCustomToken(customToken);
     return credential.user!;
   }
+  /// Forgot password, step 1: sends a WhatsApp code to the phone on file
+  /// for [identifier] (username, or a vendor's email). The server answers
+  /// the same way whether or not the account exists.
+  Future<void> requestPasswordReset(String identifier) async {
+    final deviceId = await getDeviceId();
+    await _functions.httpsCallable('auth-requestPasswordReset').call({'identifier': identifier, 'deviceId': deviceId});
+  }
+
+  /// Forgot password, step 2: sets [newPassword] and signs in.
+  Future<User> resetPassword({required String identifier, required String otp, required String newPassword}) async {
+    final deviceId = await getDeviceId();
+    final result = await _functions.httpsCallable('auth-resetPassword').call({
+      'identifier': identifier,
+      'otp': otp,
+      'newPassword': newPassword,
+      'deviceId': deviceId,
+    });
+    final credential = await _auth.signInWithCustomToken(result.data['customToken'] as String);
+    return credential.user!;
+  }
+
+  Future<UserProfile> getMyProfile() async {
+    final result = await _functions.httpsCallable('auth-getMyProfile').call();
+    return UserProfile.fromJson(Map<String, dynamic>.from(result.data as Map));
+  }
+
+  Future<void> updateMyProfile({String? name, PickedLocation? location}) async {
+    await _functions.httpsCallable('auth-updateMyProfile').call({
+      'name': ?name,
+      if (location != null) 'location': location.toJson(),
+    });
+  }
+
+  Future<void> changePassword({required String currentPassword, required String newPassword}) async {
+    await _functions
+        .httpsCallable('auth-changePassword')
+        .call({'currentPassword': currentPassword, 'newPassword': newPassword});
+  }
+
+  /// Permanently deletes the account, then drops back to a fresh guest
+  /// session so the app keeps working.
+  Future<void> deleteMyAccount({required String password}) async {
+    await _functions.httpsCallable('auth-deleteMyAccount').call({'password': password});
+    await _auth.signOut();
+    await ensureSignedIn();
+  }
+}
+
+/// The signed-in user's own profile (auth-getMyProfile).
+class UserProfile {
+  const UserProfile({required this.name, required this.username, required this.phone, this.location});
+
+  final String name;
+  final String username;
+  final String phone;
+  final PickedLocation? location;
+
+  factory UserProfile.fromJson(Map<String, dynamic> j) {
+    final loc = j['location'];
+    return UserProfile(
+      name: j['name'] as String? ?? '',
+      username: j['username'] as String? ?? '',
+      phone: j['phone'] as String? ?? '',
+      location: loc is Map ? PickedLocation.fromJson(Map<String, dynamic>.from(loc)) : null,
+    );
+  }
 }
 
 /// Thrown by [AuthRepository.signIn] when the credentials are correct but

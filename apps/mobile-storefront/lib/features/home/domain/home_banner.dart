@@ -40,8 +40,9 @@ class HomeBanner {
   }
 
   static Color? _parseHex(Object? raw) {
-    if (raw is! String || !RegExp(r'^#[0-9a-fA-F]{6}$').hasMatch(raw))
+    if (raw is! String || !RegExp(r'^#[0-9a-fA-F]{6}$').hasMatch(raw)) {
       return null;
+    }
     return Color(0xFF000000 | int.parse(raw.substring(1), radix: 16));
   }
 }

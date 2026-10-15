@@ -3,6 +3,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/auth/phone_number.dart';
 import '../../../home/domain/home_product.dart';
 import '../../data/quote_request_repository.dart';
 
@@ -29,6 +30,7 @@ class _QuoteRequestSheet extends StatefulWidget {
 
 class _QuoteRequestSheetState extends State<_QuoteRequestSheet> {
   final _controller = TextEditingController();
+  final _phoneController = TextEditingController();
   final _repository = QuoteRequestRepository();
   bool _submitting = false;
   String? _error;
@@ -36,17 +38,23 @@ class _QuoteRequestSheetState extends State<_QuoteRequestSheet> {
   @override
   void dispose() {
     _controller.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 
   Future<void> _submit() async {
     final l10n = AppLocalizations.of(context);
+    final phone = _phoneController.text.trim().isEmpty ? '' : normalizePhone(_phoneController.text);
+    if (phone.isNotEmpty && !isValidE164(phone)) {
+      setState(() => _error = l10n.checkoutPhoneInvalid);
+      return;
+    }
     setState(() {
       _submitting = true;
       _error = null;
     });
     try {
-      await _repository.submit(product: widget.product, note: _controller.text.trim());
+      await _repository.submit(product: widget.product, note: _controller.text.trim(), phone: phone);
       if (!mounted) return;
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -93,6 +101,12 @@ class _QuoteRequestSheetState extends State<_QuoteRequestSheet> {
               decoration: InputDecoration(
                 hintText: l10n.quoteRequestHint,
               ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            TextField(
+              controller: _phoneController,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(hintText: l10n.quotePhoneHint),
             ),
             if (_error != null) ...[
               const SizedBox(height: AppSpacing.sm),

@@ -12,6 +12,7 @@ import 'core/navigation/root_shell.dart';
 import 'core/theme/app_theme.dart';
 import 'features/cart/data/cart_controller.dart';
 import 'features/cart/data/cart_scope.dart';
+import 'features/cart/data/cart_store.dart';
 import 'features/home/data/home_repository.dart';
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
@@ -19,7 +20,7 @@ import 'l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const SolaryMarketplaceApp());
+  runApp(SolaryMarketplaceApp(cartStore: SharedPrefsCartStore()));
 
   // Fire-and-forget: browsing has no auth dependency (see class doc below),
   // so the home screen never waits on this. Cart/orders/favorites read
@@ -28,25 +29,35 @@ void main() async {
   unawaited(AuthRepository().ensureSignedIn());
 }
 
-/// Customer-facing marketplace. No auth gate — browsing (and cart) works
-/// as a guest by default, matching the reference screens. Account/login
+/// Customer-facing marketplace. No auth gate — browsing, cart and checkout
+/// work as a guest by default, matching the reference screens. Account/login
 /// upgrade is offered from the Account tab, not forced up front.
 ///
 /// [homeRepository] is injectable so widget tests can pass a fake instead
 /// of hitting real Firestore (see test/support/fake_home_repository.dart);
 /// production code never passes it.
 class SolaryMarketplaceApp extends StatefulWidget {
-  const SolaryMarketplaceApp({super.key, this.homeRepository});
+  const SolaryMarketplaceApp({super.key, this.homeRepository, this.cartStore});
 
   final HomeRepository? homeRepository;
+
+  /// Where the cart persists. main() passes SharedPrefsCartStore; tests
+  /// leave it null for a purely in-memory cart.
+  final CartStore? cartStore;
 
   @override
   State<SolaryMarketplaceApp> createState() => _SolaryMarketplaceAppState();
 }
 
 class _SolaryMarketplaceAppState extends State<SolaryMarketplaceApp> {
-  final _cartController = CartController();
+  late final _cartController = CartController(store: widget.cartStore);
   final _localeController = LocaleController();
+
+  @override
+  void initState() {
+    super.initState();
+    _cartController.restore();
+  }
 
   @override
   void dispose() {

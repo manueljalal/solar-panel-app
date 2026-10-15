@@ -392,9 +392,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get checkoutNotBuiltYet => 'الدفع غير متاح بعد — قريبًا.';
-
-  @override
   String get checkout => 'الدفع';
 
   @override
@@ -498,7 +495,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ordersEmptyTitle => 'لا توجد طلبات بعد';
 
   @override
-  String get ordersEmptyBody => 'ستظهر الطلبات هنا بمجرد إتاحة الدفع.';
+  String get ordersEmptyBody => 'ستظهر هنا الطلبات التي تقدّمها.';
 
   @override
   String get learnTitle => 'تعلّم';
@@ -967,4 +964,255 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bulkTitleNeeded => 'أضف عنواناً بلغة واحدة على الأقل.';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get confirm => 'تأكيد';
+
+  @override
+  String get fieldRequired => 'مطلوب.';
+
+  @override
+  String get checkoutTitle => 'إتمام الطلب';
+
+  @override
+  String get checkoutDeliveryDetails => 'تفاصيل التوصيل';
+
+  @override
+  String get checkoutName => 'الاسم الكامل';
+
+  @override
+  String get checkoutPhone => 'الهاتف (واتساب)';
+
+  @override
+  String get checkoutPhoneInvalid => 'أدخل رقمًا صحيحًا، مثل 0750 123 4567.';
+
+  @override
+  String get checkoutCity => 'المدينة';
+
+  @override
+  String get checkoutAddress => 'العنوان';
+
+  @override
+  String get checkoutNote => 'ملاحظة للفنّي (اختياري)';
+
+  @override
+  String get checkoutSummary => 'ملخص الطلب';
+
+  @override
+  String get checkoutDeliveryFee => 'التوصيل';
+
+  @override
+  String get checkoutFree => 'مجاني';
+
+  @override
+  String get checkoutTotal => 'المجموع';
+
+  @override
+  String get checkoutCashOnDelivery => 'الدفع عند الاستلام';
+
+  @override
+  String get checkoutCashOnDeliveryBody =>
+      'ادفع نقدًا للفنّي عند وصول طلبك. الدفع الإلكتروني قريبًا.';
+
+  @override
+  String get checkoutPlaceOrder => 'تأكيد الطلب';
+
+  @override
+  String get checkoutFailed =>
+      'تعذّر إرسال طلبك. تحقق من الاتصال وحاول مجددًا.';
+
+  @override
+  String get orderStatusPlaced => 'تم الطلب';
+
+  @override
+  String get orderStatusConfirmed => 'مؤكَّد';
+
+  @override
+  String get orderStatusScheduled => 'تم تحديد موعد التركيب';
+
+  @override
+  String get orderStatusEnRoute => 'الفنّي في الطريق';
+
+  @override
+  String get orderStatusInstalled => 'تم التركيب';
+
+  @override
+  String get orderStatusCancelled => 'ملغى';
+
+  @override
+  String get orderCancel => 'إلغاء الطلب';
+
+  @override
+  String get orderCancelTitle => 'إلغاء هذا الطلب؟';
+
+  @override
+  String get orderCancelBody => 'لم يؤكده البائع بعد، لذا لم يُحدَّد أي موعد.';
+
+  @override
+  String get orderCancelledBody => 'تم إلغاء هذا الطلب.';
+
+  @override
+  String get orderConfirmInstall => 'تأكيد اكتمال التركيب';
+
+  @override
+  String get orderConfirmInstallTitle => 'هل اكتمل التركيب؟';
+
+  @override
+  String get orderConfirmInstallBody => 'أكّد فقط بعد تركيب النظام وتشغيله.';
+
+  @override
+  String get orderWriteReview => 'اكتب تقييمًا';
+
+  @override
+  String get orderReviewed => 'تم التقييم — شكرًا لك';
+
+  @override
+  String get orderReviewHint => 'ما الذي كان جيدًا أو لم يكن؟ (اختياري)';
+
+  @override
+  String get orderSubmitReview => 'إرسال التقييم';
+
+  @override
+  String get orderReportProblem => 'الإبلاغ عن مشكلة';
+
+  @override
+  String get orderReportProblemBody => 'أخبرنا بما حدث. سيتابع فريقنا الأمر.';
+
+  @override
+  String get orderSendReport => 'إرسال البلاغ';
+
+  @override
+  String get orderDisputeOpen => 'تم الإبلاغ عن المشكلة — قيد المراجعة';
+
+  @override
+  String get orderDisputeClosed => 'المشكلة المبلَّغ عنها — مغلقة';
+
+  @override
+  String get editProfileTitle => 'تعديل الملف الشخصي';
+
+  @override
+  String get profileSaved => 'تم حفظ الملف الشخصي.';
+
+  @override
+  String get changePasswordTitle => 'تغيير كلمة المرور';
+
+  @override
+  String get currentPasswordLabel => 'كلمة المرور الحالية';
+
+  @override
+  String get newPasswordLabel => 'كلمة المرور الجديدة';
+
+  @override
+  String get passwordChanged => 'تم تغيير كلمة المرور.';
+
+  @override
+  String get deleteAccountTitle => 'حذف الحساب';
+
+  @override
+  String get deleteAccountBody =>
+      'سيؤدي هذا إلى حذف حسابك نهائيًا. تبقى الطلبات السابقة لدى البائع بدون اسمك أو رقمك. أدخل كلمة المرور للتأكيد.';
+
+  @override
+  String get deleteAccountConfirm => 'حذف';
+
+  @override
+  String get deleteAccountDone => 'تم حذف حسابك.';
+
+  @override
+  String get forgotPasswordLink => 'نسيت كلمة المرور؟';
+
+  @override
+  String get forgotPasswordTitle => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get forgotPasswordBody =>
+      'أدخل اسم المستخدم. سنرسل رمزًا إلى رقم واتساب المسجّل في حسابك.';
+
+  @override
+  String get forgotPasswordSendCode => 'إرسال الرمز';
+
+  @override
+  String get forgotPasswordCodeSent =>
+      'إذا كان الحساب موجودًا، فقد أُرسل رمز من 6 أرقام إلى واتساب الخاص به.';
+
+  @override
+  String get forgotPasswordReset => 'تعيين كلمة مرور جديدة';
+
+  @override
+  String get forgotPasswordResend => 'إرسال رمز جديد';
+
+  @override
+  String get myQuotesTitle => 'عروض الأسعار';
+
+  @override
+  String get myQuotesEmpty => 'لم تطلب أي عرض سعر بعد.';
+
+  @override
+  String get quoteStatusWaiting => 'بانتظار رد البائع';
+
+  @override
+  String get quoteStatusResponded => 'رد البائع';
+
+  @override
+  String get quoteStatusDeclined => 'اعتذر البائع';
+
+  @override
+  String get quotePhoneHint => 'رقم هاتف ليتصل بك البائع (اختياري)';
+
+  @override
+  String get reviewVerifiedBuyer => 'مشترٍ موثَّق';
+
+  @override
+  String checkoutSplitNotice(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'تحتوي سلتك على منتجات من بائعين مختلفين، لذا ستُرسل كـ $count طلبات منفصلة.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String checkoutSuccess(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تم إرسال $count طلبات.',
+      one: 'تم إرسال الطلب.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ordersItemCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count منتج',
+      many: '$count منتجًا',
+      few: '$count منتجات',
+      two: 'منتجان',
+      one: 'منتج واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String orderNumber(String id) {
+    return 'الطلب رقم $id';
+  }
+
+  @override
+  String reviewsTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'التقييمات ($count)',
+    );
+    return '$_temp0';
+  }
 }

@@ -29,7 +29,8 @@ void main() {
     // fields on this screen (those only appear mid-flow if the backend
     // demands device step-up, which needs a real Firebase backend to
     // trigger and isn't exercised here).
-    expect(find.text('Username'), findsOneWidget);
+    expect(find.text('Username or email'), findsOneWidget);
+    expect(find.text('Forgot password?'), findsOneWidget);
     expect(find.text('Password'), findsOneWidget);
 
     // Reach sign-up from sign-in.

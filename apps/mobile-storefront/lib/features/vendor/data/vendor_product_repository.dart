@@ -36,7 +36,7 @@ class VendorProductRepository {
         .orderBy('createdAt', descending: true)
         .snapshots()
         .map((snap) => snap.docs
-            .map((d) => VendorOwnedProduct(id: d.id, product: HomeProduct.fromFirestore(d.data(), vendorName: '')))
+            .map((d) => VendorOwnedProduct(id: d.id, product: HomeProduct.fromFirestore(d.data(), vendorName: '', id: d.id)))
             .toList());
   }
 

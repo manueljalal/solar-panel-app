@@ -3,6 +3,11 @@
 /// row shows a subset of these fields, the detail screen shows all of them.
 class HomeProduct {
   const HomeProduct({
+    this.id = '',
+    this.vendorId = '',
+    this.priceValue = 0,
+    this.currency = 'USD',
+    this.reviewCount = 0,
     required this.imageUrl,
     required this.spec,
     required this.brand,
@@ -18,6 +23,17 @@ class HomeProduct {
     this.descriptions = const {},
     this.warranties = const {},
   });
+
+  /// Firestore `products` doc id — what orders, reviews and quote
+  /// requests reference. Empty only on hand-built test fixtures.
+  final String id;
+  final String vendorId;
+
+  /// Numeric price + ISO currency ('USD' / 'IQD'), for cart totals.
+  /// [price] is the same value preformatted for display.
+  final double priceValue;
+  final String currency;
+  final int reviewCount;
 
   final String imageUrl;
   final String spec;
@@ -70,18 +86,22 @@ class HomeProduct {
   factory HomeProduct.fromFirestore(
     Map<String, dynamic> data, {
     required String vendorName,
+    String id = '',
   }) {
     final price = (data['price'] as num?)?.toDouble() ?? 0;
     final currency = data['currency'] as String? ?? 'USD';
-    final symbol = currency == 'USD' ? '\$' : '$currency ';
     return HomeProduct(
+      id: id,
+      vendorId: data['vendorId'] as String? ?? '',
+      priceValue: price,
+      currency: currency,
+      reviewCount: (data['reviewCount'] as num?)?.toInt() ?? 0,
       imageUrl: data['imageUrl'] as String? ?? '',
       spec: data['spec'] as String? ?? '',
       brand: data['brand'] as String? ?? '',
       title: data['name'] as String? ?? 'Untitled product',
       vendor: vendorName,
-      price:
-          '$symbol${price.toStringAsFixed(price.truncateToDouble() == price ? 0 : 2)}',
+      price: formatMoney(price, currency),
       rating: (data['rating'] as num?)?.toDouble() ?? 0,
       sold: (data['sold'] as num?)?.toInt() ?? 0,
       warranty: data['warranty'] as String?,
@@ -92,4 +112,13 @@ class HomeProduct {
       warranties: _i18n(data['warrantyI18n']),
     );
   }
+}
+
+/// "$1,240" / "IQD 905,000" — shared by product rows, cart and orders.
+String formatMoney(num amount, String currency) {
+  final fixed = amount.toStringAsFixed(amount.truncateToDouble() == amount ? 0 : 2);
+  final parts = fixed.split('.');
+  final whole = parts[0].replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ',');
+  final number = parts.length > 1 ? '$whole.${parts[1]}' : whole;
+  return currency == 'USD' ? '\$$number' : '$currency $number';
 }

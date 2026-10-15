@@ -20,10 +20,12 @@ class LearnScreen extends StatefulWidget {
 
 class _LearnScreenState extends State<LearnScreen> {
   late final LearnRepository _repository = widget._repository ?? LearnRepository();
-  late Future<List<LearnItem>> _items = _repository.fetchItems();
+  // Wrapped in Future() so a synchronous failure (e.g. Firebase not
+  // initialized) lands in the FutureBuilder's error state, not build().
+  late Future<List<LearnItem>> _items = Future(() => _repository.fetchItems());
 
   Future<void> _reload() async {
-    final next = _repository.fetchItems();
+    final next = Future(() => _repository.fetchItems());
     setState(() => _items = next);
     await next.catchError((_) => <LearnItem>[]);
   }

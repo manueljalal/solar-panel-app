@@ -42,8 +42,9 @@ class _ApplyBannerState extends State<ApplyBanner> {
       // forceRefresh: the vendor role is granted server-side AFTER sign-in, so
       // the cached token is stale right after approval.
       final claims = await AuthRepository().getClaims(forceRefresh: true);
-      if (mounted && claims.role == AppRole.vendor)
+      if (mounted && claims.role == AppRole.vendor) {
         setState(() => _isVendor = true);
+      }
     } catch (_) {}
   }
 
