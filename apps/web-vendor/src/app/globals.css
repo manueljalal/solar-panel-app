@@ -544,3 +544,93 @@ textarea {
     color: var(--ink-900);
   }
 }
+
+/* ── Section nav + orders / quotes / profile ── */
+.section-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px 28px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.section-nav .tab {
+  text-decoration: none;
+}
+
+.pill-accent {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: #8a5f24;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.toolbar select,
+.toolbar input,
+.field select,
+.field textarea {
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--surface);
+  color: var(--ink-900);
+  font-family: inherit;
+}
+
+.field textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.detail {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--ink-600);
+  display: grid;
+  gap: 6px;
+}
+
+.detail strong {
+  color: var(--ink-900);
+}
+
+.line-items {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.line-items td {
+  padding: 4px 0;
+}
+
+.line-items td:last-child {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.app-row-main {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .section-nav {
+    padding: 10px 16px;
+  }
+
+  .app-row {
+    flex-direction: column;
+  }
+}

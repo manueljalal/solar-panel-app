@@ -44,6 +44,14 @@ const signInFn = httpsCallable<{ username: string; password: string; deviceId: s
   functions,
   "auth-signIn",
 );
+const requestResetFn = httpsCallable<{ identifier: string; deviceId: string }, { ok: true }>(
+  functions,
+  "auth-requestPasswordReset",
+);
+const resetPasswordFn = httpsCallable<
+  { identifier: string; otp: string; newPassword: string; deviceId: string },
+  { customToken: string }
+>(functions, "auth-resetPassword");
 const stepUpFn = httpsCallable<{ username: string; otp: string; deviceId: string }, { customToken: string }>(
   functions,
   "auth-signInOtpStepUp",
@@ -53,7 +61,7 @@ function message(err: unknown, fallback: string): string {
   return (err as { message?: string }).message || fallback;
 }
 
-type View = "signin" | "signup" | "signup-otp" | "stepup-otp";
+type View = "signin" | "signup" | "signup-otp" | "stepup-otp" | "reset" | "reset-otp";
 
 const COPY = {
   vendor: {
@@ -147,6 +155,52 @@ export function AuthCard({
       const res = await stepUpFn({
         username: username.trim().toLowerCase(),
         otp: otp.trim(),
+        deviceId: getDeviceId(),
+      });
+      await signInWithCustomToken(auth, res.data.customToken);
+    } catch (err) {
+      setError(message(err, "Incorrect or expired code."));
+      setSubmitting(false);
+    }
+  }
+
+  // Forgot password: the server texts a code to the phone on file and
+  // answers identically whether or not the account exists.
+  async function sendResetCode(): Promise<boolean> {
+    try {
+      await requestResetFn({ identifier: username.trim().toLowerCase(), deviceId: getDeviceId() });
+      setCooldown(RESEND_COOLDOWN_SECONDS);
+      return true;
+    } catch (err) {
+      setError(message(err, "Couldn't send a code — try again."));
+      return false;
+    }
+  }
+
+  async function onResetStart(e: FormEvent) {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+    if (await sendResetCode()) {
+      setPassword(""); // the field now takes the NEW password
+      go("reset-otp");
+    }
+    setSubmitting(false);
+  }
+
+  async function onResetFinish(e: FormEvent) {
+    e.preventDefault();
+    if (!isValidPassword(password)) {
+      setError("Password needs 8+ characters with upper and lower case letters, a number and a symbol.");
+      return;
+    }
+    setSubmitting(true);
+    setError(null);
+    try {
+      const res = await resetPasswordFn({
+        identifier: username.trim().toLowerCase(),
+        otp: otp.trim(),
+        newPassword: password,
         deviceId: getDeviceId(),
       });
       await signInWithCustomToken(auth, res.data.customToken);
@@ -294,6 +348,8 @@ export function AuthCard({
     signup: ["Create your account", "Your phone number is verified once, on WhatsApp."],
     "signup-otp": ["Verify your phone", "One last step to finish creating your account."],
     "stepup-otp": ["Confirm it's you", "This is a new device, so we need to verify your phone."],
+    reset: ["Reset your password", "We'll send a code to the WhatsApp number on your account."],
+    "reset-otp": ["Choose a new password", "If that account exists, we sent a 6-digit code to its WhatsApp."],
   };
 
   return (
@@ -362,6 +418,64 @@ export function AuthCard({
               <button className="btn btn-primary" type="submit" disabled={submitting}>
                 {busy(submitting ? "Signing in…" : "Sign in")}
               </button>
+              <div className="auth-row">
+                <button type="button" className="auth-link" onClick={() => go("reset")}>
+                  Forgot password?
+                </button>
+              </div>
+            </form>
+          )}
+
+          {view === "reset" && (
+            <form className="auth-form" onSubmit={onResetStart}>
+              <div className="field">
+                <label htmlFor="reset-username">Username or email</label>
+                <input
+                  id="reset-username"
+                  autoComplete="username"
+                  autoCapitalize="none"
+                  spellCheck={false}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+              {alert}
+              <button className="btn btn-primary" type="submit" disabled={submitting}>
+                {busy(submitting ? "Sending code…" : "Send code")}
+              </button>
+              <div className="auth-row">
+                <button type="button" className="auth-link" onClick={() => go("signin")}>
+                  Back to sign in
+                </button>
+              </div>
+            </form>
+          )}
+
+          {view === "reset-otp" && (
+            <form className="auth-form" onSubmit={onResetFinish}>
+              {otpField}
+              {passwordField("new-password", true)}
+              {alert}
+              <button className="btn btn-primary" type="submit" disabled={submitting}>
+                {busy(submitting ? "Saving…" : "Set password and sign in")}
+              </button>
+              <div className="auth-row">
+                <button type="button" className="auth-link" onClick={() => go("signin")}>
+                  Back to sign in
+                </button>
+                <button
+                  type="button"
+                  className="auth-link"
+                  disabled={cooldown > 0 || submitting}
+                  onClick={() => {
+                    setError(null);
+                    sendResetCode();
+                  }}
+                >
+                  {cooldown > 0 ? `Resend in ${cooldown}s` : "Resend code"}
+                </button>
+              </div>
             </form>
           )}
 

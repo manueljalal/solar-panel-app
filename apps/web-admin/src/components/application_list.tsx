@@ -15,6 +15,8 @@ export interface VendorApplication {
   logoUrl?: string;
   status: ApplicationStatus;
   uid: string;
+  /** Set once approved — the vendors/{vendorId} doc it created. */
+  vendorId?: string;
   rejectionReason?: string | null;
 }
 

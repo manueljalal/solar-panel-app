@@ -606,3 +606,153 @@ input {
     color: var(--ink-900);
   }
 }
+
+/* ── Data pages (orders, users, disputes, analytics, settings) ── */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.toolbar input,
+.toolbar select,
+.field select,
+.field textarea {
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--surface);
+  color: var(--ink-900);
+  font-family: inherit;
+}
+
+.field textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--surface-sunken);
+  color: var(--ink-600);
+  white-space: nowrap;
+}
+
+.pill-success {
+  background: color-mix(in srgb, var(--success) 15%, transparent);
+  color: var(--success);
+}
+
+.pill-warning {
+  background: color-mix(in srgb, var(--warning) 15%, transparent);
+  color: var(--warning);
+}
+
+.pill-accent {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: #8a5f24;
+}
+
+.detail {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--ink-600);
+  display: grid;
+  gap: 6px;
+}
+
+.detail strong {
+  color: var(--ink-900);
+}
+
+.line-items {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.line-items td {
+  padding: 4px 0;
+}
+
+.line-items td:last-child {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.app-row-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+.table th {
+  font-size: 12px;
+  color: var(--ink-600);
+  font-weight: 600;
+  background: var(--surface-sunken);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 120px;
+  padding-top: 8px;
+}
+
+.bar-chart .bar {
+  flex: 1;
+  min-width: 4px;
+  background: var(--ink-900);
+  border-radius: 3px 3px 0 0;
+  opacity: 0.85;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 24px 0 10px;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}

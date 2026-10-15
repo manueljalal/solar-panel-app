@@ -2,7 +2,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { httpsCallable } from "firebase/functions";
-import { functions } from "@/lib/firebase";
+import { collection, getDocs } from "firebase/firestore";
+import { db, functions } from "@/lib/firebase";
+import { errorMessage, setVendorStatus } from "@/lib/api";
 import { AuthedPage } from "@/components/authed_page";
 import { ApplicationList, type ApplicationStatus, type VendorApplication } from "@/components/application_list";
 
@@ -30,6 +32,9 @@ export default function VendorsPage() {
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  // vendors/{id}.status for approved applications — "suspended" businesses
+  // can't take new orders (see admin-setVendorStatus).
+  const [vendorStatus, setVendorStatusMap] = useState<Record<string, string>>({});
 
   const load = useCallback(async (status: ApplicationStatus) => {
     setLoading(true);
@@ -37,6 +42,10 @@ export default function VendorsPage() {
     try {
       const result = await listApplications({ status });
       setApplications(result.data.applications);
+      if (status === "approved") {
+        const snap = await getDocs(collection(db, "vendors"));
+        setVendorStatusMap(Object.fromEntries(snap.docs.map((d) => [d.id, (d.data().status as string) ?? "approved"])));
+      }
     } catch {
       setError("Couldn't load applications — try again.");
     } finally {
@@ -69,6 +78,22 @@ export default function VendorsPage() {
       setNotice(`Setup link sent to ${app.email ?? "the applicant"}.`);
     } catch {
       setError("Couldn't send the setup link — try again.");
+    } finally {
+      setBusyId(null);
+    }
+  }
+
+  async function onToggleSuspended(app: VendorApplication) {
+    if (!app.vendorId) return;
+    const suspend = vendorStatus[app.vendorId] !== "suspended";
+    if (suspend && !window.confirm(`Suspend ${app.businessName}? They won't be able to take new orders or use the bulk market.`)) return;
+    setBusyId(app.id);
+    setError(null);
+    try {
+      await setVendorStatus({ vendorId: app.vendorId, status: suspend ? "suspended" : "approved" });
+      setVendorStatusMap((m) => ({ ...m, [app.vendorId!]: suspend ? "suspended" : "approved" }));
+    } catch (e) {
+      setError(errorMessage(e, "Couldn't change that vendor's status."));
     } finally {
       setBusyId(null);
     }
@@ -123,11 +148,27 @@ export default function VendorsPage() {
                   </>
                 )
               : tab === "approved"
-                ? (app) => (
-                    <button className="btn btn-ghost" disabled={busyId === app.id} onClick={() => onResend(app)}>
-                      Resend setup link
-                    </button>
-                  )
+                ? (app) => {
+                    const vendorId = app.vendorId;
+                    const suspended = vendorId ? vendorStatus[vendorId] === "suspended" : false;
+                    return (
+                      <>
+                        {suspended && <span className="pill pill-warning">Suspended</span>}
+                        <button className="btn btn-ghost" disabled={busyId === app.id} onClick={() => onResend(app)}>
+                          Resend setup link
+                        </button>
+                        {vendorId && (
+                          <button
+                            className={suspended ? "btn btn-ghost" : "btn btn-danger"}
+                            disabled={busyId === app.id}
+                            onClick={() => onToggleSuspended(app)}
+                          >
+                            {suspended ? "Restore" : "Suspend"}
+                          </button>
+                        )}
+                      </>
+                    );
+                  }
                 : undefined
           }
         />
