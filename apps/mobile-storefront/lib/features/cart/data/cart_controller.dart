@@ -87,6 +87,8 @@ class CartController extends ChangeNotifier {
 
   void _changed() {
     notifyListeners();
-    _store?.save(List.of(_items));
+    // Best effort: a failed write only means the cart isn't restored after
+    // a restart; it must never surface as an error in the UI.
+    _store?.save(List.of(_items)).catchError((Object _) {});
   }
 }

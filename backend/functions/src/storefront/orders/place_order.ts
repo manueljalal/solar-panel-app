@@ -145,9 +145,9 @@ export const placeOrder = onCall<PlaceOrderInput>({ region: "us-central1" }, asy
     }
 
     const now = Timestamp.now();
-    groups.forEach(([, groupLines], i) => {
-      const { vendorId, currency } = groupLines[0];
-      const subtotal = sumMoney(groupLines.map((l) => l.lineTotal));
+    groups.forEach(([, group], i) => {
+      const { vendorId, currency } = group[0];
+      const subtotal = sumMoney(group.map((l) => l.lineTotal));
       const deliveryFee = settings.deliveryFee[currency];
       tx.create(refs[i], {
         checkoutId,
@@ -158,8 +158,8 @@ export const placeOrder = onCall<PlaceOrderInput>({ region: "us-central1" }, asy
         note,
         vendorId,
         vendorName: vendorNames.get(vendorId) ?? "",
-        items: groupLines.map(({ vendorId: _v, ...line }) => line),
-        itemCount: groupLines.reduce((n, l) => n + l.quantity, 0),
+        items: group.map(({ vendorId: _v, ...line }) => line),
+        itemCount: group.reduce((n, l) => n + l.quantity, 0),
         currency,
         subtotal,
         deliveryFee,

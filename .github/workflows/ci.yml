@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  functions:
+    name: Cloud Functions (build, unit + emulator tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # Firestore/Auth emulators run on the JVM.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Install workspace dependencies
+        run: npm install --no-audit --no-fund
+      - name: Typecheck, build and unit tests
+        working-directory: backend/functions
+        run: npm test
+      - name: Emulator integration tests
+        working-directory: backend/functions
+        run: npx --yes firebase-tools@13 emulators:exec --project demo-solary --only auth,firestore,functions "node --test test/emulator/*.test.js"
+
+  web:
+    name: Web portals (typecheck + static build)
+    runs-on: ubuntu-latest
+    env:
+      # Placeholder config: the static export only needs Firebase to
+      # initialize, not to reach a real project.
+      NEXT_PUBLIC_FIREBASE_API_KEY: ci-placeholder
+      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: demo-solary.firebaseapp.com
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: demo-solary
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: demo-solary.appspot.com
+      NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: "0"
+      NEXT_PUBLIC_FIREBASE_APP_ID: "1:0:web:0"
+    strategy:
+      matrix:
+        app: [web-admin, web-vendor]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install workspace dependencies
+        run: npm install --no-audit --no-fund
+      - name: Typecheck
+        working-directory: apps/${{ matrix.app }}
+        run: npx tsc --noEmit -p .
+      - name: Build
+        working-directory: apps/${{ matrix.app }}
+        run: npx next build
+
+  mobile:
+    name: Flutter storefront (analyze + test)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/mobile-storefront
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Generated localizations are up to date
+        run: |
+          flutter gen-l10n
+          git diff --exit-code -- lib/l10n
+      - run: flutter analyze
+      - run: flutter test
