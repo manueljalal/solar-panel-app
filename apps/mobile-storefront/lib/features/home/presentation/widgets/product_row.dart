@@ -21,6 +21,7 @@ class ProductRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final lang = Localizations.localeOf(context).languageCode;
     return Material(
       color: AppColors.surface,
       borderRadius: BorderRadius.circular(AppRadii.card),
@@ -28,7 +29,9 @@ class ProductRow extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadii.card),
         onTap: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => ProductDetailScreen(product: product)),
+            MaterialPageRoute(
+              builder: (_) => ProductDetailScreen(product: product),
+            ),
           );
         },
         child: Container(
@@ -41,13 +44,18 @@ class ProductRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DecoratedBox(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(AppSpacing.sm)),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppSpacing.sm),
+                ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(AppSpacing.sm),
                   child: SizedBox(
                     width: 92,
                     height: 92,
-                    child: NetworkImageWithFallback(url: product.imageUrl, fallbackIcon: Icons.solar_power_outlined),
+                    child: NetworkImageWithFallback(
+                      url: product.imageUrl,
+                      fallbackIcon: Icons.solar_power_outlined,
+                    ),
                   ),
                 ),
               ),
@@ -56,30 +64,59 @@ class ProductRow extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('${product.spec} · ${product.brand}', style: AppTypography.eyebrow),
+                    Text(
+                      '${product.spec} · ${product.brand}',
+                      style: AppTypography.eyebrow,
+                    ),
                     const SizedBox(height: 2),
-                    Text(product.title, style: AppTypography.cardTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                    Text(
+                      product.titleFor(lang),
+                      style: AppTypography.cardTitle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     const SizedBox(height: 2),
-                    Text(product.vendor, style: AppTypography.bodyMuted, maxLines: 1, overflow: TextOverflow.ellipsis),
+                    Text(
+                      product.vendor,
+                      style: AppTypography.bodyMuted,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        const Icon(Icons.star, size: 13, color: AppColors.accent),
+                        const Icon(
+                          Icons.star,
+                          size: 13,
+                          color: AppColors.accent,
+                        ),
                         const SizedBox(width: 2),
                         Text(
                           '${product.rating}',
-                          style: AppTypography.bodyMuted.copyWith(fontWeight: FontWeight.w700),
+                          style: AppTypography.bodyMuted.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                         const SizedBox(width: 6),
                         Container(
                           width: 3,
                           height: 3,
-                          decoration: const BoxDecoration(color: AppColors.ink400, shape: BoxShape.circle),
+                          decoration: const BoxDecoration(
+                            color: AppColors.ink400,
+                            shape: BoxShape.circle,
+                          ),
                         ),
                         const SizedBox(width: 6),
-                        Text(l10n.productSold(product.sold), style: AppTypography.bodyMuted),
+                        Text(
+                          l10n.productSold(product.sold),
+                          style: AppTypography.bodyMuted,
+                        ),
                         const Spacer(),
-                        const Icon(Icons.favorite_border, size: 17, color: AppColors.ink400),
+                        const Icon(
+                          Icons.favorite_border,
+                          size: 17,
+                          color: AppColors.ink400,
+                        ),
                       ],
                     ),
                   ],

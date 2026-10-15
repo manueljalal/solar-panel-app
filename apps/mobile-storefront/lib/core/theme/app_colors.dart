@@ -21,14 +21,21 @@ class AppColors {
   /// an underline, a rating star, small link text. Never a large fill.
   static const accent = Color(0xFFB8763E);
 
-  /// Near-black used in place of the old solid-forest-green panels —
-  /// same "distinct dark card" role, but neutral instead of a brand hue.
-  static const ink = Color(0xFF232323);
+  /// Brand dark green — the app's theme color. Used for selected states,
+  /// focus rings, active nav and primary actions.
+  static const primary = Color(0xFF1F5A44);
+
+  /// Very light green wash for selected chips/tiles and subtle highlights.
+  static const primarySoft = Color(0xFFE4EEE8);
+
+  /// Deep forest green for the dark panels, banners and filled buttons
+  /// (wattage card, banner overlay, "Request quote"/"Add to cart").
+  static const ink = Color(0xFF173A2E);
 
   static const placeholderFill = Color(0xFFEDEDEB);
   static const placeholderIcon = Color(0xFFAFAFAC);
 
-  static const success = Color(0xFF3D7A57);
+  static const success = Color(0xFF2E7D57);
   static const warning = Color(0xFFA3701F);
 
   /// Rotating tile backgrounds for the company directory — desaturated

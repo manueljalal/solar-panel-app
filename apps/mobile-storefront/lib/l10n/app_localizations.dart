@@ -190,6 +190,48 @@ abstract class AppLocalizations {
   /// **'See all'**
   String get seeAll;
 
+  /// No description provided for @companyNoProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'This company hasn\'t listed any products yet.'**
+  String get companyNoProducts;
+
+  /// No description provided for @categoryAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get categoryAll;
+
+  /// No description provided for @sectionCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get sectionCategories;
+
+  /// No description provided for @categoryNoProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'No products in this category yet.'**
+  String get categoryNoProducts;
+
+  /// No description provided for @learnEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No lessons yet. Check back soon.'**
+  String get learnEmpty;
+
+  /// No description provided for @learnVideoError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t play this video.'**
+  String get learnVideoError;
+
+  /// No description provided for @learnTeaserSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch short video guides'**
+  String get learnTeaserSubtitle;
+
   /// No description provided for @homeLoadError.
   ///
   /// In en, this message translates to:
@@ -231,6 +273,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Own a solar\nbusiness?'**
   String get applyBannerTitle;
+
+  /// No description provided for @applyBannerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'List your products and reach clients across Iraq.'**
+  String get applyBannerSubtitle;
 
   /// No description provided for @apply.
   ///
@@ -1180,6 +1228,30 @@ abstract class AppLocalizations {
   /// **'Not set'**
   String get locationNotSet;
 
+  /// No description provided for @companyImageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Image of your company (logo or storefront)'**
+  String get companyImageLabel;
+
+  /// No description provided for @companyImageAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an image'**
+  String get companyImageAdd;
+
+  /// No description provided for @companyImageChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change image'**
+  String get companyImageChange;
+
+  /// No description provided for @companyImageRequiredError.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an image of your company.'**
+  String get companyImageRequiredError;
+
   /// No description provided for @locationRequiredError.
   ///
   /// In en, this message translates to:
@@ -1395,6 +1467,390 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Inverter'**
   String get categoryInverter;
+
+  /// No description provided for @homeBulkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'B2B\nmarketplace'**
+  String get homeBulkTitle;
+
+  /// No description provided for @homeBulkSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trade directly with other companies — wholesale prices and bulk requests.'**
+  String get homeBulkSubtitle;
+
+  /// No description provided for @homeBulkCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get homeBulkCta;
+
+  /// No description provided for @bulkMarketTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'B2B marketplace'**
+  String get bulkMarketTitle;
+
+  /// No description provided for @bulkTabWholesale.
+  ///
+  /// In en, this message translates to:
+  /// **'Wholesale'**
+  String get bulkTabWholesale;
+
+  /// No description provided for @bulkTabRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get bulkTabRequests;
+
+  /// No description provided for @bulkTabMine.
+  ///
+  /// In en, this message translates to:
+  /// **'My posts'**
+  String get bulkTabMine;
+
+  /// No description provided for @bulkPostFab.
+  ///
+  /// In en, this message translates to:
+  /// **'Post'**
+  String get bulkPostFab;
+
+  /// No description provided for @bulkPostListing.
+  ///
+  /// In en, this message translates to:
+  /// **'Post a wholesale offer'**
+  String get bulkPostListing;
+
+  /// No description provided for @bulkPostListingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Sell in bulk with quantity price tiers'**
+  String get bulkPostListingHint;
+
+  /// No description provided for @bulkPostRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Post a bulk request'**
+  String get bulkPostRequest;
+
+  /// No description provided for @bulkPostRequestHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell suppliers what you need to buy'**
+  String get bulkPostRequestHint;
+
+  /// No description provided for @bulkEmptyListings.
+  ///
+  /// In en, this message translates to:
+  /// **'No wholesale offers yet.'**
+  String get bulkEmptyListings;
+
+  /// No description provided for @bulkEmptyRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'No bulk requests yet.'**
+  String get bulkEmptyRequests;
+
+  /// No description provided for @bulkEmptyMine.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t posted anything yet.'**
+  String get bulkEmptyMine;
+
+  /// No description provided for @bulkLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the marketplace.'**
+  String get bulkLoadError;
+
+  /// No description provided for @bulkCountryAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get bulkCountryAll;
+
+  /// No description provided for @bulkCountryIraq.
+  ///
+  /// In en, this message translates to:
+  /// **'Iraq'**
+  String get bulkCountryIraq;
+
+  /// No description provided for @bulkCountryChina.
+  ///
+  /// In en, this message translates to:
+  /// **'China'**
+  String get bulkCountryChina;
+
+  /// No description provided for @bulkFromPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'From {price} / {unit}'**
+  String bulkFromPrice(String price, String unit);
+
+  /// No description provided for @bulkMinOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Min. order {qty} {unit}'**
+  String bulkMinOrder(String qty, String unit);
+
+  /// No description provided for @bulkQuantityNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'{qty} {unit} needed'**
+  String bulkQuantityNeeded(String qty, String unit);
+
+  /// No description provided for @bulkTargetPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Target {price} / {unit}'**
+  String bulkTargetPrice(String price, String unit);
+
+  /// No description provided for @bulkTierRow.
+  ///
+  /// In en, this message translates to:
+  /// **'{qty}+ {unit}'**
+  String bulkTierRow(String qty, String unit);
+
+  /// No description provided for @bulkPriceTiers.
+  ///
+  /// In en, this message translates to:
+  /// **'Price tiers'**
+  String get bulkPriceTiers;
+
+  /// No description provided for @bulkDeliverTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Deliver to {city}'**
+  String bulkDeliverTo(String city);
+
+  /// No description provided for @bulkContactSupplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get bulkContactSupplier;
+
+  /// No description provided for @bulkCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get bulkCall;
+
+  /// No description provided for @bulkWhatsApp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get bulkWhatsApp;
+
+  /// No description provided for @bulkClosePost.
+  ///
+  /// In en, this message translates to:
+  /// **'Close post'**
+  String get bulkClosePost;
+
+  /// No description provided for @bulkClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get bulkClosed;
+
+  /// No description provided for @bulkYours.
+  ///
+  /// In en, this message translates to:
+  /// **'Yours'**
+  String get bulkYours;
+
+  /// No description provided for @bulkFormTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get bulkFormTitleLabel;
+
+  /// No description provided for @bulkFormTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 450W mono panels'**
+  String get bulkFormTitleHint;
+
+  /// No description provided for @bulkFormDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get bulkFormDescriptionLabel;
+
+  /// No description provided for @bulkFormUnitLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get bulkFormUnitLabel;
+
+  /// No description provided for @bulkFormUnitHint.
+  ///
+  /// In en, this message translates to:
+  /// **'pcs, panels, kg…'**
+  String get bulkFormUnitHint;
+
+  /// No description provided for @bulkTierQtyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'From quantity'**
+  String get bulkTierQtyLabel;
+
+  /// No description provided for @bulkTierPriceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit price (USD)'**
+  String get bulkTierPriceLabel;
+
+  /// No description provided for @bulkAddTier.
+  ///
+  /// In en, this message translates to:
+  /// **'Add price tier'**
+  String get bulkAddTier;
+
+  /// No description provided for @bulkRemoveTier.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get bulkRemoveTier;
+
+  /// No description provided for @bulkQuantityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity needed'**
+  String get bulkQuantityLabel;
+
+  /// No description provided for @bulkTargetPriceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Target price per unit, USD (optional)'**
+  String get bulkTargetPriceLabel;
+
+  /// No description provided for @bulkDeliveryCityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery city (optional)'**
+  String get bulkDeliveryCityLabel;
+
+  /// No description provided for @bulkSubmitPost.
+  ///
+  /// In en, this message translates to:
+  /// **'Post'**
+  String get bulkSubmitPost;
+
+  /// No description provided for @bulkFieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get bulkFieldRequired;
+
+  /// No description provided for @bulkInvalidNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid number'**
+  String get bulkInvalidNumber;
+
+  /// No description provided for @bulkPosted.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted'**
+  String get bulkPosted;
+
+  /// No description provided for @bulkPostFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t post. Try again.'**
+  String get bulkPostFailed;
+
+  /// No description provided for @bulkDuplicateTier.
+  ///
+  /// In en, this message translates to:
+  /// **'Each price tier needs a different quantity.'**
+  String get bulkDuplicateTier;
+
+  /// No description provided for @applyCountryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Company country'**
+  String get applyCountryLabel;
+
+  /// No description provided for @signInIdentifierLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Username or email'**
+  String get signInIdentifierLabel;
+
+  /// No description provided for @bulkOpenMarket.
+  ///
+  /// In en, this message translates to:
+  /// **'Open B2B marketplace'**
+  String get bulkOpenMarket;
+
+  /// No description provided for @bulkSortNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Newest'**
+  String get bulkSortNewest;
+
+  /// No description provided for @bulkSortPriceLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: low to high'**
+  String get bulkSortPriceLow;
+
+  /// No description provided for @bulkSortQtyHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity: high to low'**
+  String get bulkSortQtyHigh;
+
+  /// No description provided for @bulkNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches these filters.'**
+  String get bulkNoResults;
+
+  /// No description provided for @bulkFormCategoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category (optional)'**
+  String get bulkFormCategoryLabel;
+
+  /// No description provided for @bulkFormCategoryNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No category'**
+  String get bulkFormCategoryNone;
+
+  /// No description provided for @bulkLanguagesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write in any language you like — buyers see it in theirs when available.'**
+  String get bulkLanguagesHint;
+
+  /// No description provided for @bulkFormPhotoLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo (optional)'**
+  String get bulkFormPhotoLabel;
+
+  /// No description provided for @bulkFormPhotoAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a photo'**
+  String get bulkFormPhotoAdd;
+
+  /// No description provided for @bulkFormPhotoChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change photo'**
+  String get bulkFormPhotoChange;
+
+  /// No description provided for @bulkTitleNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a title in at least one language.'**
+  String get bulkTitleNeeded;
 }
 
 class _AppLocalizationsDelegate

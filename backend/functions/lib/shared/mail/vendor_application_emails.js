@@ -13,8 +13,8 @@ async function sendVendorApprovedEmail(to, businessName, passwordSetupToken) {
         subject: "Your Solary vendor application has been approved",
         text: `Hello ${businessName},\n\n` +
             `Your vendor application for Solary has been reviewed and approved. ` +
-            `Set a password for your vendor account to get started — you can also still sign in with your ` +
-            `phone number at any time.\n\n` +
+            `Set your password to finish setting up your vendor account. Afterwards you can sign in ` +
+            `on the web portal or in the Solary app with your username and this password.\n\n` +
             `Set your password: ${setupUrl}\n\n` +
             `This link expires in 24 hours.\n\n` +
             `If you have any questions, reply to this email and we'll help.\n\n` +
@@ -24,8 +24,8 @@ async function sendVendorApprovedEmail(to, businessName, passwordSetupToken) {
             heading: "Your application has been approved",
             bodyHtml: `<p style="margin:0 0 16px;">Hello ${escapeHtml(businessName)},</p>` +
                 `<p style="margin:0 0 16px;">Your vendor application for Solary has been reviewed and approved. ` +
-                `Set a password for your vendor account to get started — you can also still sign in with your ` +
-                `phone number at any time.</p>`,
+                `Set your password to finish setting up your vendor account. Afterwards you can sign in on the ` +
+                `web portal or in the Solary app with your username and this password.</p>`,
             buttonLabel: "Set your password",
             buttonUrl: setupUrl,
             closingHtml: `<p style="margin:16px 0 0;font-size:13px;color:#5b6863;">This link expires in 24 hours.</p>` +

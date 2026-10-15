@@ -18,3 +18,5 @@ __exportStar(require("./create_product"), exports);
 __exportStar(require("./update_product"), exports);
 __exportStar(require("./delete_product"), exports);
 __exportStar(require("./submit_application"), exports);
+__exportStar(require("./upload_image"), exports);
+__exportStar(require("./get_my_application"), exports);

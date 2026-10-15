@@ -16,7 +16,10 @@ class FilterChipRow extends StatelessWidget {
       children: [
         const Icon(Icons.sort, size: 16, color: AppColors.ink600),
         const SizedBox(width: 4),
-        Text(l10n.bestMatch, style: AppTypography.bodyMuted.copyWith(fontWeight: FontWeight.w600)),
+        Text(
+          l10n.bestMatch,
+          style: AppTypography.bodyMuted.copyWith(fontWeight: FontWeight.w600),
+        ),
       ],
     );
   }

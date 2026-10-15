@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../shared/widgets/category_tabs.dart';
 import '../../../l10n/app_localizations.dart';
 import '../data/home_repository.dart';
+import '../domain/home_banner.dart';
+import '../domain/home_category.dart';
 import '../domain/home_company.dart';
 import '../domain/home_product.dart';
 import 'widgets/banner_carousel.dart';
@@ -11,7 +14,7 @@ import 'widgets/featured_masonry.dart';
 import 'widgets/filter_chip_row.dart';
 import 'widgets/home_app_bar.dart';
 import 'widgets/home_search_field.dart';
-import 'widgets/product_row.dart';
+import 'widgets/product_tile.dart';
 import 'widgets/skeletons.dart';
 import 'widgets/section_header.dart';
 
@@ -36,7 +39,8 @@ import 'widgets/section_header.dart';
 /// earlier iterations by accumulating private widget classes here instead
 /// of splitting them out as they were added.
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, HomeRepository? repository}) : _repository = repository;
+  const HomeScreen({super.key, HomeRepository? repository})
+    : _repository = repository;
 
   final HomeRepository? _repository;
 
@@ -45,11 +49,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final HomeRepository _repository = widget._repository ?? HomeRepository();
+  late final HomeRepository _repository =
+      widget._repository ?? HomeRepository();
 
   // null = still loading. Never pre-filled with sample data.
   List<HomeCompany>? _companies;
   List<HomeProduct>? _products;
+  List<HomeBanner> _banners = const [];
+  List<HomeCategory> _categories = const [];
+  String? _selectedCategory; // null = all
   bool _companiesFailed = false;
   bool _productsFailed = false;
 
@@ -68,16 +76,53 @@ class _HomeScreenState extends State<HomeScreen> {
       _companiesFailed = false;
       _productsFailed = false;
     });
-    _repository.fetchCompanies().then((value) {
-      if (mounted) setState(() => _companies = value);
-    }, onError: (_) {
-      if (mounted) setState(() => _companiesFailed = true);
+    _repository
+        .fetchCompanies(refresh: true)
+        .then(
+          (value) {
+            if (mounted) setState(() => _companies = value);
+          },
+          onError: (_) {
+            if (mounted) setState(() => _companiesFailed = true);
+          },
+        );
+    // No banners (or a failed read) simply means no carousel — never a
+    // hardcoded stand-in.
+    _repository.fetchBanners().then((value) {
+      if (mounted) setState(() => _banners = value);
+    }, onError: (_) {});
+    // Categories are a nicety — if they fail to load the row just hides.
+    _repository.fetchCategories().then((value) {
+      if (mounted) setState(() => _categories = value);
+    }, onError: (_) {});
+    _loadProducts();
+  }
+
+  void _loadProducts() {
+    final requested = _selectedCategory;
+    setState(() {
+      _products = null;
+      _productsFailed = false;
     });
-    _repository.fetchProducts().then((value) {
-      if (mounted) setState(() => _products = value);
-    }, onError: (_) {
-      if (mounted) setState(() => _productsFailed = true);
-    });
+    _repository
+        .fetchProducts(categoryId: requested)
+        .then(
+          (value) {
+            // Ignore a stale response if the user switched category meanwhile.
+            if (mounted && requested == _selectedCategory)
+              setState(() => _products = value);
+          },
+          onError: (_) {
+            if (mounted && requested == _selectedCategory)
+              setState(() => _productsFailed = true);
+          },
+        );
+  }
+
+  void _selectCategory(String? id) {
+    if (id == _selectedCategory) return;
+    _selectedCategory = id;
+    _loadProducts();
   }
 
   Widget _error(AppLocalizations l10n) {
@@ -85,7 +130,9 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
       child: Row(
         children: [
-          Expanded(child: Text(l10n.homeLoadError, style: AppTypography.bodyMuted)),
+          Expanded(
+            child: Text(l10n.homeLoadError, style: AppTypography.bodyMuted),
+          ),
           TextButton(onPressed: _loadLiveData, child: Text(l10n.retry)),
         ],
       ),
@@ -109,7 +156,12 @@ class _HomeScreenState extends State<HomeScreen> {
         child: CustomScrollView(
           slivers: [
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.md, AppSpacing.lg, 0),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.lg,
+                AppSpacing.md,
+                AppSpacing.lg,
+                0,
+              ),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                   const HomeAppBar(),
@@ -118,10 +170,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 ]),
               ),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.xl)),
-            const SliverToBoxAdapter(child: BannerCarousel()),
+            if (_banners.isNotEmpty) ...[
+              const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.xl)),
+              // Keyed by the banner ids so an updated set rebuilds the pager.
+              SliverToBoxAdapter(
+                child: BannerCarousel(
+                  key: ValueKey(_banners.map((b) => b.id).join(',')),
+                  banners: _banners,
+                ),
+              ),
+            ],
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.xl, AppSpacing.lg, 0),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.lg,
+                AppSpacing.xl,
+                AppSpacing.lg,
+                0,
+              ),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                   if (!(_companies?.isEmpty ?? false)) ...[
@@ -134,10 +199,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: AppSpacing.md),
                   const FeaturedMasonry(),
                   const SizedBox(height: AppSpacing.xl),
+                  if (_categories.isNotEmpty) ...[
+                    CategoryTabs(
+                      categories: _categories,
+                      selectedId: _selectedCategory,
+                      onSelected: _selectCategory,
+                    ),
+                    const SizedBox(height: AppSpacing.lg),
+                  ],
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(l10n.sectionBestSellers, style: AppTypography.sectionTitle),
+                      Text(
+                        l10n.sectionBestSellers,
+                        style: AppTypography.sectionTitle,
+                      ),
                       const FilterChipRow(),
                     ],
                   ),
@@ -153,16 +229,40 @@ class _HomeScreenState extends State<HomeScreen> {
             else if (_products == null)
               const SliverPadding(
                 padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-                sliver: SliverToBoxAdapter(child: ProductListSkeleton()),
+                sliver: SliverToBoxAdapter(child: ProductGridSkeleton()),
+              ),
+            if (_products != null && products.isEmpty && !_productsFailed)
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+                sliver: SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.lg,
+                    ),
+                    child: Text(
+                      l10n.categoryNoProducts,
+                      style: AppTypography.bodyMuted,
+                    ),
+                  ),
+                ),
               ),
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, i) => Padding(
-                    padding: const EdgeInsets.only(bottom: AppSpacing.md),
-                    child: ProductRow(product: products[i]),
+              sliver: SliverGrid(
+                // Square photo (full tile width) + a fixed text block.
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: AppSpacing.lg,
+                  crossAxisSpacing: AppSpacing.md,
+                  mainAxisExtent: ProductTile.extentFor(
+                    (MediaQuery.of(context).size.width -
+                            AppSpacing.lg * 2 -
+                            AppSpacing.md) /
+                        2,
                   ),
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (context, i) => ProductTile(product: products[i]),
                   childCount: products.length,
                 ),
               ),

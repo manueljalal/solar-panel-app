@@ -55,6 +55,28 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get seeAll => 'هەمووی ببینە';
 
   @override
+  String get companyNoProducts =>
+      'ئەم کۆمپانیایە هێشتا هیچ بەرهەمێکی زیاد نەکردووە.';
+
+  @override
+  String get categoryAll => 'هەموو';
+
+  @override
+  String get sectionCategories => 'پۆلەکان';
+
+  @override
+  String get categoryNoProducts => 'هێشتا هیچ بەرهەمێک لەم پۆلەدا نییە.';
+
+  @override
+  String get learnEmpty => 'هێشتا هیچ وانەیەک نییە. بە زوویی بگەڕێوە.';
+
+  @override
+  String get learnVideoError => 'نەتوانرا ئەم ڤیدیۆیە لێبدرێت.';
+
+  @override
+  String get learnTeaserSubtitle => 'ڕێنمایی ڤیدیۆیی کورت ببینە';
+
+  @override
   String get homeLoadError =>
       'نەتوانرا ناوەڕۆک باربکرێت. پەیوەندییەکەت بپشکنە.';
 
@@ -76,6 +98,10 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get applyBannerTitle => 'کارگەی وزەی خۆر\nهەیە؟';
+
+  @override
+  String get applyBannerSubtitle =>
+      'بەرهەمەکانت پیشان بدە و بگە بە کڕیار لە سەرانسەری عێراق.';
 
   @override
   String get apply => 'داواکاری بنێرە';
@@ -615,6 +641,18 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get locationNotSet => 'دیارینەکراوە';
 
   @override
+  String get companyImageLabel => 'وێنەی کۆمپانیاکەت (لۆگۆ یان دەرگای دووکان)';
+
+  @override
+  String get companyImageAdd => 'وێنەیەک هەڵبژێرە';
+
+  @override
+  String get companyImageChange => 'گۆڕینی وێنە';
+
+  @override
+  String get companyImageRequiredError => 'وێنەیەکی کۆمپانیاکەت زیاد بکە.';
+
+  @override
   String get locationRequiredError => 'شوێنی کارگەکەت لەسەر نەخشە دیاری بکە.';
 
   @override
@@ -730,4 +768,211 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get categoryInverter => 'عاکس';
+
+  @override
+  String get homeBulkTitle => 'بازاڕی کار\nB2B';
+
+  @override
+  String get homeBulkSubtitle =>
+      'راستەوخۆ لەگەڵ کۆمپانیاکانی تر بازرگانی بکە — نرخی بە کۆمەڵ و داواکاری.';
+
+  @override
+  String get homeBulkCta => 'بیکەرەوە';
+
+  @override
+  String get bulkMarketTitle => 'بازاڕی کار B2B';
+
+  @override
+  String get bulkTabWholesale => 'بە کۆمەڵ';
+
+  @override
+  String get bulkTabRequests => 'داواکارییەکان';
+
+  @override
+  String get bulkTabMine => 'بڵاوکراوەکانم';
+
+  @override
+  String get bulkPostFab => 'بڵاوکردنەوە';
+
+  @override
+  String get bulkPostListing => 'پێشکەشکردنی نرخی بە کۆمەڵ';
+
+  @override
+  String get bulkPostListingHint => 'بە کۆمەڵ بفرۆشە بە نرخی پلەبەند';
+
+  @override
+  String get bulkPostRequest => 'بڵاوکردنەوەی داواکاری کڕین';
+
+  @override
+  String get bulkPostRequestHint => 'بە دابینکەران بڵێ چیت دەوێت';
+
+  @override
+  String get bulkEmptyListings => 'هێشتا هیچ پێشکەشکردنێکی بە کۆمەڵ نییە.';
+
+  @override
+  String get bulkEmptyRequests => 'هێشتا هیچ داواکارییەکی بە کۆمەڵ نییە.';
+
+  @override
+  String get bulkEmptyMine => 'هێشتا هیچت بڵاو نەکردووەتەوە.';
+
+  @override
+  String get bulkLoadError => 'نەتوانرا بازاڕەکە باربکرێت.';
+
+  @override
+  String get bulkCountryAll => 'هەموو';
+
+  @override
+  String get bulkCountryIraq => 'عێراق';
+
+  @override
+  String get bulkCountryChina => 'چین';
+
+  @override
+  String bulkFromPrice(String price, String unit) {
+    return 'لە $price / $unit';
+  }
+
+  @override
+  String bulkMinOrder(String qty, String unit) {
+    return 'کەمترین داواکاری $qty $unit';
+  }
+
+  @override
+  String bulkQuantityNeeded(String qty, String unit) {
+    return 'پێویستە $qty $unit';
+  }
+
+  @override
+  String bulkTargetPrice(String price, String unit) {
+    return 'نرخی مەبەست $price / $unit';
+  }
+
+  @override
+  String bulkTierRow(String qty, String unit) {
+    return '$qty+ $unit';
+  }
+
+  @override
+  String get bulkPriceTiers => 'پلەکانی نرخ';
+
+  @override
+  String bulkDeliverTo(String city) {
+    return 'گەیاندن بۆ $city';
+  }
+
+  @override
+  String get bulkContactSupplier => 'پەیوەندی';
+
+  @override
+  String get bulkCall => 'پەیوەندی';
+
+  @override
+  String get bulkWhatsApp => 'واتسئەپ';
+
+  @override
+  String get bulkClosePost => 'داخستنی بڵاوکراوە';
+
+  @override
+  String get bulkClosed => 'داخراوە';
+
+  @override
+  String get bulkYours => 'هی تۆ';
+
+  @override
+  String get bulkFormTitleLabel => 'ناونیشان';
+
+  @override
+  String get bulkFormTitleHint => 'بۆ نموونە پانێلی ٤٥٠ وات';
+
+  @override
+  String get bulkFormDescriptionLabel => 'وردەکاری';
+
+  @override
+  String get bulkFormUnitLabel => 'یەکە';
+
+  @override
+  String get bulkFormUnitHint => 'دانە، پانێل، کگ…';
+
+  @override
+  String get bulkTierQtyLabel => 'لە برێکەوە';
+
+  @override
+  String get bulkTierPriceLabel => 'نرخی یەکە (دۆلار)';
+
+  @override
+  String get bulkAddTier => 'زیادکردنی پلەی نرخ';
+
+  @override
+  String get bulkRemoveTier => 'لابردن';
+
+  @override
+  String get bulkQuantityLabel => 'برەی پێویست';
+
+  @override
+  String get bulkTargetPriceLabel =>
+      'نرخی مەبەست بۆ هەر یەکە، دۆلار (دڵخوازانە)';
+
+  @override
+  String get bulkDeliveryCityLabel => 'شاری گەیاندن (دڵخوازانە)';
+
+  @override
+  String get bulkSubmitPost => 'بڵاوکردنەوە';
+
+  @override
+  String get bulkFieldRequired => 'پێویستە';
+
+  @override
+  String get bulkInvalidNumber => 'ژمارەیەکی دروست بنووسە';
+
+  @override
+  String get bulkPosted => 'بڵاوکرایەوە';
+
+  @override
+  String get bulkPostFailed => 'نەتوانرا بڵاوبکرێتەوە. دووبارە هەوڵبدەرەوە.';
+
+  @override
+  String get bulkDuplicateTier => 'هەر پلەیەک برێکی جیاوازی دەوێت.';
+
+  @override
+  String get applyCountryLabel => 'وڵاتی کۆمپانیا';
+
+  @override
+  String get signInIdentifierLabel => 'ناوی بەکارهێنەر یان ئیمەیڵ';
+
+  @override
+  String get bulkOpenMarket => 'بازاڕی کار B2B بکەرەوە';
+
+  @override
+  String get bulkSortNewest => 'نوێترین';
+
+  @override
+  String get bulkSortPriceLow => 'نرخ: لە کەمەوە';
+
+  @override
+  String get bulkSortQtyHigh => 'بڕ: لە زۆرەوە';
+
+  @override
+  String get bulkNoResults => 'هیچ شتێک لەگەڵ ئەم فلتەرانە ناگونجێت.';
+
+  @override
+  String get bulkFormCategoryLabel => 'پۆل (دڵخوازانە)';
+
+  @override
+  String get bulkFormCategoryNone => 'بێ پۆل';
+
+  @override
+  String get bulkLanguagesHint =>
+      'بە هەر زمانێک بنووسە — کڕیار بە زمانی خۆی دەیبینێت ئەگەر بەردەست بێت.';
+
+  @override
+  String get bulkFormPhotoLabel => 'وێنە (دڵخوازانە)';
+
+  @override
+  String get bulkFormPhotoAdd => 'وێنەیەک زیاد بکە';
+
+  @override
+  String get bulkFormPhotoChange => 'گۆڕینی وێنە';
+
+  @override
+  String get bulkTitleNeeded => 'ناونیشانێک بە لانی کەم بە یەک زمان زیاد بکە.';
 }

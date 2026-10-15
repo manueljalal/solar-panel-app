@@ -16,6 +16,11 @@ export const bootstrapSuperAdmin = onCall({ region: "us-central1" }, async (requ
   if (!request.auth) {
     throw new HttpsError("unauthenticated", "Sign in required.");
   }
+  // Guests get a silent anonymous account — the first super_admin must be
+  // a real signUp account (username + password + WhatsApp-verified phone).
+  if (request.auth.token.firebase?.sign_in_provider === "anonymous") {
+    throw new HttpsError("permission-denied", "Create an account first (sign up), then bootstrap.");
+  }
 
   const bootstrapRef = db.collection("system").doc("bootstrap");
 

@@ -18,7 +18,10 @@ class SectionHeader extends StatelessWidget {
         Text(title, style: AppTypography.sectionTitle),
         TextButton(
           onPressed: () {},
-          style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero),
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+            minimumSize: Size.zero,
+          ),
           child: Text(l10n.seeAll, style: AppTypography.link),
         ),
       ],

@@ -1,0 +1,26 @@
+rules_version = '2';
+
+// Deny-by-default. Image uploads go through the vendor-uploadImage callable
+// (Admin SDK, bypasses these rules). The ONE direct client upload allowed is
+// a Learn video from a super_admin: MP4 only, 50 MB max, an exact
+// learnVideos/<uuid>.mp4 name, create-only (no overwrite/delete from the
+// client). The admin-createLearnItem callable then re-verifies the file
+// (size, type, header) before it's ever published. Files are served through
+// unguessable download-token URLs, so there is no client read rule.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /learnVideos/{file} {
+      allow create: if request.auth != null
+                    && request.auth.token.get('role', '') == 'super_admin'
+                    && file.matches('[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}[.]mp4')
+                    && request.resource.size > 0
+                    && request.resource.size <= 50 * 1024 * 1024
+                    && request.resource.contentType == 'video/mp4';
+      allow read, update, delete: if false;
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

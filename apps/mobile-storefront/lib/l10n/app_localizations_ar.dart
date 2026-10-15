@@ -54,6 +54,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get seeAll => 'عرض الكل';
 
   @override
+  String get companyNoProducts => 'لم تضف هذه الشركة أي منتجات بعد.';
+
+  @override
+  String get categoryAll => 'الكل';
+
+  @override
+  String get sectionCategories => 'الفئات';
+
+  @override
+  String get categoryNoProducts => 'لا توجد منتجات في هذه الفئة بعد.';
+
+  @override
+  String get learnEmpty => 'لا توجد دروس بعد. عد قريباً.';
+
+  @override
+  String get learnVideoError => 'تعذّر تشغيل هذا الفيديو.';
+
+  @override
+  String get learnTeaserSubtitle => 'شاهد أدلة فيديو قصيرة';
+
+  @override
   String get homeLoadError => 'تعذّر تحميل المحتوى. تحقق من اتصالك.';
 
   @override
@@ -73,6 +94,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get applyBannerTitle => 'هل تملك شركة\nطاقة شمسية؟';
+
+  @override
+  String get applyBannerSubtitle =>
+      'اعرض منتجاتك ووصل إلى عملاء في جميع أنحاء العراق.';
 
   @override
   String get apply => 'قدّم الآن';
@@ -612,6 +637,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get locationNotSet => 'غير محدد';
 
   @override
+  String get companyImageLabel => 'صورة شركتك (الشعار أو الواجهة)';
+
+  @override
+  String get companyImageAdd => 'اختر صورة';
+
+  @override
+  String get companyImageChange => 'تغيير الصورة';
+
+  @override
+  String get companyImageRequiredError => 'أضف صورة لشركتك.';
+
+  @override
   String get locationRequiredError => 'حدّد موقع شركتك على الخريطة.';
 
   @override
@@ -724,4 +761,210 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get categoryInverter => 'عاكس';
+
+  @override
+  String get homeBulkTitle => 'سوق الأعمال\nB2B';
+
+  @override
+  String get homeBulkSubtitle =>
+      'تاجر مباشرة مع الشركات الأخرى — أسعار الجملة وطلبات الكميات.';
+
+  @override
+  String get homeBulkCta => 'افتح';
+
+  @override
+  String get bulkMarketTitle => 'سوق الأعمال B2B';
+
+  @override
+  String get bulkTabWholesale => 'الجملة';
+
+  @override
+  String get bulkTabRequests => 'الطلبات';
+
+  @override
+  String get bulkTabMine => 'منشوراتي';
+
+  @override
+  String get bulkPostFab => 'انشر';
+
+  @override
+  String get bulkPostListing => 'انشر عرض جملة';
+
+  @override
+  String get bulkPostListingHint => 'بِع بالجملة بأسعار حسب الكمية';
+
+  @override
+  String get bulkPostRequest => 'انشر طلب شراء بالجملة';
+
+  @override
+  String get bulkPostRequestHint => 'أخبر الموردين بما تحتاج شراءه';
+
+  @override
+  String get bulkEmptyListings => 'لا توجد عروض جملة بعد.';
+
+  @override
+  String get bulkEmptyRequests => 'لا توجد طلبات جملة بعد.';
+
+  @override
+  String get bulkEmptyMine => 'لم تنشر أي شيء بعد.';
+
+  @override
+  String get bulkLoadError => 'تعذّر تحميل السوق.';
+
+  @override
+  String get bulkCountryAll => 'الكل';
+
+  @override
+  String get bulkCountryIraq => 'العراق';
+
+  @override
+  String get bulkCountryChina => 'الصين';
+
+  @override
+  String bulkFromPrice(String price, String unit) {
+    return 'ابتداءً من $price / $unit';
+  }
+
+  @override
+  String bulkMinOrder(String qty, String unit) {
+    return 'الحد الأدنى $qty $unit';
+  }
+
+  @override
+  String bulkQuantityNeeded(String qty, String unit) {
+    return 'مطلوب $qty $unit';
+  }
+
+  @override
+  String bulkTargetPrice(String price, String unit) {
+    return 'السعر المستهدف $price / $unit';
+  }
+
+  @override
+  String bulkTierRow(String qty, String unit) {
+    return '$qty+ $unit';
+  }
+
+  @override
+  String get bulkPriceTiers => 'شرائح الأسعار';
+
+  @override
+  String bulkDeliverTo(String city) {
+    return 'التسليم إلى $city';
+  }
+
+  @override
+  String get bulkContactSupplier => 'تواصل';
+
+  @override
+  String get bulkCall => 'اتصال';
+
+  @override
+  String get bulkWhatsApp => 'واتساب';
+
+  @override
+  String get bulkClosePost => 'إغلاق المنشور';
+
+  @override
+  String get bulkClosed => 'مغلق';
+
+  @override
+  String get bulkYours => 'لك';
+
+  @override
+  String get bulkFormTitleLabel => 'العنوان';
+
+  @override
+  String get bulkFormTitleHint => 'مثال: ألواح 450 واط';
+
+  @override
+  String get bulkFormDescriptionLabel => 'التفاصيل';
+
+  @override
+  String get bulkFormUnitLabel => 'الوحدة';
+
+  @override
+  String get bulkFormUnitHint => 'قطعة، لوح، كغ…';
+
+  @override
+  String get bulkTierQtyLabel => 'من كمية';
+
+  @override
+  String get bulkTierPriceLabel => 'سعر الوحدة (دولار)';
+
+  @override
+  String get bulkAddTier => 'إضافة شريحة سعر';
+
+  @override
+  String get bulkRemoveTier => 'حذف';
+
+  @override
+  String get bulkQuantityLabel => 'الكمية المطلوبة';
+
+  @override
+  String get bulkTargetPriceLabel => 'السعر المستهدف للوحدة بالدولار (اختياري)';
+
+  @override
+  String get bulkDeliveryCityLabel => 'مدينة التسليم (اختياري)';
+
+  @override
+  String get bulkSubmitPost => 'نشر';
+
+  @override
+  String get bulkFieldRequired => 'مطلوب';
+
+  @override
+  String get bulkInvalidNumber => 'أدخل رقماً صحيحاً';
+
+  @override
+  String get bulkPosted => 'تم النشر';
+
+  @override
+  String get bulkPostFailed => 'تعذّر النشر. حاول مجدداً.';
+
+  @override
+  String get bulkDuplicateTier => 'كل شريحة تحتاج كمية مختلفة.';
+
+  @override
+  String get applyCountryLabel => 'بلد الشركة';
+
+  @override
+  String get signInIdentifierLabel => 'اسم المستخدم أو البريد الإلكتروني';
+
+  @override
+  String get bulkOpenMarket => 'افتح سوق الأعمال B2B';
+
+  @override
+  String get bulkSortNewest => 'الأحدث';
+
+  @override
+  String get bulkSortPriceLow => 'السعر: من الأقل';
+
+  @override
+  String get bulkSortQtyHigh => 'الكمية: من الأعلى';
+
+  @override
+  String get bulkNoResults => 'لا توجد نتائج مطابقة.';
+
+  @override
+  String get bulkFormCategoryLabel => 'الفئة (اختياري)';
+
+  @override
+  String get bulkFormCategoryNone => 'بدون فئة';
+
+  @override
+  String get bulkLanguagesHint =>
+      'اكتب بأي لغة تريد — يراه المشترون بلغتهم عند توفرها.';
+
+  @override
+  String get bulkFormPhotoLabel => 'صورة (اختياري)';
+
+  @override
+  String get bulkFormPhotoAdd => 'أضف صورة';
+
+  @override
+  String get bulkFormPhotoChange => 'تغيير الصورة';
+
+  @override
+  String get bulkTitleNeeded => 'أضف عنواناً بلغة واحدة على الأقل.';
 }

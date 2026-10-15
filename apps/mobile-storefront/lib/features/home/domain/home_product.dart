@@ -14,6 +14,9 @@ class HomeProduct {
     this.warranty,
     this.description,
     this.inStock = true,
+    this.titles = const {},
+    this.descriptions = const {},
+    this.warranties = const {},
   });
 
   final String imageUrl;
@@ -31,11 +34,43 @@ class HomeProduct {
   final String? description;
   final bool inStock;
 
+  /// Per-language text keyed by language code ('en', 'ar', 'ku') — see the
+  /// vendor portal's trilingual product form. Empty on legacy products.
+  final Map<String, String> titles;
+  final Map<String, String> descriptions;
+  final Map<String, String> warranties;
+
+  // The app's Sorani Kurdish locale is 'ckb'; data is stored under 'ku'.
+  static String _key(String languageCode) =>
+      languageCode == 'ckb' ? 'ku' : languageCode;
+
+  String titleFor(String languageCode) => _pick(titles, languageCode) ?? title;
+  String? descriptionFor(String languageCode) =>
+      _pick(descriptions, languageCode) ?? description;
+  String? warrantyFor(String languageCode) =>
+      _pick(warranties, languageCode) ?? warranty;
+
+  static String? _pick(Map<String, String> m, String languageCode) {
+    final v = m[_key(languageCode)];
+    return (v == null || v.isEmpty) ? null : v;
+  }
+
+  static Map<String, String> _i18n(Object? raw) {
+    if (raw is! Map) return const {};
+    return {
+      for (final k in const ['ku', 'ar', 'en'])
+        if (raw[k] is String) k: raw[k] as String,
+    };
+  }
+
   /// Builds a HomeProduct from a Firestore `products` document. Firestore
   /// stores `price` as a number and the seller as `vendorId` (a reference,
   /// not a display name) — [vendorName] is resolved by the repository via
   /// a join against `vendors` before this is called.
-  factory HomeProduct.fromFirestore(Map<String, dynamic> data, {required String vendorName}) {
+  factory HomeProduct.fromFirestore(
+    Map<String, dynamic> data, {
+    required String vendorName,
+  }) {
     final price = (data['price'] as num?)?.toDouble() ?? 0;
     final currency = data['currency'] as String? ?? 'USD';
     final symbol = currency == 'USD' ? '\$' : '$currency ';
@@ -45,12 +80,16 @@ class HomeProduct {
       brand: data['brand'] as String? ?? '',
       title: data['name'] as String? ?? 'Untitled product',
       vendor: vendorName,
-      price: '$symbol${price.toStringAsFixed(price.truncateToDouble() == price ? 0 : 2)}',
+      price:
+          '$symbol${price.toStringAsFixed(price.truncateToDouble() == price ? 0 : 2)}',
       rating: (data['rating'] as num?)?.toDouble() ?? 0,
       sold: (data['sold'] as num?)?.toInt() ?? 0,
       warranty: data['warranty'] as String?,
       description: data['description'] as String?,
       inStock: data['inStock'] as bool? ?? true,
+      titles: _i18n(data['nameI18n']),
+      descriptions: _i18n(data['descriptionI18n']),
+      warranties: _i18n(data['warrantyI18n']),
     );
   }
 }

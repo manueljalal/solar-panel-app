@@ -97,7 +97,7 @@ class _WattageCalculatorScreenState extends State<WattageCalculatorScreen> {
               child: ElevatedButton(
                 onPressed: () => Navigator.of(context).maybePop(),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.accent,
+                  backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
                   elevation: 0,
                   padding: const EdgeInsets.symmetric(vertical: 14),
@@ -183,12 +183,12 @@ class _RoundButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.surfaceMuted,
+      color: AppColors.primarySoft,
       shape: const CircleBorder(),
       child: InkWell(
         customBorder: const CircleBorder(),
         onTap: onTap,
-        child: SizedBox(width: 40, height: 40, child: Icon(icon, color: AppColors.ink900)),
+        child: SizedBox(width: 40, height: 40, child: Icon(icon, color: AppColors.primary)),
       ),
     );
   }

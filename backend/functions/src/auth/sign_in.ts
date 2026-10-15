@@ -1,7 +1,9 @@
 import { onCall, HttpsError } from "firebase-functions/v2/https";
+import { logger } from "firebase-functions";
 import { FieldValue } from "firebase-admin/firestore";
 import { db, auth } from "../shared/firebase";
 import { verifyPassword, normalizeUsername } from "../shared/auth/password";
+import { resolveAccountUids } from "../shared/auth/resolve_account";
 
 interface SignInInput {
   username: string;
@@ -25,29 +27,47 @@ export const signIn = onCall<SignInInput>({ region: "us-central1" }, async (requ
   if (!username || !password) {
     throw new HttpsError("invalid-argument", "username and password are required.");
   }
-
-  const usernameSnap = await db.collection("usernames").doc(username).get();
-  if (!usernameSnap.exists) {
-    // Same message as a wrong password — don't reveal whether the
-    // username exists.
-    throw new HttpsError("permission-denied", "Incorrect username or password.");
+  // Required, not optional: an omitted deviceId used to skip the step-up
+  // check below entirely, turning "unknown device needs OTP" into
+  // "just don't send a device id".
+  if (!deviceId) {
+    throw new HttpsError("invalid-argument", "deviceId is required.");
   }
-  const uid = usernameSnap.data()!.uid as string;
 
-  const userRef = db.collection("users").doc(uid);
-  const userSnap = await userRef.get();
-  if (!userSnap.exists) {
-    throw new HttpsError("permission-denied", "Incorrect username or password.");
+  // `username` may also be the vendor's application email — see
+  // resolveAccountUids. Several accounts can share one email (repeat
+  // applications), so the password picks the right one.
+  const uids = await resolveAccountUids(username);
+  let uid: string | null = null;
+  let userRef = db.collection("users").doc("_");
+  let user: FirebaseFirestore.DocumentData | null = null;
+  for (const candidate of uids) {
+    const ref = db.collection("users").doc(candidate);
+    const snap = await ref.get();
+    const data = snap.data();
+    if (!snap.exists || !data || typeof data.passwordHash !== "string") continue;
+    if (await verifyPassword(password, data.passwordHash)) {
+      uid = candidate;
+      userRef = ref;
+      user = data;
+      break;
+    }
   }
-  const user = userSnap.data()!;
-
-  const passwordOk = await verifyPassword(password, user.passwordHash as string);
-  if (!passwordOk) {
+  if (!uid || !user) {
+    // Reason goes to the server log only — the client always gets the same
+    // generic message so sign-in can't be used to probe for accounts.
+    logger.warn("signIn rejected", {
+      identifierKind: username.includes("@") ? "email" : "username",
+      candidates: uids.length,
+      reason: uids.length === 0 ? "no-matching-account" : "password-mismatch",
+    });
+    // Same message whether the account is unknown or the password is
+    // wrong — don't reveal which.
     throw new HttpsError("permission-denied", "Incorrect username or password.");
   }
 
   const knownDeviceIds = (user.knownDeviceIds ?? []) as string[];
-  if (deviceId && !knownDeviceIds.includes(deviceId)) {
+  if (!knownDeviceIds.includes(deviceId)) {
     // Correct credentials, unrecognized device — require a fresh phone
     // OTP (via requestPhoneOtp + signInWithOtpStepUp) before minting a
     // token. No token is issued here.

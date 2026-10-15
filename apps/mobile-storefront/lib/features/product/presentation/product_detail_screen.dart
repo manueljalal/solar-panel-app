@@ -22,6 +22,9 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final lang = Localizations.localeOf(context).languageCode;
+    final warranty = product.warrantyFor(lang);
+    final description = product.descriptionFor(lang);
     return Scaffold(
       backgroundColor: AppColors.surfaceSunken,
       body: SafeArea(
@@ -44,7 +47,7 @@ class ProductDetailScreen extends StatelessWidget {
                         children: [
                           Text('${product.spec} · ${product.brand}', style: AppTypography.eyebrow),
                           const SizedBox(height: 4),
-                          Text(product.title, style: AppTypography.h1.copyWith(fontSize: 22)),
+                          Text(product.titleFor(lang), style: AppTypography.h1.copyWith(fontSize: 22)),
                           const SizedBox(height: 8),
                           ProductVendorRow(vendor: product.vendor, rating: product.rating, sold: product.sold),
                           const SizedBox(height: AppSpacing.lg),
@@ -70,7 +73,7 @@ class ProductDetailScreen extends StatelessWidget {
                             child: ProductSpecRow(
                               specs: [
                                 ProductSpec(product.spec, l10n.specPower),
-                                if (product.warranty != null) ProductSpec(product.warranty!, l10n.specWarranty),
+                                if (warranty != null) ProductSpec(warranty, l10n.specWarranty),
                                 ProductSpec(product.brand, l10n.specBrand),
                               ],
                             ),
@@ -79,7 +82,7 @@ class ProductDetailScreen extends StatelessWidget {
                           Text(l10n.description, style: AppTypography.sectionTitle.copyWith(fontSize: 16)),
                           const SizedBox(height: AppSpacing.sm),
                           Text(
-                            product.description ?? l10n.noDescriptionYet,
+                            description ?? l10n.noDescriptionYet,
                             style: AppTypography.body.copyWith(color: AppColors.ink600, height: 1.55),
                           ),
                         ],
@@ -94,7 +97,7 @@ class ProductDetailScreen extends StatelessWidget {
               onAddToCart: () {
                 CartScope.of(context).add(product);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(l10n.addedToCart(product.title))),
+                  SnackBar(content: Text(l10n.addedToCart(product.titleFor(lang)))),
                 );
               },
             ),

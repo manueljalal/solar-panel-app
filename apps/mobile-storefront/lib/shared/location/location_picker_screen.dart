@@ -51,7 +51,8 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
       }
-      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
         if (!mounted) return;
         setState(() {
           _locating = false;
@@ -71,7 +72,9 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
       }
 
       final position = await Geolocator.getCurrentPosition(
-        locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+        ),
       );
       if (!mounted) return;
       final target = LatLng(position.latitude, position.longitude);
@@ -96,15 +99,26 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
       _error = null;
     });
     try {
-      String address = '${_center.latitude.toStringAsFixed(5)}, ${_center.longitude.toStringAsFixed(5)}';
+      String address =
+          '${_center.latitude.toStringAsFixed(5)}, ${_center.longitude.toStringAsFixed(5)}';
       try {
-        final placemarks = await Geocoding().placemarkFromCoordinates(_center.latitude, _center.longitude);
+        final placemarks = await Geocoding().placemarkFromCoordinates(
+          _center.latitude,
+          _center.longitude,
+        );
         if (placemarks.isNotEmpty) {
           final p = placemarks.first;
-          final parts = [p.street, p.subLocality, p.locality, p.administrativeArea, p.country]
-              .where((s) => s != null && s.trim().isNotEmpty)
-              .toSet() // drop accidental duplicates (e.g. street == locality)
-              .toList();
+          final parts =
+              [
+                    p.street,
+                    p.subLocality,
+                    p.locality,
+                    p.administrativeArea,
+                    p.country,
+                  ]
+                  .where((s) => s != null && s.trim().isNotEmpty)
+                  .toSet() // drop accidental duplicates (e.g. street == locality)
+                  .toList();
           if (parts.isNotEmpty) address = parts.join(', ');
         }
       } catch (_) {
@@ -113,7 +127,11 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
       }
       if (!mounted) return;
       Navigator.of(context).pop(
-        PickedLocation(latitude: _center.latitude, longitude: _center.longitude, address: address),
+        PickedLocation(
+          latitude: _center.latitude,
+          longitude: _center.longitude,
+          address: address,
+        ),
       );
     } catch (e) {
       if (!mounted) return;
@@ -129,7 +147,10 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.pickLocationTitle, style: AppTypography.h1.copyWith(fontSize: 18)),
+        title: Text(
+          l10n.pickLocationTitle,
+          style: AppTypography.h1.copyWith(fontSize: 18),
+        ),
       ),
       body: Stack(
         children: [
@@ -157,7 +178,11 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
             child: Center(
               child: Padding(
                 padding: EdgeInsets.only(bottom: 36),
-                child: Icon(Icons.location_on, size: 44, color: AppColors.accent),
+                child: Icon(
+                  Icons.location_on,
+                  size: 44,
+                  color: AppColors.accent,
+                ),
               ),
             ),
           ),
@@ -170,7 +195,11 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
               foregroundColor: AppColors.ink900,
               onPressed: _locating ? null : _useCurrentLocation,
               child: _locating
-                  ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
+                  ? const SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
                   : const Icon(Icons.my_location),
             ),
           ),
@@ -192,7 +221,13 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
                   Text(l10n.pickLocationHint, style: AppTypography.bodyMuted),
                   if (_error != null) ...[
                     const SizedBox(height: 6),
-                    Text(_error!, style: const TextStyle(color: AppColors.warning, fontSize: 12.5)),
+                    Text(
+                      _error!,
+                      style: const TextStyle(
+                        color: AppColors.warning,
+                        fontSize: 12.5,
+                      ),
+                    ),
                   ],
                   const SizedBox(height: AppSpacing.md),
                   SizedBox(
@@ -204,15 +239,26 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
                         foregroundColor: Colors.white,
                         elevation: 0,
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.chip)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AppRadii.chip),
+                        ),
                       ),
                       child: _confirming
                           ? const SizedBox(
                               width: 18,
                               height: 18,
-                              child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
                             )
-                          : Text(l10n.confirmLocation, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
+                          : Text(
+                              l10n.confirmLocation,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 15,
+                              ),
+                            ),
                     ),
                   ),
                 ],

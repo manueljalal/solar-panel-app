@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../core/auth/auth_repository.dart';
 import '../../../core/auth/friendly_function_error.dart';
 import '../../../core/auth/phone_number.dart';
@@ -10,6 +13,9 @@ import '../../../l10n/app_localizations.dart';
 import '../../../shared/location/location_picker_screen.dart';
 import '../../../shared/location/picked_location.dart';
 import '../../account/presentation/sign_in_screen.dart';
+import '../../bulk/domain/bulk_models.dart';
+import '../../bulk/presentation/bulk_market_screen.dart';
+import '../../bulk/presentation/widgets/country_flag.dart';
 import '../data/vendor_application_repository.dart';
 
 /// Vendor onboarding — reached from the home screen's "Own a solar
@@ -49,6 +55,9 @@ class _VendorApplyScreenState extends State<VendorApplyScreen> {
   PickedLocation? _location;
   bool _submitting = false;
   String? _locationError;
+  String _country = 'IQ';
+  Uint8List? _logoBytes;
+  String? _logoError;
 
   @override
   void initState() {
@@ -107,21 +116,51 @@ class _VendorApplyScreenState extends State<VendorApplyScreen> {
     });
   }
 
+  /// Approval grants the vendor role server-side after sign-in, so refresh
+  /// the token before opening the vendor-only marketplace.
+  Future<void> _openMarketplace() async {
+    try {
+      await _auth.getClaims(forceRefresh: true);
+    } catch (_) {}
+    if (!mounted) return;
+    await Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const BulkMarketScreen()));
+  }
+
+  Future<void> _pickLogo() async {
+    // Downscaled/compressed on pick so the base64 upload stays well under
+    // the callable payload limit.
+    final file = await ImagePicker().pickImage(source: ImageSource.gallery, maxWidth: 1600, imageQuality: 80);
+    if (file == null) return;
+    final bytes = await file.readAsBytes();
+    if (!mounted) return;
+    setState(() {
+      _logoBytes = bytes;
+      _logoError = null;
+    });
+  }
+
   Future<void> _submit() async {
     final formValid = _formKey.currentState!.validate();
     final l10n = AppLocalizations.of(context);
     final location = _location;
-    setState(() => _locationError = location == null ? l10n.locationRequiredError : null);
-    if (!formValid || location == null) return;
+    final logo = _logoBytes;
+    setState(() {
+      _locationError = location == null ? l10n.locationRequiredError : null;
+      _logoError = logo == null ? l10n.companyImageRequiredError : null;
+    });
+    if (!formValid || location == null || logo == null) return;
 
     setState(() => _submitting = true);
     try {
+      final logoUrl = await _repository.uploadCompanyLogo(logo);
       await _repository.submit(
         businessName: _businessName.text.trim(),
         city: _city.text.trim(),
         address: _address.text.trim(),
         email: _email.text.trim(),
         note: _note.text.trim(),
+        country: _country,
+        logoUrl: logoUrl,
         location: location,
       );
       if (!mounted) return;
@@ -182,6 +221,8 @@ class _VendorApplyScreenState extends State<VendorApplyScreen> {
             color: AppColors.success,
             title: l10n.vendorApplyApprovedTitle,
             body: l10n.vendorApplyApprovedBody,
+            actionLabel: l10n.bulkOpenMarket,
+            onAction: _openMarketplace,
           ),
       },
     );
@@ -255,7 +296,36 @@ class _VendorApplyScreenState extends State<VendorApplyScreen> {
               ),
             ],
             const SizedBox(height: AppSpacing.xl),
+            _LogoField(
+              label: l10n.companyImageLabel,
+              bytes: _logoBytes,
+              error: _logoError,
+              addLabel: l10n.companyImageAdd,
+              changeLabel: l10n.companyImageChange,
+              onTap: _pickLogo,
+            ),
+            const SizedBox(height: AppSpacing.md),
             _Field(controller: _businessName, label: l10n.businessNameLabel, validatorMessage: l10n.businessNameValidator),
+            const SizedBox(height: AppSpacing.md),
+            Text(l10n.applyCountryLabel, style: AppTypography.cardTitle.copyWith(fontSize: 13)),
+            const SizedBox(height: 6),
+            SegmentedButton<String>(
+              showSelectedIcon: false,
+              segments: [
+                ButtonSegment(
+                  value: 'IQ',
+                  icon: const CountryFlag(country: BulkCountry.iraq),
+                  label: Text(l10n.bulkCountryIraq),
+                ),
+                ButtonSegment(
+                  value: 'CN',
+                  icon: const CountryFlag(country: BulkCountry.china),
+                  label: Text(l10n.bulkCountryChina),
+                ),
+              ],
+              selected: {_country},
+              onSelectionChanged: (v) => setState(() => _country = v.first),
+            ),
             const SizedBox(height: AppSpacing.md),
             _Field(controller: _city, label: l10n.cityLabel, validatorMessage: l10n.cityValidator),
             const SizedBox(height: AppSpacing.md),
@@ -355,6 +425,73 @@ class _Field extends StatelessWidget {
   }
 }
 
+class _LogoField extends StatelessWidget {
+  const _LogoField({
+    required this.label,
+    required this.bytes,
+    required this.error,
+    required this.addLabel,
+    required this.changeLabel,
+    required this.onTap,
+  });
+
+  final String label;
+  final Uint8List? bytes;
+  final String? error;
+  final String addLabel;
+  final String changeLabel;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: AppTypography.cardTitle.copyWith(fontSize: 13)),
+        const SizedBox(height: 6),
+        Material(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(AppRadii.card),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(AppRadii.card),
+            onTap: onTap,
+            child: Container(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppRadii.card),
+                border: Border.all(color: error != null ? AppColors.warning : AppColors.line),
+              ),
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(AppRadii.chip),
+                    child: SizedBox(
+                      width: 56,
+                      height: 56,
+                      child: bytes != null
+                          ? Image.memory(bytes!, fit: BoxFit.cover)
+                          : const ColoredBox(
+                              color: AppColors.surfaceSunken,
+                              child: Icon(Icons.add_photo_alternate_outlined, color: AppColors.ink600),
+                            ),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(child: Text(bytes != null ? changeLabel : addLabel, style: AppTypography.link)),
+                ],
+              ),
+            ),
+          ),
+        ),
+        if (error != null) ...[
+          const SizedBox(height: 4),
+          Text(error!, style: const TextStyle(color: AppColors.warning, fontSize: 12.5)),
+        ],
+      ],
+    );
+  }
+}
+
 class _LocationField extends StatelessWidget {
   const _LocationField({
     required this.label,
@@ -421,12 +558,21 @@ class _LocationField extends StatelessWidget {
 }
 
 class _StatusState extends StatelessWidget {
-  const _StatusState({required this.icon, required this.color, required this.title, required this.body});
+  const _StatusState({
+    required this.icon,
+    required this.color,
+    required this.title,
+    required this.body,
+    this.actionLabel,
+    this.onAction,
+  });
 
   final IconData icon;
   final Color color;
   final String title;
   final String body;
+  final String? actionLabel;
+  final VoidCallback? onAction;
 
   @override
   Widget build(BuildContext context) {
@@ -447,6 +593,23 @@ class _StatusState extends StatelessWidget {
               style: AppTypography.bodyMuted,
             ),
             const SizedBox(height: AppSpacing.lg),
+            if (actionLabel != null && onAction != null) ...[
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: onAction,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.chip)),
+                  ),
+                  child: Text(actionLabel!, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
             TextButton(
               onPressed: () => Navigator.of(context).maybePop(),
               child: Text(l10n.done),

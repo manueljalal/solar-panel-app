@@ -82,34 +82,6 @@ class AuthRepository {
     await callable.call({'phone': phone, 'deviceId': deviceId});
   }
 
-  /// Step 2 — verifies the code via the verifyPhoneOtp Cloud Function,
-  /// which returns a Firebase custom token on success; this signs the
-  /// client in with it. [name] is only used if this is a first-time
-  /// verification (new account) — ignored on a repeat sign-in. Throws
-  /// FirebaseFunctionsException on a wrong/expired code — callers should
-  /// show its .message to the user, it's already human-readable (see
-  /// verify_phone_otp.ts's HttpsError messages).
-  Future<PhoneSignInResult> verifyPhoneOtp({
-    required String phone,
-    required String otp,
-    String? name,
-    PickedLocation? location,
-  }) async {
-    final deviceId = await getDeviceId();
-    final callable = _functions.httpsCallable('auth-verifyPhoneOtp');
-    final result = await callable.call({
-      'phone': phone,
-      'otp': otp,
-      'name': name,
-      'deviceId': deviceId,
-      'location': location?.toJson(),
-    });
-    final customToken = result.data['customToken'] as String;
-    final isNewUser = result.data['isNewUser'] as bool? ?? false;
-    final credential = await _auth.signInWithCustomToken(customToken);
-    return PhoneSignInResult(user: credential.user!, isNewUser: isNewUser);
-  }
-
   /// Real registration — name + username + password + phone + location,
   /// with [otp] proving phone ownership (call requestPhoneOtp first to
   /// get that code sent). Everything happens in one Cloud Function call
@@ -186,12 +158,6 @@ class AuthRepository {
     final credential = await _auth.signInWithCustomToken(customToken);
     return credential.user!;
   }
-}
-
-class PhoneSignInResult {
-  const PhoneSignInResult({required this.user, required this.isNewUser});
-  final User user;
-  final bool isNewUser;
 }
 
 /// Thrown by [AuthRepository.signIn] when the credentials are correct but

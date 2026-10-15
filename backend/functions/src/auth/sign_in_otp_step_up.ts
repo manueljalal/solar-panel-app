@@ -3,6 +3,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import { db, auth } from "../shared/firebase";
 import { consumePhoneOtp } from "../shared/auth/verify_otp";
 import { normalizeUsername } from "../shared/auth/password";
+import { resolveAccountUids } from "../shared/auth/resolve_account";
 
 interface StepUpInput {
   username: string;
@@ -24,20 +25,30 @@ export const signInOtpStepUp = onCall<StepUpInput>({ region: "us-central1" }, as
     throw new HttpsError("invalid-argument", "username, otp, and deviceId are required.");
   }
 
-  const usernameSnap = await db.collection("usernames").doc(username).get();
-  if (!usernameSnap.exists) {
+  // An email can match several accounts (repeat applications); the
+  // code sent to an account's own phone decides which one this is.
+  const candidates = await resolveAccountUids(username);
+  if (candidates.length === 0) {
     throw new HttpsError("not-found", "Account not found.");
   }
-  const uid = usernameSnap.data()!.uid as string;
-
+  let uid: string | null = null;
+  let lastError: unknown = null;
+  for (const candidate of candidates) {
+    const snap = await db.collection("users").doc(candidate).get();
+    const phone = snap.data()?.phone as string | undefined;
+    if (!snap.exists || !phone) continue;
+    try {
+      await consumePhoneOtp(phone, otp);
+      uid = candidate;
+      break;
+    } catch (err) {
+      lastError = err;
+    }
+  }
+  if (!uid) {
+    throw lastError ?? new HttpsError("not-found", "Account not found.");
+  }
   const userRef = db.collection("users").doc(uid);
-  const userSnap = await userRef.get();
-  if (!userSnap.exists) {
-    throw new HttpsError("not-found", "Account not found.");
-  }
-  const phone = userSnap.data()!.phone as string;
-
-  await consumePhoneOtp(phone, otp);
 
   await userRef.update({
     knownDeviceIds: FieldValue.arrayUnion(deviceId),

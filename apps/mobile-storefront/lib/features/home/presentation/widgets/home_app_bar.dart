@@ -28,10 +28,18 @@ class HomeAppBar extends StatelessWidget {
             const SizedBox(height: 2),
             Row(
               children: [
-                const Icon(Icons.location_on_outlined, size: 14, color: AppColors.ink600),
+                const Icon(
+                  Icons.location_on_outlined,
+                  size: 14,
+                  color: AppColors.ink600,
+                ),
                 const SizedBox(width: 3),
                 Text(l10n.locationErbilIraq, style: AppTypography.bodyMuted),
-                const Icon(Icons.keyboard_arrow_down, size: 16, color: AppColors.ink600),
+                const Icon(
+                  Icons.keyboard_arrow_down,
+                  size: 16,
+                  color: AppColors.ink600,
+                ),
               ],
             ),
           ],
@@ -39,14 +47,21 @@ class HomeAppBar extends StatelessWidget {
         Stack(
           clipBehavior: Clip.none,
           children: [
-            const Icon(Icons.notifications_none, size: 26, color: AppColors.ink900),
+            const Icon(
+              Icons.notifications_none,
+              size: 26,
+              color: AppColors.ink900,
+            ),
             Positioned(
               right: 0,
               top: 0,
               child: Container(
                 width: 8,
                 height: 8,
-                decoration: const BoxDecoration(color: AppColors.accent, shape: BoxShape.circle),
+                decoration: const BoxDecoration(
+                  color: AppColors.accent,
+                  shape: BoxShape.circle,
+                ),
               ),
             ),
           ],

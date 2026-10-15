@@ -50,6 +50,29 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // categories/{slug} — trilingual names (ku/ar/en), managed by
+    // super_admin via the admin-createCategory/updateCategory/
+    // deleteCategory callables. Public read: vendors pick from it, the
+    // storefront filters by it.
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // banners/{id} — promo carousel on the mobile home screen, managed by
+    // super_admin via admin-createBanner/updateBanner/deleteBanner (max 5).
+    match /banners/{bannerId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // learnItems/{id} — Learn tab content (trilingual title/description +
+    // video), managed by super_admin via admin-create/update/deleteLearnItem.
+    match /learnItems/{itemId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
     // orders/{orderId}
     match /orders/{orderId} {
       allow read: if false; // enforced in Functions (owner/vendor/admin only)
@@ -75,6 +98,18 @@ service cloud.firestore {
     match /vendorApplications/{applicationId} {
       allow read: if isSignedIn() && resource.data.uid == request.auth.uid;
       allow write: if false;
+    }
+
+    // bulkListings / bulkRequests — the vendor-only bulk marketplace.
+    // Bulk prices and buyer requests must never reach shoppers, so there is
+    // no client read OR write: everything goes through the bulk-*
+    // callables (backend/functions/src/bulk), which require an approved
+    // vendor and use the Admin SDK.
+    match /bulkListings/{id} {
+      allow read, write: if false;
+    }
+    match /bulkRequests/{id} {
+      allow read, write: if false;
     }
 
     // Default deny

@@ -4,18 +4,22 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/widgets/placeholder_image.dart';
 import '../../domain/home_company.dart';
+import '../company_store_screen.dart';
 
-/// Horizontal-scroll row of vendor tiles for the "Companies" section.
-/// HomeScreen passes live Firestore data once it has loaded.
+/// Compact company directory: round logos with the name underneath — the
+/// same look as the bulk marketplace's company row. HomeScreen passes live
+/// Firestore data once it has loaded. Tapping a company opens its store.
 class CompanyRow extends StatelessWidget {
   const CompanyRow({super.key, required this.companies});
 
   final List<HomeCompany> companies;
 
+  static const height = 92.0;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 172,
+      height: height,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: companies.length,
@@ -33,44 +37,57 @@ class _CompanyTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 96,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppSpacing.md),
-              boxShadow: AppShadows.card,
+    final name = company.name.trim();
+    return InkWell(
+      borderRadius: BorderRadius.circular(AppSpacing.md),
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => CompanyStoreScreen(company: company)),
+      ),
+      child: SizedBox(
+        width: 68,
+        child: Column(
+          children: [
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.surface,
+                border: Border.all(color: AppColors.line),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: company.logoUrl.isEmpty
+                  ? Center(
+                      child: Text(
+                        name.isEmpty
+                            ? '?'
+                            : name.characters.first.toUpperCase(),
+                        style: const TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 19,
+                        ),
+                      ),
+                    )
+                  : NetworkImageWithFallback(
+                      url: company.logoUrl,
+                      fallbackIcon: Icons.storefront_outlined,
+                    ),
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppSpacing.md),
-              child: SizedBox(
-                width: 96,
-                height: 96,
-                child: NetworkImageWithFallback(url: company.logoUrl, fallbackIcon: Icons.storefront_outlined),
+            const SizedBox(height: 6),
+            Text(
+              company.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: AppTypography.bodyMuted.copyWith(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: AppColors.ink900,
               ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            company.name,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: AppTypography.cardTitle,
-          ),
-          const SizedBox(height: 2),
-          Row(
-            children: [
-              Expanded(
-                child: Text(company.city, style: AppTypography.bodyMuted, overflow: TextOverflow.ellipsis),
-              ),
-              const Icon(Icons.star, size: 12, color: AppColors.accent),
-              const SizedBox(width: 2),
-              Text('${company.rating}', style: AppTypography.bodyMuted),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -8,22 +8,31 @@ import { httpsCallable } from "firebase/functions";
 import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { auth, db, functions } from "@/lib/firebase";
 import { useVendorAuth } from "@/lib/use_auth";
-import { categoryLabel, type VendorProduct } from "@/lib/products";
+import { useCategories } from "@/lib/categories";
+import type { VendorProduct } from "@/lib/products";
 
 const deleteProduct = httpsCallable<{ productId: string }, { ok: true }>(functions, "vendor-deleteProduct");
+
+function i18n(v: unknown, fallbackEn = ""): VendorProduct["nameI18n"] {
+  const o = (v ?? {}) as Record<string, unknown>;
+  return { ku: (o.ku as string) ?? "", ar: (o.ar as string) ?? "", en: (o.en as string) ?? fallbackEn };
+}
 
 function fromDoc(id: string, data: Record<string, unknown>): VendorProduct {
   return {
     id,
-    category: (data.category as VendorProduct["category"]) ?? "residential",
+    category: (data.category as VendorProduct["category"]) ?? "",
     brand: (data.brand as string) ?? "",
     name: (data.name as string) ?? "Untitled product",
+    nameI18n: i18n(data.nameI18n, (data.name as string) ?? ""),
     spec: (data.spec as string) ?? "",
     price: (data.price as number) ?? 0,
     currency: (data.currency as VendorProduct["currency"]) ?? "USD",
     imageUrl: (data.imageUrl as string) ?? "",
     description: (data.description as string | null) ?? null,
+    descriptionI18n: data.descriptionI18n ? i18n(data.descriptionI18n) : null,
     warranty: (data.warranty as string | null) ?? null,
+    warrantyI18n: data.warrantyI18n ? i18n(data.warrantyI18n) : null,
     inStock: (data.inStock as boolean) ?? true,
     rating: (data.rating as number) ?? 0,
     sold: (data.sold as number) ?? 0,
@@ -32,6 +41,7 @@ function fromDoc(id: string, data: Record<string, unknown>): VendorProduct {
 
 export default function DashboardPage() {
   const authState = useVendorAuth();
+  const { categories } = useCategories();
   const router = useRouter();
   const [products, setProducts] = useState<VendorProduct[] | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -116,7 +126,7 @@ export default function DashboardPage() {
                 <div style={{ flex: 1 }}>
                   <div className="app-row-title">{p.name}</div>
                   <div className="app-row-meta">
-                    {categoryLabel(p.category)} · {p.spec} · {p.brand}
+                    {categories?.find((c) => c.id === p.category)?.name.en ?? p.category} · {p.spec} · {p.brand}
                   </div>
                   <div className="app-row-meta">
                     {p.currency === "USD" ? "$" : "IQD "}

@@ -12,9 +12,9 @@ class AppTheme {
       brightness: Brightness.light,
       scaffoldBackgroundColor: AppColors.surfaceSunken,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.ink,
+        seedColor: AppColors.primary,
         brightness: Brightness.light,
-        primary: AppColors.ink900,
+        primary: AppColors.primary,
         secondary: AppColors.accent,
         surface: AppColors.surface,
       ),
@@ -22,6 +22,8 @@ class AppTheme {
     );
 
     return base.copyWith(
+      progressIndicatorTheme: const ProgressIndicatorThemeData(color: AppColors.primary),
+      textSelectionTheme: const TextSelectionThemeData(cursorColor: AppColors.primary),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.surfaceSunken,
         foregroundColor: AppColors.ink900,
@@ -59,12 +61,12 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadii.searchBar),
-          borderSide: const BorderSide(color: AppColors.ink900, width: 1.5),
+          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
         ),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.surface,
-        selectedItemColor: AppColors.ink900,
+        selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.ink400,
         selectedLabelStyle: TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
         unselectedLabelStyle: TextStyle(fontSize: 11, fontWeight: FontWeight.w500),

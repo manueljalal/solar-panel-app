@@ -54,6 +54,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get seeAll => 'See all';
 
   @override
+  String get companyNoProducts =>
+      'This company hasn\'t listed any products yet.';
+
+  @override
+  String get categoryAll => 'All';
+
+  @override
+  String get sectionCategories => 'Categories';
+
+  @override
+  String get categoryNoProducts => 'No products in this category yet.';
+
+  @override
+  String get learnEmpty => 'No lessons yet. Check back soon.';
+
+  @override
+  String get learnVideoError => 'Couldn\'t play this video.';
+
+  @override
+  String get learnTeaserSubtitle => 'Watch short video guides';
+
+  @override
   String get homeLoadError => 'Couldn\'t load content. Check your connection.';
 
   @override
@@ -73,6 +95,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get applyBannerTitle => 'Own a solar\nbusiness?';
+
+  @override
+  String get applyBannerSubtitle =>
+      'List your products and reach clients across Iraq.';
 
   @override
   String get apply => 'Apply';
@@ -607,6 +633,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get locationNotSet => 'Not set';
 
   @override
+  String get companyImageLabel => 'Image of your company (logo or storefront)';
+
+  @override
+  String get companyImageAdd => 'Choose an image';
+
+  @override
+  String get companyImageChange => 'Change image';
+
+  @override
+  String get companyImageRequiredError => 'Add an image of your company.';
+
+  @override
   String get locationRequiredError => 'Pin your business location on the map.';
 
   @override
@@ -721,4 +759,210 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get categoryInverter => 'Inverter';
+
+  @override
+  String get homeBulkTitle => 'B2B\nmarketplace';
+
+  @override
+  String get homeBulkSubtitle =>
+      'Trade directly with other companies — wholesale prices and bulk requests.';
+
+  @override
+  String get homeBulkCta => 'Open';
+
+  @override
+  String get bulkMarketTitle => 'B2B marketplace';
+
+  @override
+  String get bulkTabWholesale => 'Wholesale';
+
+  @override
+  String get bulkTabRequests => 'Requests';
+
+  @override
+  String get bulkTabMine => 'My posts';
+
+  @override
+  String get bulkPostFab => 'Post';
+
+  @override
+  String get bulkPostListing => 'Post a wholesale offer';
+
+  @override
+  String get bulkPostListingHint => 'Sell in bulk with quantity price tiers';
+
+  @override
+  String get bulkPostRequest => 'Post a bulk request';
+
+  @override
+  String get bulkPostRequestHint => 'Tell suppliers what you need to buy';
+
+  @override
+  String get bulkEmptyListings => 'No wholesale offers yet.';
+
+  @override
+  String get bulkEmptyRequests => 'No bulk requests yet.';
+
+  @override
+  String get bulkEmptyMine => 'You haven\'t posted anything yet.';
+
+  @override
+  String get bulkLoadError => 'Couldn\'t load the marketplace.';
+
+  @override
+  String get bulkCountryAll => 'All';
+
+  @override
+  String get bulkCountryIraq => 'Iraq';
+
+  @override
+  String get bulkCountryChina => 'China';
+
+  @override
+  String bulkFromPrice(String price, String unit) {
+    return 'From $price / $unit';
+  }
+
+  @override
+  String bulkMinOrder(String qty, String unit) {
+    return 'Min. order $qty $unit';
+  }
+
+  @override
+  String bulkQuantityNeeded(String qty, String unit) {
+    return '$qty $unit needed';
+  }
+
+  @override
+  String bulkTargetPrice(String price, String unit) {
+    return 'Target $price / $unit';
+  }
+
+  @override
+  String bulkTierRow(String qty, String unit) {
+    return '$qty+ $unit';
+  }
+
+  @override
+  String get bulkPriceTiers => 'Price tiers';
+
+  @override
+  String bulkDeliverTo(String city) {
+    return 'Deliver to $city';
+  }
+
+  @override
+  String get bulkContactSupplier => 'Contact';
+
+  @override
+  String get bulkCall => 'Call';
+
+  @override
+  String get bulkWhatsApp => 'WhatsApp';
+
+  @override
+  String get bulkClosePost => 'Close post';
+
+  @override
+  String get bulkClosed => 'Closed';
+
+  @override
+  String get bulkYours => 'Yours';
+
+  @override
+  String get bulkFormTitleLabel => 'Title';
+
+  @override
+  String get bulkFormTitleHint => 'e.g. 450W mono panels';
+
+  @override
+  String get bulkFormDescriptionLabel => 'Details';
+
+  @override
+  String get bulkFormUnitLabel => 'Unit';
+
+  @override
+  String get bulkFormUnitHint => 'pcs, panels, kg…';
+
+  @override
+  String get bulkTierQtyLabel => 'From quantity';
+
+  @override
+  String get bulkTierPriceLabel => 'Unit price (USD)';
+
+  @override
+  String get bulkAddTier => 'Add price tier';
+
+  @override
+  String get bulkRemoveTier => 'Remove';
+
+  @override
+  String get bulkQuantityLabel => 'Quantity needed';
+
+  @override
+  String get bulkTargetPriceLabel => 'Target price per unit, USD (optional)';
+
+  @override
+  String get bulkDeliveryCityLabel => 'Delivery city (optional)';
+
+  @override
+  String get bulkSubmitPost => 'Post';
+
+  @override
+  String get bulkFieldRequired => 'Required';
+
+  @override
+  String get bulkInvalidNumber => 'Enter a valid number';
+
+  @override
+  String get bulkPosted => 'Posted';
+
+  @override
+  String get bulkPostFailed => 'Couldn\'t post. Try again.';
+
+  @override
+  String get bulkDuplicateTier => 'Each price tier needs a different quantity.';
+
+  @override
+  String get applyCountryLabel => 'Company country';
+
+  @override
+  String get signInIdentifierLabel => 'Username or email';
+
+  @override
+  String get bulkOpenMarket => 'Open B2B marketplace';
+
+  @override
+  String get bulkSortNewest => 'Newest';
+
+  @override
+  String get bulkSortPriceLow => 'Price: low to high';
+
+  @override
+  String get bulkSortQtyHigh => 'Quantity: high to low';
+
+  @override
+  String get bulkNoResults => 'Nothing matches these filters.';
+
+  @override
+  String get bulkFormCategoryLabel => 'Category (optional)';
+
+  @override
+  String get bulkFormCategoryNone => 'No category';
+
+  @override
+  String get bulkLanguagesHint =>
+      'Write in any language you like — buyers see it in theirs when available.';
+
+  @override
+  String get bulkFormPhotoLabel => 'Photo (optional)';
+
+  @override
+  String get bulkFormPhotoAdd => 'Add a photo';
+
+  @override
+  String get bulkFormPhotoChange => 'Change photo';
+
+  @override
+  String get bulkTitleNeeded => 'Add a title in at least one language.';
 }

@@ -6,6 +6,9 @@
       "predeploy": ["npm --prefix backend/functions run build"]
     }
   ],
+  "storage": {
+    "rules": "backend/storage/storage.rules"
+  },
   "firestore": {
     "rules": "backend/firestore/firestore.rules",
     "indexes": "backend/firestore/firestore.indexes.json"

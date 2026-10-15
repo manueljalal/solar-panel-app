@@ -8,18 +8,26 @@ import { useVendorAuth } from "@/lib/use_auth";
 import { ProductForm } from "../product_form";
 import type { VendorProduct } from "@/lib/products";
 
+function i18n(v: unknown, fallbackEn = ""): VendorProduct["nameI18n"] {
+  const o = (v ?? {}) as Record<string, unknown>;
+  return { ku: (o.ku as string) ?? "", ar: (o.ar as string) ?? "", en: (o.en as string) ?? fallbackEn };
+}
+
 function fromDoc(id: string, data: Record<string, unknown>): VendorProduct {
   return {
     id,
-    category: (data.category as VendorProduct["category"]) ?? "residential",
+    category: (data.category as VendorProduct["category"]) ?? "",
     brand: (data.brand as string) ?? "",
     name: (data.name as string) ?? "",
+    nameI18n: i18n(data.nameI18n, (data.name as string) ?? ""),
     spec: (data.spec as string) ?? "",
     price: (data.price as number) ?? 0,
     currency: (data.currency as VendorProduct["currency"]) ?? "USD",
     imageUrl: (data.imageUrl as string) ?? "",
     description: (data.description as string | null) ?? null,
+    descriptionI18n: data.descriptionI18n ? i18n(data.descriptionI18n) : null,
     warranty: (data.warranty as string | null) ?? null,
+    warrantyI18n: data.warrantyI18n ? i18n(data.warrantyI18n) : null,
     inStock: (data.inStock as boolean) ?? true,
     rating: (data.rating as number) ?? 0,
     sold: (data.sold as number) ?? 0,

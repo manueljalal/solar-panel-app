@@ -1,9 +1,7 @@
 {
   "@@locale": "ar",
-
   "locationErbilIraq": "أربيل، العراق",
   "searchHint": "ابحث عن الألواح والعلامات التجارية والباقات",
-
   "bannerLimitedOffer": "عرض محدود",
   "bannerZeroDownTitle": "بدون دفعة أولى\nعلى أنظمة المنازل",
   "bannerGetQuote": "احصل على عرض سعر",
@@ -13,7 +11,13 @@
   "bannerVettedNetwork": "شبكة موثوقة",
   "bannerVendorsTitle": "كل بائع،\nتم التحقق من موقعه",
   "bannerMeetVendors": "تعرّف على البائعين",
-
+  "companyNoProducts": "لم تضف هذه الشركة أي منتجات بعد.",
+  "categoryAll": "الكل",
+  "sectionCategories": "الفئات",
+  "categoryNoProducts": "لا توجد منتجات في هذه الفئة بعد.",
+  "learnEmpty": "لا توجد دروس بعد. عد قريباً.",
+  "learnVideoError": "تعذّر تشغيل هذا الفيديو.",
+  "learnTeaserSubtitle": "شاهد أدلة فيديو قصيرة",
   "homeLoadError": "تعذّر تحميل المحتوى. تحقق من اتصالك.",
   "retry": "إعادة المحاولة",
   "sectionCompanies": "الشركات",
@@ -21,25 +25,20 @@
   "sectionBestSellers": "الأكثر مبيعًا",
   "seeAll": "عرض الكل",
   "bestMatch": "الأنسب",
-
   "wattageCalculatorTitle": "حاسبة الطاقة",
   "wattageCalculatorSubtitle": "سؤالان، ونحدد حجم النظام.",
   "tryIt": "جرّبها",
-
   "applyBannerTitle": "هل تملك شركة\nطاقة شمسية؟",
+  "applyBannerSubtitle": "اعرض منتجاتك ووصل إلى عملاء في جميع أنحاء العراق.",
   "apply": "قدّم الآن",
-
   "learnTeaserTitle": "اختيار القدرة الكهربائية المناسبة",
   "learnTeaserReadTime": "٤ دقائق قراءة",
-
   "productSold": "تم بيع {count}",
-
   "navHome": "الرئيسية",
   "navLearn": "تعلّم",
   "navCart": "السلة",
   "navOrders": "الطلبات",
   "navAccount": "الحساب",
-
   "cancel": "إلغاء",
   "done": "تم",
   "required": "مطلوب",
@@ -47,7 +46,6 @@
   "outOfStock": "غير متوفر",
   "genericConnectionError": "تعذّر الإرسال — تحقق من اتصالك وحاول مرة أخرى.",
   "minRead": "{minutes, plural, one {دقيقة واحدة قراءة} two {دقيقتان قراءة} few {{minutes} دقائق قراءة} many {{minutes} دقيقة قراءة} other {{minutes} دقيقة قراءة}}",
-
   "accountTitle": "الحساب",
   "accountNotSignedIn": "لم يتم تسجيل الدخول",
   "accountSignOut": "تسجيل الخروج",
@@ -72,7 +70,6 @@
   "accountRoleVendor": "بائع",
   "accountRoleAdmin": "مسؤول",
   "accountRoleGuest": "زائر",
-
   "phoneOtpInvalidFormat": "أدخل رقمًا كاملاً مع رمز الدولة، مثل ‎+9647501234567",
   "phoneOtpSendFailedRetry": "تعذّر إرسال الرمز — حاول مرة أخرى.",
   "phoneOtpSendFailedConnection": "تعذّر إرسال الرمز — تحقق من اتصالك.",
@@ -94,7 +91,6 @@
   "phoneOtpResendCode": "إعادة إرسال الرمز",
   "phoneOtpLocationLabel": "موقعك",
   "phoneOtpLocationRequired": "حدّد موقعك على الخريطة.",
-
   "signUpTitle": "إنشاء حساب",
   "signInTitle": "تسجيل الدخول",
   "usernameLabel": "اسم المستخدم",
@@ -115,14 +111,12 @@
   "stepUpBody": "تم اكتشاف جهاز جديد. سنرسل رمزًا مكوّنًا من 6 أرقام إلى رقم الهاتف المسجّل في حسابك.",
   "stepUpSendCode": "إرسال الرمز",
   "stepUpVerifyCode": "تأكيد",
-
   "cartTitle": "السلة",
   "cartEmptyTitle": "سلتك فارغة",
   "cartEmptyBody": "تصفّح الأكثر مبيعًا في الرئيسية وأضف شيئًا.",
   "cartSubtotal": "{count, plural, one {المجموع الفرعي (عنصر واحد)} two {المجموع الفرعي (عنصران)} few {المجموع الفرعي ({count} عناصر)} many {المجموع الفرعي ({count} عنصرًا)} other {المجموع الفرعي ({count} عنصر)}}",
   "checkoutNotBuiltYet": "الدفع غير متاح بعد — قريبًا.",
   "checkout": "الدفع",
-
   "perUnit": "/ للوحدة",
   "description": "الوصف",
   "noDescriptionYet": "لا يوجد وصف بعد.",
@@ -132,15 +126,12 @@
   "specBrand": "العلامة التجارية",
   "requestQuote": "طلب عرض سعر",
   "addToCart": "أضف إلى السلة",
-
   "quoteRequested": "تم طلب عرض سعر لـ {title}.",
   "requestAQuote": "طلب عرض سعر",
   "quoteRequestHint": "مثال: الكمية المطلوبة، الجدول الزمني للتركيب، عنوان الموقع",
   "sendRequest": "إرسال الطلب",
-
   "searchNoResults": "لا توجد نتائج لـ \"{query}\"",
   "searchPrompt": "ابحث عن الألواح أو العلامات التجارية أو البائعين.",
-
   "wattageCalculatorScreenTitle": "حاسبة الطاقة",
   "wattageCalculatorIntro": "أجب عن سؤالين وسنقدّر حجم النظام وعدد الألواح التي يحتاجها منزلك.",
   "dailyUsageTitle": "متوسط استهلاك الكهرباء اليومي",
@@ -153,13 +144,10 @@
   "panelEstimate": "{count} لوحًا · {wattage} واط لكل لوح",
   "seeMatchingPanels": "عرض الألواح المناسبة",
   "wattageDisclaimer": "تقدير فقط — سيؤكد البائع الحجم الدقيق بعد زيارة الموقع.",
-
   "ordersTitle": "الطلبات",
   "ordersEmptyTitle": "لا توجد طلبات بعد",
   "ordersEmptyBody": "ستظهر الطلبات هنا بمجرد إتاحة الدفع.",
-
   "learnTitle": "تعلّم",
-
   "learnArticleWattageTitle": "اختيار القدرة الكهربائية المناسبة",
   "learnArticleWattageBody": "يستهلك المنزل النموذجي 10–15 كيلوواط ساعة يوميًا. اقسم استهلاكك اليومي على عدد ساعات ذروة أشعة الشمس على سطح منزلك (عادة 4–6 ساعات في العراق) لتقدير حجم النظام بالكيلوواط. استخدم حاسبة الطاقة في الرئيسية للحصول على تقدير سريع — سيؤكد البائع الحجم الدقيق بعد زيارة الموقع، لأن زاوية السطح والتظليل وكفاءة الألواح كلها عوامل مؤثرة.",
   "learnArticleInstallationTitle": "كيف يتم التركيب",
@@ -170,7 +158,6 @@
   "learnArticleMaintenanceBody": "تحتاج الألواح إلى صيانة بسيطة — غسلة عرضية لإزالة الغبار تحافظ على الإنتاج ثابتًا. تحقق من مؤشر حالة العاكس أو تطبيق المراقبة بشكل دوري؛ عادةً ما يعني الضوء الأحمر أو الكهرماني أنه من الأفضل الاتصال بالمُركِّب. يقدّم معظم البائعين فحصًا سنويًا كجزء من باقة التركيب.",
   "learnArticleNetMeteringTitle": "شرح عداد الصافي",
   "learnArticleNetMeteringBody": "يتيح لك عداد الصافي إرسال فائض الطاقة الشمسية إلى الشبكة واستعادته لاحقًا دون تكلفة إضافية، مما يجعل الشبكة تعمل بشكل فعّال كبطارية. تختلف الإتاحة والشروط حسب مزود الخدمة — اسأل المُركِّب عمّا إذا كانت متاحة في منطقتك قبل تحديد حجم البطارية في نظامك.",
-
   "vendorApplyGenericError": "تعذّر الإرسال — تحقق من اتصالك وحاول مرة أخرى.",
   "vendorApplyTitle": "هل تملك شركة طاقة شمسية؟",
   "vendorApplyIntro": "اعرض منتجاتك وتواصل مع عملاء في جميع أنحاء العراق. أخبرنا عن شركتك — سنتابع للتحقق وإعدادك.",
@@ -193,18 +180,25 @@
   "vendorApplyPendingTitle": "الطلب قيد المراجعة",
   "vendorApplyPendingBody": "نقوم بمراجعة {business}. بعد الموافقة، سجّل الدخول إلى بوابة البائع باسم المستخدم وكلمة المرور.",
   "@vendorApplyPendingBody": {
-    "placeholders": {"business": {"type": "String"}}
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
   },
   "vendorApplyApprovedTitle": "تمت الموافقة عليك",
   "vendorApplyApprovedBody": "حساب البائع جاهز. افتح تبويب الحساب لإدارة منتجاتك.",
   "vendorApplyRejectedNotice": "لم تتم الموافقة على طلبك السابق. يمكنك التقديم مرة أخرى.",
-
   "addressLabel": "العنوان التفصيلي",
   "addressValidator": "أدخل عنوانك التفصيلي",
   "mapLocationLabel": "الموقع على الخريطة",
   "setLocationOnMap": "تحديد الموقع على الخريطة",
   "changeLocation": "تغيير",
   "locationNotSet": "غير محدد",
+  "companyImageLabel": "صورة شركتك (الشعار أو الواجهة)",
+  "companyImageAdd": "اختر صورة",
+  "companyImageChange": "تغيير الصورة",
+  "companyImageRequiredError": "أضف صورة لشركتك.",
   "locationRequiredError": "حدّد موقع شركتك على الخريطة.",
   "pickLocationTitle": "حدّد موقعك",
   "pickLocationHint": "اسحب الخريطة لتحديد موقع العلامة، أو استخدم موقعك الحالي.",
@@ -212,7 +206,6 @@
   "locationPermissionDenied": "تم رفض إذن الموقع — اسحب العلامة يدويًا بدلاً من ذلك.",
   "locationServiceDisabled": "خدمات الموقع متوقفة — اسحب العلامة يدويًا بدلاً من ذلك.",
   "locationFetchFailed": "تعذّر تحديد موقعك — اسحب العلامة يدويًا بدلاً من ذلك.",
-
   "myProductsTitle": "منتجاتي",
   "addProduct": "إضافة منتج",
   "couldntLoadProducts": "تعذّر تحميل منتجاتك.",
@@ -221,7 +214,6 @@
   "removeProductTitle": "إزالة هذا المنتج؟",
   "remove": "إزالة",
   "couldntRemoveProduct": "تعذّرت إزالة هذا المنتج — حاول مرة أخرى.",
-
   "couldntSaveWithReason": "تعذّر الحفظ — {reason}",
   "errorPermissionDenied": "لا تملك الصلاحية للقيام بذلك.",
   "errorCheckValues": "تحقق من القيم وحاول مرة أخرى.",
@@ -242,5 +234,126 @@
   "categoryResidential": "سكني",
   "categoryCommercial": "تجاري",
   "categoryBattery": "بطارية",
-  "categoryInverter": "عاكس"
+  "categoryInverter": "عاكس",
+  "homeBulkTitle": "سوق الأعمال\nB2B",
+  "homeBulkSubtitle": "تاجر مباشرة مع الشركات الأخرى — أسعار الجملة وطلبات الكميات.",
+  "homeBulkCta": "افتح",
+  "bulkMarketTitle": "سوق الأعمال B2B",
+  "bulkTabWholesale": "الجملة",
+  "bulkTabRequests": "الطلبات",
+  "bulkTabMine": "منشوراتي",
+  "bulkPostFab": "انشر",
+  "bulkPostListing": "انشر عرض جملة",
+  "bulkPostListingHint": "بِع بالجملة بأسعار حسب الكمية",
+  "bulkPostRequest": "انشر طلب شراء بالجملة",
+  "bulkPostRequestHint": "أخبر الموردين بما تحتاج شراءه",
+  "bulkEmptyListings": "لا توجد عروض جملة بعد.",
+  "bulkEmptyRequests": "لا توجد طلبات جملة بعد.",
+  "bulkEmptyMine": "لم تنشر أي شيء بعد.",
+  "bulkLoadError": "تعذّر تحميل السوق.",
+  "bulkCountryAll": "الكل",
+  "bulkCountryIraq": "العراق",
+  "bulkCountryChina": "الصين",
+  "bulkFromPrice": "ابتداءً من {price} / {unit}",
+  "@bulkFromPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "bulkMinOrder": "الحد الأدنى {qty} {unit}",
+  "@bulkMinOrder": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "bulkQuantityNeeded": "مطلوب {qty} {unit}",
+  "@bulkQuantityNeeded": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "bulkTargetPrice": "السعر المستهدف {price} / {unit}",
+  "@bulkTargetPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "bulkTierRow": "{qty}+ {unit}",
+  "@bulkTierRow": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "bulkPriceTiers": "شرائح الأسعار",
+  "bulkDeliverTo": "التسليم إلى {city}",
+  "@bulkDeliverTo": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "bulkContactSupplier": "تواصل",
+  "bulkCall": "اتصال",
+  "bulkWhatsApp": "واتساب",
+  "bulkClosePost": "إغلاق المنشور",
+  "bulkClosed": "مغلق",
+  "bulkYours": "لك",
+  "bulkFormTitleLabel": "العنوان",
+  "bulkFormTitleHint": "مثال: ألواح 450 واط",
+  "bulkFormDescriptionLabel": "التفاصيل",
+  "bulkFormUnitLabel": "الوحدة",
+  "bulkFormUnitHint": "قطعة، لوح، كغ…",
+  "bulkTierQtyLabel": "من كمية",
+  "bulkTierPriceLabel": "سعر الوحدة (دولار)",
+  "bulkAddTier": "إضافة شريحة سعر",
+  "bulkRemoveTier": "حذف",
+  "bulkQuantityLabel": "الكمية المطلوبة",
+  "bulkTargetPriceLabel": "السعر المستهدف للوحدة بالدولار (اختياري)",
+  "bulkDeliveryCityLabel": "مدينة التسليم (اختياري)",
+  "bulkSubmitPost": "نشر",
+  "bulkFieldRequired": "مطلوب",
+  "bulkInvalidNumber": "أدخل رقماً صحيحاً",
+  "bulkPosted": "تم النشر",
+  "bulkPostFailed": "تعذّر النشر. حاول مجدداً.",
+  "bulkDuplicateTier": "كل شريحة تحتاج كمية مختلفة.",
+  "applyCountryLabel": "بلد الشركة",
+  "signInIdentifierLabel": "اسم المستخدم أو البريد الإلكتروني",
+  "bulkOpenMarket": "افتح سوق الأعمال B2B",
+  "bulkSortNewest": "الأحدث",
+  "bulkSortPriceLow": "السعر: من الأقل",
+  "bulkSortQtyHigh": "الكمية: من الأعلى",
+  "bulkNoResults": "لا توجد نتائج مطابقة.",
+  "bulkFormCategoryLabel": "الفئة (اختياري)",
+  "bulkFormCategoryNone": "بدون فئة",
+  "bulkLanguagesHint": "اكتب بأي لغة تريد — يراه المشترون بلغتهم عند توفرها.",
+  "bulkFormPhotoLabel": "صورة (اختياري)",
+  "bulkFormPhotoAdd": "أضف صورة",
+  "bulkFormPhotoChange": "تغيير الصورة",
+  "bulkTitleNeeded": "أضف عنواناً بلغة واحدة على الأقل."
 }

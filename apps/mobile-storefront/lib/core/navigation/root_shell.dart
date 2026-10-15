@@ -32,13 +32,26 @@ class RootShell extends StatefulWidget {
 class _RootShellState extends State<RootShell> {
   int _index = 0;
 
-  late final _tabs = [
-    HomeScreen(repository: widget.homeRepository),
-    const LearnScreen(),
-    const CartScreen(),
-    const OrdersScreen(),
-    const AccountScreen(),
-  ];
+  // Tabs are built on first visit, not at startup — otherwise Learn, Cart,
+  // Orders and Account all run their loading while Home is still fetching,
+  // competing for the network and slowing the first screen down. Once built
+  // a tab is kept alive (IndexedStack) so it retains its scroll/state.
+  final _visited = <int>{0};
+
+  Widget _buildTab(int i) {
+    switch (i) {
+      case 0:
+        return HomeScreen(repository: widget.homeRepository);
+      case 1:
+        return const LearnScreen();
+      case 2:
+        return const CartScreen();
+      case 3:
+        return const OrdersScreen();
+      default:
+        return const AccountScreen();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,16 +59,22 @@ class _RootShellState extends State<RootShell> {
     final l10n = AppLocalizations.of(context);
 
     return Scaffold(
-      body: IndexedStack(index: _index, children: _tabs),
+      body: IndexedStack(
+        index: _index,
+        children: [for (var i = 0; i < 5; i++) _visited.contains(i) ? _buildTab(i) : const SizedBox.shrink()],
+      ),
       bottomNavigationBar: AnimatedBuilder(
         animation: cart,
         builder: (context, _) {
           return BottomNavigationBar(
             currentIndex: _index,
-            onTap: (i) => setState(() => _index = i),
+            onTap: (i) => setState(() {
+              _visited.add(i);
+              _index = i;
+            }),
             type: BottomNavigationBarType.fixed,
             backgroundColor: AppColors.surface,
-            selectedItemColor: AppColors.ink900,
+            selectedItemColor: AppColors.primary,
             unselectedItemColor: AppColors.ink400,
             selectedLabelStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
             unselectedLabelStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),

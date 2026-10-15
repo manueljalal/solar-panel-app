@@ -29,53 +29,58 @@ class CompanyRowSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 172,
+      height: 92,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: 3,
+        itemCount: 5,
         separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.lg),
-        itemBuilder: (_, _) => const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _Bone(width: 96, height: 96, radius: AppSpacing.md),
-            SizedBox(height: AppSpacing.sm),
-            _Bone(width: 72, height: 14),
-            SizedBox(height: 6),
-            _Bone(width: 48, height: 12),
-          ],
+        itemBuilder: (_, _) => const SizedBox(
+          width: 68,
+          child: Column(
+            children: [
+              _Bone(width: 60, height: 60, radius: 30),
+              SizedBox(height: 8),
+              _Bone(width: 48, height: 11),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class ProductListSkeleton extends StatelessWidget {
-  const ProductListSkeleton({super.key});
+/// Two-column placeholder matching the product grid's tiles.
+class ProductGridSkeleton extends StatelessWidget {
+  const ProductGridSkeleton({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Widget tile() => const Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AspectRatio(
+            aspectRatio: 1,
+            child: _Bone(height: double.infinity, radius: 14),
+          ),
+          SizedBox(height: 8),
+          _Bone(width: 110, height: 14),
+          SizedBox(height: 6),
+          _Bone(width: 60, height: 13),
+        ],
+      ),
+    );
     return Column(
       children: List.generate(
-        3,
-        (_) => const Padding(
-          padding: EdgeInsets.only(bottom: AppSpacing.md),
+        2,
+        (_) => Padding(
+          padding: const EdgeInsets.only(bottom: AppSpacing.lg),
           child: Row(
             children: [
-              _Bone(width: 88, height: 88, radius: AppSpacing.md),
-              SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _Bone(width: 140, height: 14),
-                    SizedBox(height: 8),
-                    _Bone(width: 90, height: 12),
-                    SizedBox(height: 8),
-                    _Bone(width: 60, height: 14),
-                  ],
-                ),
-              ),
+              tile(),
+              const SizedBox(width: AppSpacing.md),
+              tile(),
             ],
           ),
         ),

@@ -8,8 +8,13 @@ import '../../../wattage_calculator/presentation/wattage_calculator_screen.dart'
 /// Wattage calculator — a gauge dial, not an icon-in-a-circle. Fills the
 /// larger cell of the Featured masonry so it reads as the anchor tile of
 /// the cluster. Tapping it opens the real calculator.
+///
+/// [compact] is the half-height variant used when the tile sits in the
+/// stacked column: a small dial beside the title and CTA.
 class WattageCalculatorCard extends StatelessWidget {
-  const WattageCalculatorCard({super.key});
+  const WattageCalculatorCard({super.key, this.compact = false});
+
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
@@ -24,57 +29,148 @@ class WattageCalculatorCard extends StatelessWidget {
         ),
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(AppSpacing.md),
+          padding: EdgeInsets.all(compact ? AppSpacing.sm : AppSpacing.md),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppRadii.card),
             boxShadow: AppShadows.card,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                width: 48,
-                height: 48,
-                child: CustomPaint(
-                  painter: _DialPainter(progress: 0.62),
-                  child: const Center(
-                    child: Column(
+          child: compact
+              ? _compactBody(l10n)
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: 48,
+                      height: 48,
+                      child: CustomPaint(
+                        painter: _DialPainter(progress: 0.62),
+                        child: const Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                '2.5',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w800,
+                                  height: 1.0,
+                                ),
+                              ),
+                              Text(
+                                'kW',
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 7,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      l10n.wattageCalculatorTitle,
+                      style: AppTypography.sectionTitle.copyWith(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      l10n.wattageCalculatorSubtitle,
+                      style: AppTypography.bodyMuted.copyWith(
+                        color: Colors.white70,
+                        fontSize: 11,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          '2.5',
-                          style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w800, height: 1.0),
+                          l10n.tryIt,
+                          style: AppTypography.link.copyWith(
+                            color: AppColors.accent,
+                            fontSize: 12,
+                          ),
                         ),
-                        Text('kW', style: TextStyle(color: Colors.white70, fontSize: 7, fontWeight: FontWeight.w600)),
+                        const Icon(
+                          Icons.arrow_forward,
+                          color: AppColors.accent,
+                          size: 12,
+                        ),
                       ],
                     ),
-                  ),
+                  ],
+                ),
+        ),
+      ),
+    );
+  }
+
+  Widget _compactBody(AppLocalizations l10n) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 38,
+          height: 38,
+          child: CustomPaint(
+            painter: _DialPainter(progress: 0.62),
+            child: const Center(
+              child: Text(
+                '2.5',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
-              const SizedBox(height: 10),
+            ),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Text(
                 l10n.wattageCalculatorTitle,
-                style: AppTypography.sectionTitle.copyWith(color: Colors.white, fontSize: 14),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: AppTypography.sectionTitle.copyWith(
+                  color: Colors.white,
+                  fontSize: 12.5,
+                  height: 1.15,
+                ),
               ),
               const SizedBox(height: 3),
-              Text(
-                l10n.wattageCalculatorSubtitle,
-                style: AppTypography.bodyMuted.copyWith(color: Colors.white70, fontSize: 11),
-              ),
-              const SizedBox(height: 6),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(l10n.tryIt, style: AppTypography.link.copyWith(color: AppColors.accent, fontSize: 12)),
-                  const Icon(Icons.arrow_forward, color: AppColors.accent, size: 12),
+                  Text(
+                    l10n.tryIt,
+                    style: AppTypography.link.copyWith(
+                      color: AppColors.accent,
+                      fontSize: 11,
+                    ),
+                  ),
+                  const Icon(
+                    Icons.arrow_forward,
+                    color: AppColors.accent,
+                    size: 11,
+                  ),
                 ],
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -96,16 +192,29 @@ class _DialPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4
       ..strokeCap = StrokeCap.round;
-    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), 2.36, 4.71, false, track);
+    canvas.drawArc(
+      Rect.fromCircle(center: center, radius: radius),
+      2.36,
+      4.71,
+      false,
+      track,
+    );
 
     final fill = Paint()
       ..color = AppColors.accent
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4
       ..strokeCap = StrokeCap.round;
-    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), 2.36, 4.71 * progress, false, fill);
+    canvas.drawArc(
+      Rect.fromCircle(center: center, radius: radius),
+      2.36,
+      4.71 * progress,
+      false,
+      fill,
+    );
   }
 
   @override
-  bool shouldRepaint(covariant _DialPainter oldDelegate) => oldDelegate.progress != progress;
+  bool shouldRepaint(covariant _DialPainter oldDelegate) =>
+      oldDelegate.progress != progress;
 }

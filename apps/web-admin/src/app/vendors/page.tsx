@@ -18,6 +18,10 @@ const rejectApplication = httpsCallable<{ applicationId: string; reason?: string
   functions,
   "admin-rejectVendorApplication",
 );
+const resendSetup = httpsCallable<{ applicationId: string }, { ok: true }>(
+  functions,
+  "admin-resendPasswordSetup",
+);
 
 export default function VendorsPage() {
   const [tab, setTab] = useState<ApplicationStatus>("pending");
@@ -25,6 +29,7 @@ export default function VendorsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
   const load = useCallback(async (status: ApplicationStatus) => {
     setLoading(true);
@@ -50,6 +55,20 @@ export default function VendorsPage() {
       await load(tab);
     } catch {
       setError("Couldn't approve that application — try again.");
+    } finally {
+      setBusyId(null);
+    }
+  }
+
+  async function onResend(app: VendorApplication) {
+    setBusyId(app.id);
+    setError(null);
+    setNotice(null);
+    try {
+      await resendSetup({ applicationId: app.id });
+      setNotice(`Setup link sent to ${app.email ?? "the applicant"}.`);
+    } catch {
+      setError("Couldn't send the setup link — try again.");
     } finally {
       setBusyId(null);
     }
@@ -84,6 +103,8 @@ export default function VendorsPage() {
           ))}
         </div>
 
+        {notice && <p style={{ marginBottom: 12 }}>{notice}</p>}
+
         <ApplicationList
           applications={applications}
           loading={loading}
@@ -101,7 +122,13 @@ export default function VendorsPage() {
                     </button>
                   </>
                 )
-              : undefined
+              : tab === "approved"
+                ? (app) => (
+                    <button className="btn btn-ghost" disabled={busyId === app.id} onClick={() => onResend(app)}>
+                      Resend setup link
+                    </button>
+                  )
+                : undefined
           }
         />
       </div>

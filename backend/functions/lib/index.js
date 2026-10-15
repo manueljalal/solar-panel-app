@@ -36,8 +36,9 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.auth = exports.storefront = exports.vendor = exports.admin = void 0;
+exports.auth = exports.storefront = exports.bulk = exports.vendor = exports.admin = void 0;
 exports.admin = __importStar(require("./admin"));
 exports.vendor = __importStar(require("./vendor"));
+exports.bulk = __importStar(require("./bulk"));
 exports.storefront = __importStar(require("./storefront"));
 exports.auth = __importStar(require("./auth"));

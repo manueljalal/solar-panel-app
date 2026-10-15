@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import '../../../shared/location/picked_location.dart';
 
@@ -24,12 +27,25 @@ class VendorApplicationRepository {
 
   final FirebaseFunctions _functions;
 
+  /// Uploads the company image through vendor-uploadImage and returns the
+  /// URL the server issued. submitApplication only accepts a URL from this
+  /// endpoint (scoped to the caller's own folder), never an arbitrary one.
+  Future<String> uploadCompanyLogo(Uint8List bytes) async {
+    final result = await _functions.httpsCallable('vendor-uploadImage').call({
+      'purpose': 'company-logo',
+      'data': base64Encode(bytes),
+    });
+    return (result.data as Map)['url'] as String;
+  }
+
   Future<void> submit({
     required String businessName,
     required String city,
     required String address,
     required String email,
     required String note,
+    required String country,
+    required String logoUrl,
     required PickedLocation location,
   }) async {
     final callable = _functions.httpsCallable('vendor-submitApplication');
@@ -39,6 +55,8 @@ class VendorApplicationRepository {
       'address': address,
       'email': email,
       'note': note,
+      'country': country,
+      'logoUrl': logoUrl,
       'location': location.toJson(),
     });
   }

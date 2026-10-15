@@ -6,9 +6,13 @@ export interface VendorApplication {
   id: string;
   businessName: string;
   city: string;
+  address?: string;
+  country?: "IQ" | "CN";
+  location?: { latitude: number; longitude: number; address?: string } | null;
   phone: string;
   email?: string;
   note?: string;
+  logoUrl?: string;
   status: ApplicationStatus;
   uid: string;
   rejectionReason?: string | null;
@@ -35,12 +39,37 @@ export function ApplicationList({
     <div>
       {applications.map((app) => (
         <div className="app-row" key={app.id}>
-          <div>
+          {app.logoUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={app.logoUrl}
+              alt=""
+              style={{ width: 56, height: 56, objectFit: "cover", borderRadius: 8, border: "1px solid var(--line)" }}
+            />
+          )}
+          <div style={{ flex: 1 }}>
             <div className="app-row-title">{app.businessName}</div>
             <div className="app-row-meta">
-              {app.city} · {app.phone}
+              {app.country === "CN" ? "China" : "Iraq"} · {app.city} · {app.phone}
               {app.email ? ` · ${app.email}` : ""}
             </div>
+            {(app.address || app.location) && (
+              <div className="app-row-meta">
+                {app.address}
+                {app.location && (
+                  <>
+                    {app.address ? " · " : ""}
+                    <a
+                      href={`https://www.google.com/maps?q=${app.location.latitude},${app.location.longitude}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View on map
+                    </a>
+                  </>
+                )}
+              </div>
+            )}
             {app.note && <div className="app-row-meta">{app.note}</div>}
             {app.status === "rejected" && app.rejectionReason && (
               <div className="app-row-meta">Reason: {app.rejectionReason}</div>

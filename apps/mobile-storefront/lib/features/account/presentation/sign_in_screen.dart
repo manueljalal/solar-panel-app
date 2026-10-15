@@ -187,7 +187,7 @@ class _SignInScreenState extends State<SignInScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AuthTextField(
-            label: l10n.usernameLabel,
+            label: l10n.signInIdentifierLabel,
             controller: _usernameController,
             forceLatinKeyboard: true,
             autofillHints: const [AutofillHints.username],

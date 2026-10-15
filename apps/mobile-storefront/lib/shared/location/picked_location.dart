@@ -4,17 +4,21 @@
 /// coordinates, which is what gets stored and used for anything precise
 /// (e.g. showing the pin again later).
 class PickedLocation {
-  const PickedLocation({required this.latitude, required this.longitude, required this.address});
+  const PickedLocation({
+    required this.latitude,
+    required this.longitude,
+    required this.address,
+  });
 
   final double latitude;
   final double longitude;
   final String address;
 
   Map<String, dynamic> toJson() => {
-        'latitude': latitude,
-        'longitude': longitude,
-        'address': address,
-      };
+    'latitude': latitude,
+    'longitude': longitude,
+    'address': address,
+  };
 
   static PickedLocation? fromJson(Map<String, dynamic>? json) {
     if (json == null) return null;

@@ -36,11 +36,12 @@ exports.approveVendorApplication = (0, https_1.onCall)({ region: "us-central1", 
             city: application.city,
             address: application.address ?? null,
             phone: application.phone,
+            country: application.country === "CN" ? "CN" : "IQ",
             location: application.location ?? null,
             status: "approved",
             rating: 0,
             reviewCount: 0,
-            logoUrl: "",
+            logoUrl: application.logoUrl ?? "",
             createdAt: firestore_1.FieldValue.serverTimestamp(),
         });
         tx.update(appRef, {
@@ -58,14 +59,12 @@ exports.approveVendorApplication = (0, https_1.onCall)({ region: "us-central1", 
         role: "vendor",
         vendorId: vendorRef.id,
     });
-    // Denormalized onto users/{uid} so vendorPasswordSignIn can look the
-    // account up by email once a password is set — vendorApplications
-    // itself isn't client-readable (see firestore.rules) and isn't keyed
-    // by email anyway.
+    // Approval ends with the vendor setting their password: a single-use,
+    // 24h link goes to the application email and lands on the portal's
+    // /set-password page (auth-setVendorPassword), which signs them in.
     if (application.email) {
+        // Lets the vendor sign in with this email (see resolveAccountUid).
         await firebase_1.db.collection("users").doc(application.uid).set({ email: application.email }, { merge: true });
-    }
-    if (application.email) {
         const passwordSetupToken = await (0, password_setup_token_1.createPasswordSetupToken)(application.uid);
         await (0, vendor_application_emails_1.sendVendorApprovedEmail)(application.email, application.businessName, passwordSetupToken);
     }

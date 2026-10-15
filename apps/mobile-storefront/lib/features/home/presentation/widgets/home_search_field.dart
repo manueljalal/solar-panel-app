@@ -21,9 +21,9 @@ class HomeSearchField extends StatelessWidget {
       borderRadius: BorderRadius.circular(AppRadii.searchBar),
       child: InkWell(
         borderRadius: BorderRadius.circular(AppRadii.searchBar),
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const SearchScreen()),
-        ),
+        onTap: () => Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (_) => const SearchScreen())),
         child: Container(
           height: 48,
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
