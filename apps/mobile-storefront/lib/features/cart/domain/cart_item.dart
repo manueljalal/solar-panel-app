@@ -7,18 +7,34 @@ class CartItem {
   final HomeProduct product;
   final int quantity;
 
-  /// Parses HomeProduct.price ("$189", "$1,240") back into a number for
-  /// totals math. Fragile by construction — HomeProduct stores price as a
-  /// display string because that's what the product list needs; once
-  /// products come with a real numeric price field end-to-end (the
-  /// Firestore doc already has one — see home_repository.dart), thread
-  /// that through instead of re-parsing text.
+  /// Products read from Firestore carry their real numeric price
+  /// (HomeProduct.priceValue). Only hand-built fixtures lack it, and for
+  /// those the display string ("$189", "$1,240") is parsed instead. Either
+  /// way this is display-only: placeOrder re-reads every price server-side.
   double get unitPrice {
+    final value = product.priceValue;
+    if (value != null) return value;
     final digits = product.price.replaceAll(RegExp(r'[^0-9.]'), '');
     return double.tryParse(digits) ?? 0;
   }
 
   double get lineTotal => unitPrice * quantity;
 
+  String get currency => product.currency;
+
+  /// Products from Firestore are matched by doc id; fixtures without one
+  /// fall back to their title.
+  String get key => product.id.isNotEmpty ? product.id : product.title;
+
   CartItem copyWith({int? quantity}) => CartItem(product: product, quantity: quantity ?? this.quantity);
+
+  Map<String, Object?> toJson() => {'product': product.toJson(), 'quantity': quantity};
+
+  static CartItem? fromJson(Object? json) {
+    if (json is! Map) return null;
+    final product = json['product'];
+    final quantity = json['quantity'];
+    if (product is! Map || quantity is! int || quantity <= 0) return null;
+    return CartItem(product: HomeProduct.fromJson(product.cast<String, Object?>()), quantity: quantity);
+  }
 }

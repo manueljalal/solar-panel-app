@@ -5,6 +5,7 @@ import '../../features/cart/presentation/cart_screen.dart';
 import '../../features/home/data/home_repository.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/learn/presentation/learn_screen.dart';
+import '../../features/orders/data/order_repository.dart';
 import '../../features/orders/presentation/orders_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
@@ -19,11 +20,22 @@ import '../theme/app_colors.dart';
 /// behavior users expect from a bottom-nav app.
 ///
 /// [homeRepository] threads through to the Home tab the same way it used
-/// to reach HomeScreen directly, so widget tests can still inject a fake.
+/// to reach HomeScreen directly, so widget tests can still inject a fake;
+/// [orderRepository] does the same for the Cart (checkout) and Orders tabs.
 class RootShell extends StatefulWidget {
-  const RootShell({super.key, this.homeRepository});
+  const RootShell({super.key, this.homeRepository, this.orderRepository});
 
   final HomeRepository? homeRepository;
+  final OrderRepository? orderRepository;
+
+  static const ordersTab = 3;
+
+  /// Switches the bottom nav from inside one of the tabs (e.g. the Cart
+  /// tab after checkout). [context] must be below RootShell — a pushed
+  /// route's context isn't, so callers pass their tab's own context.
+  static void showTab(BuildContext context, int index) {
+    context.findAncestorStateOfType<_RootShellState>()?._select(index);
+  }
 
   @override
   State<RootShell> createState() => _RootShellState();
@@ -38,6 +50,11 @@ class _RootShellState extends State<RootShell> {
   // a tab is kept alive (IndexedStack) so it retains its scroll/state.
   final _visited = <int>{0};
 
+  void _select(int i) => setState(() {
+        _visited.add(i);
+        _index = i;
+      });
+
   Widget _buildTab(int i) {
     switch (i) {
       case 0:
@@ -45,9 +62,9 @@ class _RootShellState extends State<RootShell> {
       case 1:
         return const LearnScreen();
       case 2:
-        return const CartScreen();
+        return CartScreen(orderRepository: widget.orderRepository);
       case 3:
-        return const OrdersScreen();
+        return OrdersScreen(repository: widget.orderRepository);
       default:
         return const AccountScreen();
     }
@@ -68,10 +85,7 @@ class _RootShellState extends State<RootShell> {
         builder: (context, _) {
           return BottomNavigationBar(
             currentIndex: _index,
-            onTap: (i) => setState(() {
-              _visited.add(i);
-              _index = i;
-            }),
+            onTap: _select,
             type: BottomNavigationBarType.fixed,
             backgroundColor: AppColors.surface,
             selectedItemColor: AppColors.primary,

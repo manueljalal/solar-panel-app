@@ -1,20 +1,23 @@
 # Solary platform — monorepo structure
 
-Multi-vendor solar marketplace: 3 web apps (structure only) + 1 Flutter
-customer marketplace app (built out, connected to a real Firebase backend).
+Multi-vendor solar marketplace: a Flutter customer app plus admin and vendor
+web portals, all on one Firebase backend. The public web storefront is still
+a placeholder.
 
 ```
 apps/
-  web-admin/          Next.js — Super Admin console (structure only)
-  web-vendor/          Next.js — Vendor/business owner portal (structure only)
-  web-storefront/      Next.js — Public customer marketplace (structure only)
+  web-admin/          Next.js — Super Admin console (vendors, orders, categories,
+                        banners, Learn; users/disputes/analytics/settings TODO)
+  web-vendor/          Next.js — Vendor portal (apply, sign in, products)
+  web-storefront/      Next.js — Public customer marketplace (placeholder only)
   mobile-storefront/   Flutter — the customer-facing marketplace app (built out, live backend)
 
 backend/
   functions/           Firebase Cloud Functions (TypeScript), grouped by
-                        role: src/admin, src/vendor, src/storefront, src/shared
-                        — still empty stubs; storefront reads go direct from
-                        the Flutter app to Firestore for now (see below)
+                        domain: src/admin, src/vendor, src/storefront,
+                        src/auth, src/bulk, src/shared. Every client write goes
+                        through one of these; public reads go direct to
+                        Firestore
   firestore/           firestore.rules (deployed live) + firestore.indexes.json
 
 packages/
@@ -39,7 +42,7 @@ app was built and then deleted once this was clarified; don't recreate it
 without checking with the user first.
 
 - **customer** — browses/compares/buys, no auth wall. `apps/mobile-storefront`
-  (built) and eventually `apps/web-storefront` (structure only).
+  (built) and eventually `apps/web-storefront` (placeholder).
 - **vendor** — applies via the in-app "Apply" card; day-to-day business
   management (if it ever needs a dedicated UI) is a `apps/web-vendor`
   concern, not mobile.
@@ -105,12 +108,11 @@ all no-ops). That's fixed:
   Orders/Account are 5 real, distinct screens behind an `IndexedStack`
   (each keeps its scroll state when you switch away). Previously only
   Home existed; the other 4 tabs did nothing.
-- **Cart** — real in-memory state (`features/cart/data/cart_controller.dart`),
-  shared app-wide via `CartScope`. "Add to cart" on product detail adds a
-  real item; the Cart tab shows it with quantity controls and a live
-  subtotal; the nav bar's Cart icon shows a live item-count badge.
-  In-memory only — cleared on app restart; not yet backed by Firestore
-  (see Next steps).
+- **Cart** — `features/cart/data/cart_controller.dart`, shared app-wide via
+  `CartScope` and saved on the device. "Add to cart" on product detail adds a
+  real item. The Cart tab has quantity controls, per-currency totals and
+  Checkout. The nav bar's Cart icon shows a live item-count badge. See
+  "Orders and checkout" below.
 - **Search** — tapping the home search field opens a real search screen
   that filters the live product catalog as you type (debounced). Client-
   side filtering, not a search index — fine at 4 products, revisit if the
@@ -119,40 +121,66 @@ all no-ops). That's fixed:
   (`features/wattage_calculator/domain/system_size_estimate.dart`):
   daily usage ÷ peak sun hours → system kW → panel count. Two steppers,
   live-updating result. Previously just a static card.
-- **Vendor Apply** — a real form that writes to a new `vendorApplications`
-  Firestore collection (rules deployed, public write gated to the
-  submitter's own uid). No admin-side UI reads these yet — an honest gap,
-  not hidden.
-- **Request quote** — a real form (bottom sheet) that writes to a new
-  `quoteRequests` collection, same pattern/same gap as vendor applications.
+- **Vendor Apply** — a form that submits through `vendor-submitApplication`.
+  Admins review applications on the web-admin Vendors page.
+- **Request quote** — a bottom-sheet form that submits through
+  `storefront-submitQuoteRequest`. No vendor or admin screen reads these
+  yet (see Next steps).
 - **Learn** — 5 real, written articles (not lorem ipsum), tappable into a
   detail screen.
 - **Account** — shows the actual signed-in anonymous uid, proving auth is
   live and not just a background detail nobody sees.
 
-**Still not done, stated plainly**: Checkout doesn't exist — the Cart
-screen's "Checkout" button says so via a SnackBar instead of pretending.
-Cart state isn't persisted (Firestore-backed cart is the natural next
-step, now that a uid exists to key it on). `quoteRequests` and
-`vendorApplications` have no vendor/admin-facing UI yet — submissions go
-into Firestore and stay there. No real vendor-uploaded photography
-(product/vendor images are still the same verified-working stock photos).
-No Cloud Functions — the `backend/functions/src/*` folders are still
-empty barrels; every write above goes directly from the client, gated by
-Firestore rules rather than server-side logic.
+**Still not done**: no screen reads `quoteRequests` yet, and product and
+vendor images are still stock photos rather than vendor uploads.
+
+## Orders and checkout
+
+Checkout is **cash on delivery**, with no payment gateway, so the app never
+collects card details.
+
+- **Cart** — `CartController`, saved on the device
+  (`features/cart/data/cart_storage.dart`) so it survives restarts. Lines are
+  keyed by product id. Totals are kept per currency because products are
+  priced in USD or IQD and the two are never added together.
+- **Checkout** (`features/checkout/`) — name, phone, city, address and an
+  optional note. Phone input accepts `0750…`, `00964…`, `+964…` and
+  Eastern Arabic digits, and is normalized to E.164 on both the client and
+  the server.
+- **`storefront-placeOrder`** — the client sends only product ids and
+  quantities. The function reads each product's price, name and vendor
+  itself and rejects missing or out-of-stock products, so a tampered client
+  can't change what it pays. It writes `orders/{id}` with `status: placed`,
+  `vendorIds`, per-currency `totals`, and a `statusHistory`.
+- **Orders tab** — a live query of the customer's own orders (the rules
+  allow only `uid == auth.uid`), with a detail screen. An order can be
+  cancelled from there until it's confirmed (`storefront-cancelOrder`).
+- **Admin → Orders** (`apps/web-admin/src/app/orders`) — a live list per
+  status. Moving an order along placed → confirmed → shipped → delivered,
+  or cancelling it, goes through `admin-updateOrderStatus`, which enforces
+  the allowed transitions and bumps each product's `sold` count on
+  delivery.
+- **Rules/indexes** — `orders` is readable by its customer, by any vendor
+  in `vendorIds`, and by super_admin; nobody can write it from a client.
+  Three composite indexes back the queries above.
+
+**Deploy needed:** `firebase deploy --only functions,firestore:rules,firestore:indexes`.
+Until then, Place order fails with a "try again" error.
 
 ## Status
-- `apps/mobile-storefront` — 12 screens built (home, product detail,
-  cart, search, wattage calculator, vendor apply, quote request, learn ×2,
-  orders, account), all reachable through real navigation, all reading or
-  writing live Firestore where that makes sense. `flutter analyze` clean;
-  `flutter test` — **9 passing** (up from 5 — added cart flow, bottom-nav
-  tab coverage, search filtering, wattage-calculator math) + 2 integration
-  tests against real Firestore, skipped by default (see below).
-- `apps/web-admin`, `apps/web-vendor`, `apps/web-storefront` — folders,
-  manifests, and route stubs only, untouched since the mobile pivot.
-- `backend/functions/`, `packages/` — structure and typed models only, no
-  Cloud Functions logic wired up yet.
+- `apps/mobile-storefront` — home, product detail, company store, search,
+  cart, checkout, orders and order detail, wattage calculator, Learn, bulk
+  market, account (WhatsApp OTP sign-in/up), vendor apply/dashboard/product
+  form. Trilingual (en / ar / ckb). `flutter analyze` shows no errors or
+  warnings. `flutter test`: 19 pass, 4 fail. The failing tests
+  (`auth_screens`, `carousel`, `masonry`, `product_detail`) were written for
+  an older UI (username sign-in, hard-coded banners) and need rewriting.
+- `apps/web-admin` — vendor applications, orders, categories, banners,
+  Learn. Users, Disputes, Analytics and Settings are "Coming soon" pages.
+- `apps/web-vendor` — apply, set password, sign in, product create/edit.
+- `apps/web-storefront` — placeholder page only.
+- `backend/functions` — `npm test` runs unit tests for the order rules.
+  Nothing else in the backend has tests yet.
 
 ## Running the app
 ```
@@ -184,16 +212,20 @@ application-default login`) — no service account key file needed or
 checked in.
 
 ## Next steps
-1. Build cart + checkout screens; wire "Add to cart" (currently a no-op
-   button on the product detail screen) — there's now a real `uid` from
-   anonymous auth to attach a cart to.
-2. Fill in `backend/functions/src/*/index.ts` — first candidates: a
-   `submitVendorApplication` callable (the home screen's "Apply" card has
-   no destination yet) and a checkout-session function once cart exists.
-3. Build out the remaining storefront screens: vendor profile page,
-   search/filter results.
-4. When real accounts matter (order history persisting past a reinstall,
-   etc.), add the anonymous → email/phone upgrade path via
-   `linkWithCredential` — noted but not built in `auth_repository.dart`.
-5. Decide whether `web-storefront` (browser) is still wanted alongside the
-   Flutter app, or whether mobile is now the primary customer surface.
+1. Deploy the order functions, rules and indexes (see above), then place a
+   real order from a device and walk it through the admin Orders page.
+2. Show vendors the orders that include their products in `web-vendor`
+   (rules already allow reading by `vendorIds`; the
+   `vendorIds`/`createdAt` index exists).
+3. Notify on new orders (WhatsApp/email to vendor and admin), e.g. an
+   `onDocumentCreated("orders/{id}")` trigger reusing `shared/mail` and
+   `shared/whatsapp`.
+4. Give `quoteRequests` a reader: they store the vendor's display name, not
+   its id, so add `vendorId` first, then list them for vendors and admins.
+5. Fill in the remaining admin pages (Users, Disputes, Analytics,
+   Settings).
+6. Rewrite the 4 out-of-date mobile widget tests.
+7. Decide whether `web-storefront` is still wanted. Also replace the
+   placeholder colors in `packages/ui-web` (see `docs/design-notes.md`).
+8. Link anonymous sessions to the real account on sign-in
+   (`linkWithCredential`), so a guest's orders stay with them.

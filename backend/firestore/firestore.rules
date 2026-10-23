@@ -73,9 +73,18 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // orders/{orderId}
+    // orders/{orderId} — created only by storefront-placeOrder (prices
+    // are read server-side from `products`, never taken from the client)
+    // and changed only by storefront-cancelOrder / admin-updateOrderStatus.
+    // Readable by the customer who placed it, by any vendor whose product
+    // is on it (vendorIds), and by super_admin. Holds the buyer's phone and
+    // address, so there is no public read.
     match /orders/{orderId} {
-      allow read: if false; // enforced in Functions (owner/vendor/admin only)
+      allow read: if isSignedIn() && (
+        resource.data.uid == request.auth.uid
+        || role() == 'super_admin'
+        || (role() == 'vendor' && request.auth.token.get('vendorId', '') in resource.data.vendorIds)
+      );
       allow write: if false;
     }
 

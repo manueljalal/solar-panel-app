@@ -19,3 +19,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // `allow read: if true` rules — only writes that need a verified uid or
 // server-side validation go through a callable.
 __exportStar(require("./quotes"), exports);
+__exportStar(require("./orders"), exports);

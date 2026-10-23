@@ -388,10 +388,126 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get checkoutNotBuiltYet => 'Checkout isn\'t built yet — coming next.';
+  String get checkout => 'Checkout';
 
   @override
-  String get checkout => 'Checkout';
+  String get checkoutContactSection => 'Contact';
+
+  @override
+  String get checkoutNameLabel => 'Full name';
+
+  @override
+  String get checkoutNameValidator => 'Enter your name';
+
+  @override
+  String get checkoutPhoneHint => '0750 123 4567';
+
+  @override
+  String get checkoutPhoneInvalid =>
+      'Enter a valid phone number, e.g. 0750 123 4567';
+
+  @override
+  String get checkoutDeliverySection => 'Delivery';
+
+  @override
+  String get checkoutAddressHint => 'Street, neighbourhood, nearest landmark';
+
+  @override
+  String get checkoutNoteLabel => 'Note for the seller (optional)';
+
+  @override
+  String get checkoutPaymentSection => 'Payment';
+
+  @override
+  String get checkoutCashOnDelivery => 'Cash on delivery';
+
+  @override
+  String get checkoutCashOnDeliveryBody =>
+      'Pay the seller when your order arrives.';
+
+  @override
+  String get checkoutSummarySection => 'Order summary';
+
+  @override
+  String get checkoutTotal => 'Total';
+
+  @override
+  String get checkoutPlaceOrder => 'Place order';
+
+  @override
+  String get checkoutFailed => 'Couldn\'t place your order — try again.';
+
+  @override
+  String get orderPlacedTitle => 'Order placed';
+
+  @override
+  String get orderPlacedBody =>
+      'The seller will call you to confirm delivery. You can follow your order in the Orders tab.';
+
+  @override
+  String get orderPlacedViewOrders => 'View my orders';
+
+  @override
+  String get ordersLoadError => 'Couldn\'t load your orders.';
+
+  @override
+  String orderNumber(String id) {
+    return 'Order #$id';
+  }
+
+  @override
+  String orderItemCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get orderStatusPlaced => 'Placed';
+
+  @override
+  String get orderStatusConfirmed => 'Confirmed';
+
+  @override
+  String get orderStatusShipped => 'On the way';
+
+  @override
+  String get orderStatusDelivered => 'Delivered';
+
+  @override
+  String get orderStatusCancelled => 'Cancelled';
+
+  @override
+  String get orderDetailTitle => 'Order details';
+
+  @override
+  String get orderItemsSection => 'Items';
+
+  @override
+  String get orderDeliverTo => 'Deliver to';
+
+  @override
+  String get orderCancel => 'Cancel order';
+
+  @override
+  String get orderCancelConfirmTitle => 'Cancel this order?';
+
+  @override
+  String get orderCancelConfirmBody =>
+      'The seller hasn\'t confirmed it yet, so it can still be cancelled.';
+
+  @override
+  String get orderKeep => 'Keep order';
+
+  @override
+  String get orderCancelled => 'Order cancelled.';
+
+  @override
+  String get orderCancelFailed => 'Couldn\'t cancel the order — try again.';
 
   @override
   String get perUnit => '/ unit';
@@ -493,8 +609,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ordersEmptyTitle => 'No orders yet';
 
   @override
-  String get ordersEmptyBody =>
-      'Orders will show up here once checkout is built.';
+  String get ordersEmptyBody => 'Orders you place will show up here.';
 
   @override
   String get learnTitle => 'Learn';

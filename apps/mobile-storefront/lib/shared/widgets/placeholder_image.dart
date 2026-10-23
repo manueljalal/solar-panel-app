@@ -24,9 +24,22 @@ class NetworkImageWithFallback extends StatelessWidget {
   /// decoded image in memory.
   final int cacheWidth;
 
+  /// Off only in widget tests (test/flutter_test_config.dart): the disk
+  /// cache needs platform plugins flutter_test doesn't have, so its loading
+  /// spinner never resolves and every pumpAndSettle times out.
+  static bool useDiskCache = true;
+
   @override
   Widget build(BuildContext context) {
     if (url.isEmpty) return _Placeholder(icon: fallbackIcon);
+    if (!useDiskCache) {
+      return Image.network(
+        url,
+        fit: fit,
+        cacheWidth: cacheWidth,
+        errorBuilder: (context, _, _) => _Placeholder(icon: fallbackIcon),
+      );
+    }
     // Cached on disk (not just in memory) so a cold start doesn't re-download
     // every image, and decoded at display size to keep memory low.
     return CachedNetworkImage(

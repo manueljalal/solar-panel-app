@@ -2,18 +2,26 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../core/navigation/root_shell.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../shared/formatting/money.dart';
 import '../../../shared/widgets/placeholder_image.dart';
+import '../../checkout/presentation/checkout_screen.dart';
+import '../../checkout/presentation/order_placed_screen.dart';
+import '../../orders/data/order_repository.dart';
 import '../data/cart_scope.dart';
 import '../domain/cart_item.dart';
 
 /// Real cart screen — reads live from CartScope, so it always reflects
 /// whatever was added from product detail. Quantity can be changed or
-/// removed inline; "Checkout" is a real navigation target (checkout
-/// screen still needs to be built — this button surfaces that instead of
-/// hiding it as a silent no-op).
+/// removed inline; "Checkout" opens CheckoutScreen, and after a placed
+/// order this screen shows the confirmation and can jump to the Orders tab.
+///
+/// [orderRepository] passes through to CheckoutScreen for widget tests.
 class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+  const CartScreen({super.key, this.orderRepository});
+
+  final OrderRepository? orderRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +50,27 @@ class CartScreen extends StatelessWidget {
                   itemBuilder: (context, i) => _CartRow(item: cart.items[i]),
                 ),
               ),
-              _CartSummary(subtotal: cart.subtotal, itemCount: cart.itemCount),
+              _CartSummary(
+                totals: cart.totals,
+                itemCount: cart.itemCount,
+                onCheckout: () => _checkout(context),
+              ),
             ],
           );
         },
       ),
     );
+  }
+
+  Future<void> _checkout(BuildContext context) async {
+    final orderId = await Navigator.of(context).push<String>(
+      MaterialPageRoute(builder: (_) => CheckoutScreen(repository: orderRepository)),
+    );
+    if (orderId == null || !context.mounted) return;
+    final viewOrders = await Navigator.of(context).push<bool>(
+      MaterialPageRoute(builder: (_) => OrderPlacedScreen(orderId: orderId)),
+    );
+    if (viewOrders == true && context.mounted) RootShell.showTab(context, RootShell.ordersTab);
   }
 }
 
@@ -163,10 +186,11 @@ class _QtyButton extends StatelessWidget {
 }
 
 class _CartSummary extends StatelessWidget {
-  const _CartSummary({required this.subtotal, required this.itemCount});
+  const _CartSummary({required this.totals, required this.itemCount, required this.onCheckout});
 
-  final double subtotal;
+  final Map<String, double> totals;
   final int itemCount;
+  final VoidCallback onCheckout;
 
   @override
   Widget build(BuildContext context) {
@@ -187,16 +211,13 @@ class _CartSummary extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(l10n.cartSubtotal(itemCount), style: AppTypography.bodyMuted),
-                  Text('\$${subtotal.toStringAsFixed(2)}', style: AppTypography.price),
+                  const SizedBox(width: AppSpacing.md),
+                  Flexible(child: Text(formatTotals(totals), style: AppTypography.price, textAlign: TextAlign.end)),
                 ],
               ),
               const SizedBox(height: AppSpacing.md),
               ElevatedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(l10n.checkoutNotBuiltYet)),
-                  );
-                },
+                onPressed: onCheckout,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.ink,
                   foregroundColor: Colors.white,

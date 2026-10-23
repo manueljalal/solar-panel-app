@@ -392,10 +392,127 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get checkoutNotBuiltYet => 'الدفع غير متاح بعد — قريبًا.';
+  String get checkout => 'الدفع';
 
   @override
-  String get checkout => 'الدفع';
+  String get checkoutContactSection => 'معلومات التواصل';
+
+  @override
+  String get checkoutNameLabel => 'الاسم الكامل';
+
+  @override
+  String get checkoutNameValidator => 'أدخل اسمك';
+
+  @override
+  String get checkoutPhoneHint => '0750 123 4567';
+
+  @override
+  String get checkoutPhoneInvalid => 'أدخل رقم هاتف صحيحًا، مثل 0750 123 4567';
+
+  @override
+  String get checkoutDeliverySection => 'التوصيل';
+
+  @override
+  String get checkoutAddressHint => 'الشارع، الحي، أقرب معلم';
+
+  @override
+  String get checkoutNoteLabel => 'ملاحظة للبائع (اختياري)';
+
+  @override
+  String get checkoutPaymentSection => 'الدفع';
+
+  @override
+  String get checkoutCashOnDelivery => 'الدفع عند الاستلام';
+
+  @override
+  String get checkoutCashOnDeliveryBody => 'ادفع للبائع عند وصول طلبك.';
+
+  @override
+  String get checkoutSummarySection => 'ملخص الطلب';
+
+  @override
+  String get checkoutTotal => 'المجموع';
+
+  @override
+  String get checkoutPlaceOrder => 'تأكيد الطلب';
+
+  @override
+  String get checkoutFailed => 'تعذّر إرسال طلبك — حاول مرة أخرى.';
+
+  @override
+  String get orderPlacedTitle => 'تم إرسال الطلب';
+
+  @override
+  String get orderPlacedBody =>
+      'سيتصل بك البائع لتأكيد التوصيل. يمكنك متابعة طلبك من تبويب الطلبات.';
+
+  @override
+  String get orderPlacedViewOrders => 'عرض طلباتي';
+
+  @override
+  String get ordersLoadError => 'تعذّر تحميل طلباتك.';
+
+  @override
+  String orderNumber(String id) {
+    return 'الطلب #$id';
+  }
+
+  @override
+  String orderItemCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count عنصر',
+      many: '$count عنصرًا',
+      few: '$count عناصر',
+      two: 'عنصران',
+      one: 'عنصر واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get orderStatusPlaced => 'تم الإرسال';
+
+  @override
+  String get orderStatusConfirmed => 'مؤكد';
+
+  @override
+  String get orderStatusShipped => 'في الطريق';
+
+  @override
+  String get orderStatusDelivered => 'تم التوصيل';
+
+  @override
+  String get orderStatusCancelled => 'ملغى';
+
+  @override
+  String get orderDetailTitle => 'تفاصيل الطلب';
+
+  @override
+  String get orderItemsSection => 'المنتجات';
+
+  @override
+  String get orderDeliverTo => 'التوصيل إلى';
+
+  @override
+  String get orderCancel => 'إلغاء الطلب';
+
+  @override
+  String get orderCancelConfirmTitle => 'إلغاء هذا الطلب؟';
+
+  @override
+  String get orderCancelConfirmBody =>
+      'لم يؤكده البائع بعد، لذا لا يزال بالإمكان إلغاؤه.';
+
+  @override
+  String get orderKeep => 'الإبقاء على الطلب';
+
+  @override
+  String get orderCancelled => 'تم إلغاء الطلب.';
+
+  @override
+  String get orderCancelFailed => 'تعذّر إلغاء الطلب — حاول مرة أخرى.';
 
   @override
   String get perUnit => '/ للوحدة';
@@ -498,7 +615,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ordersEmptyTitle => 'لا توجد طلبات بعد';
 
   @override
-  String get ordersEmptyBody => 'ستظهر الطلبات هنا بمجرد إتاحة الدفع.';
+  String get ordersEmptyBody => 'ستظهر الطلبات التي ترسلها هنا.';
 
   @override
   String get learnTitle => 'تعلّم';

@@ -158,8 +158,56 @@
       }
     }
   },
-  "checkoutNotBuiltYet": "Checkout isn't built yet — coming next.",
   "checkout": "Checkout",
+  "checkoutContactSection": "Contact",
+  "checkoutNameLabel": "Full name",
+  "checkoutNameValidator": "Enter your name",
+  "checkoutPhoneHint": "0750 123 4567",
+  "checkoutPhoneInvalid": "Enter a valid phone number, e.g. 0750 123 4567",
+  "checkoutDeliverySection": "Delivery",
+  "checkoutAddressHint": "Street, neighbourhood, nearest landmark",
+  "checkoutNoteLabel": "Note for the seller (optional)",
+  "checkoutPaymentSection": "Payment",
+  "checkoutCashOnDelivery": "Cash on delivery",
+  "checkoutCashOnDeliveryBody": "Pay the seller when your order arrives.",
+  "checkoutSummarySection": "Order summary",
+  "checkoutTotal": "Total",
+  "checkoutPlaceOrder": "Place order",
+  "checkoutFailed": "Couldn't place your order — try again.",
+  "orderPlacedTitle": "Order placed",
+  "orderPlacedBody": "The seller will call you to confirm delivery. You can follow your order in the Orders tab.",
+  "orderPlacedViewOrders": "View my orders",
+  "ordersLoadError": "Couldn't load your orders.",
+  "orderNumber": "Order #{id}",
+  "@orderNumber": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "orderItemCount": "{count, plural, one {1 item} other {{count} items}}",
+  "@orderItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "orderStatusPlaced": "Placed",
+  "orderStatusConfirmed": "Confirmed",
+  "orderStatusShipped": "On the way",
+  "orderStatusDelivered": "Delivered",
+  "orderStatusCancelled": "Cancelled",
+  "orderDetailTitle": "Order details",
+  "orderItemsSection": "Items",
+  "orderDeliverTo": "Deliver to",
+  "orderCancel": "Cancel order",
+  "orderCancelConfirmTitle": "Cancel this order?",
+  "orderCancelConfirmBody": "The seller hasn't confirmed it yet, so it can still be cancelled.",
+  "orderKeep": "Keep order",
+  "orderCancelled": "Order cancelled.",
+  "orderCancelFailed": "Couldn't cancel the order — try again.",
   "perUnit": "/ unit",
   "description": "Description",
   "noDescriptionYet": "No description provided yet.",
@@ -220,7 +268,7 @@
   "wattageDisclaimer": "Estimate only — a vendor will confirm exact sizing after a site visit.",
   "ordersTitle": "Orders",
   "ordersEmptyTitle": "No orders yet",
-  "ordersEmptyBody": "Orders will show up here once checkout is built.",
+  "ordersEmptyBody": "Orders you place will show up here.",
   "learnTitle": "Learn",
   "learnArticleWattageTitle": "Choosing the right wattage",
   "learnArticleWattageBody": "A typical home uses 10–15 kWh per day. Divide your daily usage by your roof's peak sunlight hours (usually 4–6 in Iraq) to estimate the system size in kW. Use the Wattage calculator on Home for a quick estimate — a vendor will confirm exact sizing after a site visit, since roof angle, shading, and panel efficiency all matter.",

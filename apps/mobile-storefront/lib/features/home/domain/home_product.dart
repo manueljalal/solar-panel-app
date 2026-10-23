@@ -3,6 +3,10 @@
 /// row shows a subset of these fields, the detail screen shows all of them.
 class HomeProduct {
   const HomeProduct({
+    this.id = '',
+    this.vendorId = '',
+    this.priceValue,
+    this.currency = 'USD',
     required this.imageUrl,
     required this.spec,
     required this.brand,
@@ -18,6 +22,16 @@ class HomeProduct {
     this.descriptions = const {},
     this.warranties = const {},
   });
+
+  /// Firestore `products` doc id — what checkout sends to placeOrder.
+  /// Empty only on hand-built test fixtures.
+  final String id;
+  final String vendorId;
+
+  /// The real numeric price behind the [price] display string. Null on
+  /// fixtures that only set [price]; see CartItem.unitPrice.
+  final double? priceValue;
+  final String currency;
 
   final String imageUrl;
   final String spec;
@@ -68,6 +82,7 @@ class HomeProduct {
   /// not a display name) — [vendorName] is resolved by the repository via
   /// a join against `vendors` before this is called.
   factory HomeProduct.fromFirestore(
+    String id,
     Map<String, dynamic> data, {
     required String vendorName,
   }) {
@@ -75,6 +90,10 @@ class HomeProduct {
     final currency = data['currency'] as String? ?? 'USD';
     final symbol = currency == 'USD' ? '\$' : '$currency ';
     return HomeProduct(
+      id: id,
+      vendorId: data['vendorId'] as String? ?? '',
+      priceValue: price,
+      currency: currency,
       imageUrl: data['imageUrl'] as String? ?? '',
       spec: data['spec'] as String? ?? '',
       brand: data['brand'] as String? ?? '',
@@ -92,4 +111,41 @@ class HomeProduct {
       warranties: _i18n(data['warrantyI18n']),
     );
   }
+
+  /// Local cart persistence (see CartStorage) — the subset of fields the
+  /// cart and checkout screens show. Prices are re-read server-side at
+  /// checkout, so a stale saved copy can never change what's charged.
+  Map<String, Object?> toJson() => {
+    'id': id,
+    'vendorId': vendorId,
+    'priceValue': priceValue,
+    'currency': currency,
+    'imageUrl': imageUrl,
+    'spec': spec,
+    'brand': brand,
+    'title': title,
+    'vendor': vendor,
+    'price': price,
+    'rating': rating,
+    'sold': sold,
+    'inStock': inStock,
+    'titles': titles,
+  };
+
+  factory HomeProduct.fromJson(Map<String, Object?> json) => HomeProduct(
+    id: json['id'] as String? ?? '',
+    vendorId: json['vendorId'] as String? ?? '',
+    priceValue: (json['priceValue'] as num?)?.toDouble(),
+    currency: json['currency'] as String? ?? 'USD',
+    imageUrl: json['imageUrl'] as String? ?? '',
+    spec: json['spec'] as String? ?? '',
+    brand: json['brand'] as String? ?? '',
+    title: json['title'] as String? ?? '',
+    vendor: json['vendor'] as String? ?? '',
+    price: json['price'] as String? ?? '',
+    rating: (json['rating'] as num?)?.toDouble() ?? 0,
+    sold: (json['sold'] as num?)?.toInt() ?? 0,
+    inStock: json['inStock'] as bool? ?? true,
+    titles: _i18n(json['titles']),
+  );
 }

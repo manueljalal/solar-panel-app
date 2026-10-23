@@ -396,10 +396,128 @@ class AppLocalizationsCkb extends AppLocalizations {
   }
 
   @override
-  String get checkoutNotBuiltYet => 'پارەدان هێشتا دروست نەکراوە — بەم زووانە.';
+  String get checkout => 'پارەدان';
 
   @override
-  String get checkout => 'پارەدان';
+  String get checkoutContactSection => 'زانیاری پەیوەندی';
+
+  @override
+  String get checkoutNameLabel => 'ناوی تەواو';
+
+  @override
+  String get checkoutNameValidator => 'ناوەکەت بنووسە';
+
+  @override
+  String get checkoutPhoneHint => '0750 123 4567';
+
+  @override
+  String get checkoutPhoneInvalid =>
+      'ژمارەیەکی دروست بنووسە، بۆ نموونە 0750 123 4567';
+
+  @override
+  String get checkoutDeliverySection => 'گەیاندن';
+
+  @override
+  String get checkoutAddressHint => 'شەقام، گەڕەک، نزیکترین شوێنی دیار';
+
+  @override
+  String get checkoutNoteLabel => 'تێبینی بۆ فرۆشیار (ئارەزوومەندانە)';
+
+  @override
+  String get checkoutPaymentSection => 'پارەدان';
+
+  @override
+  String get checkoutCashOnDelivery => 'پارەدان لە کاتی گەیاندن';
+
+  @override
+  String get checkoutCashOnDeliveryBody =>
+      'کاتێک داواکارییەکەت گەیشت پارە بە فرۆشیار بدە.';
+
+  @override
+  String get checkoutSummarySection => 'پوختەی داواکاری';
+
+  @override
+  String get checkoutTotal => 'کۆی گشتی';
+
+  @override
+  String get checkoutPlaceOrder => 'ناردنی داواکاری';
+
+  @override
+  String get checkoutFailed =>
+      'نەتوانرا داواکارییەکەت بنێردرێت — دووبارە هەوڵ بدەوە.';
+
+  @override
+  String get orderPlacedTitle => 'داواکارییەکە نێردرا';
+
+  @override
+  String get orderPlacedBody =>
+      'فرۆشیار پەیوەندیت پێوە دەکات بۆ دڵنیاکردنەوەی گەیاندن. دەتوانیت لە بەشی داواکارییەکان بەدوای داواکارییەکەتدا بچیت.';
+
+  @override
+  String get orderPlacedViewOrders => 'بینینی داواکارییەکانم';
+
+  @override
+  String get ordersLoadError => 'نەتوانرا داواکارییەکانت باربکرێن.';
+
+  @override
+  String orderNumber(String id) {
+    return 'داواکاری #$id';
+  }
+
+  @override
+  String orderItemCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count بەرهەم',
+      one: '١ بەرهەم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get orderStatusPlaced => 'نێردراوە';
+
+  @override
+  String get orderStatusConfirmed => 'پشتڕاستکراوە';
+
+  @override
+  String get orderStatusShipped => 'لە ڕێگادایە';
+
+  @override
+  String get orderStatusDelivered => 'گەیەنراوە';
+
+  @override
+  String get orderStatusCancelled => 'هەڵوەشێنراوەتەوە';
+
+  @override
+  String get orderDetailTitle => 'وردەکاری داواکاری';
+
+  @override
+  String get orderItemsSection => 'بەرهەمەکان';
+
+  @override
+  String get orderDeliverTo => 'گەیاندن بۆ';
+
+  @override
+  String get orderCancel => 'هەڵوەشاندنەوەی داواکاری';
+
+  @override
+  String get orderCancelConfirmTitle => 'ئەم داواکارییە هەڵبوەشێنرێتەوە؟';
+
+  @override
+  String get orderCancelConfirmBody =>
+      'فرۆشیار هێشتا پشتڕاستی نەکردووەتەوە، بۆیە هێشتا دەتوانرێت هەڵبوەشێنرێتەوە.';
+
+  @override
+  String get orderKeep => 'هێشتنەوەی داواکاری';
+
+  @override
+  String get orderCancelled => 'داواکارییەکە هەڵوەشێنرایەوە.';
+
+  @override
+  String get orderCancelFailed =>
+      'نەتوانرا داواکارییەکە هەڵبوەشێنرێتەوە — دووبارە هەوڵ بدەوە.';
 
   @override
   String get perUnit => '/ یەکە';
@@ -501,8 +619,7 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get ordersEmptyTitle => 'هێشتا هیچ داواکارییەک نییە';
 
   @override
-  String get ordersEmptyBody =>
-      'داواکارییەکان لێرە دەردەکەون کاتێک پارەدان دروست بکرێت.';
+  String get ordersEmptyBody => 'ئەو داواکارییانەی دەینێریت لێرە دەردەکەون.';
 
   @override
   String get learnTitle => 'فێربوون';

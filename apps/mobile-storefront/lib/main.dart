@@ -12,14 +12,16 @@ import 'core/navigation/root_shell.dart';
 import 'core/theme/app_theme.dart';
 import 'features/cart/data/cart_controller.dart';
 import 'features/cart/data/cart_scope.dart';
+import 'features/cart/data/cart_storage.dart';
 import 'features/home/data/home_repository.dart';
+import 'features/orders/data/order_repository.dart';
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const SolaryMarketplaceApp());
+  runApp(SolaryMarketplaceApp(cartStorage: SharedPrefsCartStorage()));
 
   // Fire-and-forget: browsing has no auth dependency (see class doc below),
   // so the home screen never waits on this. Cart/orders/favorites read
@@ -34,18 +36,23 @@ void main() async {
 ///
 /// [homeRepository] is injectable so widget tests can pass a fake instead
 /// of hitting real Firestore (see test/support/fake_home_repository.dart);
-/// production code never passes it.
+/// production code never passes it. [orderRepository] works the same way
+/// for checkout and the Orders tab. [cartStorage] is the reverse: main()
+/// passes the device-backed one, tests leave it null so the cart stays
+/// in memory.
 class SolaryMarketplaceApp extends StatefulWidget {
-  const SolaryMarketplaceApp({super.key, this.homeRepository});
+  const SolaryMarketplaceApp({super.key, this.homeRepository, this.orderRepository, this.cartStorage});
 
   final HomeRepository? homeRepository;
+  final OrderRepository? orderRepository;
+  final CartStorage? cartStorage;
 
   @override
   State<SolaryMarketplaceApp> createState() => _SolaryMarketplaceAppState();
 }
 
 class _SolaryMarketplaceAppState extends State<SolaryMarketplaceApp> {
-  final _cartController = CartController();
+  late final _cartController = CartController(storage: widget.cartStorage);
   final _localeController = LocaleController();
 
   @override
@@ -84,7 +91,7 @@ class _SolaryMarketplaceAppState extends State<SolaryMarketplaceApp> {
               // for it on the three framework delegates only — same RTL
               // direction, while AppLocalizations still serves real ckb text
               // everywhere in the actual UI.
-              home: RootShell(homeRepository: widget.homeRepository),
+              home: RootShell(homeRepository: widget.homeRepository, orderRepository: widget.orderRepository),
             );
           },
         ),

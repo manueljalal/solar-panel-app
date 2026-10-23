@@ -3,3 +3,4 @@
 // `allow read: if true` rules — only writes that need a verified uid or
 // server-side validation go through a callable.
 export * from "./quotes";
+export * from "./orders";

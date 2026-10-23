@@ -5,18 +5,21 @@ import 'package:solary_marketplace/features/home/domain/home_product.dart';
 
 const homeCompanies = [
   HomeCompany(
+    id: 'vendor-1',
     name: 'SunBridge Energy',
     city: 'Erbil',
     rating: 4.9,
     logoUrl: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=400&q=80',
   ),
   HomeCompany(
+    id: 'vendor-2',
     name: 'Helios Power Co.',
     city: 'Sulaymaniyah',
     rating: 4.8,
     logoUrl: 'https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=400&q=80',
   ),
   HomeCompany(
+    id: 'vendor-3',
     name: 'GreenTech Iraq',
     city: 'Basra',
     rating: 4.7,
@@ -26,6 +29,7 @@ const homeCompanies = [
 
 const homeProducts = [
   HomeProduct(
+    id: 'product-1',
     imageUrl: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400&q=80',
     spec: '450W',
     brand: 'JinkoSolar',
@@ -41,6 +45,7 @@ const homeProducts = [
         'mounting hardware compatible with most rail systems.',
   ),
   HomeProduct(
+    id: 'product-2',
     imageUrl: 'https://images.unsplash.com/photo-1624397640148-949b1732bb0a?w=400&q=80',
     spec: '5kWh',
     brand: 'Huawei',
@@ -56,6 +61,7 @@ const homeProducts = [
         'stackable up to 3 units for extra capacity.',
   ),
   HomeProduct(
+    id: 'product-3',
     imageUrl: 'https://images.unsplash.com/photo-1592833159155-c62df1b65634?w=400&q=80',
     spec: '6kW',
     brand: 'Growatt',
@@ -71,6 +77,7 @@ const homeProducts = [
         'trackers.',
   ),
   HomeProduct(
+    id: 'product-4',
     imageUrl: 'https://images.unsplash.com/photo-1613665813446-82a78c468a1d?w=400&q=80',
     spec: '400W',
     brand: 'Canadian Solar',
