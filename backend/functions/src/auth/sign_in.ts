@@ -4,6 +4,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import { db, auth } from "../shared/firebase";
 import { verifyPassword, normalizeUsername } from "../shared/auth/password";
 import { resolveAccountUids } from "../shared/auth/resolve_account";
+import { consumeRateLimit } from "../shared/rate_limit";
 
 interface SignInInput {
   username: string;
@@ -33,6 +34,16 @@ export const signIn = onCall<SignInInput>({ region: "us-central1" }, async (requ
   if (!deviceId) {
     throw new HttpsError("invalid-argument", "deviceId is required.");
   }
+
+  // Online password guessing: bcrypt slows each guess, this caps how many
+  // a single account can take. Keyed on the typed identifier (not the
+  // caller), so rotating devices or anonymous uids doesn't reset it. It
+  // counts every attempt — a real user won't hit 10 in 15 minutes.
+  await consumeRateLimit("signIn", username, {
+    max: 10,
+    windowMs: 15 * 60 * 1000,
+    message: "Too many sign-in attempts. Wait 15 minutes and try again.",
+  });
 
   // `username` may also be the vendor's application email — see
   // resolveAccountUids. Several accounts can share one email (repeat

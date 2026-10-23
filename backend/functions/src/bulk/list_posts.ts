@@ -14,9 +14,11 @@ const FEED_LIMIT = 100;
 
 type Kind = "listings" | "requests";
 
-/// Reads the newest posts and filters in memory (status / country /
-/// owner). A single-field createdAt order needs no composite index, and
-/// the feed is capped at 100 — revisit with indexes if volume outgrows it.
+/// Filters in the query (status / country / owner) so the 100-row cap
+/// applies to matching posts — filtering in memory after a plain
+/// "newest 100" read silently dropped older open posts and a vendor's own
+/// older posts. Backed by the bulkListings/bulkRequests composite indexes
+/// in firestore.indexes.json.
 function makeLister(collection: string, openStatus: string, kind: Kind) {
   return onCall<ListInput>({ region: "us-central1" }, async (request) => {
     const me = await requireBulkVendor(request);
@@ -24,20 +26,28 @@ function makeLister(collection: string, openStatus: string, kind: Kind) {
       request.data?.country === undefined ? undefined : cleanEnum(request.data.country, COUNTRIES, "country");
     const mine = request.data?.mine === true;
 
-    const snap = await db.collection(collection).orderBy("createdAt", "desc").limit(FEED_LIMIT).get();
-    const rows = snap.docs
-      .map((d) => {
-        const data = d.data();
-        return {
-          ...data,
-          id: d.id,
-          status: data.status as string,
-          country: data.country as string,
-          createdAt: data.createdAt?.toMillis?.() ?? null,
-          isMine: data.vendorId === me.vendorId,
-        };
-      })
-      .filter((r) => (mine ? r.isMine : r.status === openStatus && (!country || r.country === country)));
+    let q: FirebaseFirestore.Query = db.collection(collection);
+    if (mine) {
+      q = q.where("vendorId", "==", me.vendorId);
+    } else {
+      q = q.where("status", "==", openStatus);
+      if (country) q = q.where("country", "==", country);
+    }
+    const snap = await q.orderBy("createdAt", "desc").limit(FEED_LIMIT).get();
+
+    const rows = snap.docs.map((d) => {
+      // ownerUid is the poster's Firebase account id — internal only, so
+      // it isn't sent to every other vendor reading the feed.
+      const { ownerUid, ...data } = d.data();
+      return {
+        ...data,
+        id: d.id,
+        status: data.status as string,
+        country: data.country as string,
+        createdAt: data.createdAt?.toMillis?.() ?? null,
+        isMine: data.vendorId === me.vendorId,
+      };
+    });
 
     return { [kind]: rows };
   });

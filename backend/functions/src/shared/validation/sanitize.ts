@@ -179,3 +179,26 @@ export function cleanMultilingual(
 export function primaryText(t: MultilingualText): string {
   return t.en ?? t.ar ?? t.ku ?? "";
 }
+
+export interface PickedLocation {
+  latitude: number;
+  longitude: number;
+  address: string;
+}
+
+/// A map pin from the location picker: real coordinates plus a short
+/// address. Rebuilt field by field so no extra client keys are stored.
+export function cleanLocation(value: unknown): PickedLocation | null {
+  if (value === undefined || value === null) return null;
+  if (typeof value !== "object" || Array.isArray(value)) {
+    throw new HttpsError("invalid-argument", "location is invalid.");
+  }
+  const { latitude, longitude, address } = value as Record<string, unknown>;
+  if (
+    typeof latitude !== "number" || typeof longitude !== "number" ||
+    !(latitude >= -90 && latitude <= 90) || !(longitude >= -180 && longitude <= 180)
+  ) {
+    throw new HttpsError("invalid-argument", "location is invalid.");
+  }
+  return { latitude, longitude, address: cleanText(address, "location address", { max: 300 }) };
+}

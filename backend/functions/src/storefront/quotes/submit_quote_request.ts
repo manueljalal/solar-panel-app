@@ -1,6 +1,7 @@
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../../shared/firebase";
+import { consumeRateLimit } from "../../shared/rate_limit";
 
 interface SubmitQuoteRequestInput {
   productTitle: string;
@@ -33,6 +34,12 @@ export const submitQuoteRequest = onCall<SubmitQuoteRequestInput>({ region: "us-
   if (productTitle.length > MAX_STRING_LENGTH || vendor.length > MAX_STRING_LENGTH || note.length > MAX_STRING_LENGTH) {
     throw new HttpsError("invalid-argument", `Fields must be under ${MAX_STRING_LENGTH} characters.`);
   }
+
+  await consumeRateLimit("quoteRequest", uid, {
+    max: 10,
+    windowMs: 60 * 60 * 1000,
+    message: "You've sent several quote requests recently. Try again later.",
+  });
 
   const requestRef = db.collection("quoteRequests").doc();
   await requestRef.set({

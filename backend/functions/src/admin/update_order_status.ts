@@ -28,12 +28,18 @@ export const updateOrderStatus = onCall<{ orderId: string; status: OrderStatus }
       // Transactions need every read before the first write, so the
       // product lookups happen up front. A product deleted since the order
       // was placed is skipped rather than failing the status change.
+      // One batched read (getAll) rather than a round trip per line.
       const soldUpdates: { ref: FirebaseFirestore.DocumentReference; quantity: number }[] = [];
       if (status === "delivered") {
-        for (const item of (data.items ?? []) as { productId?: string; quantity?: number }[]) {
-          if (!item.productId || !item.quantity) continue;
-          const productRef = db.collection("products").doc(item.productId);
-          if ((await tx.get(productRef)).exists) soldUpdates.push({ ref: productRef, quantity: item.quantity });
+        const lines = ((data.items ?? []) as { productId?: string; quantity?: number }[]).filter(
+          (item): item is { productId: string; quantity: number } => !!item.productId && !!item.quantity,
+        );
+        if (lines.length > 0) {
+          const refs = lines.map((item) => db.collection("products").doc(item.productId));
+          const snaps = await tx.getAll(...refs);
+          snaps.forEach((snap, i) => {
+            if (snap.exists) soldUpdates.push({ ref: refs[i], quantity: lines[i].quantity });
+          });
         }
       }
 

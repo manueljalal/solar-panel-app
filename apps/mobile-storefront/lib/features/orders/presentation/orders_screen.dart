@@ -17,27 +17,48 @@ import 'widgets/order_status_chip.dart';
 ///
 /// With no Firebase app (widget tests) or no user yet it shows the empty
 /// state. Tests that need a list pass [repository] and [uid].
-class OrdersScreen extends StatelessWidget {
+class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key, this.repository, this.uid});
 
   final OrderRepository? repository;
   final String? uid;
 
   @override
+  State<OrdersScreen> createState() => _OrdersScreenState();
+}
+
+class _OrdersScreenState extends State<OrdersScreen> {
+  // Created once, not per build — a new authStateChanges() stream on every
+  // rebuild (e.g. a locale switch) would make StreamBuilder resubscribe,
+  // and a new repository would restart the orders query.
+  Stream<User?>? _authChanges;
+  OrderRepository? _repository;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.uid == null && Firebase.apps.isNotEmpty) {
+      _authChanges = FirebaseAuth.instance.authStateChanges();
+      _repository = widget.repository ?? OrderRepository();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final authChanges = _authChanges;
     final Widget body;
-    if (uid != null && repository != null) {
-      body = _OrderList(repository: repository!, uid: uid!);
-    } else if (Firebase.apps.isEmpty) {
+    if (widget.uid != null && widget.repository != null) {
+      body = _OrderList(repository: widget.repository!, uid: widget.uid!);
+    } else if (authChanges == null) {
       body = const _EmptyOrders();
     } else {
       body = StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
+        stream: authChanges,
         builder: (context, snap) {
           final user = snap.data;
           if (user == null) return const _EmptyOrders();
-          return _OrderList(repository: repository ?? OrderRepository(), uid: user.uid);
+          return _OrderList(repository: _repository!, uid: user.uid);
         },
       );
     }

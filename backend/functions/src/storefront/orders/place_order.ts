@@ -2,6 +2,7 @@ import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../../shared/firebase";
 import { normalizePhone } from "../../shared/orders/order_status";
+import { consumeRateLimit } from "../../shared/rate_limit";
 import { cleanDocId, cleanText } from "../../shared/validation/sanitize";
 
 interface PlaceOrderInput {
@@ -97,6 +98,15 @@ export const placeOrder = onCall<PlaceOrderInput>({ region: "us-central1" }, asy
       quantity,
       lineTotal,
     };
+  });
+
+  // Any guest can place an order, and each one puts a stranger's phone
+  // number in front of a seller — cap how many one account can create.
+  // Checked last so an order rejected above doesn't use up a slot.
+  await consumeRateLimit("placeOrder", uid, {
+    max: 5,
+    windowMs: 60 * 60 * 1000,
+    message: "You've placed several orders recently. Wait a while, or contact us to order more.",
   });
 
   const orderRef = db.collection("orders").doc();

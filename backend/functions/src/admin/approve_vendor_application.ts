@@ -5,6 +5,7 @@ import { requireRole } from "../shared/auth/require_role";
 import { smtpUser, smtpPass } from "../shared/mail/send_mail";
 import { sendVendorApprovedEmail } from "../shared/mail/vendor_application_emails";
 import { createPasswordSetupToken } from "../shared/auth/password_setup_token";
+import { cleanDocId } from "../shared/validation/sanitize";
 
 interface ApproveInput {
   applicationId: string;
@@ -25,20 +26,21 @@ export const approveVendorApplication = onCall<ApproveInput>(
       throw new HttpsError("invalid-argument", "applicationId is required.");
     }
 
-    const appRef = db.collection("vendorApplications").doc(applicationId);
-    const appSnap = await appRef.get();
-    if (!appSnap.exists) {
-      throw new HttpsError("not-found", "Application not found.");
-    }
-
-    const application = appSnap.data()!;
-    if (application.status !== "pending") {
-      throw new HttpsError("failed-precondition", `Application is already '${application.status}'.`);
-    }
-
+    const appRef = db.collection("vendorApplications").doc(cleanDocId(applicationId, "applicationId"));
     const vendorRef = db.collection("vendors").doc();
 
-    await db.runTransaction(async (tx) => {
+    // The pending check lives inside the transaction: read outside it, two
+    // admins approving at the same moment would both pass and create two
+    // vendor docs for one application.
+    const application = await db.runTransaction(async (tx) => {
+      const appSnap = await tx.get(appRef);
+      const application = appSnap.data();
+      if (!appSnap.exists || !application) {
+        throw new HttpsError("not-found", "Application not found.");
+      }
+      if (application.status !== "pending") {
+        throw new HttpsError("failed-precondition", `Application is already '${application.status}'.`);
+      }
       tx.set(vendorRef, {
         ownerUid: application.uid,
         businessName: application.businessName,
@@ -59,6 +61,7 @@ export const approveVendorApplication = onCall<ApproveInput>(
         reviewedAt: FieldValue.serverTimestamp(),
         reviewedBy: request.auth!.uid,
       });
+      return application;
     });
 
     // Merge, not overwrite — preserves any other claims (e.g. if this

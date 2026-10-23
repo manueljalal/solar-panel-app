@@ -9,6 +9,7 @@ exports.cleanEnum = cleanEnum;
 exports.cleanDocId = cleanDocId;
 exports.cleanMultilingual = cleanMultilingual;
 exports.primaryText = primaryText;
+exports.cleanLocation = cleanLocation;
 const https_1 = require("firebase-functions/v2/https");
 // Control chars (keeps \n/\t out here; multiline handling re-adds \n),
 // zero-width space / BOM, and bidi override/isolate characters — the latter
@@ -146,4 +147,19 @@ function cleanMultilingual(value, field, opts) {
 /// that don't know about languages: English if present, else the first.
 function primaryText(t) {
     return t.en ?? t.ar ?? t.ku ?? "";
+}
+/// A map pin from the location picker: real coordinates plus a short
+/// address. Rebuilt field by field so no extra client keys are stored.
+function cleanLocation(value) {
+    if (value === undefined || value === null)
+        return null;
+    if (typeof value !== "object" || Array.isArray(value)) {
+        throw new https_1.HttpsError("invalid-argument", "location is invalid.");
+    }
+    const { latitude, longitude, address } = value;
+    if (typeof latitude !== "number" || typeof longitude !== "number" ||
+        !(latitude >= -90 && latitude <= 90) || !(longitude >= -180 && longitude <= 180)) {
+        throw new https_1.HttpsError("invalid-argument", "location is invalid.");
+    }
+    return { latitude, longitude, address: cleanText(address, "location address", { max: 300 }) };
 }

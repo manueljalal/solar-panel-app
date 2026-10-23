@@ -1,5 +1,6 @@
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { storeImage } from "../shared/images/store_image";
+import { consumeRateLimit } from "../shared/rate_limit";
 import { cleanEnum } from "../shared/validation/sanitize";
 
 interface UploadImageInput {
@@ -39,6 +40,13 @@ export const uploadImage = onCall<UploadImageInput>(
       }
       folder = `productImages/${vendorId}`;
     }
+
+    // Every upload is 2 MB of storage that's never cleaned up if unused.
+    await consumeRateLimit("uploadImage", auth.uid, {
+      max: 30,
+      windowMs: 60 * 60 * 1000,
+      message: "Too many uploads. Try again in a while.",
+    });
 
     return { url: await storeImage(request.data?.data, folder) };
   },

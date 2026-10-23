@@ -5,6 +5,7 @@ const https_1 = require("firebase-functions/v2/https");
 const firestore_1 = require("firebase-admin/firestore");
 const firebase_1 = require("../../shared/firebase");
 const order_status_1 = require("../../shared/orders/order_status");
+const rate_limit_1 = require("../../shared/rate_limit");
 const sanitize_1 = require("../../shared/validation/sanitize");
 const MAX_LINES = 30;
 const MAX_QUANTITY = 999;
@@ -87,6 +88,14 @@ exports.placeOrder = (0, https_1.onCall)({ region: "us-central1" }, async (reque
             quantity,
             lineTotal,
         };
+    });
+    // Any guest can place an order, and each one puts a stranger's phone
+    // number in front of a seller — cap how many one account can create.
+    // Checked last so an order rejected above doesn't use up a slot.
+    await (0, rate_limit_1.consumeRateLimit)("placeOrder", uid, {
+        max: 5,
+        windowMs: 60 * 60 * 1000,
+        message: "You've placed several orders recently. Wait a while, or contact us to order more.",
     });
     const orderRef = firebase_1.db.collection("orders").doc();
     await orderRef.set({

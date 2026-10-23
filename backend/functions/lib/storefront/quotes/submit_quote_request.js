@@ -4,6 +4,7 @@ exports.submitQuoteRequest = void 0;
 const https_1 = require("firebase-functions/v2/https");
 const firestore_1 = require("firebase-admin/firestore");
 const firebase_1 = require("../../shared/firebase");
+const rate_limit_1 = require("../../shared/rate_limit");
 const MAX_STRING_LENGTH = 500;
 /// Any signed-in user (anonymous browsing included — see
 /// AuthRepository.ensureSignedIn). Writes the quoteRequests doc
@@ -26,6 +27,11 @@ exports.submitQuoteRequest = (0, https_1.onCall)({ region: "us-central1" }, asyn
     if (productTitle.length > MAX_STRING_LENGTH || vendor.length > MAX_STRING_LENGTH || note.length > MAX_STRING_LENGTH) {
         throw new https_1.HttpsError("invalid-argument", `Fields must be under ${MAX_STRING_LENGTH} characters.`);
     }
+    await (0, rate_limit_1.consumeRateLimit)("quoteRequest", uid, {
+        max: 10,
+        windowMs: 60 * 60 * 1000,
+        message: "You've sent several quote requests recently. Try again later.",
+    });
     const requestRef = firebase_1.db.collection("quoteRequests").doc();
     await requestRef.set({
         uid,

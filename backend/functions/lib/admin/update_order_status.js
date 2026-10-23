@@ -26,14 +26,17 @@ exports.updateOrderStatus = (0, https_1.onCall)({ region: "us-central1" }, async
         // Transactions need every read before the first write, so the
         // product lookups happen up front. A product deleted since the order
         // was placed is skipped rather than failing the status change.
+        // One batched read (getAll) rather than a round trip per line.
         const soldUpdates = [];
         if (status === "delivered") {
-            for (const item of (data.items ?? [])) {
-                if (!item.productId || !item.quantity)
-                    continue;
-                const productRef = firebase_1.db.collection("products").doc(item.productId);
-                if ((await tx.get(productRef)).exists)
-                    soldUpdates.push({ ref: productRef, quantity: item.quantity });
+            const lines = (data.items ?? []).filter((item) => !!item.productId && !!item.quantity);
+            if (lines.length > 0) {
+                const refs = lines.map((item) => firebase_1.db.collection("products").doc(item.productId));
+                const snaps = await tx.getAll(...refs);
+                snaps.forEach((snap, i) => {
+                    if (snap.exists)
+                        soldUpdates.push({ ref: refs[i], quantity: lines[i].quantity });
+                });
             }
         }
         tx.update(orderRef, {

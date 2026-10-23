@@ -4,6 +4,7 @@ import { randomUUID } from "crypto";
 import { db, auth } from "../shared/firebase";
 import { consumePhoneOtp } from "../shared/auth/verify_otp";
 import { hashPassword, isValidPassword, isValidUsername, normalizeUsername } from "../shared/auth/password";
+import { cleanLocation, cleanText } from "../shared/validation/sanitize";
 
 interface PickedLocationInput {
   latitude: number;
@@ -32,15 +33,14 @@ const E164_PATTERN = /^\+[1-9]\d{6,14}$/;
 /// user (we mint custom tokens instead, the same mechanism the phone-only
 /// flow already uses), since the credential check is entirely our own.
 export const signUp = onCall<SignUpInput>({ region: "us-central1" }, async (request) => {
-  const name = request.data?.name?.trim();
+  const name = cleanText(request.data?.name, "name", { max: 80, min: 1 });
   const username = normalizeUsername(request.data?.username ?? "");
   const password = request.data?.password ?? "";
   const phone = request.data?.phone?.trim();
   const otp = request.data?.otp?.trim();
-  const location = request.data?.location ?? null;
+  const location = cleanLocation(request.data?.location);
   const deviceId = request.data?.deviceId?.trim() || null;
 
-  if (!name) throw new HttpsError("invalid-argument", "name is required.");
   if (!isValidUsername(username)) {
     throw new HttpsError(
       "invalid-argument",

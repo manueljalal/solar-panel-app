@@ -13,13 +13,30 @@ class SearchRepository {
 
   final HomeRepository _homeRepository;
 
+  // The catalog is read once per search screen, not once per keystroke —
+  // filtering is in memory, so re-querying Firestore on every debounced
+  // change only multiplied reads. A failed read isn't cached.
+  Future<List<HomeProduct>>? _catalog;
+
+  Future<List<HomeProduct>> _loadCatalog() {
+    final read = _catalog ??= _homeRepository.fetchProducts();
+    read.catchError((Object _) {
+      if (identical(_catalog, read)) _catalog = null;
+      return <HomeProduct>[];
+    });
+    return read;
+  }
+
   Future<List<HomeProduct>> search(String query) async {
-    final products = await _homeRepository.fetchProducts();
+    final products = await _loadCatalog();
     final normalized = query.trim().toLowerCase();
     if (normalized.isEmpty) return products;
 
     return products.where((p) {
       return p.title.toLowerCase().contains(normalized) ||
+          // Arabic/Kurdish names too, so a shopper can search in the
+          // language the app is showing them.
+          p.titles.values.any((t) => t.toLowerCase().contains(normalized)) ||
           p.brand.toLowerCase().contains(normalized) ||
           p.spec.toLowerCase().contains(normalized) ||
           p.vendor.toLowerCase().contains(normalized);

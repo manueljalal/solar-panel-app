@@ -7,6 +7,7 @@ const firestore_1 = require("firebase-admin/firestore");
 const firebase_1 = require("../shared/firebase");
 const password_1 = require("../shared/auth/password");
 const resolve_account_1 = require("../shared/auth/resolve_account");
+const rate_limit_1 = require("../shared/rate_limit");
 /// Real sign-in: username + password, checked against the bcrypt hash on
 /// users/{uid} (see sign_up.ts — there is no Firebase Auth password for
 /// this user, the check is entirely ours). If the calling device isn't
@@ -28,6 +29,15 @@ exports.signIn = (0, https_1.onCall)({ region: "us-central1" }, async (request) 
     if (!deviceId) {
         throw new https_1.HttpsError("invalid-argument", "deviceId is required.");
     }
+    // Online password guessing: bcrypt slows each guess, this caps how many
+    // a single account can take. Keyed on the typed identifier (not the
+    // caller), so rotating devices or anonymous uids doesn't reset it. It
+    // counts every attempt — a real user won't hit 10 in 15 minutes.
+    await (0, rate_limit_1.consumeRateLimit)("signIn", username, {
+        max: 10,
+        windowMs: 15 * 60 * 1000,
+        message: "Too many sign-in attempts. Wait 15 minutes and try again.",
+    });
     // `username` may also be the vendor's application email — see
     // resolveAccountUids. Several accounts can share one email (repeat
     // applications), so the password picks the right one.

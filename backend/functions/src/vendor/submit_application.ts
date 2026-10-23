@@ -2,7 +2,8 @@ import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../shared/firebase";
 import { isOwnedImageUrl } from "../shared/images/store_image";
-import { cleanEmail, cleanEnum, cleanText } from "../shared/validation/sanitize";
+import { consumeRateLimit } from "../shared/rate_limit";
+import { cleanEmail, cleanEnum, cleanLocation, cleanText } from "../shared/validation/sanitize";
 
 interface PickedLocationInput {
   latitude: number;
@@ -58,18 +59,13 @@ export const submitApplication = onCall<SubmitApplicationInput>({ region: "us-ce
     throw new HttpsError("invalid-argument", "Upload an image of your company.");
   }
 
-  const rawLocation = request.data?.location;
-  let location: PickedLocationInput | null = null;
-  if (rawLocation) {
-    const { latitude, longitude } = rawLocation;
-    if (
-      typeof latitude !== "number" || typeof longitude !== "number" ||
-      !(latitude >= -90 && latitude <= 90) || !(longitude >= -180 && longitude <= 180)
-    ) {
-      throw new HttpsError("invalid-argument", "location is invalid.");
-    }
-    location = { latitude, longitude, address: cleanText(rawLocation.address, "location address", { max: 300 }) };
-  }
+  const location = cleanLocation(request.data?.location);
+
+  await consumeRateLimit("vendorApplication", uid, {
+    max: 3,
+    windowMs: 24 * 60 * 60 * 1000,
+    message: "You've already applied today. We'll review your application soon.",
+  });
 
   const applicationRef = db.collection("vendorApplications").doc();
   await applicationRef.set({

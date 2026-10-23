@@ -8,6 +8,7 @@ const require_role_1 = require("../shared/auth/require_role");
 const send_mail_1 = require("../shared/mail/send_mail");
 const vendor_application_emails_1 = require("../shared/mail/vendor_application_emails");
 const password_setup_token_1 = require("../shared/auth/password_setup_token");
+const sanitize_1 = require("../shared/validation/sanitize");
 /// Admin-only. Turns a pending vendorApplications/{id} doc into a real
 /// vendors/{vendorId} doc, and grants the applicant's account the
 /// 'vendor' role + vendorId custom claim so they can call vendor-scoped
@@ -19,17 +20,20 @@ exports.approveVendorApplication = (0, https_1.onCall)({ region: "us-central1", 
     if (!applicationId) {
         throw new https_1.HttpsError("invalid-argument", "applicationId is required.");
     }
-    const appRef = firebase_1.db.collection("vendorApplications").doc(applicationId);
-    const appSnap = await appRef.get();
-    if (!appSnap.exists) {
-        throw new https_1.HttpsError("not-found", "Application not found.");
-    }
-    const application = appSnap.data();
-    if (application.status !== "pending") {
-        throw new https_1.HttpsError("failed-precondition", `Application is already '${application.status}'.`);
-    }
+    const appRef = firebase_1.db.collection("vendorApplications").doc((0, sanitize_1.cleanDocId)(applicationId, "applicationId"));
     const vendorRef = firebase_1.db.collection("vendors").doc();
-    await firebase_1.db.runTransaction(async (tx) => {
+    // The pending check lives inside the transaction: read outside it, two
+    // admins approving at the same moment would both pass and create two
+    // vendor docs for one application.
+    const application = await firebase_1.db.runTransaction(async (tx) => {
+        const appSnap = await tx.get(appRef);
+        const application = appSnap.data();
+        if (!appSnap.exists || !application) {
+            throw new https_1.HttpsError("not-found", "Application not found.");
+        }
+        if (application.status !== "pending") {
+            throw new https_1.HttpsError("failed-precondition", `Application is already '${application.status}'.`);
+        }
         tx.set(vendorRef, {
             ownerUid: application.uid,
             businessName: application.businessName,
@@ -50,6 +54,7 @@ exports.approveVendorApplication = (0, https_1.onCall)({ region: "us-central1", 
             reviewedAt: firestore_1.FieldValue.serverTimestamp(),
             reviewedBy: request.auth.uid,
         });
+        return application;
     });
     // Merge, not overwrite — preserves any other claims (e.g. if this
     // account is ever also a customer in other data).

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadImage = void 0;
 const https_1 = require("firebase-functions/v2/https");
 const store_image_1 = require("../shared/images/store_image");
+const rate_limit_1 = require("../shared/rate_limit");
 const sanitize_1 = require("../shared/validation/sanitize");
 /// Signed-in (non-anonymous) users may upload a company logo for their
 /// vendor application; approved vendors may upload product images. The
@@ -34,5 +35,11 @@ exports.uploadImage = (0, https_1.onCall)({ region: "us-central1", memory: "512M
         }
         folder = `productImages/${vendorId}`;
     }
+    // Every upload is 2 MB of storage that's never cleaned up if unused.
+    await (0, rate_limit_1.consumeRateLimit)("uploadImage", auth.uid, {
+        max: 30,
+        windowMs: 60 * 60 * 1000,
+        message: "Too many uploads. Try again in a while.",
+    });
     return { url: await (0, store_image_1.storeImage)(request.data?.data, folder) };
 });

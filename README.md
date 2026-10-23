@@ -164,8 +164,33 @@ collects card details.
   in `vendorIds`, and by super_admin; nobody can write it from a client.
   Three composite indexes back the queries above.
 
-**Deploy needed:** `firebase deploy --only functions,firestore:rules,firestore:indexes`.
+**Deploy needed:** `firebase deploy --only functions,firestore:rules,firestore:indexes,hosting`.
 Until then, Place order fails with a "try again" error.
+
+## Security notes
+
+- **Rate limits** (`backend/functions/src/shared/rate_limit.ts`, stored in
+  `rateLimits`): sign-in 10 attempts per username per 15 min, orders 5 per
+  account per hour, quote requests 10/h, vendor applications 3/day, image
+  uploads 30/h. OTP sends already had their own per-number and per-device
+  limits.
+  In the Firebase console, add a TTL policy on `rateLimits.expiresAt` so
+  old entries are deleted automatically.
+- **Not yet done — App Check.** Every callable, including the WhatsApp OTP
+  sender, can be called by any script. A fresh anonymous account is free,
+  so the per-account limits above slow abuse down but can't stop it. Set
+  up App Check (Play Integrity / App Attest / reCAPTCHA for the web
+  portals) and turn on `enforceAppCheck` for the callables.
+- **`auth-bootstrapSuperAdmin`** makes the first real account that calls it
+  a super_admin. Once a super_admin exists, check that `system/bootstrap`
+  is set (or remove the export), so a fresh database can't be taken over.
+- `verifyPhoneOtp` / `vendorPasswordSignIn` are intentionally not exported.
+  `firebase functions:list` shows whether an old deploy left them running.
+  If so, delete them; `vendorPasswordSignIn` skips the new-device OTP
+  check.
+- Hosting sends `X-Frame-Options: DENY`, `nosniff`, HSTS and a referrer
+  policy. The admin and vendor portals use `same-origin`, so the vendor
+  `/set-password?token=` link can't leak through a `Referer` header.
 
 ## Status
 - `apps/mobile-storefront` — home, product detail, company store, search,

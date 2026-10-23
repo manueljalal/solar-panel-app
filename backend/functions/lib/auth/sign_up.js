@@ -7,6 +7,7 @@ const crypto_1 = require("crypto");
 const firebase_1 = require("../shared/firebase");
 const verify_otp_1 = require("../shared/auth/verify_otp");
 const password_1 = require("../shared/auth/password");
+const sanitize_1 = require("../shared/validation/sanitize");
 const E164_PATTERN = /^\+[1-9]\d{6,14}$/;
 /// Real registration: name + username + password + phone, with the phone
 /// number proven via a WhatsApp-delivered OTP (requestPhoneOtp must have
@@ -17,15 +18,13 @@ const E164_PATTERN = /^\+[1-9]\d{6,14}$/;
 /// user (we mint custom tokens instead, the same mechanism the phone-only
 /// flow already uses), since the credential check is entirely our own.
 exports.signUp = (0, https_1.onCall)({ region: "us-central1" }, async (request) => {
-    const name = request.data?.name?.trim();
+    const name = (0, sanitize_1.cleanText)(request.data?.name, "name", { max: 80, min: 1 });
     const username = (0, password_1.normalizeUsername)(request.data?.username ?? "");
     const password = request.data?.password ?? "";
     const phone = request.data?.phone?.trim();
     const otp = request.data?.otp?.trim();
-    const location = request.data?.location ?? null;
+    const location = (0, sanitize_1.cleanLocation)(request.data?.location);
     const deviceId = request.data?.deviceId?.trim() || null;
-    if (!name)
-        throw new https_1.HttpsError("invalid-argument", "name is required.");
     if (!(0, password_1.isValidUsername)(username)) {
         throw new https_1.HttpsError("invalid-argument", "username must be 3-20 characters: lowercase letters, numbers, underscores only.");
     }
