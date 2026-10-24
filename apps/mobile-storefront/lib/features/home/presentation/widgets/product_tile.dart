@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../shared/bidi.dart';
 import '../../../../shared/widgets/placeholder_image.dart';
 import '../../../product/presentation/product_detail_screen.dart';
 import '../../domain/home_product.dart';
@@ -14,7 +15,7 @@ class ProductTile extends StatelessWidget {
   const ProductTile({super.key, required this.product});
 
   /// Height of everything under the square photo.
-  static const _textBlock = 78.0;
+  static const _textBlock = 92.0;
 
   /// Grid row height for a tile of [tileWidth] (square photo + text).
   static double extentFor(double tileWidth) => tileWidth + _textBlock;
@@ -61,7 +62,7 @@ class ProductTile extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(
-            product.price,
+            ltr(product.price),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTypography.body.copyWith(

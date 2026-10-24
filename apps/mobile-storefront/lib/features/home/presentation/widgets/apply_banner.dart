@@ -4,7 +4,6 @@ import '../../../../core/auth/auth_repository.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../shared/widgets/placeholder_image.dart';
 import '../../../bulk/presentation/bulk_market_screen.dart';
 import '../../../vendor/presentation/vendor_apply_screen.dart';
 
@@ -49,8 +48,9 @@ class _ApplyBannerState extends State<ApplyBanner> {
 
   bool get large => widget.large;
 
-  static const _imageUrl =
-      'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80';
+  /// Bundled handshake photo (no network fetch, so the tile never shows a
+  /// blank while loading).
+  static const _imageAsset = 'assets/images/b2b.jpeg';
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +77,10 @@ class _ApplyBannerState extends State<ApplyBanner> {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                NetworkImageWithFallback(
-                  url: _imageUrl,
-                  fallbackIcon: Icons.storefront_outlined,
+                Image.asset(
+                  _imageAsset,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, _, _) => const ColoredBox(color: AppColors.ink),
                 ),
                 DecoratedBox(
                   decoration: BoxDecoration(

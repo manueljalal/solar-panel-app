@@ -824,18 +824,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String bulkMinOrder(String qty, String unit) {
-    return 'Min. order $qty $unit';
+  String bulkMinOrder(String amount) {
+    return 'Min. order $amount';
   }
 
   @override
-  String bulkQuantityNeeded(String qty, String unit) {
-    return '$qty $unit needed';
+  String bulkQuantityNeeded(String amount) {
+    return '$amount needed';
   }
 
   @override
-  String bulkTargetPrice(String price, String unit) {
-    return 'Target $price / $unit';
+  String bulkTargetPrice(String amount) {
+    return 'Target $amount';
   }
 
   @override
@@ -965,4 +965,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bulkTitleNeeded => 'Add a title in at least one language.';
+
+  @override
+  String get signUpPhoneTaken =>
+      'An account with this phone number already exists. Sign in instead, or use a different number.';
 }

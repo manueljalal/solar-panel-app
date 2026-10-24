@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../shared/bidi.dart';
 import '../../domain/bulk_models.dart';
 import 'country_flag.dart';
 
@@ -16,6 +17,11 @@ String formatQty(int n) {
   }
   return buf.toString();
 }
+
+/// "100 pcs" / "\$150 / pcs", isolated so they read correctly in any language.
+String qtyUnit(int qty, String unit) => ltr('${formatQty(qty)} $unit');
+String priceUnit(double price, String unit) =>
+    ltr('${formatUsd(price)} / $unit');
 
 String formatUsd(double v) =>
     '\$${v == v.roundToDouble() ? v.toStringAsFixed(0) : v.toStringAsFixed(2)}';
@@ -77,7 +83,7 @@ class BulkPostCard extends StatelessWidget {
   });
 
   /// Height of everything under the square photo.
-  static const _textBlock = 84.0;
+  static const _textBlock = 100.0;
 
   /// Grid row height for a tile of [tileWidth] (square photo + text).
   static double extentFor(double tileWidth) => tileWidth + _textBlock;
@@ -94,13 +100,13 @@ class BulkPostCard extends StatelessWidget {
     final String price;
     final String detail;
     if (p is BulkListing) {
-      price = '${formatUsd(p.bestPriceUsd)} / ${p.unit}';
-      detail = l10n.bulkMinOrder(formatQty(p.moq), p.unit);
+      price = priceUnit(p.bestPriceUsd, p.unit);
+      detail = l10n.bulkMinOrder(qtyUnit(p.moq, p.unit));
     } else {
       final r = p as BulkRequest;
-      price = '${formatQty(r.quantity)} ${r.unit}';
+      price = qtyUnit(r.quantity, r.unit);
       detail = r.targetPriceUsd != null
-          ? l10n.bulkTargetPrice(formatUsd(r.targetPriceUsd!), r.unit)
+          ? l10n.bulkTargetPrice(priceUnit(r.targetPriceUsd!, r.unit))
           : '';
     }
 
@@ -297,12 +303,12 @@ class _BulkPostSheet extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          l10n.bulkTierRow(formatQty(t.minQty), p.unit),
+                          ltr('${formatQty(t.minQty)}+ ${p.unit}'),
                           style: AppTypography.body,
                         ),
                       ),
                       Text(
-                        '${formatUsd(t.unitPriceUsd)} / ${p.unit}',
+                        priceUnit(t.unitPriceUsd, p.unit),
                         style: AppTypography.cardTitle.copyWith(
                           color: AppColors.primary,
                         ),
@@ -312,12 +318,12 @@ class _BulkPostSheet extends StatelessWidget {
                 ),
             ] else if (p is BulkRequest) ...[
               Text(
-                l10n.bulkQuantityNeeded(formatQty(p.quantity), p.unit),
+                l10n.bulkQuantityNeeded(qtyUnit(p.quantity, p.unit)),
                 style: AppTypography.cardTitle,
               ),
               if (p.targetPriceUsd != null)
                 Text(
-                  l10n.bulkTargetPrice(formatUsd(p.targetPriceUsd!), p.unit),
+                  l10n.bulkTargetPrice(priceUnit(p.targetPriceUsd!, p.unit)),
                   style: AppTypography.body,
                 ),
               if (p.deliveryCity.isNotEmpty)

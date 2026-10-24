@@ -826,18 +826,18 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String bulkMinOrder(String qty, String unit) {
-    return 'الحد الأدنى $qty $unit';
+  String bulkMinOrder(String amount) {
+    return 'الحد الأدنى $amount';
   }
 
   @override
-  String bulkQuantityNeeded(String qty, String unit) {
-    return 'مطلوب $qty $unit';
+  String bulkQuantityNeeded(String amount) {
+    return 'مطلوب $amount';
   }
 
   @override
-  String bulkTargetPrice(String price, String unit) {
-    return 'السعر المستهدف $price / $unit';
+  String bulkTargetPrice(String amount) {
+    return 'السعر المستهدف $amount';
   }
 
   @override
@@ -967,4 +967,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get bulkTitleNeeded => 'أضف عنواناً بلغة واحدة على الأقل.';
+
+  @override
+  String get signUpPhoneTaken =>
+      'يوجد حساب بهذا الرقم بالفعل. سجّل الدخول، أو استخدم رقماً آخر.';
 }

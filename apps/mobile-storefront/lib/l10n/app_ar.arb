@@ -265,35 +265,26 @@
       }
     }
   },
-  "bulkMinOrder": "الحد الأدنى {qty} {unit}",
+  "bulkMinOrder": "الحد الأدنى {amount}",
   "@bulkMinOrder": {
     "placeholders": {
-      "qty": {
-        "type": "String"
-      },
-      "unit": {
+      "amount": {
         "type": "String"
       }
     }
   },
-  "bulkQuantityNeeded": "مطلوب {qty} {unit}",
+  "bulkQuantityNeeded": "مطلوب {amount}",
   "@bulkQuantityNeeded": {
     "placeholders": {
-      "qty": {
-        "type": "String"
-      },
-      "unit": {
+      "amount": {
         "type": "String"
       }
     }
   },
-  "bulkTargetPrice": "السعر المستهدف {price} / {unit}",
+  "bulkTargetPrice": "السعر المستهدف {amount}",
   "@bulkTargetPrice": {
     "placeholders": {
-      "price": {
-        "type": "String"
-      },
-      "unit": {
+      "amount": {
         "type": "String"
       }
     }
@@ -355,5 +346,6 @@
   "bulkFormPhotoLabel": "صورة (اختياري)",
   "bulkFormPhotoAdd": "أضف صورة",
   "bulkFormPhotoChange": "تغيير الصورة",
-  "bulkTitleNeeded": "أضف عنواناً بلغة واحدة على الأقل."
+  "bulkTitleNeeded": "أضف عنواناً بلغة واحدة على الأقل.",
+  "signUpPhoneTaken": "يوجد حساب بهذا الرقم بالفعل. سجّل الدخول، أو استخدم رقماً آخر."
 }

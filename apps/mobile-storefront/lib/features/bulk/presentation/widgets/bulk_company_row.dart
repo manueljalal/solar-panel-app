@@ -26,7 +26,10 @@ class BulkCompany {
 /// vendorId -> logo URL from the vendor records (what Home's Companies row
 /// uses); it fills in companies whose posts predate logos being saved on
 /// posts.
-List<BulkCompany> companiesOf(Iterable<BulkPost> posts, {Map<String, String> logos = const {}}) {
+List<BulkCompany> companiesOf(
+  Iterable<BulkPost> posts, {
+  Map<String, String> logos = const {},
+}) {
   final byId = <String, List<BulkPost>>{};
   for (final p in posts) {
     if (p.vendorId.isEmpty) continue;

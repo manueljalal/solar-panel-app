@@ -68,7 +68,8 @@ class _BulkMarketScreenState extends State<BulkMarketScreen> {
       if (mounted) setState(() => _categories = value);
     }, onError: (_) {});
     _home.fetchCompanies().then((value) {
-      if (mounted) setState(() => _logos = {for (final c in value) c.id: c.logoUrl});
+      if (mounted)
+        setState(() => _logos = {for (final c in value) c.id: c.logoUrl});
     }, onError: (_) {});
   }
 

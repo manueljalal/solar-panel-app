@@ -1591,20 +1591,20 @@ abstract class AppLocalizations {
   /// No description provided for @bulkMinOrder.
   ///
   /// In en, this message translates to:
-  /// **'Min. order {qty} {unit}'**
-  String bulkMinOrder(String qty, String unit);
+  /// **'Min. order {amount}'**
+  String bulkMinOrder(String amount);
 
   /// No description provided for @bulkQuantityNeeded.
   ///
   /// In en, this message translates to:
-  /// **'{qty} {unit} needed'**
-  String bulkQuantityNeeded(String qty, String unit);
+  /// **'{amount} needed'**
+  String bulkQuantityNeeded(String amount);
 
   /// No description provided for @bulkTargetPrice.
   ///
   /// In en, this message translates to:
-  /// **'Target {price} / {unit}'**
-  String bulkTargetPrice(String price, String unit);
+  /// **'Target {amount}'**
+  String bulkTargetPrice(String amount);
 
   /// No description provided for @bulkTierRow.
   ///
@@ -1851,6 +1851,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add a title in at least one language.'**
   String get bulkTitleNeeded;
+
+  /// No description provided for @signUpPhoneTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'An account with this phone number already exists. Sign in instead, or use a different number.'**
+  String get signUpPhoneTaken;
 }
 
 class _AppLocalizationsDelegate

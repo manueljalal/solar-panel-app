@@ -346,35 +346,26 @@
       }
     }
   },
-  "bulkMinOrder": "Min. order {qty} {unit}",
+  "bulkMinOrder": "Min. order {amount}",
   "@bulkMinOrder": {
     "placeholders": {
-      "qty": {
-        "type": "String"
-      },
-      "unit": {
+      "amount": {
         "type": "String"
       }
     }
   },
-  "bulkQuantityNeeded": "{qty} {unit} needed",
+  "bulkQuantityNeeded": "{amount} needed",
   "@bulkQuantityNeeded": {
     "placeholders": {
-      "qty": {
-        "type": "String"
-      },
-      "unit": {
+      "amount": {
         "type": "String"
       }
     }
   },
-  "bulkTargetPrice": "Target {price} / {unit}",
+  "bulkTargetPrice": "Target {amount}",
   "@bulkTargetPrice": {
     "placeholders": {
-      "price": {
-        "type": "String"
-      },
-      "unit": {
+      "amount": {
         "type": "String"
       }
     }
@@ -436,5 +427,6 @@
   "bulkFormPhotoLabel": "Photo (optional)",
   "bulkFormPhotoAdd": "Add a photo",
   "bulkFormPhotoChange": "Change photo",
-  "bulkTitleNeeded": "Add a title in at least one language."
+  "bulkTitleNeeded": "Add a title in at least one language.",
+  "signUpPhoneTaken": "An account with this phone number already exists. Sign in instead, or use a different number."
 }

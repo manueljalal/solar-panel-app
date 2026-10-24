@@ -833,18 +833,18 @@ class AppLocalizationsCkb extends AppLocalizations {
   }
 
   @override
-  String bulkMinOrder(String qty, String unit) {
-    return 'کەمترین داواکاری $qty $unit';
+  String bulkMinOrder(String amount) {
+    return 'کەمترین داواکاری $amount';
   }
 
   @override
-  String bulkQuantityNeeded(String qty, String unit) {
-    return 'پێویستە $qty $unit';
+  String bulkQuantityNeeded(String amount) {
+    return 'پێویستە $amount';
   }
 
   @override
-  String bulkTargetPrice(String price, String unit) {
-    return 'نرخی مەبەست $price / $unit';
+  String bulkTargetPrice(String amount) {
+    return 'نرخی مەبەست $amount';
   }
 
   @override
@@ -975,4 +975,8 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get bulkTitleNeeded => 'ناونیشانێک بە لانی کەم بە یەک زمان زیاد بکە.';
+
+  @override
+  String get signUpPhoneTaken =>
+      'ئەم ژمارەیە پێشتر هەژماری هەیە. بچۆ ژوورەوە، یان ژمارەیەکی تر بەکاربهێنە.';
 }

@@ -265,35 +265,26 @@
       }
     }
   },
-  "bulkMinOrder": "کەمترین داواکاری {qty} {unit}",
+  "bulkMinOrder": "کەمترین داواکاری {amount}",
   "@bulkMinOrder": {
     "placeholders": {
-      "qty": {
-        "type": "String"
-      },
-      "unit": {
+      "amount": {
         "type": "String"
       }
     }
   },
-  "bulkQuantityNeeded": "پێویستە {qty} {unit}",
+  "bulkQuantityNeeded": "پێویستە {amount}",
   "@bulkQuantityNeeded": {
     "placeholders": {
-      "qty": {
-        "type": "String"
-      },
-      "unit": {
+      "amount": {
         "type": "String"
       }
     }
   },
-  "bulkTargetPrice": "نرخی مەبەست {price} / {unit}",
+  "bulkTargetPrice": "نرخی مەبەست {amount}",
   "@bulkTargetPrice": {
     "placeholders": {
-      "price": {
-        "type": "String"
-      },
-      "unit": {
+      "amount": {
         "type": "String"
       }
     }
@@ -355,5 +346,6 @@
   "bulkFormPhotoLabel": "وێنە (دڵخوازانە)",
   "bulkFormPhotoAdd": "وێنەیەک زیاد بکە",
   "bulkFormPhotoChange": "گۆڕینی وێنە",
-  "bulkTitleNeeded": "ناونیشانێک بە لانی کەم بە یەک زمان زیاد بکە."
+  "bulkTitleNeeded": "ناونیشانێک بە لانی کەم بە یەک زمان زیاد بکە.",
+  "signUpPhoneTaken": "ئەم ژمارەیە پێشتر هەژماری هەیە. بچۆ ژوورەوە، یان ژمارەیەکی تر بەکاربهێنە."
 }
