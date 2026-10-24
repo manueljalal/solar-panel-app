@@ -1,104 +1,63 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { useVendorAuth } from "@/lib/use_auth";
+import { VendorShell, useVendor } from "@/components/vendor_shell";
 import { ProductForm } from "../product_form";
-import type { VendorProduct } from "@/lib/products";
-
-function i18n(v: unknown, fallbackEn = ""): VendorProduct["nameI18n"] {
-  const o = (v ?? {}) as Record<string, unknown>;
-  return { ku: (o.ku as string) ?? "", ar: (o.ar as string) ?? "", en: (o.en as string) ?? fallbackEn };
-}
-
-function fromDoc(id: string, data: Record<string, unknown>): VendorProduct {
-  return {
-    id,
-    category: (data.category as VendorProduct["category"]) ?? "",
-    brand: (data.brand as string) ?? "",
-    name: (data.name as string) ?? "",
-    nameI18n: i18n(data.nameI18n, (data.name as string) ?? ""),
-    spec: (data.spec as string) ?? "",
-    price: (data.price as number) ?? 0,
-    currency: (data.currency as VendorProduct["currency"]) ?? "USD",
-    imageUrl: (data.imageUrl as string) ?? "",
-    description: (data.description as string | null) ?? null,
-    descriptionI18n: data.descriptionI18n ? i18n(data.descriptionI18n) : null,
-    warranty: (data.warranty as string | null) ?? null,
-    warrantyI18n: data.warrantyI18n ? i18n(data.warrantyI18n) : null,
-    inStock: (data.inStock as boolean) ?? true,
-    rating: (data.rating as number) ?? 0,
-    sold: (data.sold as number) ?? 0,
-  };
-}
+import { productFromDoc, type VendorProduct } from "@/lib/products";
 
 function EditProductInner() {
-  const authState = useVendorAuth();
-  const router = useRouter();
-  const params = useSearchParams();
-  const id = params.get("id");
+  const { vendorId } = useVendor();
+  const id = useSearchParams().get("id");
   const [product, setProduct] = useState<VendorProduct | null | "not-found">(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (authState.status === "signed-out" || authState.status === "signed-in-not-vendor") {
-      router.replace("/login");
+    if (!id) {
+      setProduct("not-found");
+      return;
     }
-  }, [authState.status, router]);
-
-  useEffect(() => {
-    if (authState.status !== "signed-in-vendor" || !id) return;
     getDoc(doc(db, "products", id))
       .then((snap) => {
-        if (!snap.exists() || snap.data().vendorId !== authState.vendorId) {
+        if (!snap.exists() || snap.data().vendorId !== vendorId) {
           setProduct("not-found");
           return;
         }
-        setProduct(fromDoc(snap.id, snap.data()));
+        setProduct(productFromDoc(snap.id, snap.data()));
       })
       .catch(() => setError("Couldn't load that product."));
-  }, [authState, id]);
-
-  if (authState.status !== "signed-in-vendor" || !id) {
-    return (
-      <div className="content">
-        <p className="muted">Loading…</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="content">
-        <p className="error-text">{error}</p>
-      </div>
-    );
-  }
-
-  if (product === "not-found") {
-    return (
-      <div className="content">
-        <p className="error-text">Product not found.</p>
-      </div>
-    );
-  }
+  }, [vendorId, id]);
 
   return (
-    <div className="content" style={{ maxWidth: 480 }}>
-      <h1 style={{ fontSize: 20, marginBottom: 20 }}>Edit product</h1>
-      <div className="card">
-        {product ? <ProductForm editing={product} /> : <p className="muted">Loading…</p>}
+    <div style={{ maxWidth: 560 }}>
+      <div className="page-header">
+        <div>
+          <h1 className="page-title">Edit product</h1>
+          <p className="page-sub">
+            <Link className="link" href="/products">← Back to products</Link>
+          </p>
+        </div>
       </div>
+      {error ? (
+        <p className="error-text">{error}</p>
+      ) : product === "not-found" ? (
+        <p className="error-text">Product not found.</p>
+      ) : (
+        <div className="panel">{product ? <ProductForm editing={product} /> : <p className="muted">Loading…</p>}</div>
+      )}
     </div>
   );
 }
 
 export default function EditProductPage() {
   return (
-    <Suspense fallback={<div className="content"><p className="muted">Loading…</p></div>}>
-      <EditProductInner />
-    </Suspense>
+    <VendorShell>
+      <Suspense fallback={<p className="muted">Loading…</p>}>
+        <EditProductInner />
+      </Suspense>
+    </VendorShell>
   );
 }

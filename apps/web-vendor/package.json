@@ -13,7 +13,6 @@
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "firebase": "^10.12.0",
-    "@solary/shared-types": "*",
     "@solary/ui-web": "*"
   },
   "devDependencies": {

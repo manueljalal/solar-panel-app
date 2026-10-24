@@ -119,7 +119,7 @@ export function ProductForm({ editing }: { editing?: VendorProduct }) {
           },
         });
       }
-      router.replace("/dashboard");
+      router.replace("/products");
     } catch (err) {
       setError(friendlyError(err));
       setSubmitting(false);

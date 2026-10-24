@@ -1,154 +1,147 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signOut } from "firebase/auth";
-import { httpsCallable } from "firebase/functions";
-import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
-import { auth, db, functions } from "@/lib/firebase";
-import { useVendorAuth } from "@/lib/use_auth";
-import { useCategories } from "@/lib/categories";
-import type { VendorProduct } from "@/lib/products";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  ORDER_STATUS_LABEL,
+  formatDate,
+  formatTotals,
+  orderNumber,
+  sumTotals,
+  type PortalOrder,
+} from "@solary/ui-web";
+import { db } from "@/lib/firebase";
+import { errorMessage, listOrders, listQuoteRequests, type QuoteRequest } from "@/lib/api";
+import { VendorShell, useVendor } from "@/components/vendor_shell";
 
-const deleteProduct = httpsCallable<{ productId: string }, { ok: true }>(functions, "vendor-deleteProduct");
-
-function i18n(v: unknown, fallbackEn = ""): VendorProduct["nameI18n"] {
-  const o = (v ?? {}) as Record<string, unknown>;
-  return { ku: (o.ku as string) ?? "", ar: (o.ar as string) ?? "", en: (o.en as string) ?? fallbackEn };
+interface Overview {
+  orders: PortalOrder[];
+  quotes: QuoteRequest[];
+  products: number;
+  inStock: number;
 }
 
-function fromDoc(id: string, data: Record<string, unknown>): VendorProduct {
-  return {
-    id,
-    category: (data.category as VendorProduct["category"]) ?? "",
-    brand: (data.brand as string) ?? "",
-    name: (data.name as string) ?? "Untitled product",
-    nameI18n: i18n(data.nameI18n, (data.name as string) ?? ""),
-    spec: (data.spec as string) ?? "",
-    price: (data.price as number) ?? 0,
-    currency: (data.currency as VendorProduct["currency"]) ?? "USD",
-    imageUrl: (data.imageUrl as string) ?? "",
-    description: (data.description as string | null) ?? null,
-    descriptionI18n: data.descriptionI18n ? i18n(data.descriptionI18n) : null,
-    warranty: (data.warranty as string | null) ?? null,
-    warrantyI18n: data.warrantyI18n ? i18n(data.warrantyI18n) : null,
-    inStock: (data.inStock as boolean) ?? true,
-    rating: (data.rating as number) ?? 0,
-    sold: (data.sold as number) ?? 0,
-  };
+function OverviewInner() {
+  const { vendorId, profile } = useVendor();
+  const [data, setData] = useState<Overview | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    Promise.all([
+      listOrders({}),
+      listQuoteRequests(),
+      getDocs(query(collection(db, "products"), where("vendorId", "==", vendorId))),
+    ])
+      .then(([o, q, p]) =>
+        setData({
+          orders: o.data.orders,
+          quotes: q.data.requests,
+          products: p.size,
+          inStock: p.docs.filter((d) => d.data().inStock !== false).length,
+        }),
+      )
+      .catch((e) => setError(errorMessage(e, "Couldn't load your overview — try again.")));
+  }, [vendorId]);
+
+  const by = (s: PortalOrder["status"]) => data?.orders.filter((o) => o.status === s) ?? [];
+  const newOrders = by("placed").length;
+  const inProgress = by("confirmed").length + by("out_for_delivery").length;
+  const revenue = sumTotals(by("delivered").map((o) => o.totals));
+  const newQuotes = data?.quotes.filter((q) => q.status === "new").length ?? 0;
+
+  return (
+    <>
+      <div className="page-header">
+        <div>
+          <h1 className="page-title">{profile?.businessName ? `Welcome, ${profile.businessName}` : "Overview"}</h1>
+          <p className="page-sub">What needs your attention today.</p>
+        </div>
+        <Link href="/products/new" className="btn btn-primary">
+          Add product
+        </Link>
+      </div>
+
+      {error && <p className="error-text">{error}</p>}
+
+      <div className="stat-grid">
+        <Link href="/orders" className={`stat-card ${newOrders ? "attention" : ""}`}>
+          <span className="stat-label">New orders</span>
+          <span className="stat-value">{data ? newOrders : "—"}</span>
+          <span className="stat-hint">Waiting for you to confirm</span>
+        </Link>
+        <Link href="/orders" className="stat-card">
+          <span className="stat-label">In progress</span>
+          <span className="stat-value">{data ? inProgress : "—"}</span>
+          <span className="stat-hint">Confirmed or out for delivery</span>
+        </Link>
+        <div className="stat-card">
+          <span className="stat-label">Delivered sales</span>
+          <span className="stat-value" style={{ fontSize: 22 }}>{data ? formatTotals(revenue) : "—"}</span>
+          <span className="stat-hint">{data ? `${by("delivered").length} delivered orders` : ""}</span>
+        </div>
+        <Link href="/quotes" className={`stat-card ${newQuotes ? "attention" : ""}`}>
+          <span className="stat-label">New quote requests</span>
+          <span className="stat-value">{data ? newQuotes : "—"}</span>
+          <span className="stat-hint">Shoppers waiting for a price</span>
+        </Link>
+        <Link href="/products" className="stat-card">
+          <span className="stat-label">Products</span>
+          <span className="stat-value">{data ? data.products : "—"}</span>
+          <span className="stat-hint">{data ? `${data.inStock} in stock` : ""}</span>
+        </Link>
+      </div>
+
+      <div className="section-title">
+        Recent orders <Link href="/orders">View all</Link>
+      </div>
+      {data && data.orders.length === 0 ? (
+        <div className="empty-state">
+          <strong>No orders yet</strong>
+          Orders from the Solary app will appear here.
+        </div>
+      ) : (
+        <div className="table-wrap">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Customer</th>
+                <th className="num">Total</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(data?.orders ?? []).slice(0, 6).map((o) => (
+                <tr key={o.id}>
+                  <td>
+                    <div className="cell-main">{orderNumber(o.id)}</div>
+                    <div className="cell-sub">{formatDate(o.createdAt)}</div>
+                  </td>
+                  <td>{o.customerName || "—"}</td>
+                  <td className="num">{formatTotals(o.totals)}</td>
+                  <td>
+                    <span className={`status status-${o.status}`}>{ORDER_STATUS_LABEL[o.status]}</span>
+                  </td>
+                </tr>
+              ))}
+              {!data && (
+                <tr>
+                  <td colSpan={4} className="muted">Loading…</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </>
+  );
 }
 
 export default function DashboardPage() {
-  const authState = useVendorAuth();
-  const { categories } = useCategories();
-  const router = useRouter();
-  const [products, setProducts] = useState<VendorProduct[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [busyId, setBusyId] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (authState.status === "signed-out" || authState.status === "signed-in-not-vendor") {
-      router.replace("/login");
-    }
-  }, [authState.status, router]);
-
-  useEffect(() => {
-    if (authState.status !== "signed-in-vendor") return;
-    const q = query(
-      collection(db, "products"),
-      where("vendorId", "==", authState.vendorId),
-      orderBy("createdAt", "desc"),
-    );
-    const unsubscribe = onSnapshot(
-      q,
-      (snap) => setProducts(snap.docs.map((d) => fromDoc(d.id, d.data()))),
-      () => setError("Couldn't load your products."),
-    );
-    return unsubscribe;
-  }, [authState]);
-
-  async function onDelete(id: string, name: string) {
-    if (!window.confirm(`Remove "${name}"?`)) return;
-    setBusyId(id);
-    try {
-      await deleteProduct({ productId: id });
-    } catch {
-      setError("Couldn't remove that product — try again.");
-    } finally {
-      setBusyId(null);
-    }
-  }
-
-  if (authState.status !== "signed-in-vendor") {
-    return (
-      <div className="content">
-        <p className="muted">Loading…</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="shell">
-      <div className="topbar">
-        <div className="brand">Solary — Vendor Portal</div>
-        <button className="btn btn-ghost" onClick={() => signOut(auth)}>
-          Sign out
-        </button>
-      </div>
-      <div className="content">
-        <div className="page-header">
-          <div>
-            <h1 style={{ fontSize: 20, marginBottom: 4 }}>My products</h1>
-            <p className="muted">Manage what shoppers see on Solary.</p>
-          </div>
-          <Link href="/products/new" className="btn btn-primary">
-            Add product
-          </Link>
-        </div>
-
-        {error && <p className="error-text" style={{ marginBottom: 12 }}>{error}</p>}
-
-        {products === null ? (
-          <p className="muted">Loading…</p>
-        ) : products.length === 0 ? (
-          <div className="empty-state">No products yet. Tap &quot;Add product&quot; to list your first item.</div>
-        ) : (
-          <div>
-            {products.map((p) => (
-              <div className="app-row" key={p.id}>
-                {p.imageUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={p.imageUrl} alt="" className="product-thumb" />
-                ) : (
-                  <div className="product-thumb" />
-                )}
-                <div style={{ flex: 1 }}>
-                  <div className="app-row-title">{p.name}</div>
-                  <div className="app-row-meta">
-                    {categories?.find((c) => c.id === p.category)?.name.en ?? p.category} · {p.spec} · {p.brand}
-                  </div>
-                  <div className="app-row-meta">
-                    {p.currency === "USD" ? "$" : "IQD "}
-                    {p.price.toLocaleString()}{" "}
-                    <span className={`pill ${p.inStock ? "pill-success" : "pill-warning"}`} style={{ marginLeft: 6 }}>
-                      {p.inStock ? "In stock" : "Out of stock"}
-                    </span>
-                  </div>
-                </div>
-                <div className="app-row-actions">
-                  <Link href={`/products/edit?id=${p.id}`} className="btn btn-ghost">
-                    Edit
-                  </Link>
-                  <button className="btn btn-danger" disabled={busyId === p.id} onClick={() => onDelete(p.id, p.name)}>
-                    Remove
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
+    <VendorShell>
+      <OverviewInner />
+    </VendorShell>
   );
 }

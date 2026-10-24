@@ -1,5 +1,6 @@
-// Shared design-system entry point for the 3 web apps.
-// Real redesign (colors, type scale, components) replaces this placeholder —
-// see /docs/design-notes.md for why the reference UI needs a rework.
-
-export * from "./tokens/colors";
+// Shared by the admin and vendor portals: formatting helpers, order types
+// and the order detail drawer. The matching styles live in ./dashboard.css
+// (imported once in each app's root layout).
+export * from "./format";
+export * from "./orders";
+export * from "./order_drawer";

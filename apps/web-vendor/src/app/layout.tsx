@@ -1,8 +1,9 @@
 import "./globals.css";
+import "@solary/ui-web/dashboard.css";
 
 export const metadata = {
   title: "Solary — Vendor Portal",
-  description: "Manage your listings, orders, and installs",
+  description: "Manage your products, orders and quote requests",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
