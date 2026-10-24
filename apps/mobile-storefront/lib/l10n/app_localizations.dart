@@ -790,12 +790,6 @@ abstract class AppLocalizations {
   /// **'{count, plural, one {Subtotal (1 item)} other {Subtotal ({count} items)}}'**
   String cartSubtotal(int count);
 
-  /// No description provided for @checkoutNotBuiltYet.
-  ///
-  /// In en, this message translates to:
-  /// **'Checkout isn\'t built yet — coming next.'**
-  String get checkoutNotBuiltYet;
-
   /// No description provided for @checkout.
   ///
   /// In en, this message translates to:
@@ -979,7 +973,7 @@ abstract class AppLocalizations {
   /// No description provided for @ordersEmptyBody.
   ///
   /// In en, this message translates to:
-  /// **'Orders will show up here once checkout is built.'**
+  /// **'When you place an order it will show up here.'**
   String get ordersEmptyBody;
 
   /// No description provided for @learnTitle.
@@ -1857,6 +1851,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An account with this phone number already exists. Sign in instead, or use a different number.'**
   String get signUpPhoneTaken;
+
+  /// No description provided for @checkoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout'**
+  String get checkoutTitle;
+
+  /// No description provided for @checkoutDeliverTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery location'**
+  String get checkoutDeliverTo;
+
+  /// No description provided for @checkoutChooseLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose on map'**
+  String get checkoutChooseLocation;
+
+  /// No description provided for @checkoutAddressLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Address details'**
+  String get checkoutAddressLabel;
+
+  /// No description provided for @checkoutAddressHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Street, building, nearest landmark'**
+  String get checkoutAddressHint;
+
+  /// No description provided for @checkoutNoteLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Note for the seller (optional)'**
+  String get checkoutNoteLabel;
+
+  /// No description provided for @checkoutPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get checkoutPayment;
+
+  /// No description provided for @checkoutCod.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash on delivery'**
+  String get checkoutCod;
+
+  /// No description provided for @checkoutCodHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay the seller in cash when your order arrives.'**
+  String get checkoutCodHint;
+
+  /// No description provided for @checkoutSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Order summary'**
+  String get checkoutSummary;
+
+  /// No description provided for @checkoutTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get checkoutTotal;
+
+  /// No description provided for @checkoutPlaceOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Place order'**
+  String get checkoutPlaceOrder;
+
+  /// No description provided for @checkoutSellersNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Items from several sellers become separate orders — each seller confirms and delivers its own.'**
+  String get checkoutSellersNote;
+
+  /// No description provided for @checkoutSignInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to place an order'**
+  String get checkoutSignInTitle;
+
+  /// No description provided for @checkoutSignInBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders need an account with a verified phone so the seller can call you to confirm.'**
+  String get checkoutSignInBody;
+
+  /// No description provided for @checkoutLocationRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your delivery location on the map.'**
+  String get checkoutLocationRequired;
+
+  /// No description provided for @checkoutAddressRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your address details.'**
+  String get checkoutAddressRequired;
+
+  /// No description provided for @checkoutFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t place your order. Try again.'**
+  String get checkoutFailed;
+
+  /// No description provided for @orderPlacedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Order placed'**
+  String get orderPlacedTitle;
+
+  /// No description provided for @orderPlacedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The seller will call you to confirm. Pay in cash when it arrives.'**
+  String get orderPlacedBody;
+
+  /// No description provided for @orderViewOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'View my orders'**
+  String get orderViewOrders;
+
+  /// No description provided for @orderStatusPlaced.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for seller'**
+  String get orderStatusPlaced;
+
+  /// No description provided for @orderStatusConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get orderStatusConfirmed;
+
+  /// No description provided for @orderStatusOutForDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'On the way'**
+  String get orderStatusOutForDelivery;
+
+  /// No description provided for @orderStatusDelivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get orderStatusDelivered;
+
+  /// No description provided for @orderStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get orderStatusCancelled;
+
+  /// No description provided for @ordersSignInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to see your orders'**
+  String get ordersSignInTitle;
+
+  /// No description provided for @orderItemCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {1 item} other {{count} items}}'**
+  String orderItemCount(int count);
+
+  /// No description provided for @orderCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel order'**
+  String get orderCancel;
+
+  /// No description provided for @orderCancelConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this order?'**
+  String get orderCancelConfirmTitle;
+
+  /// No description provided for @orderCancelConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The seller hasn\'t confirmed it yet, so you can still cancel.'**
+  String get orderCancelConfirmBody;
+
+  /// No description provided for @orderKeep.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep order'**
+  String get orderKeep;
+
+  /// No description provided for @orderCancelledToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Order cancelled.'**
+  String get orderCancelledToast;
+
+  /// No description provided for @orderActionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Try again.'**
+  String get orderActionFailed;
+
+  /// No description provided for @orderDeliverTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Deliver to'**
+  String get orderDeliverTo;
+
+  /// No description provided for @orderFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From {seller}'**
+  String orderFrom(String seller);
+
+  /// No description provided for @orderCancelReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason: {reason}'**
+  String orderCancelReason(String reason);
 }
 
 class _AppLocalizationsDelegate

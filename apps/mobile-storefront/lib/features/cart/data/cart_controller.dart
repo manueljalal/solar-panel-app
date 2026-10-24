@@ -2,12 +2,9 @@ import 'package:flutter/foundation.dart';
 import '../../home/domain/home_product.dart';
 import '../domain/cart_item.dart';
 
-/// Holds cart state for the whole app session. In-memory only — cleared on
-/// app restart. That's a real limitation, not a placeholder pretending to
-/// be done: once there's a checkout flow worth persisting, back this with
-/// a Firestore `carts/{uid}` doc (the uid already exists — see
-/// core/auth/auth_repository.dart) instead of rewriting the call sites
-/// that use this controller.
+/// Holds cart state for the whole app session (in memory — cleared on app
+/// restart). Checkout sends product ids and quantities; prices are always
+/// re-read on the server.
 ///
 /// A single instance is shared app-wide via CartScope (see
 /// presentation/cart_scope.dart) so any screen can add/remove items and
@@ -19,12 +16,23 @@ class CartController extends ChangeNotifier {
 
   int get itemCount => _items.fold(0, (sum, item) => sum + item.quantity);
 
-  double get subtotal => _items.fold(0, (sum, item) => sum + item.lineTotal);
+  /// Totals per currency — USD and IQD products are never added together.
+  Map<String, double> get totals {
+    final out = <String, double>{};
+    for (final i in _items) {
+      out[i.currency] = (out[i.currency] ?? 0) + i.lineTotal;
+    }
+    return out;
+  }
+
+  // Lines are keyed by product id (two products can share a name); test
+  // fixtures without ids fall back to the title.
+  static String _key(HomeProduct p) => p.id.isNotEmpty ? p.id : p.title;
 
   bool get isEmpty => _items.isEmpty;
 
   void add(HomeProduct product, {int quantity = 1}) {
-    final index = _items.indexWhere((i) => i.product.title == product.title);
+    final index = _items.indexWhere((i) => _key(i.product) == _key(product));
     if (index == -1) {
       _items.add(CartItem(product: product, quantity: quantity));
     } else {
@@ -34,7 +42,7 @@ class CartController extends ChangeNotifier {
   }
 
   void setQuantity(HomeProduct product, int quantity) {
-    final index = _items.indexWhere((i) => i.product.title == product.title);
+    final index = _items.indexWhere((i) => _key(i.product) == _key(product));
     if (index == -1) return;
     if (quantity <= 0) {
       _items.removeAt(index);
@@ -45,7 +53,7 @@ class CartController extends ChangeNotifier {
   }
 
   void remove(HomeProduct product) {
-    _items.removeWhere((i) => i.product.title == product.title);
+    _items.removeWhere((i) => _key(i.product) == _key(product));
     notifyListeners();
   }
 

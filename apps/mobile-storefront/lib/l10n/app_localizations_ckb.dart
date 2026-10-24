@@ -396,9 +396,6 @@ class AppLocalizationsCkb extends AppLocalizations {
   }
 
   @override
-  String get checkoutNotBuiltYet => 'پارەدان هێشتا دروست نەکراوە — بەم زووانە.';
-
-  @override
   String get checkout => 'پارەدان';
 
   @override
@@ -501,8 +498,7 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get ordersEmptyTitle => 'هێشتا هیچ داواکارییەک نییە';
 
   @override
-  String get ordersEmptyBody =>
-      'داواکارییەکان لێرە دەردەکەون کاتێک پارەدان دروست بکرێت.';
+  String get ordersEmptyBody => 'کاتێک داواکارییەک دەنێریت لێرە دەردەکەوێت.';
 
   @override
   String get learnTitle => 'فێربوون';
@@ -979,4 +975,133 @@ class AppLocalizationsCkb extends AppLocalizations {
   @override
   String get signUpPhoneTaken =>
       'ئەم ژمارەیە پێشتر هەژماری هەیە. بچۆ ژوورەوە، یان ژمارەیەکی تر بەکاربهێنە.';
+
+  @override
+  String get checkoutTitle => 'تەواوکردنی داواکاری';
+
+  @override
+  String get checkoutDeliverTo => 'شوێنی گەیاندن';
+
+  @override
+  String get checkoutChooseLocation => 'لەسەر نەخشە هەڵبژێرە';
+
+  @override
+  String get checkoutAddressLabel => 'وردەکاری ناونیشان';
+
+  @override
+  String get checkoutAddressHint => 'شەقام، باڵەخانە، نزیکترین نیشانە';
+
+  @override
+  String get checkoutNoteLabel => 'تێبینی بۆ فرۆشیار (دڵخوازانە)';
+
+  @override
+  String get checkoutPayment => 'پارەدان';
+
+  @override
+  String get checkoutCod => 'پارەدان لە کاتی گەیاندن';
+
+  @override
+  String get checkoutCodHint =>
+      'کاتێک داواکارییەکەت گەیشت، بە نەختینە پارە بدە بە فرۆشیار.';
+
+  @override
+  String get checkoutSummary => 'پوختەی داواکاری';
+
+  @override
+  String get checkoutTotal => 'کۆی گشتی';
+
+  @override
+  String get checkoutPlaceOrder => 'ناردنی داواکاری';
+
+  @override
+  String get checkoutSellersNote =>
+      'کاڵای چەند فرۆشیارێک دەبنە داواکاری جیا — هەر فرۆشیارێک داواکاری خۆی پشتڕاست دەکاتەوە و دەیگەیەنێت.';
+
+  @override
+  String get checkoutSignInTitle => 'بۆ ناردنی داواکاری بچۆ ژوورەوە';
+
+  @override
+  String get checkoutSignInBody =>
+      'داواکاری پێویستی بە هەژمارێکی ژمارە پشتڕاستکراوە هەیە بۆ ئەوەی فرۆشیار پەیوەندیت پێوە بکات.';
+
+  @override
+  String get checkoutLocationRequired => 'شوێنی گەیاندن لەسەر نەخشە هەڵبژێرە.';
+
+  @override
+  String get checkoutAddressRequired => 'وردەکاری ناونیشانەکەت بنووسە.';
+
+  @override
+  String get checkoutFailed =>
+      'نەتوانرا داواکارییەکەت بنێردرێت. دووبارە هەوڵبدەرەوە.';
+
+  @override
+  String get orderPlacedTitle => 'داواکاری نێردرا';
+
+  @override
+  String get orderPlacedBody =>
+      'فرۆشیار پەیوەندیت پێوە دەکات بۆ پشتڕاستکردنەوە. لە کاتی گەیشتن بە نەختینە پارە بدە.';
+
+  @override
+  String get orderViewOrders => 'داواکارییەکانم ببینە';
+
+  @override
+  String get orderStatusPlaced => 'چاوەڕێی فرۆشیار';
+
+  @override
+  String get orderStatusConfirmed => 'پشتڕاستکراوە';
+
+  @override
+  String get orderStatusOutForDelivery => 'لە ڕێگادایە';
+
+  @override
+  String get orderStatusDelivered => 'گەیەندرا';
+
+  @override
+  String get orderStatusCancelled => 'هەڵوەشێنراوە';
+
+  @override
+  String get ordersSignInTitle => 'بۆ بینینی داواکارییەکانت بچۆ ژوورەوە';
+
+  @override
+  String orderItemCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count کاڵا',
+      one: '1 کاڵا',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get orderCancel => 'هەڵوەشاندنەوەی داواکاری';
+
+  @override
+  String get orderCancelConfirmTitle => 'ئەم داواکارییە هەڵبوەشێنرێتەوە؟';
+
+  @override
+  String get orderCancelConfirmBody =>
+      'فرۆشیار هێشتا پشتڕاستی نەکردۆتەوە، بۆیە دەتوانیت هەڵیبوەشێنیتەوە.';
+
+  @override
+  String get orderKeep => 'داواکارییەکە بهێڵەرەوە';
+
+  @override
+  String get orderCancelledToast => 'داواکارییەکە هەڵوەشێنرایەوە.';
+
+  @override
+  String get orderActionFailed => 'هەڵەیەک ڕوویدا. دووبارە هەوڵبدەرەوە.';
+
+  @override
+  String get orderDeliverTo => 'گەیاندن بۆ';
+
+  @override
+  String orderFrom(String seller) {
+    return 'لە $seller';
+  }
+
+  @override
+  String orderCancelReason(String reason) {
+    return 'هۆکار: $reason';
+  }
 }

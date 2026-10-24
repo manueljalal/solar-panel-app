@@ -22,3 +22,4 @@ __exportStar(require("./list_vendor_applications"), exports);
 __exportStar(require("./categories"), exports);
 __exportStar(require("./banners"), exports);
 __exportStar(require("./learn"), exports);
+__exportStar(require("./orders"), exports);

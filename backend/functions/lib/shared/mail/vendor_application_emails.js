@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendVendorApprovedEmail = sendVendorApprovedEmail;
 exports.sendVendorRejectedEmail = sendVendorRejectedEmail;
+exports.renderTemplate = renderTemplate;
+exports.escapeHtml = escapeHtml;
 const send_mail_1 = require("./send_mail");
 const VENDOR_PORTAL_URL = "https://solary-vendor-dev.web.app";
 const COMPANY_FOOTER_NAME = "Solary, a Quadcores product";

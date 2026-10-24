@@ -7,16 +7,15 @@ class CartItem {
   final HomeProduct product;
   final int quantity;
 
-  /// Parses HomeProduct.price ("$189", "$1,240") back into a number for
-  /// totals math. Fragile by construction — HomeProduct stores price as a
-  /// display string because that's what the product list needs; once
-  /// products come with a real numeric price field end-to-end (the
-  /// Firestore doc already has one — see home_repository.dart), thread
-  /// that through instead of re-parsing text.
+  /// Numeric unit price from the product doc. Falls back to parsing the
+  /// display string only for products built without one (test fixtures).
   double get unitPrice {
+    if (product.priceValue > 0) return product.priceValue;
     final digits = product.price.replaceAll(RegExp(r'[^0-9.]'), '');
     return double.tryParse(digits) ?? 0;
   }
+
+  String get currency => product.currency;
 
   double get lineTotal => unitPrice * quantity;
 

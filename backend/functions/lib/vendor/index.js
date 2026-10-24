@@ -20,3 +20,4 @@ __exportStar(require("./delete_product"), exports);
 __exportStar(require("./submit_application"), exports);
 __exportStar(require("./upload_image"), exports);
 __exportStar(require("./get_my_application"), exports);
+__exportStar(require("./orders"), exports);

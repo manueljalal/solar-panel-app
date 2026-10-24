@@ -3,15 +3,15 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../shared/money.dart';
+import '../../checkout/presentation/checkout_screen.dart';
 import '../../../shared/widgets/placeholder_image.dart';
 import '../data/cart_scope.dart';
 import '../domain/cart_item.dart';
 
 /// Real cart screen — reads live from CartScope, so it always reflects
 /// whatever was added from product detail. Quantity can be changed or
-/// removed inline; "Checkout" is a real navigation target (checkout
-/// screen still needs to be built — this button surfaces that instead of
-/// hiding it as a silent no-op).
+/// removed inline; "Checkout" opens the cash-on-delivery checkout.
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
@@ -42,7 +42,7 @@ class CartScreen extends StatelessWidget {
                   itemBuilder: (context, i) => _CartRow(item: cart.items[i]),
                 ),
               ),
-              _CartSummary(subtotal: cart.subtotal, itemCount: cart.itemCount),
+              _CartSummary(totals: cart.totals, itemCount: cart.itemCount),
             ],
           );
         },
@@ -124,7 +124,7 @@ class _CartRow extends StatelessWidget {
                     ),
                     _QtyButton(icon: Icons.add, onTap: () => cart.setQuantity(item.product, item.quantity + 1)),
                     const Spacer(),
-                    Text(item.product.price, style: AppTypography.price),
+                    Text(formatMoney(item.unitPrice, item.currency), style: AppTypography.price),
                   ],
                 ),
               ],
@@ -163,9 +163,9 @@ class _QtyButton extends StatelessWidget {
 }
 
 class _CartSummary extends StatelessWidget {
-  const _CartSummary({required this.subtotal, required this.itemCount});
+  const _CartSummary({required this.totals, required this.itemCount});
 
-  final double subtotal;
+  final Map<String, double> totals;
   final int itemCount;
 
   @override
@@ -187,16 +187,14 @@ class _CartSummary extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(l10n.cartSubtotal(itemCount), style: AppTypography.bodyMuted),
-                  Text('\$${subtotal.toStringAsFixed(2)}', style: AppTypography.price),
+                  Flexible(child: Text(formatTotals(totals), style: AppTypography.price, textAlign: TextAlign.end)),
                 ],
               ),
               const SizedBox(height: AppSpacing.md),
               ElevatedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(l10n.checkoutNotBuiltYet)),
-                  );
-                },
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const CheckoutScreen()),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.ink,
                   foregroundColor: Colors.white,

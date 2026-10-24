@@ -29,7 +29,7 @@ void main() {
 
     await tester.tap(navTab('Orders'));
     await tester.pumpAndSettle();
-    expect(find.text('No orders yet'), findsOneWidget);
+    expect(find.text('Sign in to see your orders'), findsOneWidget); // no account in tests
 
     await tester.tap(navTab('Account'));
     await tester.pumpAndSettle();

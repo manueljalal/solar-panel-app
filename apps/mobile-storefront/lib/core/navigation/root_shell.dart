@@ -25,12 +25,40 @@ class RootShell extends StatefulWidget {
 
   final HomeRepository? homeRepository;
 
+  /// Lets a pushed screen switch tabs (e.g. "View my orders" after
+  /// checkout). Set it to a tab index; the shell switches and resets it.
+  static final tabRequests = ValueNotifier<int?>(null);
+
+  static const ordersTab = 3;
+
   @override
   State<RootShell> createState() => _RootShellState();
 }
 
 class _RootShellState extends State<RootShell> {
   int _index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    RootShell.tabRequests.addListener(_onTabRequest);
+  }
+
+  @override
+  void dispose() {
+    RootShell.tabRequests.removeListener(_onTabRequest);
+    super.dispose();
+  }
+
+  void _onTabRequest() {
+    final i = RootShell.tabRequests.value;
+    if (i == null || !mounted) return;
+    setState(() {
+      _visited.add(i);
+      _index = i;
+    });
+    RootShell.tabRequests.value = null;
+  }
 
   // Tabs are built on first visit, not at startup — otherwise Learn, Cart,
   // Orders and Account all run their loading while Home is still fetching,

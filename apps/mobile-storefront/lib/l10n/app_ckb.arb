@@ -115,7 +115,6 @@
   "cartEmptyTitle": "سەبەتەکەت بەتاڵە",
   "cartEmptyBody": "زۆرترین فرۆشراوەکان لە سەرەکی ببینە و شتێک زیاد بکە.",
   "cartSubtotal": "{count, plural, one {کۆی گشتی (١ بەرهەم)} other {کۆی گشتی ({count} بەرهەم)}}",
-  "checkoutNotBuiltYet": "پارەدان هێشتا دروست نەکراوە — بەم زووانە.",
   "checkout": "پارەدان",
   "perUnit": "/ یەکە",
   "description": "پێناسە",
@@ -146,7 +145,7 @@
   "wattageDisclaimer": "تەنها خەمڵاندنێکە — فرۆشیار قەبارەی وردی دیاری دەکات دوای سەردانی شوێنەکە.",
   "ordersTitle": "داواکارییەکان",
   "ordersEmptyTitle": "هێشتا هیچ داواکارییەک نییە",
-  "ordersEmptyBody": "داواکارییەکان لێرە دەردەکەون کاتێک پارەدان دروست بکرێت.",
+  "ordersEmptyBody": "کاتێک داواکارییەک دەنێریت لێرە دەردەکەوێت.",
   "learnTitle": "فێربوون",
   "learnArticleWattageTitle": "هەڵبژاردنی واتی گونجاو",
   "learnArticleWattageBody": "ماڵێکی ئاسایی ڕۆژانە ١٠-١٥ کیلۆوات کاژێر بەکاردەهێنێت. بەکارهێنانی ڕۆژانەت دابەش بکە بەسەر کاتژمێرەکانی لووتکەی تیشکی خۆر لەسەر باڵەخانەکەت (زۆرجار ٤-٦ کاتژمێر لە عێراق) بۆ خەمڵاندنی قەبارەی سیستەم بە کیلۆوات. ژمێرەری وات لە سەرەکی بەکاربهێنە بۆ خەمڵاندنێکی خێرا — فرۆشیار قەبارەی وردی دیاری دەکات دوای سەردانی شوێنەکە، چونکە گۆشەی باڵەخانە و سێبەر و کارایی پانێڵ هەموو کاریگەرن.",
@@ -347,5 +346,63 @@
   "bulkFormPhotoAdd": "وێنەیەک زیاد بکە",
   "bulkFormPhotoChange": "گۆڕینی وێنە",
   "bulkTitleNeeded": "ناونیشانێک بە لانی کەم بە یەک زمان زیاد بکە.",
-  "signUpPhoneTaken": "ئەم ژمارەیە پێشتر هەژماری هەیە. بچۆ ژوورەوە، یان ژمارەیەکی تر بەکاربهێنە."
+  "signUpPhoneTaken": "ئەم ژمارەیە پێشتر هەژماری هەیە. بچۆ ژوورەوە، یان ژمارەیەکی تر بەکاربهێنە.",
+  "checkoutTitle": "تەواوکردنی داواکاری",
+  "checkoutDeliverTo": "شوێنی گەیاندن",
+  "checkoutChooseLocation": "لەسەر نەخشە هەڵبژێرە",
+  "checkoutAddressLabel": "وردەکاری ناونیشان",
+  "checkoutAddressHint": "شەقام، باڵەخانە، نزیکترین نیشانە",
+  "checkoutNoteLabel": "تێبینی بۆ فرۆشیار (دڵخوازانە)",
+  "checkoutPayment": "پارەدان",
+  "checkoutCod": "پارەدان لە کاتی گەیاندن",
+  "checkoutCodHint": "کاتێک داواکارییەکەت گەیشت، بە نەختینە پارە بدە بە فرۆشیار.",
+  "checkoutSummary": "پوختەی داواکاری",
+  "checkoutTotal": "کۆی گشتی",
+  "checkoutPlaceOrder": "ناردنی داواکاری",
+  "checkoutSellersNote": "کاڵای چەند فرۆشیارێک دەبنە داواکاری جیا — هەر فرۆشیارێک داواکاری خۆی پشتڕاست دەکاتەوە و دەیگەیەنێت.",
+  "checkoutSignInTitle": "بۆ ناردنی داواکاری بچۆ ژوورەوە",
+  "checkoutSignInBody": "داواکاری پێویستی بە هەژمارێکی ژمارە پشتڕاستکراوە هەیە بۆ ئەوەی فرۆشیار پەیوەندیت پێوە بکات.",
+  "checkoutLocationRequired": "شوێنی گەیاندن لەسەر نەخشە هەڵبژێرە.",
+  "checkoutAddressRequired": "وردەکاری ناونیشانەکەت بنووسە.",
+  "checkoutFailed": "نەتوانرا داواکارییەکەت بنێردرێت. دووبارە هەوڵبدەرەوە.",
+  "orderPlacedTitle": "داواکاری نێردرا",
+  "orderPlacedBody": "فرۆشیار پەیوەندیت پێوە دەکات بۆ پشتڕاستکردنەوە. لە کاتی گەیشتن بە نەختینە پارە بدە.",
+  "orderViewOrders": "داواکارییەکانم ببینە",
+  "orderStatusPlaced": "چاوەڕێی فرۆشیار",
+  "orderStatusConfirmed": "پشتڕاستکراوە",
+  "orderStatusOutForDelivery": "لە ڕێگادایە",
+  "orderStatusDelivered": "گەیەندرا",
+  "orderStatusCancelled": "هەڵوەشێنراوە",
+  "ordersSignInTitle": "بۆ بینینی داواکارییەکانت بچۆ ژوورەوە",
+  "orderItemCount": "{count, plural, one {1 کاڵا} other {{count} کاڵا}}",
+  "@orderItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "orderCancel": "هەڵوەشاندنەوەی داواکاری",
+  "orderCancelConfirmTitle": "ئەم داواکارییە هەڵبوەشێنرێتەوە؟",
+  "orderCancelConfirmBody": "فرۆشیار هێشتا پشتڕاستی نەکردۆتەوە، بۆیە دەتوانیت هەڵیبوەشێنیتەوە.",
+  "orderKeep": "داواکارییەکە بهێڵەرەوە",
+  "orderCancelledToast": "داواکارییەکە هەڵوەشێنرایەوە.",
+  "orderActionFailed": "هەڵەیەک ڕوویدا. دووبارە هەوڵبدەرەوە.",
+  "orderDeliverTo": "گەیاندن بۆ",
+  "orderFrom": "لە {seller}",
+  "@orderFrom": {
+    "placeholders": {
+      "seller": {
+        "type": "String"
+      }
+    }
+  },
+  "orderCancelReason": "هۆکار: {reason}",
+  "@orderCancelReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  }
 }

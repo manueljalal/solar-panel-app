@@ -388,9 +388,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get checkoutNotBuiltYet => 'Checkout isn\'t built yet — coming next.';
-
-  @override
   String get checkout => 'Checkout';
 
   @override
@@ -493,8 +490,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ordersEmptyTitle => 'No orders yet';
 
   @override
-  String get ordersEmptyBody =>
-      'Orders will show up here once checkout is built.';
+  String get ordersEmptyBody => 'When you place an order it will show up here.';
 
   @override
   String get learnTitle => 'Learn';
@@ -969,4 +965,133 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get signUpPhoneTaken =>
       'An account with this phone number already exists. Sign in instead, or use a different number.';
+
+  @override
+  String get checkoutTitle => 'Checkout';
+
+  @override
+  String get checkoutDeliverTo => 'Delivery location';
+
+  @override
+  String get checkoutChooseLocation => 'Choose on map';
+
+  @override
+  String get checkoutAddressLabel => 'Address details';
+
+  @override
+  String get checkoutAddressHint => 'Street, building, nearest landmark';
+
+  @override
+  String get checkoutNoteLabel => 'Note for the seller (optional)';
+
+  @override
+  String get checkoutPayment => 'Payment';
+
+  @override
+  String get checkoutCod => 'Cash on delivery';
+
+  @override
+  String get checkoutCodHint =>
+      'Pay the seller in cash when your order arrives.';
+
+  @override
+  String get checkoutSummary => 'Order summary';
+
+  @override
+  String get checkoutTotal => 'Total';
+
+  @override
+  String get checkoutPlaceOrder => 'Place order';
+
+  @override
+  String get checkoutSellersNote =>
+      'Items from several sellers become separate orders — each seller confirms and delivers its own.';
+
+  @override
+  String get checkoutSignInTitle => 'Sign in to place an order';
+
+  @override
+  String get checkoutSignInBody =>
+      'Orders need an account with a verified phone so the seller can call you to confirm.';
+
+  @override
+  String get checkoutLocationRequired =>
+      'Choose your delivery location on the map.';
+
+  @override
+  String get checkoutAddressRequired => 'Enter your address details.';
+
+  @override
+  String get checkoutFailed => 'Couldn\'t place your order. Try again.';
+
+  @override
+  String get orderPlacedTitle => 'Order placed';
+
+  @override
+  String get orderPlacedBody =>
+      'The seller will call you to confirm. Pay in cash when it arrives.';
+
+  @override
+  String get orderViewOrders => 'View my orders';
+
+  @override
+  String get orderStatusPlaced => 'Waiting for seller';
+
+  @override
+  String get orderStatusConfirmed => 'Confirmed';
+
+  @override
+  String get orderStatusOutForDelivery => 'On the way';
+
+  @override
+  String get orderStatusDelivered => 'Delivered';
+
+  @override
+  String get orderStatusCancelled => 'Cancelled';
+
+  @override
+  String get ordersSignInTitle => 'Sign in to see your orders';
+
+  @override
+  String orderItemCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get orderCancel => 'Cancel order';
+
+  @override
+  String get orderCancelConfirmTitle => 'Cancel this order?';
+
+  @override
+  String get orderCancelConfirmBody =>
+      'The seller hasn\'t confirmed it yet, so you can still cancel.';
+
+  @override
+  String get orderKeep => 'Keep order';
+
+  @override
+  String get orderCancelledToast => 'Order cancelled.';
+
+  @override
+  String get orderActionFailed => 'Something went wrong. Try again.';
+
+  @override
+  String get orderDeliverTo => 'Deliver to';
+
+  @override
+  String orderFrom(String seller) {
+    return 'From $seller';
+  }
+
+  @override
+  String orderCancelReason(String reason) {
+    return 'Reason: $reason';
+  }
 }

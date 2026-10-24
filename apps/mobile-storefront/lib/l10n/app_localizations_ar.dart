@@ -392,9 +392,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get checkoutNotBuiltYet => 'الدفع غير متاح بعد — قريبًا.';
-
-  @override
   String get checkout => 'الدفع';
 
   @override
@@ -498,7 +495,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ordersEmptyTitle => 'لا توجد طلبات بعد';
 
   @override
-  String get ordersEmptyBody => 'ستظهر الطلبات هنا بمجرد إتاحة الدفع.';
+  String get ordersEmptyBody => 'ستظهر طلباتك هنا عند إرسالها.';
 
   @override
   String get learnTitle => 'تعلّم';
@@ -971,4 +968,131 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get signUpPhoneTaken =>
       'يوجد حساب بهذا الرقم بالفعل. سجّل الدخول، أو استخدم رقماً آخر.';
+
+  @override
+  String get checkoutTitle => 'إتمام الطلب';
+
+  @override
+  String get checkoutDeliverTo => 'موقع التوصيل';
+
+  @override
+  String get checkoutChooseLocation => 'اختر على الخريطة';
+
+  @override
+  String get checkoutAddressLabel => 'تفاصيل العنوان';
+
+  @override
+  String get checkoutAddressHint => 'الشارع، المبنى، أقرب معلم';
+
+  @override
+  String get checkoutNoteLabel => 'ملاحظة للبائع (اختياري)';
+
+  @override
+  String get checkoutPayment => 'الدفع';
+
+  @override
+  String get checkoutCod => 'الدفع عند الاستلام';
+
+  @override
+  String get checkoutCodHint => 'ادفع للبائع نقداً عند وصول طلبك.';
+
+  @override
+  String get checkoutSummary => 'ملخص الطلب';
+
+  @override
+  String get checkoutTotal => 'المجموع';
+
+  @override
+  String get checkoutPlaceOrder => 'تأكيد الطلب';
+
+  @override
+  String get checkoutSellersNote =>
+      'المنتجات من عدة بائعين تصبح طلبات منفصلة — كل بائع يؤكد ويوصل طلبه.';
+
+  @override
+  String get checkoutSignInTitle => 'سجّل الدخول لإتمام الطلب';
+
+  @override
+  String get checkoutSignInBody =>
+      'تحتاج الطلبات إلى حساب برقم هاتف موثّق ليتصل بك البائع للتأكيد.';
+
+  @override
+  String get checkoutLocationRequired => 'اختر موقع التوصيل على الخريطة.';
+
+  @override
+  String get checkoutAddressRequired => 'أدخل تفاصيل عنوانك.';
+
+  @override
+  String get checkoutFailed => 'تعذّر إرسال طلبك. حاول مجدداً.';
+
+  @override
+  String get orderPlacedTitle => 'تم إرسال الطلب';
+
+  @override
+  String get orderPlacedBody =>
+      'سيتصل بك البائع للتأكيد. ادفع نقداً عند الاستلام.';
+
+  @override
+  String get orderViewOrders => 'عرض طلباتي';
+
+  @override
+  String get orderStatusPlaced => 'بانتظار البائع';
+
+  @override
+  String get orderStatusConfirmed => 'مؤكد';
+
+  @override
+  String get orderStatusOutForDelivery => 'في الطريق';
+
+  @override
+  String get orderStatusDelivered => 'تم التوصيل';
+
+  @override
+  String get orderStatusCancelled => 'ملغى';
+
+  @override
+  String get ordersSignInTitle => 'سجّل الدخول لرؤية طلباتك';
+
+  @override
+  String orderItemCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count منتجات',
+      one: 'منتج واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get orderCancel => 'إلغاء الطلب';
+
+  @override
+  String get orderCancelConfirmTitle => 'إلغاء هذا الطلب؟';
+
+  @override
+  String get orderCancelConfirmBody =>
+      'لم يؤكده البائع بعد، لذا يمكنك الإلغاء.';
+
+  @override
+  String get orderKeep => 'الإبقاء على الطلب';
+
+  @override
+  String get orderCancelledToast => 'تم إلغاء الطلب.';
+
+  @override
+  String get orderActionFailed => 'حدث خطأ. حاول مجدداً.';
+
+  @override
+  String get orderDeliverTo => 'التوصيل إلى';
+
+  @override
+  String orderFrom(String seller) {
+    return 'من $seller';
+  }
+
+  @override
+  String orderCancelReason(String reason) {
+    return 'السبب: $reason';
+  }
 }

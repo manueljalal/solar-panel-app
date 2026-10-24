@@ -71,7 +71,7 @@ export async function sendVendorRejectedEmail(
   });
 }
 
-function renderTemplate(options: {
+export function renderTemplate(options: {
   heading: string;
   bodyHtml: string;
   buttonLabel?: string;
@@ -125,7 +125,7 @@ function renderTemplate(options: {
 </html>`;
 }
 
-function escapeHtml(value: string): string {
+export function escapeHtml(value: string): string {
   return value
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")

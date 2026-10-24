@@ -115,7 +115,6 @@
   "cartEmptyTitle": "سلتك فارغة",
   "cartEmptyBody": "تصفّح الأكثر مبيعًا في الرئيسية وأضف شيئًا.",
   "cartSubtotal": "{count, plural, one {المجموع الفرعي (عنصر واحد)} two {المجموع الفرعي (عنصران)} few {المجموع الفرعي ({count} عناصر)} many {المجموع الفرعي ({count} عنصرًا)} other {المجموع الفرعي ({count} عنصر)}}",
-  "checkoutNotBuiltYet": "الدفع غير متاح بعد — قريبًا.",
   "checkout": "الدفع",
   "perUnit": "/ للوحدة",
   "description": "الوصف",
@@ -146,7 +145,7 @@
   "wattageDisclaimer": "تقدير فقط — سيؤكد البائع الحجم الدقيق بعد زيارة الموقع.",
   "ordersTitle": "الطلبات",
   "ordersEmptyTitle": "لا توجد طلبات بعد",
-  "ordersEmptyBody": "ستظهر الطلبات هنا بمجرد إتاحة الدفع.",
+  "ordersEmptyBody": "ستظهر طلباتك هنا عند إرسالها.",
   "learnTitle": "تعلّم",
   "learnArticleWattageTitle": "اختيار القدرة الكهربائية المناسبة",
   "learnArticleWattageBody": "يستهلك المنزل النموذجي 10–15 كيلوواط ساعة يوميًا. اقسم استهلاكك اليومي على عدد ساعات ذروة أشعة الشمس على سطح منزلك (عادة 4–6 ساعات في العراق) لتقدير حجم النظام بالكيلوواط. استخدم حاسبة الطاقة في الرئيسية للحصول على تقدير سريع — سيؤكد البائع الحجم الدقيق بعد زيارة الموقع، لأن زاوية السطح والتظليل وكفاءة الألواح كلها عوامل مؤثرة.",
@@ -347,5 +346,63 @@
   "bulkFormPhotoAdd": "أضف صورة",
   "bulkFormPhotoChange": "تغيير الصورة",
   "bulkTitleNeeded": "أضف عنواناً بلغة واحدة على الأقل.",
-  "signUpPhoneTaken": "يوجد حساب بهذا الرقم بالفعل. سجّل الدخول، أو استخدم رقماً آخر."
+  "signUpPhoneTaken": "يوجد حساب بهذا الرقم بالفعل. سجّل الدخول، أو استخدم رقماً آخر.",
+  "checkoutTitle": "إتمام الطلب",
+  "checkoutDeliverTo": "موقع التوصيل",
+  "checkoutChooseLocation": "اختر على الخريطة",
+  "checkoutAddressLabel": "تفاصيل العنوان",
+  "checkoutAddressHint": "الشارع، المبنى، أقرب معلم",
+  "checkoutNoteLabel": "ملاحظة للبائع (اختياري)",
+  "checkoutPayment": "الدفع",
+  "checkoutCod": "الدفع عند الاستلام",
+  "checkoutCodHint": "ادفع للبائع نقداً عند وصول طلبك.",
+  "checkoutSummary": "ملخص الطلب",
+  "checkoutTotal": "المجموع",
+  "checkoutPlaceOrder": "تأكيد الطلب",
+  "checkoutSellersNote": "المنتجات من عدة بائعين تصبح طلبات منفصلة — كل بائع يؤكد ويوصل طلبه.",
+  "checkoutSignInTitle": "سجّل الدخول لإتمام الطلب",
+  "checkoutSignInBody": "تحتاج الطلبات إلى حساب برقم هاتف موثّق ليتصل بك البائع للتأكيد.",
+  "checkoutLocationRequired": "اختر موقع التوصيل على الخريطة.",
+  "checkoutAddressRequired": "أدخل تفاصيل عنوانك.",
+  "checkoutFailed": "تعذّر إرسال طلبك. حاول مجدداً.",
+  "orderPlacedTitle": "تم إرسال الطلب",
+  "orderPlacedBody": "سيتصل بك البائع للتأكيد. ادفع نقداً عند الاستلام.",
+  "orderViewOrders": "عرض طلباتي",
+  "orderStatusPlaced": "بانتظار البائع",
+  "orderStatusConfirmed": "مؤكد",
+  "orderStatusOutForDelivery": "في الطريق",
+  "orderStatusDelivered": "تم التوصيل",
+  "orderStatusCancelled": "ملغى",
+  "ordersSignInTitle": "سجّل الدخول لرؤية طلباتك",
+  "orderItemCount": "{count, plural, one {منتج واحد} other {{count} منتجات}}",
+  "@orderItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "orderCancel": "إلغاء الطلب",
+  "orderCancelConfirmTitle": "إلغاء هذا الطلب؟",
+  "orderCancelConfirmBody": "لم يؤكده البائع بعد، لذا يمكنك الإلغاء.",
+  "orderKeep": "الإبقاء على الطلب",
+  "orderCancelledToast": "تم إلغاء الطلب.",
+  "orderActionFailed": "حدث خطأ. حاول مجدداً.",
+  "orderDeliverTo": "التوصيل إلى",
+  "orderFrom": "من {seller}",
+  "@orderFrom": {
+    "placeholders": {
+      "seller": {
+        "type": "String"
+      }
+    }
+  },
+  "orderCancelReason": "السبب: {reason}",
+  "@orderCancelReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  }
 }

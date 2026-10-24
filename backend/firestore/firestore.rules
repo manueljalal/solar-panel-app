@@ -73,9 +73,12 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // orders/{orderId}
+    // orders/{orderId} — cash-on-delivery orders. No client access: the
+    // storefront-placeOrder / listMyOrders / cancelMyOrder, vendor-listOrders /
+    // updateOrderStatus and admin-listOrders / updateOrderStatus callables
+    // scope every read and write to the customer, the vendor, or an admin.
     match /orders/{orderId} {
-      allow read: if false; // enforced in Functions (owner/vendor/admin only)
+      allow read: if false;
       allow write: if false;
     }
 
