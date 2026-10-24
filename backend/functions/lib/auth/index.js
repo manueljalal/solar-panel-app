@@ -30,6 +30,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // (separate email+password vendor credential).
 __exportStar(require("./request_phone_otp"), exports);
 __exportStar(require("./sign_up"), exports);
+__exportStar(require("./check_sign_up"), exports);
 __exportStar(require("./sign_in"), exports);
 __exportStar(require("./sign_in_otp_step_up"), exports);
 __exportStar(require("./set_vendor_password"), exports);

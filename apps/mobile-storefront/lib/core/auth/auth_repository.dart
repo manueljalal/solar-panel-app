@@ -82,6 +82,24 @@ class AuthRepository {
     await callable.call({'phone': phone, 'deviceId': deviceId});
   }
 
+  /// Asks the backend, before any WhatsApp code is sent, whether the chosen
+  /// username or phone already has an account. Best effort: if the check
+  /// itself can't be reached, reports both as free and lets signUp (which
+  /// re-checks) be the authority.
+  Future<({bool usernameTaken, bool phoneTaken})> checkSignUp({required String username, required String phone}) async {
+    try {
+      final result = await _functions.httpsCallable('auth-checkSignUp').call({'username': username, 'phone': phone});
+      final data = result.data as Map;
+      return (usernameTaken: data['usernameTaken'] == true, phoneTaken: data['phoneTaken'] == true);
+    } on FirebaseFunctionsException catch (e) {
+      // Bad input is the user's to fix; anything else must not block sign-up.
+      if (e.code == 'invalid-argument') rethrow;
+      return (usernameTaken: false, phoneTaken: false);
+    } catch (_) {
+      return (usernameTaken: false, phoneTaken: false);
+    }
+  }
+
   /// Real registration — name + username + password + phone + location,
   /// with [otp] proving phone ownership (call requestPhoneOtp first to
   /// get that code sent). Everything happens in one Cloud Function call

@@ -4,6 +4,7 @@ import { randomUUID } from "crypto";
 import { db, auth } from "../shared/firebase";
 import { consumePhoneOtp } from "../shared/auth/verify_otp";
 import { hashPassword, isValidPassword, isValidUsername, normalizeUsername } from "../shared/auth/password";
+import { isUsernameAvailable } from "../shared/auth/signup_checks";
 
 interface PickedLocationInput {
   latitude: number;
@@ -58,6 +59,12 @@ export const signUp = onCall<SignUpInput>({ region: "us-central1" }, async (requ
   }
   if (!otp) throw new HttpsError("invalid-argument", "otp is required.");
 
+  // Cheap and non-destructive, so do it before the one-time code is spent:
+  // a taken username must not cost the user a WhatsApp code.
+  if (!(await isUsernameAvailable(username))) {
+    throw new HttpsError("already-exists", "That username is taken.");
+  }
+
   // Prove phone ownership BEFORE reserving the username / creating
   // anything — a failed OTP check should leave no trace.
   await consumePhoneOtp(phone, otp);
@@ -83,7 +90,13 @@ export const signUp = onCall<SignUpInput>({ region: "us-central1" }, async (requ
   await db.runTransaction(async (tx) => {
     const usernameSnap = await tx.get(usernameRef);
     if (usernameSnap.exists) {
-      throw new HttpsError("already-exists", "That username is taken.");
+      // Taken only if it belongs to a real account; an orphaned
+      // reservation (interrupted earlier sign-up) is reclaimed.
+      const owner = usernameSnap.data()?.uid as string | undefined;
+      const ownerExists = owner ? (await tx.get(db.collection("users").doc(owner))).exists : false;
+      if (ownerExists) {
+        throw new HttpsError("already-exists", "That username is taken.");
+      }
     }
     tx.set(usernameRef, { uid, createdAt: FieldValue.serverTimestamp() });
   });

@@ -7,6 +7,7 @@ const crypto_1 = require("crypto");
 const firebase_1 = require("../shared/firebase");
 const verify_otp_1 = require("../shared/auth/verify_otp");
 const password_1 = require("../shared/auth/password");
+const signup_checks_1 = require("../shared/auth/signup_checks");
 const E164_PATTERN = /^\+[1-9]\d{6,14}$/;
 /// Real registration: name + username + password + phone, with the phone
 /// number proven via a WhatsApp-delivered OTP (requestPhoneOtp must have
@@ -37,6 +38,11 @@ exports.signUp = (0, https_1.onCall)({ region: "us-central1" }, async (request) 
     }
     if (!otp)
         throw new https_1.HttpsError("invalid-argument", "otp is required.");
+    // Cheap and non-destructive, so do it before the one-time code is spent:
+    // a taken username must not cost the user a WhatsApp code.
+    if (!(await (0, signup_checks_1.isUsernameAvailable)(username))) {
+        throw new https_1.HttpsError("already-exists", "That username is taken.");
+    }
     // Prove phone ownership BEFORE reserving the username / creating
     // anything — a failed OTP check should leave no trace.
     await (0, verify_otp_1.consumePhoneOtp)(phone, otp);
@@ -60,7 +66,13 @@ exports.signUp = (0, https_1.onCall)({ region: "us-central1" }, async (request) 
     await firebase_1.db.runTransaction(async (tx) => {
         const usernameSnap = await tx.get(usernameRef);
         if (usernameSnap.exists) {
-            throw new https_1.HttpsError("already-exists", "That username is taken.");
+            // Taken only if it belongs to a real account; an orphaned
+            // reservation (interrupted earlier sign-up) is reclaimed.
+            const owner = usernameSnap.data()?.uid;
+            const ownerExists = owner ? (await tx.get(firebase_1.db.collection("users").doc(owner))).exists : false;
+            if (ownerExists) {
+                throw new https_1.HttpsError("already-exists", "That username is taken.");
+            }
         }
         tx.set(usernameRef, { uid, createdAt: firestore_1.FieldValue.serverTimestamp() });
     });

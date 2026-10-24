@@ -116,6 +116,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _error = null;
     });
     try {
+      // Tell them a taken username/phone BEFORE a WhatsApp code is spent.
+      final check = await _repository.checkSignUp(username: _usernameController.text.trim().toLowerCase(), phone: _phone);
+      if (!mounted) return;
+      if (check.usernameTaken || check.phoneTaken) {
+        setState(() {
+          _submitting = false;
+          _error = check.phoneTaken ? l10n.signUpPhoneTaken : l10n.signUpUsernameTaken;
+        });
+        return;
+      }
       await _repository.requestPhoneOtp(_phone);
       if (!mounted) return;
       setState(() {
@@ -165,7 +175,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (!mounted) return;
       setState(() {
         _submitting = false;
-        _error = e.code == 'already-exists' ? l10n.signUpUsernameTaken : friendlyFunctionError(e, l10n.signUpGenericError);
+        _error = e.code == 'already-exists'
+            // The server uses already-exists for both; its message says which.
+            ? ((e.message ?? '').toLowerCase().contains('phone') ? l10n.signUpPhoneTaken : l10n.signUpUsernameTaken)
+            : friendlyFunctionError(e, l10n.signUpGenericError);
       });
     } catch (e) {
       if (!mounted) return;

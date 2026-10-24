@@ -14,6 +14,7 @@
 // (separate email+password vendor credential).
 export * from "./request_phone_otp";
 export * from "./sign_up";
+export * from "./check_sign_up";
 export * from "./sign_in";
 export * from "./sign_in_otp_step_up";
 export * from "./set_vendor_password";
