@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:solary_marketplace/main.dart';
 
 import 'support/fake_home_repository.dart';
+import 'support/finders.dart';
 
 void main() {
   testWidgets('Account tab offers Sign in, which opens username/password sign-in and links to sign-up',
@@ -16,7 +17,7 @@ void main() {
     await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository()));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Account'));
+    await tester.tap(navTab('Account'));
     await tester.pumpAndSettle();
 
     // Guest state — no Firebase in tests, so the anonymous sign-in never
@@ -29,7 +30,7 @@ void main() {
     // fields on this screen (those only appear mid-flow if the backend
     // demands device step-up, which needs a real Firebase backend to
     // trigger and isn't exercised here).
-    expect(find.text('Username'), findsOneWidget);
+    expect(find.text('Username or email'), findsOneWidget);
     expect(find.text('Password'), findsOneWidget);
 
     // Reach sign-up from sign-in.

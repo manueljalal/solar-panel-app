@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:solary_marketplace/main.dart';
 
 import 'support/fake_home_repository.dart';
+import 'support/finders.dart';
 
 void main() {
   testWidgets('Add to cart from product detail updates the Cart tab and nav badge', (tester) async {
@@ -26,11 +27,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Navigate into a product and add it to cart.
-    await tester.scrollUntilVisible(
-      find.text('Tiger Neo Mono Panel'),
-      300,
-      scrollable: find.byType(Scrollable).first,
-    );
+    await scrollHomeTo(tester, find.text('Tiger Neo Mono Panel'));
     await tester.tap(find.text('Tiger Neo Mono Panel'));
     await tester.pumpAndSettle();
 
@@ -45,7 +42,7 @@ void main() {
     // Cart nav badge shows "1".
     expect(find.text('1'), findsOneWidget);
 
-    await tester.tap(find.text('Cart'));
+    await tester.tap(navTab('Cart'));
     await tester.pumpAndSettle();
 
     expect(find.text('Tiger Neo Mono Panel'), findsOneWidget);

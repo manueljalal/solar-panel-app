@@ -5,9 +5,14 @@ import '../domain/learn_item.dart';
 /// show a real error state; an empty collection is an empty list — there is
 /// no built-in fallback content.
 class LearnRepository {
-  LearnRepository({FirebaseFirestore? firestore}) : _db = firestore ?? FirebaseFirestore.instance;
+  LearnRepository({FirebaseFirestore? firestore}) : _injected = firestore;
 
-  final FirebaseFirestore _db;
+  final FirebaseFirestore? _injected;
+
+  // Resolved on first read, not in the constructor: if Firebase isn't
+  // available the failure lands in fetchItems' Future (shown as the
+  // screen's error state) instead of throwing while the screen builds.
+  FirebaseFirestore get _db => _injected ?? FirebaseFirestore.instance;
 
   // The admin tool caps items at 50; the limit here is a second guard so the
   // list never grows unbounded. Only metadata is read — the video bytes are

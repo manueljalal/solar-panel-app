@@ -41,6 +41,9 @@ class NetworkImageWithFallback extends StatelessWidget {
   }
 }
 
+/// Shown while an image loads and if it fails: a plain white tile with a
+/// faint brand-tinted icon. No spinner (one per tile is noise, and it never
+/// stops animating if a download stalls) and no grey box.
 class _Placeholder extends StatelessWidget {
   const _Placeholder({required this.icon, this.loading = false});
 
@@ -49,20 +52,11 @@ class _Placeholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(color: AppColors.placeholderFill),
-      child: Center(
-        child: loading
-            ? const SizedBox(
-                width: 22,
-                height: 22,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: AppColors.placeholderIcon,
-                ),
-              )
-            : Icon(icon, color: AppColors.placeholderIcon, size: 30),
-      ),
+    return ColoredBox(
+      color: AppColors.surface,
+      child: loading
+          ? const SizedBox.expand()
+          : Center(child: Icon(icon, color: AppColors.primary.withValues(alpha: 0.3), size: 28)),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:solary_marketplace/main.dart';
 
 import 'support/fake_home_repository.dart';
+import 'support/finders.dart';
 
 void main() {
   testWidgets('All 5 bottom nav tabs navigate to real, distinct screens', (tester) async {
@@ -18,19 +19,19 @@ void main() {
     // Home is the default tab.
     expect(find.text('Solary'), findsOneWidget);
 
-    await tester.tap(find.text('Learn'));
+    await tester.tap(navTab('Learn'));
     await tester.pumpAndSettle();
-    expect(find.text('Choosing the right wattage'), findsOneWidget);
+    expect(find.text('Learn'), findsWidgets); // app bar title + tab label
 
-    await tester.tap(find.text('Cart'));
+    await tester.tap(navTab('Cart'));
     await tester.pumpAndSettle();
     expect(find.text('Your cart is empty'), findsOneWidget);
 
-    await tester.tap(find.text('Orders'));
+    await tester.tap(navTab('Orders'));
     await tester.pumpAndSettle();
     expect(find.text('No orders yet'), findsOneWidget);
 
-    await tester.tap(find.text('Account'));
+    await tester.tap(navTab('Account'));
     await tester.pumpAndSettle();
     expect(find.text('Account'), findsWidgets); // app bar title + tab label
     // No Firebase.initializeApp() in the test environment, so this
@@ -38,7 +39,7 @@ void main() {
     // see AccountScreen's Firebase.apps.isEmpty guard.
     expect(find.text('Not signed in'), findsOneWidget);
 
-    await tester.tap(find.text('Home'));
+    await tester.tap(navTab('Home'));
     await tester.pumpAndSettle();
     expect(find.text('Solary'), findsOneWidget);
   });

@@ -1,22 +1,26 @@
 // Sample content for widget tests only. Production code never uses this —
 // the app reads live data from Firestore (see HomeRepository).
+import 'package:solary_marketplace/features/home/domain/home_banner.dart';
 import 'package:solary_marketplace/features/home/domain/home_company.dart';
 import 'package:solary_marketplace/features/home/domain/home_product.dart';
 
 const homeCompanies = [
   HomeCompany(
+    id: 'sunbridge',
     name: 'SunBridge Energy',
     city: 'Erbil',
     rating: 4.9,
     logoUrl: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=400&q=80',
   ),
   HomeCompany(
+    id: 'helios',
     name: 'Helios Power Co.',
     city: 'Sulaymaniyah',
     rating: 4.8,
     logoUrl: 'https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=400&q=80',
   ),
   HomeCompany(
+    id: 'greentech',
     name: 'GreenTech Iraq',
     city: 'Basra',
     rating: 4.7,
@@ -84,4 +88,11 @@ const homeProducts = [
         'Balanced-cost mono panel for larger residential and light-commercial '
         'arrays, with a reinforced frame rated for higher wind and snow loads.',
   ),
+];
+
+// Image-less so the test never waits on the network.
+const homeBanners = [
+  HomeBanner(id: 'b1', imageUrl: '', titles: {'en': 'Zero down payment on residential kits'}),
+  HomeBanner(id: 'b2', imageUrl: '', titles: {'en': 'Battery storage, built for outages'}),
+  HomeBanner(id: 'b3', imageUrl: '', titles: {'en': 'Every vendor, site-verified'}),
 ];

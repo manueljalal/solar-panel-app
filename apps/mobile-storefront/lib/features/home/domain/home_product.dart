@@ -3,6 +3,10 @@
 /// row shows a subset of these fields, the detail screen shows all of them.
 class HomeProduct {
   const HomeProduct({
+    this.id = '',
+    this.vendorId = '',
+    this.priceValue = 0,
+    this.currency = 'USD',
     required this.imageUrl,
     required this.spec,
     required this.brand,
@@ -18,6 +22,16 @@ class HomeProduct {
     this.descriptions = const {},
     this.warranties = const {},
   });
+
+  /// Firestore `products` doc id and its seller's `vendors` doc id —
+  /// what orders and quote requests reference. Empty only on test fixtures.
+  final String id;
+  final String vendorId;
+
+  /// Numeric unit price and its currency ('USD' / 'IQD'); [price] is the
+  /// same value formatted for display.
+  final double priceValue;
+  final String currency;
 
   final String imageUrl;
   final String spec;
@@ -68,6 +82,7 @@ class HomeProduct {
   /// not a display name) — [vendorName] is resolved by the repository via
   /// a join against `vendors` before this is called.
   factory HomeProduct.fromFirestore(
+    String id,
     Map<String, dynamic> data, {
     required String vendorName,
   }) {
@@ -75,6 +90,10 @@ class HomeProduct {
     final currency = data['currency'] as String? ?? 'USD';
     final symbol = currency == 'USD' ? '\$' : '$currency ';
     return HomeProduct(
+      id: id,
+      vendorId: data['vendorId'] as String? ?? '',
+      priceValue: price,
+      currency: currency,
       imageUrl: data['imageUrl'] as String? ?? '',
       spec: data['spec'] as String? ?? '',
       brand: data['brand'] as String? ?? '',

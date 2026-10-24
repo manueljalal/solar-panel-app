@@ -10,9 +10,6 @@
         ],
         "vendor": [
           "solary-vendor-dev"
-        ],
-        "storefront": [
-          "solary-storefront-dev"
         ]
       }
     }

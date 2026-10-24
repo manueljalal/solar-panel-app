@@ -109,7 +109,7 @@ class HomeRepository {
         snapshot.docs
             .map(
               (d) =>
-                  HomeProduct.fromFirestore(d.data(), vendorName: vendor.name),
+                  HomeProduct.fromFirestore(d.id, d.data(), vendorName: vendor.name),
             )
             .toList()
           ..sort((a, b) => b.sold.compareTo(a.sold));
@@ -147,6 +147,7 @@ class HomeRepository {
     return docs.map((d) {
       final data = d.data();
       return HomeProduct.fromFirestore(
+        d.id,
         data,
         vendorName: known[data['vendorId']] ?? 'Unknown vendor',
       );
