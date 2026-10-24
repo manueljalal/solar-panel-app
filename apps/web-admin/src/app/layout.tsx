@@ -1,4 +1,5 @@
 import "./globals.css";
+import "@solary/ui-web/dashboard.css";
 
 export const metadata = {
   title: "Solary — Super Admin",
