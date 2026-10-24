@@ -1104,4 +1104,8 @@ class AppLocalizationsCkb extends AppLocalizations {
   String orderCancelReason(String reason) {
     return 'هۆکار: $reason';
   }
+
+  @override
+  String get quoteSignInBody =>
+      'بچۆ ژوورەوە بۆ ئەوەی فرۆشیار بە نرخەکەوە پەیوەندیت پێوە بکات.';
 }

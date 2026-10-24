@@ -2073,6 +2073,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reason: {reason}'**
   String orderCancelReason(String reason);
+
+  /// No description provided for @quoteSignInBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in so the seller can call you back with a price.'**
+  String get quoteSignInBody;
 }
 
 class _AppLocalizationsDelegate

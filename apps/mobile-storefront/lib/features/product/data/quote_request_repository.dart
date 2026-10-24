@@ -14,11 +14,9 @@ class QuoteRequestRepository {
 
   Future<void> submit({required HomeProduct product, required String note}) async {
     final callable = _functions.httpsCallable('storefront-submitQuoteRequest');
-    await callable.call({
-      'productTitle': product.title,
-      'vendor': product.vendor,
-      'note': note,
-    });
+    // The server reads the product name and vendor from the product doc,
+    // so the request reaches that vendor's inbox.
+    await callable.call({'productId': product.id, 'note': note});
   }
 }
 

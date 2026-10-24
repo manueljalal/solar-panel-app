@@ -485,5 +485,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "quoteSignInBody": "Sign in so the seller can call you back with a price."
 }

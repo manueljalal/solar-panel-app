@@ -7,3 +7,4 @@ export * from "./categories";
 export * from "./banners";
 export * from "./learn";
 export * from "./orders";
+export * from "./platform";

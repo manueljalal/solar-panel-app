@@ -1,9 +1,14 @@
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import '../../../../core/auth/friendly_function_error.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../home/domain/home_product.dart';
+import '../../../account/presentation/sign_in_screen.dart';
 import '../../data/quote_request_repository.dart';
 
 /// Bottom sheet for "Request quote" — a real form that writes to
@@ -52,6 +57,12 @@ class _QuoteRequestSheetState extends State<_QuoteRequestSheet> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(l10n.quoteRequested(widget.product.title))),
       );
+    } on FirebaseFunctionsException catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _error = friendlyFunctionError(e, l10n.genericConnectionError);
+        _submitting = false;
+      });
     } catch (e) {
       if (!mounted) return;
       setState(() {
@@ -61,9 +72,54 @@ class _QuoteRequestSheetState extends State<_QuoteRequestSheet> {
     }
   }
 
+  // The vendor answers a quote by calling the customer, so it needs a real
+  // account with a verified phone.
+  bool get _hasAccount {
+    final user = Firebase.apps.isEmpty ? null : FirebaseAuth.instance.currentUser;
+    return user != null && !user.isAnonymous;
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    if (!_hasAccount) {
+      return Container(
+        decoration: const BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadii.card)),
+        ),
+        padding: const EdgeInsets.all(AppSpacing.xl),
+        child: SafeArea(
+          top: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(l10n.requestAQuote, style: AppTypography.h1.copyWith(fontSize: 19)),
+              const SizedBox(height: 6),
+              Text(l10n.quoteSignInBody, textAlign: TextAlign.center, style: AppTypography.bodyMuted),
+              const SizedBox(height: AppSpacing.lg),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SignInScreen()));
+                    if (mounted) setState(() {});
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.chip)),
+                  ),
+                  child: Text(l10n.accountSignIn, style: const TextStyle(fontWeight: FontWeight.w700)),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(

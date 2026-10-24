@@ -23,3 +23,4 @@ __exportStar(require("./categories"), exports);
 __exportStar(require("./banners"), exports);
 __exportStar(require("./learn"), exports);
 __exportStar(require("./orders"), exports);
+__exportStar(require("./platform"), exports);

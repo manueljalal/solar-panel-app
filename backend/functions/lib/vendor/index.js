@@ -21,3 +21,5 @@ __exportStar(require("./submit_application"), exports);
 __exportStar(require("./upload_image"), exports);
 __exportStar(require("./get_my_application"), exports);
 __exportStar(require("./orders"), exports);
+__exportStar(require("./quotes"), exports);
+__exportStar(require("./profile"), exports);

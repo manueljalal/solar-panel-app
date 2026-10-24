@@ -1095,4 +1095,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String orderCancelReason(String reason) {
     return 'السبب: $reason';
   }
+
+  @override
+  String get quoteSignInBody => 'سجّل الدخول ليتصل بك البائع بالسعر.';
 }

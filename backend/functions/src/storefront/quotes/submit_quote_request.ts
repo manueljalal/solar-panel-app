@@ -1,48 +1,49 @@
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../../shared/firebase";
+import { cleanDocId, cleanText } from "../../shared/validation/sanitize";
 
 interface SubmitQuoteRequestInput {
-  productTitle: string;
-  vendor: string;
+  productId: string;
   note: string;
 }
 
-const MAX_STRING_LENGTH = 500;
-
-/// Any signed-in user (anonymous browsing included — see
-/// AuthRepository.ensureSignedIn). Writes the quoteRequests doc
-/// server-side instead of letting the client write it directly: the uid
-/// comes from the verified auth token (request.auth.uid), never a
-/// client-supplied field, which is the whole reason this goes through a
-/// callable rather than a direct Firestore write under the owner-scoped
-/// create rule.
+/// A shopper asks a vendor for a price on one product (bulk quantity,
+/// installation, site address...). Needs a real account: the vendor answers
+/// by calling the verified phone. Product name and vendor are read from the
+/// product doc, never trusted from the client, so the request lands in that
+/// vendor's inbox (vendor-listQuoteRequests).
 export const submitQuoteRequest = onCall<SubmitQuoteRequestInput>({ region: "us-central1" }, async (request) => {
-  if (!request.auth) {
-    throw new HttpsError("unauthenticated", "Sign in required.");
-  }
-  const uid = request.auth.uid;
-
-  const productTitle = request.data?.productTitle?.trim();
-  const vendor = request.data?.vendor?.trim();
-  const note = request.data?.note?.trim() ?? "";
-
-  if (!productTitle || !vendor) {
-    throw new HttpsError("invalid-argument", "productTitle and vendor are required.");
-  }
-  if (productTitle.length > MAX_STRING_LENGTH || vendor.length > MAX_STRING_LENGTH || note.length > MAX_STRING_LENGTH) {
-    throw new HttpsError("invalid-argument", `Fields must be under ${MAX_STRING_LENGTH} characters.`);
+  const auth = request.auth;
+  if (!auth) throw new HttpsError("unauthenticated", "Sign in required.");
+  if (auth.token.firebase?.sign_in_provider === "anonymous") {
+    throw new HttpsError("failed-precondition", "Create an account to request a quote.");
   }
 
-  const requestRef = db.collection("quoteRequests").doc();
-  await requestRef.set({
-    uid,
-    productTitle,
-    vendor,
+  const productId = cleanDocId(request.data?.productId, "productId");
+  const note = cleanText(request.data?.note, "note", { max: 1000, multiline: true });
+
+  const product = (await db.collection("products").doc(productId).get()).data();
+  if (!product?.vendorId) throw new HttpsError("not-found", "This product is no longer available.");
+  const [vendor, user] = await Promise.all([
+    db.collection("vendors").doc(product.vendorId).get(),
+    db.collection("users").doc(auth.uid).get(),
+  ]);
+
+  const ref = db.collection("quoteRequests").doc();
+  await ref.set({
+    uid: auth.uid,
+    customerName: user.data()?.name ?? "",
+    customerPhone: user.data()?.phone ?? "",
+    productId,
+    productTitle: product.name ?? "",
+    productImageUrl: product.imageUrl ?? "",
+    vendorId: product.vendorId,
+    vendorName: vendor.data()?.businessName ?? "",
     note,
-    status: "submitted",
+    status: "new",
     createdAt: FieldValue.serverTimestamp(),
+    updatedAt: FieldValue.serverTimestamp(),
   });
-
-  return { requestId: requestRef.id };
+  return { requestId: ref.id };
 });
