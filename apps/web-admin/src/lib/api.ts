@@ -87,6 +87,25 @@ export const closeBulkPost = httpsCallable<{ kind: "listing" | "request"; id: st
 );
 export const listQuoteRequests = httpsCallable<void, { requests: QuoteRequest[] }>(functions, "admin-listQuoteRequests");
 
+export interface AccountInfo {
+  uid: string;
+  phone: string | null;
+  name: string | null;
+  username: string | null;
+  role: string;
+  hasProfile: boolean;
+  vendorNames: string[];
+}
+
+export const findAccount = httpsCallable<{ uid?: string; phone?: string }, { account: AccountInfo | null }>(
+  functions,
+  "admin-findAccount",
+);
+export const deleteAccount = httpsCallable<{ uid?: string; phone?: string }, { ok: true; removed: Record<string, number> }>(
+  functions,
+  "admin-deleteAccount",
+);
+
 export function errorMessage(err: unknown, fallback: string): string {
   const e = err as { code?: string; message?: string };
   if (!e?.message || e.code === "functions/internal" || e.message === "INTERNAL") return fallback;

@@ -4,7 +4,8 @@ import { randomUUID } from "crypto";
 import { db, auth } from "../shared/firebase";
 import { consumePhoneOtp } from "../shared/auth/verify_otp";
 import { hashPassword, isValidPassword, isValidUsername, normalizeUsername } from "../shared/auth/password";
-import { isUsernameAvailable } from "../shared/auth/signup_checks";
+import { logger } from "firebase-functions";
+import { findPhoneAccount, isUsernameAvailable, removeOrphanAccount } from "../shared/auth/signup_checks";
 
 interface PickedLocationInput {
   latitude: number;
@@ -65,9 +66,21 @@ export const signUp = onCall<SignUpInput>({ region: "us-central1" }, async (requ
     throw new HttpsError("already-exists", "That username is taken.");
   }
 
+  // A phone that already has a real account is refused before the code is
+  // spent, too.
+  const existing = await findPhoneAccount(phone);
+  if (existing && !existing.orphan) {
+    throw new HttpsError("already-exists", "An account with that phone number already exists.");
+  }
+
   // Prove phone ownership BEFORE reserving the username / creating
   // anything — a failed OTP check should leave no trace.
   await consumePhoneOtp(phone, otp);
+
+  // The caller now provably owns this phone, so a leftover Auth account
+  // from an earlier interrupted sign-up (no profile, no role) is removed
+  // instead of blocking the number forever.
+  if (existing?.orphan) await removeOrphanAccount(existing.uid);
 
   const usernameRef = db.collection("usernames").doc(username);
   const uid = randomUUID();
@@ -111,8 +124,14 @@ export const signUp = onCall<SignUpInput>({ region: "us-central1" }, async (requ
 
   const passwordHash = await hashPassword(password);
 
+  // The account only counts as created once BOTH the Auth user and the
+  // users/{uid} profile exist. If either step fails, everything written so
+  // far is undone, so a failed sign-up never leaves an Auth account holding
+  // the phone number (which used to make the number unusable afterwards).
+  let authCreated = false;
   try {
     await auth.createUser({ uid, displayName: name, phoneNumber: phone });
+    authCreated = true;
     await db
       .collection("users")
       .doc(uid)
@@ -128,7 +147,10 @@ export const signUp = onCall<SignUpInput>({ region: "us-central1" }, async (requ
         lastSignInAt: FieldValue.serverTimestamp(),
       });
   } catch (e) {
-    await usernameRef.delete();
+    if (authCreated) {
+      await auth.deleteUser(uid).catch((err) => logger.error("signUp rollback: deleteUser failed", { uid, err: String(err) }));
+    }
+    await usernameRef.delete().catch((err) => logger.error("signUp rollback: username delete failed", { uid, err: String(err) }));
     if ((e as { code?: string }).code === "auth/phone-number-already-exists") {
       throw new HttpsError("already-exists", "An account with that phone number already exists.");
     }

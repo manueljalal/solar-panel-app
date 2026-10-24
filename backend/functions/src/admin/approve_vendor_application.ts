@@ -1,5 +1,6 @@
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { FieldValue } from "firebase-admin/firestore";
+import { logger } from "firebase-functions";
 import { db, auth } from "../shared/firebase";
 import { requireRole } from "../shared/auth/require_role";
 import { smtpUser, smtpPass } from "../shared/mail/send_mail";
@@ -30,15 +31,28 @@ export const approveVendorApplication = onCall<ApproveInput>(
     if (!appSnap.exists) {
       throw new HttpsError("not-found", "Application not found.");
     }
-
     const application = appSnap.data()!;
-    if (application.status !== "pending") {
-      throw new HttpsError("failed-precondition", `Application is already '${application.status}'.`);
+
+    // The applicant's account must really exist — Auth user AND profile —
+    // before a vendor company is created for it.
+    const applicant = await auth.getUser(application.uid).catch(() => null);
+    const profile = await db.collection("users").doc(application.uid).get();
+    if (!applicant || !profile.exists) {
+      throw new HttpsError("failed-precondition", "The applicant's account no longer exists, so it can't be approved.");
+    }
+    if (applicant.customClaims?.role === "vendor" && applicant.customClaims?.vendorId) {
+      throw new HttpsError("failed-precondition", "This account is already an approved vendor.");
     }
 
     const vendorRef = db.collection("vendors").doc();
 
+    // Status is re-checked inside the transaction so two admins approving
+    // at the same moment can't create two vendor companies.
     await db.runTransaction(async (tx) => {
+      const fresh = await tx.get(appRef);
+      if (fresh.data()?.status !== "pending") {
+        throw new HttpsError("failed-precondition", `Application is already '${fresh.data()?.status}'.`);
+      }
       tx.set(vendorRef, {
         ownerUid: application.uid,
         businessName: application.businessName,
@@ -61,23 +75,40 @@ export const approveVendorApplication = onCall<ApproveInput>(
       });
     });
 
-    // Merge, not overwrite — preserves any other claims (e.g. if this
-    // account is ever also a customer in other data).
-    const user = await auth.getUser(application.uid);
-    await auth.setCustomUserClaims(application.uid, {
-      ...user.customClaims,
-      role: "vendor",
-      vendorId: vendorRef.id,
-    });
+    // The vendor only exists once the account also carries the vendor role.
+    // If granting it fails, undo the company + approval so the application
+    // is pending again and can simply be approved again.
+    try {
+      await auth.setCustomUserClaims(application.uid, {
+        ...applicant.customClaims,
+        role: "vendor",
+        vendorId: vendorRef.id,
+      });
+    } catch (e) {
+      logger.error("approve: granting vendor role failed, rolling back", { applicationId, err: String(e) });
+      const batch = db.batch();
+      batch.delete(vendorRef);
+      batch.update(appRef, {
+        status: "pending",
+        vendorId: FieldValue.delete(),
+        reviewedAt: FieldValue.delete(),
+        reviewedBy: FieldValue.delete(),
+      });
+      await batch.commit();
+      throw new HttpsError("internal", "Couldn't grant the vendor role — nothing was changed, try again.");
+    }
 
-    // Approval ends with the vendor setting their password: a single-use,
-    // 24h link goes to the application email and lands on the portal's
-    // /set-password page (auth-setVendorPassword), which signs them in.
+    // Approval is complete from here. The rest is notification: a failure
+    // is logged (the admin can use "Resend setup link") but doesn't undo it.
     if (application.email) {
-      // Lets the vendor sign in with this email (see resolveAccountUid).
-      await db.collection("users").doc(application.uid).set({ email: application.email }, { merge: true });
-      const passwordSetupToken = await createPasswordSetupToken(application.uid);
-      await sendVendorApprovedEmail(application.email, application.businessName, passwordSetupToken);
+      try {
+        // Lets the vendor sign in with this email (see resolveAccountUids).
+        await db.collection("users").doc(application.uid).set({ email: application.email }, { merge: true });
+        const passwordSetupToken = await createPasswordSetupToken(application.uid);
+        await sendVendorApprovedEmail(application.email, application.businessName, passwordSetupToken);
+      } catch (e) {
+        logger.error("approve: setup email failed (approval stands)", { applicationId, err: String(e) });
+      }
     }
 
     return { vendorId: vendorRef.id };

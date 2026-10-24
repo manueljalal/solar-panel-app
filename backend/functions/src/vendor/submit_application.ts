@@ -34,7 +34,11 @@ export const submitApplication = onCall<SubmitApplicationInput>({ region: "us-ce
     throw new HttpsError("unauthenticated", "Sign in required.");
   }
   const uid = request.auth.uid;
+  if (request.auth.token.role === "vendor") {
+    throw new HttpsError("failed-precondition", "This account is already an approved vendor.");
+  }
 
+  // Only a fully created account (with its users/{uid} profile) can apply.
   const userSnap = await db.collection("users").doc(uid).get();
   const phone = userSnap.data()?.phone?.trim();
   if (!phone) {
@@ -71,20 +75,30 @@ export const submitApplication = onCall<SubmitApplicationInput>({ region: "us-ce
     location = { latitude, longitude, address: cleanText(rawLocation.address, "location address", { max: 300 }) };
   }
 
+  // One open application per account. Checked inside a transaction so a
+  // double tap can't create two.
   const applicationRef = db.collection("vendorApplications").doc();
-  await applicationRef.set({
-    uid,
-    businessName,
-    city,
-    address,
-    phone,
-    email,
-    country,
-    note,
-    logoUrl,
-    location,
-    status: "pending",
-    createdAt: FieldValue.serverTimestamp(),
+  await db.runTransaction(async (tx) => {
+    const open = await tx.get(
+      db.collection("vendorApplications").where("uid", "==", uid).where("status", "==", "pending").limit(1),
+    );
+    if (!open.empty) {
+      throw new HttpsError("already-exists", "You already have an application waiting for review.");
+    }
+    tx.set(applicationRef, {
+      uid,
+      businessName,
+      city,
+      address,
+      phone,
+      email,
+      country,
+      note,
+      logoUrl,
+      location,
+      status: "pending",
+      createdAt: FieldValue.serverTimestamp(),
+    });
   });
 
   return { applicationId: applicationRef.id };

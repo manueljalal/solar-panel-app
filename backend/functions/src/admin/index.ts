@@ -8,3 +8,4 @@ export * from "./banners";
 export * from "./learn";
 export * from "./orders";
 export * from "./platform";
+export * from "./delete_account";
