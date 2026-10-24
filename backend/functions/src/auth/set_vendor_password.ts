@@ -11,8 +11,8 @@ interface SetVendorPasswordInput {
 
 /// Finalizes the one-time setup link sent by approveVendorApplication:
 /// consumes the token (single use, 24h TTL — see password_setup_token.ts),
-/// hashes the chosen password, and stores it on users/{uid} so
-/// vendorPasswordSignIn can check it afterwards. Mirrors signUp's password
+/// hashes the chosen password, and stores it on users/{uid} — the same hash
+/// auth-signIn checks (by username or email). Mirrors signUp's password
 /// handling: Firebase Auth itself never gets a password, the hash on
 /// users/{uid} is the only credential store.
 export const setVendorPassword = onCall<SetVendorPasswordInput>({ region: "us-central1" }, async (request) => {

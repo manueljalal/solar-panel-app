@@ -10,7 +10,7 @@ import 'device_id.dart';
 /// attach to from the very first frame.
 ///
 /// The only way to become a *real* (non-anonymous) account is WhatsApp
-/// phone OTP (requestPhoneOtp / verifyPhoneOtp) — delivery goes through a
+/// phone OTP (requestPhoneOtp, then signUp / signInOtpStepUp) — delivery goes through a
 /// Cloud Function + the WhatsApp Business API, not Firebase's own
 /// SMS-based Phone Auth. Email/password was removed deliberately: phone
 /// verification is the only identity check that actually confirms you

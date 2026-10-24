@@ -8,10 +8,6 @@
 // "set your password" link. It writes the same users/{uid}.passwordHash
 // that signUp/signIn use, so it is the same single credential — the vendor
 // can then sign in with their username + that password everywhere.
-//
-// Deliberately NOT exported anymore (files left on disk, safe to delete):
-// verify_phone_otp (passwordless phone login) and vendor_password_sign_in
-// (separate email+password vendor credential).
 export * from "./request_phone_otp";
 export * from "./sign_up";
 export * from "./check_sign_up";

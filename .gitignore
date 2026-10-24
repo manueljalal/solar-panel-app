@@ -13,8 +13,10 @@
 
 # Node
 node_modules/
-package-lock.json
 npm-debug.log*
+
+# Compiled Cloud Functions (firebase.json's predeploy runs the build)
+backend/functions/lib/
 
 # Next.js
 .next/

@@ -13,7 +13,7 @@ function hashOtp(otp: string, phone: string): string {
 /// Checks a code against the pending phoneOtps/{phone} doc (written by
 /// requestPhoneOtp) and consumes it on success — shared by every flow
 /// that needs "prove you control this phone number right now"
-/// (verifyPhoneOtp's own sign-in, signUp, and signInWithOtpStepUp).
+/// (signUp and signInOtpStepUp).
 /// Throws HttpsError on any failure (not found / expired / too many
 /// attempts / wrong code); callers don't need their own error handling.
 export async function consumePhoneOtp(phone: string, otp: string): Promise<void> {
