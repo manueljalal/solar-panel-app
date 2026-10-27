@@ -43,7 +43,10 @@ class HomeRepository {
         .orderBy('rating', descending: true)
         .limit(_maxCompanies)
         .get();
+    // Only approved vendors are shown (status is filtered in memory so the
+    // rating order needs no composite index).
     return snapshot.docs
+        .where((d) => d.data()['status'] == 'approved')
         .map((d) => HomeCompany.fromFirestore(d.id, d.data()))
         .toList();
   }
@@ -124,7 +127,7 @@ class HomeRepository {
     // Vendor names come from the companies read the home screen already
     // makes (no extra round trip). Only vendors outside that list — rare —
     // get an individual lookup, in parallel.
-    final known = {
+    final known = <String, String>{
       for (final c in await fetchCompanies().catchError((_) => <HomeCompany>[]))
         c.id: c.name,
     };
@@ -135,22 +138,27 @@ class HomeRepository {
         .where((id) => !known.containsKey(id));
     final extra = await Future.wait(
       missing.map((id) async {
-        final doc = await _db.collection('vendors').doc(id).get();
-        return MapEntry(
-          id,
-          doc.data()?['businessName'] as String? ?? 'Unknown vendor',
-        );
+        final vendor = (await _db.collection('vendors').doc(id).get()).data();
+        return vendor != null && vendor['status'] == 'approved'
+            ? MapEntry(id, vendor['businessName'] as String? ?? '')
+            : null;
       }),
     );
-    known.addEntries(extra);
+    known.addEntries(extra.whereType<MapEntry<String, String>>());
 
-    return docs.map((d) {
-      final data = d.data();
-      return HomeProduct.fromFirestore(
-        d.id,
-        data,
-        vendorName: known[data['vendorId']] ?? 'Unknown vendor',
-      );
-    }).toList();
+    // A product is only shown if its seller is an existing, approved vendor
+    // — otherwise nobody could confirm or deliver an order for it, and
+    // checkout would refuse it ("seller not accepting orders").
+    return docs
+        .where((d) => known.containsKey(d.data()['vendorId']))
+        .map((d) {
+          final data = d.data();
+          return HomeProduct.fromFirestore(
+            d.id,
+            data,
+            vendorName: known[data['vendorId']]!,
+          );
+        })
+        .toList();
   }
 }
