@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
+import { IRAQ_CITIES } from "@solary/ui-web";
 import { ImageField } from "@/components/image_field";
 import { VendorShell, useVendor } from "@/components/vendor_shell";
 import { errorMessage, updateProfile } from "@/lib/api";
@@ -81,7 +82,24 @@ function SettingsInner() {
           </div>
           <div className="field">
             <label htmlFor="city">City</label>
-            <input id="city" maxLength={80} required value={city} onChange={(e) => setCity(e.target.value)} />
+            {profile.country === "IQ" ? (
+              // Picked from the list so the app's city filter can find this company.
+              <select id="city" required value={city} onChange={(e) => setCity(e.target.value)}>
+                <option value="" disabled>
+                  Choose a city
+                </option>
+                {!IRAQ_CITIES.includes(city as (typeof IRAQ_CITIES)[number]) && city && (
+                  <option value={city}>{city} (current — please pick from the list)</option>
+                )}
+                {IRAQ_CITIES.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input id="city" maxLength={80} required value={city} onChange={(e) => setCity(e.target.value)} />
+            )}
           </div>
           <div className="field full">
             <label htmlFor="address">Address</label>

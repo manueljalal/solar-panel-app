@@ -1108,4 +1108,18 @@ class AppLocalizationsCkb extends AppLocalizations {
   @override
   String get quoteSignInBody =>
       'بچۆ ژوورەوە بۆ ئەوەی فرۆشیار بە نرخەکەوە پەیوەندیت پێوە بکات.';
+
+  @override
+  String get cityAll => 'هەموو شارەکان';
+
+  @override
+  String get cityPickerTitle => 'شارێک هەڵبژێرە';
+
+  @override
+  String companiesNoneInCity(String city) {
+    return 'هێشتا هیچ کۆمپانیایەک لە $city نییە.';
+  }
+
+  @override
+  String get cityChoose => 'شارەکەت هەڵبژێرە';
 }

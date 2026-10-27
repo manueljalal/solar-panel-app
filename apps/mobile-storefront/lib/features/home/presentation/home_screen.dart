@@ -3,6 +3,8 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../shared/widgets/category_tabs.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../shared/iraq_cities.dart';
+import '../../../shared/widgets/city_picker.dart';
 import '../data/home_repository.dart';
 import '../domain/home_banner.dart';
 import '../domain/home_category.dart';
@@ -58,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<HomeBanner> _banners = const [];
   List<HomeCategory> _categories = const [];
   String? _selectedCategory; // null = all
+  String? _companyCity; // IraqCity id; null = all cities
   bool _companiesFailed = false;
   bool _productsFailed = false;
 
@@ -143,7 +146,30 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_companiesFailed) return _error(l10n);
     final companies = _companies;
     if (companies == null) return const CompanyRowSkeleton();
-    return CompanyRow(companies: companies);
+    final city = iraqCityById(_companyCity);
+    if (city == null) return CompanyRow(companies: companies);
+    final inCity = companies.where((c) => matchIraqCity(c.city)?.id == city.id).toList();
+    if (inCity.isEmpty) {
+      final lang = Localizations.localeOf(context).languageCode;
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+        child: Text(l10n.companiesNoneInCity(city.nameFor(lang)), style: AppTypography.bodyMuted),
+      );
+    }
+    return CompanyRow(companies: inCity);
+  }
+
+  Future<void> _pickCompanyCity() async {
+    final counts = <String, int>{};
+    for (final c in _companies ?? const <HomeCompany>[]) {
+      final id = matchIraqCity(c.city)?.id;
+      if (id != null) counts[id] = (counts[id] ?? 0) + 1;
+    }
+    final picked = await showIraqCityPicker(context, selectedId: _companyCity, counts: counts, allowAll: true);
+    if (picked == null || !mounted) return;
+    setState(() {
+      _companyCity = picked.isEmpty ? null : picked;
+    });
   }
 
   @override
@@ -190,7 +216,14 @@ class _HomeScreenState extends State<HomeScreen> {
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                   if (!(_companies?.isEmpty ?? false)) ...[
-                    SectionHeader(title: l10n.sectionCompanies),
+                    SectionHeader(
+                      title: l10n.sectionCompanies,
+                      trailing: CityFilterChip(
+                        label: iraqCityById(_companyCity)?.nameFor(Localizations.localeOf(context).languageCode) ?? l10n.cityAll,
+                        active: _companyCity != null,
+                        onTap: _pickCompanyCity,
+                      ),
+                    ),
                     const SizedBox(height: AppSpacing.md),
                     _companiesSection(l10n),
                     const SizedBox(height: AppSpacing.xl),

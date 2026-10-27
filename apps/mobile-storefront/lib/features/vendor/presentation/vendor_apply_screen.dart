@@ -11,7 +11,9 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/location/location_picker_screen.dart';
+import '../../../shared/iraq_cities.dart';
 import '../../../shared/location/picked_location.dart';
+import '../../../shared/widgets/city_picker.dart';
 import '../../account/presentation/sign_in_screen.dart';
 import '../../bulk/domain/bulk_models.dart';
 import '../../bulk/presentation/bulk_market_screen.dart';
@@ -324,10 +326,38 @@ class _VendorApplyScreenState extends State<VendorApplyScreen> {
                 ),
               ],
               selected: {_country},
-              onSelectionChanged: (v) => setState(() => _country = v.first),
+              onSelectionChanged: (v) => setState(() {
+                _country = v.first;
+                if (_country == 'IQ' && matchIraqCity(_city.text) == null) _city.clear();
+              }),
             ),
             const SizedBox(height: AppSpacing.md),
-            _Field(controller: _city, label: l10n.cityLabel, validatorMessage: l10n.cityValidator),
+            // Iraqi companies pick from the city list (keeps city filters
+            // working); other countries type their city.
+            if (_country == 'IQ')
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(l10n.cityLabel, style: AppTypography.cardTitle.copyWith(fontSize: 13)),
+                  const SizedBox(height: 6),
+                  TextFormField(
+                    controller: _city,
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      hintText: l10n.cityChoose,
+                      suffixIcon: const Icon(Icons.keyboard_arrow_down),
+                    ),
+                    validator: (v) => matchIraqCity(v) == null ? l10n.cityValidator : null,
+                    onTap: () async {
+                      final picked = await showIraqCityPicker(context, selectedId: matchIraqCity(_city.text)?.id);
+                      final city = iraqCityById(picked);
+                      if (city != null) setState(() => _city.text = city.en);
+                    },
+                  ),
+                ],
+              )
+            else
+              _Field(controller: _city, label: l10n.cityLabel, validatorMessage: l10n.cityValidator),
             const SizedBox(height: AppSpacing.md),
             _Field(controller: _address, label: l10n.addressLabel, validatorMessage: l10n.addressValidator),
             const SizedBox(height: AppSpacing.md),

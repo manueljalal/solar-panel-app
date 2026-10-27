@@ -405,5 +405,16 @@
       }
     }
   },
-  "quoteSignInBody": "سجّل الدخول ليتصل بك البائع بالسعر."
+  "quoteSignInBody": "سجّل الدخول ليتصل بك البائع بالسعر.",
+  "cityAll": "كل المدن",
+  "cityPickerTitle": "اختر مدينة",
+  "companiesNoneInCity": "لا توجد شركات في {city} بعد.",
+  "cityChoose": "اختر مدينتك",
+  "@companiesNoneInCity": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -1098,4 +1098,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get quoteSignInBody =>
       'Sign in so the seller can call you back with a price.';
+
+  @override
+  String get cityAll => 'All cities';
+
+  @override
+  String get cityPickerTitle => 'Choose a city';
+
+  @override
+  String companiesNoneInCity(String city) {
+    return 'No companies in $city yet.';
+  }
+
+  @override
+  String get cityChoose => 'Choose your city';
 }

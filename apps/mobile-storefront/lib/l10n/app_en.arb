@@ -486,5 +486,16 @@
       }
     }
   },
-  "quoteSignInBody": "Sign in so the seller can call you back with a price."
+  "quoteSignInBody": "Sign in so the seller can call you back with a price.",
+  "cityAll": "All cities",
+  "cityPickerTitle": "Choose a city",
+  "companiesNoneInCity": "No companies in {city} yet.",
+  "cityChoose": "Choose your city",
+  "@companiesNoneInCity": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  }
 }

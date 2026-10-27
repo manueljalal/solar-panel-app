@@ -2079,6 +2079,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign in so the seller can call you back with a price.'**
   String get quoteSignInBody;
+
+  /// No description provided for @cityAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All cities'**
+  String get cityAll;
+
+  /// No description provided for @cityPickerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a city'**
+  String get cityPickerTitle;
+
+  /// No description provided for @companiesNoneInCity.
+  ///
+  /// In en, this message translates to:
+  /// **'No companies in {city} yet.'**
+  String companiesNoneInCity(String city);
+
+  /// No description provided for @cityChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your city'**
+  String get cityChoose;
 }
 
 class _AppLocalizationsDelegate

@@ -405,5 +405,16 @@
       }
     }
   },
-  "quoteSignInBody": "بچۆ ژوورەوە بۆ ئەوەی فرۆشیار بە نرخەکەوە پەیوەندیت پێوە بکات."
+  "quoteSignInBody": "بچۆ ژوورەوە بۆ ئەوەی فرۆشیار بە نرخەکەوە پەیوەندیت پێوە بکات.",
+  "cityAll": "هەموو شارەکان",
+  "cityPickerTitle": "شارێک هەڵبژێرە",
+  "companiesNoneInCity": "هێشتا هیچ کۆمپانیایەک لە {city} نییە.",
+  "cityChoose": "شارەکەت هەڵبژێرە",
+  "@companiesNoneInCity": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  }
 }

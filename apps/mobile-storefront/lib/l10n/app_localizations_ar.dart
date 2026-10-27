@@ -1098,4 +1098,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get quoteSignInBody => 'سجّل الدخول ليتصل بك البائع بالسعر.';
+
+  @override
+  String get cityAll => 'كل المدن';
+
+  @override
+  String get cityPickerTitle => 'اختر مدينة';
+
+  @override
+  String companiesNoneInCity(String city) {
+    return 'لا توجد شركات في $city بعد.';
+  }
+
+  @override
+  String get cityChoose => 'اختر مدينتك';
 }
