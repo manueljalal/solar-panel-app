@@ -554,5 +554,20 @@
         "type": "String"
       }
     }
-  }
+  },
+  "accountGuestTitle": "Sign in to Solary",
+  "accountGuestBody": "Track your orders, book installations and keep your details in one place.",
+  "accountCreateAccount": "Create account",
+  "accountEditProfile": "Edit profile",
+  "accountYourName": "Your name",
+  "accountSave": "Save",
+  "accountSaved": "Saved.",
+  "accountMyOrders": "My orders",
+  "accountMyServices": "My service requests",
+  "accountSectionActivity": "Activity",
+  "accountSectionBusiness": "Business",
+  "accountSectionPreferences": "Preferences",
+  "accountSectionSupport": "Help",
+  "accountCity": "City",
+  "accountNotSet": "Not set"
 }

@@ -1263,4 +1263,50 @@ class AppLocalizationsCkb extends AppLocalizations {
   String aboutVersion(String version) {
     return 'وەشانی $version';
   }
+
+  @override
+  String get accountGuestTitle => 'بچۆ ژوورەوە بۆ سۆلاری';
+
+  @override
+  String get accountGuestBody =>
+      'داواکارییەکانت بەدوادا بچۆ، دامەزراندن داوا بکە و زانیارییەکانت لە یەک شوێن هەڵبگرە.';
+
+  @override
+  String get accountCreateAccount => 'دروستکردنی هەژمار';
+
+  @override
+  String get accountEditProfile => 'دەستکاریکردنی پرۆفایل';
+
+  @override
+  String get accountYourName => 'ناوت';
+
+  @override
+  String get accountSave => 'پاشەکەوت';
+
+  @override
+  String get accountSaved => 'پاشەکەوت کرا.';
+
+  @override
+  String get accountMyOrders => 'داواکارییەکانم';
+
+  @override
+  String get accountMyServices => 'داواکاری خزمەتگوزارییەکانم';
+
+  @override
+  String get accountSectionActivity => 'چالاکی';
+
+  @override
+  String get accountSectionBusiness => 'بازرگانی';
+
+  @override
+  String get accountSectionPreferences => 'هەڵبژاردەکان';
+
+  @override
+  String get accountSectionSupport => 'یارمەتی';
+
+  @override
+  String get accountCity => 'شار';
+
+  @override
+  String get accountNotSet => 'دیاری نەکراوە';
 }

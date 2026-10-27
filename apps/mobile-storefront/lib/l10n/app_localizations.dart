@@ -2361,6 +2361,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Version {version}'**
   String aboutVersion(String version);
+
+  /// No description provided for @accountGuestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to Solary'**
+  String get accountGuestTitle;
+
+  /// No description provided for @accountGuestBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your orders, book installations and keep your details in one place.'**
+  String get accountGuestBody;
+
+  /// No description provided for @accountCreateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get accountCreateAccount;
+
+  /// No description provided for @accountEditProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get accountEditProfile;
+
+  /// No description provided for @accountYourName.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get accountYourName;
+
+  /// No description provided for @accountSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get accountSave;
+
+  /// No description provided for @accountSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved.'**
+  String get accountSaved;
+
+  /// No description provided for @accountMyOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'My orders'**
+  String get accountMyOrders;
+
+  /// No description provided for @accountMyServices.
+  ///
+  /// In en, this message translates to:
+  /// **'My service requests'**
+  String get accountMyServices;
+
+  /// No description provided for @accountSectionActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get accountSectionActivity;
+
+  /// No description provided for @accountSectionBusiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get accountSectionBusiness;
+
+  /// No description provided for @accountSectionPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get accountSectionPreferences;
+
+  /// No description provided for @accountSectionSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get accountSectionSupport;
+
+  /// No description provided for @accountCity.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get accountCity;
+
+  /// No description provided for @accountNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get accountNotSet;
 }
 
 class _AppLocalizationsDelegate

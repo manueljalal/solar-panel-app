@@ -1251,4 +1251,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String aboutVersion(String version) {
     return 'Version $version';
   }
+
+  @override
+  String get accountGuestTitle => 'Sign in to Solary';
+
+  @override
+  String get accountGuestBody =>
+      'Track your orders, book installations and keep your details in one place.';
+
+  @override
+  String get accountCreateAccount => 'Create account';
+
+  @override
+  String get accountEditProfile => 'Edit profile';
+
+  @override
+  String get accountYourName => 'Your name';
+
+  @override
+  String get accountSave => 'Save';
+
+  @override
+  String get accountSaved => 'Saved.';
+
+  @override
+  String get accountMyOrders => 'My orders';
+
+  @override
+  String get accountMyServices => 'My service requests';
+
+  @override
+  String get accountSectionActivity => 'Activity';
+
+  @override
+  String get accountSectionBusiness => 'Business';
+
+  @override
+  String get accountSectionPreferences => 'Preferences';
+
+  @override
+  String get accountSectionSupport => 'Help';
+
+  @override
+  String get accountCity => 'City';
+
+  @override
+  String get accountNotSet => 'Not set';
 }

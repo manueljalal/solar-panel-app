@@ -27,5 +27,8 @@ class ProfileRepository {
     );
   }
 
+  Future<void> updateName(String name) =>
+      _functions.httpsCallable('auth-updateMyProfile').call({'name': name});
+
   Future<void> deleteMyAccount() => _functions.httpsCallable('auth-deleteMyAccount').call();
 }

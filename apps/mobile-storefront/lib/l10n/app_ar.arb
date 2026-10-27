@@ -473,5 +473,20 @@
         "type": "String"
       }
     }
-  }
+  },
+  "accountGuestTitle": "سجّل الدخول إلى سولاري",
+  "accountGuestBody": "تابع طلباتك واحجز التركيب واحفظ بياناتك في مكان واحد.",
+  "accountCreateAccount": "إنشاء حساب",
+  "accountEditProfile": "تعديل الملف",
+  "accountYourName": "اسمك",
+  "accountSave": "حفظ",
+  "accountSaved": "تم الحفظ.",
+  "accountMyOrders": "طلباتي",
+  "accountMyServices": "طلبات الخدمة",
+  "accountSectionActivity": "النشاط",
+  "accountSectionBusiness": "الأعمال",
+  "accountSectionPreferences": "التفضيلات",
+  "accountSectionSupport": "المساعدة",
+  "accountCity": "المدينة",
+  "accountNotSet": "غير محدد"
 }

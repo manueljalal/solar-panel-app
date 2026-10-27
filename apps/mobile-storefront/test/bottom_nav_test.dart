@@ -39,7 +39,7 @@ void main() {
     // No Firebase.initializeApp() in the test environment, so this
     // correctly shows the "not signed in" state rather than a real uid —
     // see AccountScreen's Firebase.apps.isEmpty guard.
-    expect(find.text('Not signed in'), findsOneWidget);
+    expect(find.text('Sign in to Solary'), findsOneWidget);
 
     await tester.tap(navTab('Home'));
     await tester.pumpAndSettle();

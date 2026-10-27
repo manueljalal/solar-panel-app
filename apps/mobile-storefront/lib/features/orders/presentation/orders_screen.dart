@@ -17,8 +17,10 @@ import '../domain/order.dart';
 /// the customer cancel while the seller hasn't confirmed it yet. Reloads
 /// whenever an order is placed or cancelled elsewhere in the app.
 class OrdersScreen extends StatefulWidget {
-  const OrdersScreen({super.key, OrdersRepository? repository}) : _repository = repository;
+  const OrdersScreen({super.key, this.status, OrdersRepository? repository}) : _repository = repository;
 
+  /// Show only orders in this status (from Account's order tracker); null = all.
+  final OrderStatus? status;
   final OrdersRepository? _repository;
 
   @override
@@ -64,7 +66,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
         backgroundColor: AppColors.surface,
         elevation: 0,
         scrolledUnderElevation: 0,
-        title: Text(l10n.ordersTitle, style: AppTypography.h1.copyWith(fontSize: 20)),
+        title: Text(
+          widget.status == null ? l10n.ordersTitle : statusLabel(l10n, widget.status!),
+          style: AppTypography.h1.copyWith(fontSize: 20),
+        ),
         centerTitle: false,
       ),
       body: !_hasAccount
@@ -93,7 +98,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     action: TextButton(onPressed: _reload, child: Text(l10n.retry)),
                   );
                 }
-                final orders = snap.data ?? const [];
+                final orders = [
+                  for (final o in snap.data ?? const <CustomerOrder>[])
+                    if (widget.status == null || o.status == widget.status) o,
+                ];
                 if (orders.isEmpty) {
                   return _Message(
                     icon: Icons.inventory_2_outlined,

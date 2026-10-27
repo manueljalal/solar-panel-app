@@ -473,5 +473,20 @@
         "type": "String"
       }
     }
-  }
+  },
+  "accountGuestTitle": "بچۆ ژوورەوە بۆ سۆلاری",
+  "accountGuestBody": "داواکارییەکانت بەدوادا بچۆ، دامەزراندن داوا بکە و زانیارییەکانت لە یەک شوێن هەڵبگرە.",
+  "accountCreateAccount": "دروستکردنی هەژمار",
+  "accountEditProfile": "دەستکاریکردنی پرۆفایل",
+  "accountYourName": "ناوت",
+  "accountSave": "پاشەکەوت",
+  "accountSaved": "پاشەکەوت کرا.",
+  "accountMyOrders": "داواکارییەکانم",
+  "accountMyServices": "داواکاری خزمەتگوزارییەکانم",
+  "accountSectionActivity": "چالاکی",
+  "accountSectionBusiness": "بازرگانی",
+  "accountSectionPreferences": "هەڵبژاردەکان",
+  "accountSectionSupport": "یارمەتی",
+  "accountCity": "شار",
+  "accountNotSet": "دیاری نەکراوە"
 }

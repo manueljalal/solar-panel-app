@@ -1248,4 +1248,50 @@ class AppLocalizationsAr extends AppLocalizations {
   String aboutVersion(String version) {
     return 'الإصدار $version';
   }
+
+  @override
+  String get accountGuestTitle => 'سجّل الدخول إلى سولاري';
+
+  @override
+  String get accountGuestBody =>
+      'تابع طلباتك واحجز التركيب واحفظ بياناتك في مكان واحد.';
+
+  @override
+  String get accountCreateAccount => 'إنشاء حساب';
+
+  @override
+  String get accountEditProfile => 'تعديل الملف';
+
+  @override
+  String get accountYourName => 'اسمك';
+
+  @override
+  String get accountSave => 'حفظ';
+
+  @override
+  String get accountSaved => 'تم الحفظ.';
+
+  @override
+  String get accountMyOrders => 'طلباتي';
+
+  @override
+  String get accountMyServices => 'طلبات الخدمة';
+
+  @override
+  String get accountSectionActivity => 'النشاط';
+
+  @override
+  String get accountSectionBusiness => 'الأعمال';
+
+  @override
+  String get accountSectionPreferences => 'التفضيلات';
+
+  @override
+  String get accountSectionSupport => 'المساعدة';
+
+  @override
+  String get accountCity => 'المدينة';
+
+  @override
+  String get accountNotSet => 'غير محدد';
 }
