@@ -47,7 +47,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   void _reload() {
     if (!mounted) return;
-    setState(() => _orders = _hasAccount ? _repo.listMine() : null);
+    // Block body: an arrow here would return the Future from setState's
+    // callback, which Flutter rejects with a red error screen.
+    final next = _hasAccount ? _repo.listMine() : null;
+    setState(() {
+      _orders = next;
+    });
   }
 
   @override
