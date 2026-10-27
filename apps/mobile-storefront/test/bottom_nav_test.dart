@@ -27,9 +27,11 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Your cart is empty'), findsOneWidget);
 
-    await tester.tap(navTab('Orders'));
+    await tester.tap(navTab('Services'));
     await tester.pumpAndSettle();
-    expect(find.text('Sign in to see your orders'), findsOneWidget); // no account in tests
+    expect(find.text('Installation'), findsOneWidget);
+    expect(find.text('Panel cleaning'), findsOneWidget);
+    expect(find.text('Call center'), findsOneWidget);
 
     await tester.tap(navTab('Account'));
     await tester.pumpAndSettle();

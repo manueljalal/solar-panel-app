@@ -1,5 +1,5 @@
 import { httpsCallable } from "firebase/functions";
-import type { OrderStatus, PortalOrder, QuoteStatus } from "@solary/ui-web";
+import type { OrderStatus, PortalOrder, PortalServiceRequest, QuoteStatus, ServiceStatus } from "@solary/ui-web";
 import { functions } from "./firebase";
 
 export interface PlatformStats {
@@ -11,6 +11,7 @@ export interface PlatformStats {
   newQuotes: number;
   bulkListings: number;
   bulkRequests: number;
+  newServiceRequests: number;
 }
 
 export interface AdminUser {
@@ -105,6 +106,19 @@ export const deleteAccount = httpsCallable<{ uid?: string; phone?: string }, { o
   functions,
   "admin-deleteAccount",
 );
+
+export const listServiceRequests = httpsCallable<void, { requests: PortalServiceRequest[] }>(
+  functions,
+  "admin-listServiceRequests",
+);
+export const updateServiceRequest = httpsCallable<
+  { id: string; status?: ServiceStatus; vendorId?: string; scheduledFor?: number | null; adminNote?: string },
+  { ok: true }
+>(functions, "admin-updateServiceRequest");
+export const updateSupportConfig = httpsCallable<
+  { phone: string; whatsapp?: string; hours?: string; email?: string },
+  { ok: true }
+>(functions, "admin-updateSupportConfig");
 
 export function errorMessage(err: unknown, fallback: string): string {
   const e = err as { code?: string; message?: string };

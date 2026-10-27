@@ -1112,4 +1112,143 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cityChoose => 'Choose your city';
+
+  @override
+  String get navServices => 'Services';
+
+  @override
+  String get servicesTitle => 'Services';
+
+  @override
+  String get servicesIntro => 'Book a solar expert to your home.';
+
+  @override
+  String get serviceInstallation => 'Installation';
+
+  @override
+  String get serviceInstallationHint =>
+      'Site visit, mounting, wiring and setup';
+
+  @override
+  String get serviceCleaning => 'Panel cleaning';
+
+  @override
+  String get serviceCleaningHint =>
+      'Dust and dirt cut your power — get them cleaned';
+
+  @override
+  String get serviceCallCenter => 'Call center';
+
+  @override
+  String get serviceCallCenterHint => 'Questions, problems or help choosing';
+
+  @override
+  String get serviceCall => 'Call';
+
+  @override
+  String get serviceWhatsApp => 'WhatsApp';
+
+  @override
+  String get serviceSupportNotSet =>
+      'Our call center number will be available soon.';
+
+  @override
+  String get serviceMyRequests => 'My requests';
+
+  @override
+  String get serviceNoRequests => 'You haven\'t booked a service yet.';
+
+  @override
+  String get serviceRequestTitleInstallation => 'Book an installation';
+
+  @override
+  String get serviceRequestTitleCleaning => 'Book a panel cleaning';
+
+  @override
+  String get serviceLocation => 'Location';
+
+  @override
+  String get servicePreferredDate => 'Preferred date (optional)';
+
+  @override
+  String get serviceAnyDate => 'Any day';
+
+  @override
+  String get servicePanelCount => 'Number of panels (optional)';
+
+  @override
+  String get serviceSystemSize => 'System size in kW (optional)';
+
+  @override
+  String get serviceNote => 'Anything we should know? (optional)';
+
+  @override
+  String get serviceSubmit => 'Send request';
+
+  @override
+  String get serviceSent => 'Request sent — we\'ll call you to confirm a time.';
+
+  @override
+  String get serviceFailed => 'Couldn\'t send your request. Try again.';
+
+  @override
+  String get serviceSignInBody =>
+      'Sign in so our team can call you to arrange the visit.';
+
+  @override
+  String get serviceStatusNew => 'Waiting for confirmation';
+
+  @override
+  String get serviceStatusScheduled => 'Scheduled';
+
+  @override
+  String get serviceStatusCompleted => 'Completed';
+
+  @override
+  String get serviceStatusCancelled => 'Cancelled';
+
+  @override
+  String serviceScheduledFor(String date) {
+    return 'Scheduled for $date';
+  }
+
+  @override
+  String get serviceCancel => 'Cancel request';
+
+  @override
+  String get accountHelp => 'Help & support';
+
+  @override
+  String get accountB2B => 'B2B marketplace';
+
+  @override
+  String get accountDelete => 'Delete account';
+
+  @override
+  String get accountDeleteTitle => 'Delete your account?';
+
+  @override
+  String get accountDeleteBody =>
+      'This permanently removes your account and profile. Past orders stay with the sellers as records. This can\'t be undone.';
+
+  @override
+  String get accountDeleteConfirm => 'Delete';
+
+  @override
+  String get accountDeleted => 'Your account was deleted.';
+
+  @override
+  String get accountDeleteFailed => 'Couldn\'t delete your account. Try again.';
+
+  @override
+  String get aboutBody =>
+      'Solary connects you with trusted solar companies across Iraq — panels, batteries, inverters, installation and cleaning.';
+
+  @override
+  String get aboutCompany => 'Solary, a Quadcores product';
+
+  @override
+  String aboutVersion(String version) {
+    return 'Version $version';
+  }
 }

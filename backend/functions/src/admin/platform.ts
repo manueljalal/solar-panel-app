@@ -19,7 +19,7 @@ export const getStats = onCall({ region: "us-central1" }, async (request) => {
   const [
     users, vendors, products, pendingApplications,
     placed, confirmed, outForDelivery, delivered, cancelled,
-    newQuotes, bulkListings, bulkRequests,
+    newQuotes, bulkListings, bulkRequests, newServiceRequests,
   ] = await Promise.all([
     count(db.collection("users")),
     count(db.collection("vendors").where("status", "==", "approved")),
@@ -33,11 +33,12 @@ export const getStats = onCall({ region: "us-central1" }, async (request) => {
     count(db.collection("quoteRequests").where("status", "==", "new")),
     count(db.collection("bulkListings").where("status", "==", "active")),
     count(db.collection("bulkRequests").where("status", "==", "open")),
+    count(db.collection("serviceRequests").where("status", "==", "new")),
   ]);
   return {
     users, vendors, products, pendingApplications,
     orders: { placed, confirmed, outForDelivery, delivered, cancelled },
-    newQuotes, bulkListings, bulkRequests,
+    newQuotes, bulkListings, bulkRequests, newServiceRequests,
   };
 });
 

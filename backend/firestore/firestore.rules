@@ -115,6 +115,21 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // config/support — call-center phone/WhatsApp/hours shown in the app.
+    // Public read; written only by admin-updateSupportConfig.
+    match /config/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // serviceRequests — installation / panel-cleaning bookings. No client
+    // access: storefront-requestService / listMyServiceRequests,
+    // admin-listServiceRequests / updateServiceRequest and
+    // vendor-listServiceJobs / updateServiceJob scope every read and write.
+    match /serviceRequests/{id} {
+      allow read, write: if false;
+    }
+
     // Default deny
     match /{document=**} {
       allow read, write: if false;

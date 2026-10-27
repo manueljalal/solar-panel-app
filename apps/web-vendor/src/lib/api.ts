@@ -1,5 +1,5 @@
 import { httpsCallable } from "firebase/functions";
-import type { OrderStatus, PortalOrder, QuoteStatus } from "@solary/ui-web";
+import type { OrderStatus, PortalOrder, PortalServiceRequest, QuoteStatus } from "@solary/ui-web";
 import { functions } from "./firebase";
 
 export interface QuoteRequest {
@@ -29,6 +29,12 @@ export const updateProfile = httpsCallable<
   { ok: true }
 >(functions, "vendor-updateProfile");
 export const deleteProduct = httpsCallable<{ productId: string }, { ok: true }>(functions, "vendor-deleteProduct");
+
+export const listServiceJobs = httpsCallable<void, { jobs: PortalServiceRequest[] }>(functions, "vendor-listServiceJobs");
+export const updateServiceJob = httpsCallable<
+  { id: string; status: "scheduled" | "completed"; scheduledFor?: number | null },
+  { ok: true }
+>(functions, "vendor-updateServiceJob");
 
 /** Callable errors carry a readable message for HttpsErrors; anything else
  * (network, INTERNAL) falls back to [fallback]. */

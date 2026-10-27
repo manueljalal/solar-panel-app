@@ -497,5 +497,62 @@
         "type": "String"
       }
     }
+  },
+  "navServices": "Services",
+  "servicesTitle": "Services",
+  "servicesIntro": "Book a solar expert to your home.",
+  "serviceInstallation": "Installation",
+  "serviceInstallationHint": "Site visit, mounting, wiring and setup",
+  "serviceCleaning": "Panel cleaning",
+  "serviceCleaningHint": "Dust and dirt cut your power — get them cleaned",
+  "serviceCallCenter": "Call center",
+  "serviceCallCenterHint": "Questions, problems or help choosing",
+  "serviceCall": "Call",
+  "serviceWhatsApp": "WhatsApp",
+  "serviceSupportNotSet": "Our call center number will be available soon.",
+  "serviceMyRequests": "My requests",
+  "serviceNoRequests": "You haven't booked a service yet.",
+  "serviceRequestTitleInstallation": "Book an installation",
+  "serviceRequestTitleCleaning": "Book a panel cleaning",
+  "serviceLocation": "Location",
+  "servicePreferredDate": "Preferred date (optional)",
+  "serviceAnyDate": "Any day",
+  "servicePanelCount": "Number of panels (optional)",
+  "serviceSystemSize": "System size in kW (optional)",
+  "serviceNote": "Anything we should know? (optional)",
+  "serviceSubmit": "Send request",
+  "serviceSent": "Request sent — we'll call you to confirm a time.",
+  "serviceFailed": "Couldn't send your request. Try again.",
+  "serviceSignInBody": "Sign in so our team can call you to arrange the visit.",
+  "serviceStatusNew": "Waiting for confirmation",
+  "serviceStatusScheduled": "Scheduled",
+  "serviceStatusCompleted": "Completed",
+  "serviceStatusCancelled": "Cancelled",
+  "serviceScheduledFor": "Scheduled for {date}",
+  "@serviceScheduledFor": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "serviceCancel": "Cancel request",
+  "accountHelp": "Help & support",
+  "accountB2B": "B2B marketplace",
+  "accountDelete": "Delete account",
+  "accountDeleteTitle": "Delete your account?",
+  "accountDeleteBody": "This permanently removes your account and profile. Past orders stay with the sellers as records. This can't be undone.",
+  "accountDeleteConfirm": "Delete",
+  "accountDeleted": "Your account was deleted.",
+  "accountDeleteFailed": "Couldn't delete your account. Try again.",
+  "aboutBody": "Solary connects you with trusted solar companies across Iraq — panels, batteries, inverters, installation and cleaning.",
+  "aboutCompany": "Solary, a Quadcores product",
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
   }
 }

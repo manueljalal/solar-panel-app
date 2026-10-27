@@ -40,6 +40,7 @@ const NAV = [
   { href: "/orders", label: "Orders", badge: "orders" as const },
   { href: "/products", label: "Products" },
   { href: "/quotes", label: "Quote requests", badge: "quotes" as const },
+  { href: "/services", label: "Service jobs" },
   { href: "/settings", label: "Company" },
 ];
 

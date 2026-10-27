@@ -416,5 +416,62 @@
         "type": "String"
       }
     }
+  },
+  "navServices": "الخدمات",
+  "servicesTitle": "الخدمات",
+  "servicesIntro": "احجز خبير طاقة شمسية إلى منزلك.",
+  "serviceInstallation": "التركيب",
+  "serviceInstallationHint": "زيارة الموقع والتثبيت والتوصيل والإعداد",
+  "serviceCleaning": "تنظيف الألواح",
+  "serviceCleaningHint": "الغبار يقلل الطاقة — نظّفها",
+  "serviceCallCenter": "مركز الاتصال",
+  "serviceCallCenterHint": "أسئلة أو مشاكل أو مساعدة في الاختيار",
+  "serviceCall": "اتصال",
+  "serviceWhatsApp": "واتساب",
+  "serviceSupportNotSet": "سيتوفر رقم مركز الاتصال قريباً.",
+  "serviceMyRequests": "طلباتي",
+  "serviceNoRequests": "لم تحجز أي خدمة بعد.",
+  "serviceRequestTitleInstallation": "احجز تركيباً",
+  "serviceRequestTitleCleaning": "احجز تنظيف ألواح",
+  "serviceLocation": "الموقع",
+  "servicePreferredDate": "التاريخ المفضل (اختياري)",
+  "serviceAnyDate": "أي يوم",
+  "servicePanelCount": "عدد الألواح (اختياري)",
+  "serviceSystemSize": "حجم النظام بالكيلوواط (اختياري)",
+  "serviceNote": "هل هناك ما يجب أن نعرفه؟ (اختياري)",
+  "serviceSubmit": "إرسال الطلب",
+  "serviceSent": "تم إرسال الطلب — سنتصل بك لتأكيد الموعد.",
+  "serviceFailed": "تعذّر إرسال طلبك. حاول مجدداً.",
+  "serviceSignInBody": "سجّل الدخول ليتصل بك فريقنا لترتيب الزيارة.",
+  "serviceStatusNew": "بانتظار التأكيد",
+  "serviceStatusScheduled": "مجدول",
+  "serviceStatusCompleted": "مكتمل",
+  "serviceStatusCancelled": "ملغى",
+  "serviceScheduledFor": "مجدول في {date}",
+  "@serviceScheduledFor": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "serviceCancel": "إلغاء الطلب",
+  "accountHelp": "المساعدة والدعم",
+  "accountB2B": "سوق الأعمال B2B",
+  "accountDelete": "حذف الحساب",
+  "accountDeleteTitle": "حذف حسابك؟",
+  "accountDeleteBody": "سيؤدي هذا إلى حذف حسابك وملفك نهائياً. تبقى الطلبات السابقة لدى البائعين كسجلات. لا يمكن التراجع عن ذلك.",
+  "accountDeleteConfirm": "حذف",
+  "accountDeleted": "تم حذف حسابك.",
+  "accountDeleteFailed": "تعذّر حذف حسابك. حاول مجدداً.",
+  "aboutBody": "تربطك سولاري بشركات طاقة شمسية موثوقة في جميع أنحاء العراق — ألواح وبطاريات ومحولات وتركيب وتنظيف.",
+  "aboutCompany": "سولاري، أحد منتجات Quadcores",
+  "aboutVersion": "الإصدار {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
   }
 }

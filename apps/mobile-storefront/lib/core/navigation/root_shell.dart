@@ -5,7 +5,7 @@ import '../../features/cart/presentation/cart_screen.dart';
 import '../../features/home/data/home_repository.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/learn/presentation/learn_screen.dart';
-import '../../features/orders/presentation/orders_screen.dart';
+import '../../features/services/presentation/services_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
 
@@ -29,7 +29,7 @@ class RootShell extends StatefulWidget {
   /// checkout). Set it to a tab index; the shell switches and resets it.
   static final tabRequests = ValueNotifier<int?>(null);
 
-  static const ordersTab = 3;
+  static const servicesTab = 3;
 
   @override
   State<RootShell> createState() => _RootShellState();
@@ -75,7 +75,7 @@ class _RootShellState extends State<RootShell> {
       case 2:
         return const CartScreen();
       case 3:
-        return const OrdersScreen();
+        return const ServicesScreen();
       default:
         return const AccountScreen();
     }
@@ -114,7 +114,11 @@ class _RootShellState extends State<RootShell> {
                 icon: _CartIcon(count: cart.itemCount),
                 label: l10n.navCart,
               ),
-              BottomNavigationBarItem(icon: const Icon(Icons.inventory_2_outlined), label: l10n.navOrders),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.handyman_outlined),
+                activeIcon: const Icon(Icons.handyman),
+                label: l10n.navServices,
+              ),
               BottomNavigationBarItem(icon: const Icon(Icons.person_outline), label: l10n.navAccount),
             ],
           );

@@ -14,3 +14,4 @@ export * from "./check_sign_up";
 export * from "./sign_in";
 export * from "./sign_in_otp_step_up";
 export * from "./set_vendor_password";
+export * from "./my_account";

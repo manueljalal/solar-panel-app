@@ -9,3 +9,4 @@ export * from "./learn";
 export * from "./orders";
 export * from "./platform";
 export * from "./delete_account";
+export * from "./services";

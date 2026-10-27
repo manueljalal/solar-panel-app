@@ -2103,6 +2103,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose your city'**
   String get cityChoose;
+
+  /// No description provided for @navServices.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get navServices;
+
+  /// No description provided for @servicesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get servicesTitle;
+
+  /// No description provided for @servicesIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a solar expert to your home.'**
+  String get servicesIntro;
+
+  /// No description provided for @serviceInstallation.
+  ///
+  /// In en, this message translates to:
+  /// **'Installation'**
+  String get serviceInstallation;
+
+  /// No description provided for @serviceInstallationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Site visit, mounting, wiring and setup'**
+  String get serviceInstallationHint;
+
+  /// No description provided for @serviceCleaning.
+  ///
+  /// In en, this message translates to:
+  /// **'Panel cleaning'**
+  String get serviceCleaning;
+
+  /// No description provided for @serviceCleaningHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Dust and dirt cut your power — get them cleaned'**
+  String get serviceCleaningHint;
+
+  /// No description provided for @serviceCallCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Call center'**
+  String get serviceCallCenter;
+
+  /// No description provided for @serviceCallCenterHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Questions, problems or help choosing'**
+  String get serviceCallCenterHint;
+
+  /// No description provided for @serviceCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get serviceCall;
+
+  /// No description provided for @serviceWhatsApp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get serviceWhatsApp;
+
+  /// No description provided for @serviceSupportNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Our call center number will be available soon.'**
+  String get serviceSupportNotSet;
+
+  /// No description provided for @serviceMyRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'My requests'**
+  String get serviceMyRequests;
+
+  /// No description provided for @serviceNoRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t booked a service yet.'**
+  String get serviceNoRequests;
+
+  /// No description provided for @serviceRequestTitleInstallation.
+  ///
+  /// In en, this message translates to:
+  /// **'Book an installation'**
+  String get serviceRequestTitleInstallation;
+
+  /// No description provided for @serviceRequestTitleCleaning.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a panel cleaning'**
+  String get serviceRequestTitleCleaning;
+
+  /// No description provided for @serviceLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get serviceLocation;
+
+  /// No description provided for @servicePreferredDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred date (optional)'**
+  String get servicePreferredDate;
+
+  /// No description provided for @serviceAnyDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Any day'**
+  String get serviceAnyDate;
+
+  /// No description provided for @servicePanelCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of panels (optional)'**
+  String get servicePanelCount;
+
+  /// No description provided for @serviceSystemSize.
+  ///
+  /// In en, this message translates to:
+  /// **'System size in kW (optional)'**
+  String get serviceSystemSize;
+
+  /// No description provided for @serviceNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything we should know? (optional)'**
+  String get serviceNote;
+
+  /// No description provided for @serviceSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Send request'**
+  String get serviceSubmit;
+
+  /// No description provided for @serviceSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent — we\'ll call you to confirm a time.'**
+  String get serviceSent;
+
+  /// No description provided for @serviceFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t send your request. Try again.'**
+  String get serviceFailed;
+
+  /// No description provided for @serviceSignInBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in so our team can call you to arrange the visit.'**
+  String get serviceSignInBody;
+
+  /// No description provided for @serviceStatusNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for confirmation'**
+  String get serviceStatusNew;
+
+  /// No description provided for @serviceStatusScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get serviceStatusScheduled;
+
+  /// No description provided for @serviceStatusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get serviceStatusCompleted;
+
+  /// No description provided for @serviceStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get serviceStatusCancelled;
+
+  /// No description provided for @serviceScheduledFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled for {date}'**
+  String serviceScheduledFor(String date);
+
+  /// No description provided for @serviceCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel request'**
+  String get serviceCancel;
+
+  /// No description provided for @accountHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help & support'**
+  String get accountHelp;
+
+  /// No description provided for @accountB2B.
+  ///
+  /// In en, this message translates to:
+  /// **'B2B marketplace'**
+  String get accountB2B;
+
+  /// No description provided for @accountDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get accountDelete;
+
+  /// No description provided for @accountDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your account?'**
+  String get accountDeleteTitle;
+
+  /// No description provided for @accountDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently removes your account and profile. Past orders stay with the sellers as records. This can\'t be undone.'**
+  String get accountDeleteBody;
+
+  /// No description provided for @accountDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get accountDeleteConfirm;
+
+  /// No description provided for @accountDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account was deleted.'**
+  String get accountDeleted;
+
+  /// No description provided for @accountDeleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t delete your account. Try again.'**
+  String get accountDeleteFailed;
+
+  /// No description provided for @aboutBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Solary connects you with trusted solar companies across Iraq — panels, batteries, inverters, installation and cleaning.'**
+  String get aboutBody;
+
+  /// No description provided for @aboutCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Solary, a Quadcores product'**
+  String get aboutCompany;
+
+  /// No description provided for @aboutVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String aboutVersion(String version);
 }
 
 class _AppLocalizationsDelegate

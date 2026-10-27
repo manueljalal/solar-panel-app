@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import '../../../core/auth/friendly_function_error.dart';
-import '../../../core/navigation/root_shell.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
@@ -15,6 +14,7 @@ import '../../account/presentation/sign_in_screen.dart';
 import '../../cart/data/cart_scope.dart';
 import '../../cart/domain/cart_item.dart';
 import '../../orders/data/orders_repository.dart';
+import '../../orders/presentation/orders_screen.dart';
 
 /// Cash-on-delivery checkout: delivery location + address details, an
 /// optional note, the order summary, and one "Place order" button. Needs a
@@ -266,10 +266,10 @@ class _OrderPlacedScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.xl),
               _PrimaryButton(
                 label: l10n.orderViewOrders,
-                onPressed: () {
-                  Navigator.of(context).popUntil((r) => r.isFirst);
-                  RootShell.tabRequests.value = RootShell.ordersTab;
-                },
+                // Orders live under Account now; open the list directly.
+                onPressed: () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => const OrdersScreen()),
+                ),
               ),
               TextButton(
                 onPressed: () => Navigator.of(context).popUntil((r) => r.isFirst),

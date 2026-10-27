@@ -7,7 +7,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { getStats, type PlatformStats } from "@/lib/api";
 
-type BadgeKey = "orders" | "applications" | "quotes";
+type BadgeKey = "orders" | "applications" | "quotes" | "services";
 
 const SECTIONS: { title?: string; items: { href: string; label: string; badge?: BadgeKey }[] }[] = [
   { items: [{ href: "/dashboard", label: "Dashboard" }] },
@@ -17,6 +17,7 @@ const SECTIONS: { title?: string; items: { href: string; label: string; badge?: 
       { href: "/orders", label: "Orders", badge: "orders" },
       { href: "/products", label: "Products" },
       { href: "/quotes", label: "Quote requests", badge: "quotes" },
+      { href: "/services", label: "Service requests", badge: "services" },
     ],
   },
   {
@@ -33,6 +34,7 @@ const SECTIONS: { title?: string; items: { href: string; label: string; badge?: 
       { href: "/categories", label: "Categories" },
       { href: "/banners", label: "Banners" },
       { href: "/learn", label: "Learn" },
+      { href: "/settings", label: "Settings" },
     ],
   },
 ];
@@ -42,6 +44,7 @@ function badges(stats: PlatformStats | null): Record<BadgeKey, number> {
     orders: stats?.orders.placed ?? 0,
     applications: stats?.pendingApplications ?? 0,
     quotes: stats?.newQuotes ?? 0,
+    services: stats?.newServiceRequests ?? 0,
   };
 }
 

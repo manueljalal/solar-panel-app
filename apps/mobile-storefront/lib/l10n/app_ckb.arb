@@ -416,5 +416,62 @@
         "type": "String"
       }
     }
+  },
+  "navServices": "خزمەتگوزارییەکان",
+  "servicesTitle": "خزمەتگوزارییەکان",
+  "servicesIntro": "پسپۆڕی وزەی خۆر بۆ ماڵەکەت بانگ بکە.",
+  "serviceInstallation": "دامەزراندن",
+  "serviceInstallationHint": "سەردانی شوێن، دامەزراندن، وایەرکردن و ڕێکخستن",
+  "serviceCleaning": "پاککردنەوەی پانێڵ",
+  "serviceCleaningHint": "تۆز وزەکەت کەم دەکاتەوە — پاکیان بکەرەوە",
+  "serviceCallCenter": "سەنتەری پەیوەندی",
+  "serviceCallCenterHint": "پرسیار، کێشە یان یارمەتی لە هەڵبژاردن",
+  "serviceCall": "پەیوەندی",
+  "serviceWhatsApp": "واتسئەپ",
+  "serviceSupportNotSet": "ژمارەی سەنتەری پەیوەندی بەم زووانە بەردەست دەبێت.",
+  "serviceMyRequests": "داواکارییەکانم",
+  "serviceNoRequests": "هێشتا هیچ خزمەتگوزارییەکت داوا نەکردووە.",
+  "serviceRequestTitleInstallation": "داواکردنی دامەزراندن",
+  "serviceRequestTitleCleaning": "داواکردنی پاککردنەوەی پانێڵ",
+  "serviceLocation": "شوێن",
+  "servicePreferredDate": "بەرواری دڵخواز (دڵخوازانە)",
+  "serviceAnyDate": "هەر ڕۆژێک",
+  "servicePanelCount": "ژمارەی پانێڵەکان (دڵخوازانە)",
+  "serviceSystemSize": "قەبارەی سیستەم بە کیلۆوات (دڵخوازانە)",
+  "serviceNote": "شتێک هەیە پێویستە بیزانین؟ (دڵخوازانە)",
+  "serviceSubmit": "ناردنی داواکاری",
+  "serviceSent": "داواکارییەکە نێردرا — پەیوەندیت پێوە دەکەین بۆ دیاریکردنی کات.",
+  "serviceFailed": "نەتوانرا داواکارییەکەت بنێردرێت. دووبارە هەوڵبدەرەوە.",
+  "serviceSignInBody": "بچۆ ژوورەوە بۆ ئەوەی تیمەکەمان پەیوەندیت پێوە بکات.",
+  "serviceStatusNew": "چاوەڕێی پشتڕاستکردنەوە",
+  "serviceStatusScheduled": "کاتی دیاریکراوە",
+  "serviceStatusCompleted": "تەواوبوو",
+  "serviceStatusCancelled": "هەڵوەشێنراوە",
+  "serviceScheduledFor": "دیاریکراوە بۆ {date}",
+  "@serviceScheduledFor": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "serviceCancel": "هەڵوەشاندنەوەی داواکاری",
+  "accountHelp": "یارمەتی و پشتگیری",
+  "accountB2B": "بازاڕی کار B2B",
+  "accountDelete": "سڕینەوەی هەژمار",
+  "accountDeleteTitle": "هەژمارەکەت بسڕیتەوە؟",
+  "accountDeleteBody": "ئەمە هەژمار و پرۆفایلەکەت بە یەکجاری دەسڕێتەوە. داواکارییە کۆنەکان وەک تۆمار لای فرۆشیاران دەمێننەوە. ناگەڕێتەوە.",
+  "accountDeleteConfirm": "سڕینەوە",
+  "accountDeleted": "هەژمارەکەت سڕایەوە.",
+  "accountDeleteFailed": "نەتوانرا هەژمارەکەت بسڕدرێتەوە. دووبارە هەوڵبدەرەوە.",
+  "aboutBody": "سۆلاری تۆ بە کۆمپانیا متمانەپێکراوەکانی وزەی خۆر لە سەرانسەری عێراق دەبەستێتەوە — پانێڵ، باتری، ئینڤێرتەر، دامەزراندن و پاککردنەوە.",
+  "aboutCompany": "سۆلاری، بەرهەمێکی Quadcores",
+  "aboutVersion": "وەشانی {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
   }
 }

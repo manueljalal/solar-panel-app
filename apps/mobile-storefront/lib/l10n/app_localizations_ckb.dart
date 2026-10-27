@@ -1122,4 +1122,145 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get cityChoose => 'شارەکەت هەڵبژێرە';
+
+  @override
+  String get navServices => 'خزمەتگوزارییەکان';
+
+  @override
+  String get servicesTitle => 'خزمەتگوزارییەکان';
+
+  @override
+  String get servicesIntro => 'پسپۆڕی وزەی خۆر بۆ ماڵەکەت بانگ بکە.';
+
+  @override
+  String get serviceInstallation => 'دامەزراندن';
+
+  @override
+  String get serviceInstallationHint =>
+      'سەردانی شوێن، دامەزراندن، وایەرکردن و ڕێکخستن';
+
+  @override
+  String get serviceCleaning => 'پاککردنەوەی پانێڵ';
+
+  @override
+  String get serviceCleaningHint => 'تۆز وزەکەت کەم دەکاتەوە — پاکیان بکەرەوە';
+
+  @override
+  String get serviceCallCenter => 'سەنتەری پەیوەندی';
+
+  @override
+  String get serviceCallCenterHint => 'پرسیار، کێشە یان یارمەتی لە هەڵبژاردن';
+
+  @override
+  String get serviceCall => 'پەیوەندی';
+
+  @override
+  String get serviceWhatsApp => 'واتسئەپ';
+
+  @override
+  String get serviceSupportNotSet =>
+      'ژمارەی سەنتەری پەیوەندی بەم زووانە بەردەست دەبێت.';
+
+  @override
+  String get serviceMyRequests => 'داواکارییەکانم';
+
+  @override
+  String get serviceNoRequests => 'هێشتا هیچ خزمەتگوزارییەکت داوا نەکردووە.';
+
+  @override
+  String get serviceRequestTitleInstallation => 'داواکردنی دامەزراندن';
+
+  @override
+  String get serviceRequestTitleCleaning => 'داواکردنی پاککردنەوەی پانێڵ';
+
+  @override
+  String get serviceLocation => 'شوێن';
+
+  @override
+  String get servicePreferredDate => 'بەرواری دڵخواز (دڵخوازانە)';
+
+  @override
+  String get serviceAnyDate => 'هەر ڕۆژێک';
+
+  @override
+  String get servicePanelCount => 'ژمارەی پانێڵەکان (دڵخوازانە)';
+
+  @override
+  String get serviceSystemSize => 'قەبارەی سیستەم بە کیلۆوات (دڵخوازانە)';
+
+  @override
+  String get serviceNote => 'شتێک هەیە پێویستە بیزانین؟ (دڵخوازانە)';
+
+  @override
+  String get serviceSubmit => 'ناردنی داواکاری';
+
+  @override
+  String get serviceSent =>
+      'داواکارییەکە نێردرا — پەیوەندیت پێوە دەکەین بۆ دیاریکردنی کات.';
+
+  @override
+  String get serviceFailed =>
+      'نەتوانرا داواکارییەکەت بنێردرێت. دووبارە هەوڵبدەرەوە.';
+
+  @override
+  String get serviceSignInBody =>
+      'بچۆ ژوورەوە بۆ ئەوەی تیمەکەمان پەیوەندیت پێوە بکات.';
+
+  @override
+  String get serviceStatusNew => 'چاوەڕێی پشتڕاستکردنەوە';
+
+  @override
+  String get serviceStatusScheduled => 'کاتی دیاریکراوە';
+
+  @override
+  String get serviceStatusCompleted => 'تەواوبوو';
+
+  @override
+  String get serviceStatusCancelled => 'هەڵوەشێنراوە';
+
+  @override
+  String serviceScheduledFor(String date) {
+    return 'دیاریکراوە بۆ $date';
+  }
+
+  @override
+  String get serviceCancel => 'هەڵوەشاندنەوەی داواکاری';
+
+  @override
+  String get accountHelp => 'یارمەتی و پشتگیری';
+
+  @override
+  String get accountB2B => 'بازاڕی کار B2B';
+
+  @override
+  String get accountDelete => 'سڕینەوەی هەژمار';
+
+  @override
+  String get accountDeleteTitle => 'هەژمارەکەت بسڕیتەوە؟';
+
+  @override
+  String get accountDeleteBody =>
+      'ئەمە هەژمار و پرۆفایلەکەت بە یەکجاری دەسڕێتەوە. داواکارییە کۆنەکان وەک تۆمار لای فرۆشیاران دەمێننەوە. ناگەڕێتەوە.';
+
+  @override
+  String get accountDeleteConfirm => 'سڕینەوە';
+
+  @override
+  String get accountDeleted => 'هەژمارەکەت سڕایەوە.';
+
+  @override
+  String get accountDeleteFailed =>
+      'نەتوانرا هەژمارەکەت بسڕدرێتەوە. دووبارە هەوڵبدەرەوە.';
+
+  @override
+  String get aboutBody =>
+      'سۆلاری تۆ بە کۆمپانیا متمانەپێکراوەکانی وزەی خۆر لە سەرانسەری عێراق دەبەستێتەوە — پانێڵ، باتری، ئینڤێرتەر، دامەزراندن و پاککردنەوە.';
+
+  @override
+  String get aboutCompany => 'سۆلاری، بەرهەمێکی Quadcores';
+
+  @override
+  String aboutVersion(String version) {
+    return 'وەشانی $version';
+  }
 }

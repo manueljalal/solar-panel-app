@@ -1112,4 +1112,140 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get cityChoose => 'اختر مدينتك';
+
+  @override
+  String get navServices => 'الخدمات';
+
+  @override
+  String get servicesTitle => 'الخدمات';
+
+  @override
+  String get servicesIntro => 'احجز خبير طاقة شمسية إلى منزلك.';
+
+  @override
+  String get serviceInstallation => 'التركيب';
+
+  @override
+  String get serviceInstallationHint =>
+      'زيارة الموقع والتثبيت والتوصيل والإعداد';
+
+  @override
+  String get serviceCleaning => 'تنظيف الألواح';
+
+  @override
+  String get serviceCleaningHint => 'الغبار يقلل الطاقة — نظّفها';
+
+  @override
+  String get serviceCallCenter => 'مركز الاتصال';
+
+  @override
+  String get serviceCallCenterHint => 'أسئلة أو مشاكل أو مساعدة في الاختيار';
+
+  @override
+  String get serviceCall => 'اتصال';
+
+  @override
+  String get serviceWhatsApp => 'واتساب';
+
+  @override
+  String get serviceSupportNotSet => 'سيتوفر رقم مركز الاتصال قريباً.';
+
+  @override
+  String get serviceMyRequests => 'طلباتي';
+
+  @override
+  String get serviceNoRequests => 'لم تحجز أي خدمة بعد.';
+
+  @override
+  String get serviceRequestTitleInstallation => 'احجز تركيباً';
+
+  @override
+  String get serviceRequestTitleCleaning => 'احجز تنظيف ألواح';
+
+  @override
+  String get serviceLocation => 'الموقع';
+
+  @override
+  String get servicePreferredDate => 'التاريخ المفضل (اختياري)';
+
+  @override
+  String get serviceAnyDate => 'أي يوم';
+
+  @override
+  String get servicePanelCount => 'عدد الألواح (اختياري)';
+
+  @override
+  String get serviceSystemSize => 'حجم النظام بالكيلوواط (اختياري)';
+
+  @override
+  String get serviceNote => 'هل هناك ما يجب أن نعرفه؟ (اختياري)';
+
+  @override
+  String get serviceSubmit => 'إرسال الطلب';
+
+  @override
+  String get serviceSent => 'تم إرسال الطلب — سنتصل بك لتأكيد الموعد.';
+
+  @override
+  String get serviceFailed => 'تعذّر إرسال طلبك. حاول مجدداً.';
+
+  @override
+  String get serviceSignInBody => 'سجّل الدخول ليتصل بك فريقنا لترتيب الزيارة.';
+
+  @override
+  String get serviceStatusNew => 'بانتظار التأكيد';
+
+  @override
+  String get serviceStatusScheduled => 'مجدول';
+
+  @override
+  String get serviceStatusCompleted => 'مكتمل';
+
+  @override
+  String get serviceStatusCancelled => 'ملغى';
+
+  @override
+  String serviceScheduledFor(String date) {
+    return 'مجدول في $date';
+  }
+
+  @override
+  String get serviceCancel => 'إلغاء الطلب';
+
+  @override
+  String get accountHelp => 'المساعدة والدعم';
+
+  @override
+  String get accountB2B => 'سوق الأعمال B2B';
+
+  @override
+  String get accountDelete => 'حذف الحساب';
+
+  @override
+  String get accountDeleteTitle => 'حذف حسابك؟';
+
+  @override
+  String get accountDeleteBody =>
+      'سيؤدي هذا إلى حذف حسابك وملفك نهائياً. تبقى الطلبات السابقة لدى البائعين كسجلات. لا يمكن التراجع عن ذلك.';
+
+  @override
+  String get accountDeleteConfirm => 'حذف';
+
+  @override
+  String get accountDeleted => 'تم حذف حسابك.';
+
+  @override
+  String get accountDeleteFailed => 'تعذّر حذف حسابك. حاول مجدداً.';
+
+  @override
+  String get aboutBody =>
+      'تربطك سولاري بشركات طاقة شمسية موثوقة في جميع أنحاء العراق — ألواح وبطاريات ومحولات وتركيب وتنظيف.';
+
+  @override
+  String get aboutCompany => 'سولاري، أحد منتجات Quadcores';
+
+  @override
+  String aboutVersion(String version) {
+    return 'الإصدار $version';
+  }
 }

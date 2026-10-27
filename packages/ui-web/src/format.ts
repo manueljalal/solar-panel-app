@@ -62,3 +62,53 @@ export const QUOTE_STATUS_LABEL: Record<QuoteStatus, string> = {
 export function whatsappLink(phone: string): string {
   return `https://wa.me/${phone.replace(/\D/g, "")}`;
 }
+
+export type ServiceType = "installation" | "cleaning";
+export type ServiceStatus = "new" | "scheduled" | "completed" | "cancelled";
+
+export const SERVICE_TYPE_LABEL: Record<ServiceType, string> = {
+  installation: "Installation",
+  cleaning: "Panel cleaning",
+};
+
+export const SERVICE_STATUS_LABEL: Record<ServiceStatus, string> = {
+  new: "New",
+  scheduled: "Scheduled",
+  completed: "Completed",
+  cancelled: "Cancelled",
+};
+
+/** A service request as returned to admins and assigned vendors. */
+export interface PortalServiceRequest {
+  id: string;
+  type: ServiceType;
+  status: ServiceStatus;
+  address: string;
+  location: { latitude: number; longitude: number; address?: string } | null;
+  city: string;
+  preferredDate: number | null;
+  scheduledFor: number | null;
+  panelCount: number | null;
+  systemSizeKw: number | null;
+  note: string;
+  vendorId: string | null;
+  vendorName: string | null;
+  createdAt: number | null;
+  customerName: string;
+  customerPhone: string;
+  adminNote: string;
+}
+
+/** "2026-10-30" for an <input type="date">, from epoch millis. */
+export function toDateInput(millis: number | null | undefined): string {
+  if (!millis) return "";
+  const d = new Date(millis);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+/** Epoch millis (local noon, so time zones never shift the day) from an <input type="date"> value. */
+export function fromDateInput(value: string): number | null {
+  if (!value) return null;
+  const [y, m, d] = value.split("-").map(Number);
+  return new Date(y, m - 1, d, 12).getTime();
+}

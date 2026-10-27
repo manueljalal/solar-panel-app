@@ -1,29 +1,34 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import '../../../core/auth/auth_claims.dart';
 import '../../../core/auth/auth_repository.dart';
+import '../../../core/auth/friendly_function_error.dart';
+import '../../../core/city/city_controller.dart';
+import '../../../core/navigation/root_shell.dart';
 import '../../../core/l10n/locale_controller.dart';
 import '../../../core/l10n/locale_scope.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../shared/bidi.dart';
+import '../../../shared/widgets/city_picker.dart';
+import '../../bulk/presentation/bulk_market_screen.dart';
+import '../../orders/presentation/orders_screen.dart';
+import '../data/profile_repository.dart';
 import '../../vendor/presentation/vendor_apply_screen.dart';
 import '../../vendor/presentation/vendor_dashboard_screen.dart';
 import 'sign_in_screen.dart';
 
-/// Account tab. Shows the real signed-in state from AuthRepository, and —
-/// once role claims load — either "Own a solar business? Apply" (for a
-/// customer) or "My products" (for an approved vendor). This is the
-/// actual entry point into the vendor dashboard; there's no other way to
-/// reach it from the UI, matching how role-gating should work (the link
-/// simply doesn't appear if you're not a vendor, rather than appearing
-/// and then refusing you).
+/// Account tab: who you are (name, @username, phone), your city, order
+/// history, the business entry (apply, or B2B + products for an approved
+/// vendor), language, help, about, sign out and — for customer accounts —
+/// in-app account deletion (an App Store requirement).
 ///
 /// Guards against reading FirebaseAuth before Firebase.initializeApp() has
-/// run — this tab sits inside RootShell's IndexedStack, which builds every
-/// tab eagerly (not just the visible one).
+/// run — this tab sits inside RootShell's IndexedStack.
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
 
@@ -31,140 +36,292 @@ class AccountScreen extends StatefulWidget {
   State<AccountScreen> createState() => _AccountScreenState();
 }
 
+const _appVersion = '1.0.0';
+
 class _AccountScreenState extends State<AccountScreen> {
   AuthClaims? _claims;
+  MyProfile? _profile;
+  final _profiles = ProfileRepository();
 
   // Lazily constructed, and only ever accessed behind a Firebase.apps
-  // check — AuthRepository()'s constructor reaches for
-  // FirebaseAuth.instance eagerly, which throws if Firebase hasn't
-  // initialized yet. This tab sits inside RootShell's IndexedStack (built
-  // eagerly, not just when visible), so that guard is load-bearing, not
-  // defensive boilerplate — a plain field initializer here crashes the
-  // whole app on cold start in any environment where Firebase init is
-  // slow (or, as caught by the test suite, absent entirely).
+  // check — AuthRepository()'s constructor reaches for FirebaseAuth.instance
+  // eagerly, which throws if Firebase hasn't initialized yet.
   AuthRepository? _repository;
   AuthRepository get _repo => _repository ??= AuthRepository();
+
+  User? get _user => Firebase.apps.isEmpty ? null : _repo.currentUser;
+  bool get _isRealAccount => _user != null && !_user!.isAnonymous;
 
   @override
   void initState() {
     super.initState();
-    _loadClaims();
+    _refresh();
   }
 
-  Future<void> _loadClaims() async {
+  Future<void> _refresh() async {
     if (Firebase.apps.isEmpty) return;
-    // forceRefresh: true — a sign-in that just happened, or a role just
-    // granted by an admin, only shows up on a fresh token. Cheap enough
-    // to always force here since this only runs on tab load/return.
+    // forceRefresh: a sign-in that just happened, or a role just granted by
+    // an admin, only shows up on a fresh token.
     final claims = await _repo.getClaims(forceRefresh: true);
+    MyProfile? profile;
+    if (_isRealAccount) {
+      try {
+        profile = await _profiles.get();
+      } catch (_) {}
+    }
     if (!mounted) return;
-    setState(() => _claims = claims);
+    setState(() {
+      _claims = claims;
+      _profile = profile;
+    });
   }
 
   Future<void> _openSignIn() async {
     await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SignInScreen()));
-    _loadClaims();
+    _refresh();
   }
 
   Future<void> _signOut() async {
     await _repo.signOut();
     await _repo.ensureSignedIn(); // drop back to a fresh anonymous session
-    _loadClaims();
+    setState(() => _profile = null);
+    _refresh();
+  }
+
+  Future<void> _pickCity() async {
+    final picked = await showIraqCityPicker(context, selectedId: CityController.instance.value);
+    if (picked != null && picked.isNotEmpty) await CityController.instance.set(picked);
+  }
+
+  void _showAbout(AppLocalizations l10n) {
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadii.card))),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.xl),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(16)),
+                child: const Icon(Icons.wb_sunny_outlined, color: Colors.white, size: 30),
+              ),
+              const SizedBox(height: AppSpacing.md),
+              Text('Solary', style: AppTypography.h1.copyWith(fontSize: 22)),
+              const SizedBox(height: 4),
+              Text(l10n.aboutVersion(_appVersion), style: AppTypography.bodyMuted),
+              const SizedBox(height: AppSpacing.md),
+              Text(l10n.aboutBody, textAlign: TextAlign.center, style: AppTypography.body),
+              const SizedBox(height: AppSpacing.md),
+              Text(l10n.aboutCompany, style: AppTypography.bodyMuted),
+              const SizedBox(height: 2),
+              Text('info@quadcores.com', style: AppTypography.bodyMuted),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _deleteAccount(AppLocalizations l10n) async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.accountDeleteTitle),
+        content: Text(l10n.accountDeleteBody),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(l10n.orderKeep)),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            style: TextButton.styleFrom(foregroundColor: AppColors.warning),
+            child: Text(l10n.accountDeleteConfirm),
+          ),
+        ],
+      ),
+    );
+    if (ok != true || !mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      await _profiles.deleteMyAccount();
+      await _signOut();
+      messenger.showSnackBar(SnackBar(content: Text(l10n.accountDeleted)));
+    } on FirebaseFunctionsException catch (e) {
+      messenger.showSnackBar(SnackBar(content: Text(friendlyFunctionError(e, l10n.accountDeleteFailed))));
+    } catch (_) {
+      messenger.showSnackBar(SnackBar(content: Text(l10n.accountDeleteFailed)));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final user = Firebase.apps.isEmpty ? null : _repo.currentUser;
-    final isRealAccount = user != null && !user.isAnonymous;
+    final lang = Localizations.localeOf(context).languageCode;
+    final user = _user;
+    final isRealAccount = _isRealAccount;
     final claims = _claims;
+    final isVendor = claims?.role == AppRole.vendor && claims?.vendorId != null;
+    final profile = _profile;
+
+    final title = isRealAccount
+        ? (profile?.name.isNotEmpty == true ? profile!.name : _roleLabel(l10n, claims, true))
+        : (user != null ? l10n.accountRoleGuest : l10n.accountNotSignedIn);
+    final subtitle = isRealAccount
+        ? [
+            if (profile?.username.isNotEmpty == true) '@${profile!.username}',
+            if ((profile?.phone ?? user?.phoneNumber ?? '').isNotEmpty) ltr(profile?.phone ?? user!.phoneNumber!),
+          ].join(' · ')
+        : l10n.accountAnonymousUnavailable;
 
     return Scaffold(
-      backgroundColor: AppColors.surfaceSunken,
+      backgroundColor: AppColors.surface,
       appBar: AppBar(
-        backgroundColor: AppColors.surfaceSunken,
+        backgroundColor: AppColors.surface,
         elevation: 0,
+        scrolledUnderElevation: 0,
         title: Text(l10n.accountTitle, style: AppTypography.h1.copyWith(fontSize: 20)),
         centerTitle: false,
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        children: [
-          Container(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(AppRadii.card),
-              boxShadow: AppShadows.card,
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 44,
-                  height: 44,
-                  decoration: const BoxDecoration(color: AppColors.surfaceMuted, shape: BoxShape.circle),
-                  child: const Icon(Icons.person_outline, color: AppColors.ink900),
-                ),
-                const SizedBox(width: AppSpacing.md),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        user != null ? _roleLabel(l10n, claims, isRealAccount) : l10n.accountNotSignedIn,
-                        style: AppTypography.cardTitle,
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        _subtitle(l10n, user, isRealAccount),
-                        style: AppTypography.bodyMuted,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-                if (isRealAccount)
-                  TextButton(onPressed: _signOut, child: Text(l10n.accountSignOut))
-                else
-                  TextButton(onPressed: _openSignIn, child: Text(l10n.accountSignIn)),
-              ],
-            ),
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          _AccountRow(icon: Icons.location_on_outlined, label: l10n.accountLocation, trailing: l10n.accountChange),
-          _AccountRow(icon: Icons.receipt_long_outlined, label: l10n.accountOrderHistory, trailing: l10n.accountView),
-          if (claims?.role == AppRole.vendor && claims?.vendorId != null)
-            _AccountRow(
-              icon: Icons.storefront_outlined,
-              label: l10n.accountMyProducts,
-              trailing: l10n.accountManage,
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => VendorDashboardScreen(vendorId: claims!.vendorId!)),
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: ListView(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          children: [
+            Container(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(AppRadii.card),
+                border: Border.all(color: AppColors.line),
               ),
-            )
-          else
-            _AccountRow(
-              icon: Icons.storefront_outlined,
-              label: l10n.accountOwnBusiness,
-              trailing: l10n.accountApply,
-              onTap: () async {
-                await Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const VendorApplyScreen()),
-                );
-                // Verifying a phone inside the apply flow swaps the guest
-                // session for a real account — refresh role/claims.
-                _loadClaims();
-              },
+              child: Row(
+                children: [
+                  Container(
+                    width: 48,
+                    height: 48,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(color: AppColors.primarySoft, shape: BoxShape.circle),
+                    child: isRealAccount && title.isNotEmpty
+                        ? Text(
+                            title.characters.first.toUpperCase(),
+                            style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w800, fontSize: 20),
+                          )
+                        : const Icon(Icons.person_outline, color: AppColors.primary),
+                  ),
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(title, style: AppTypography.cardTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                            ),
+                            if (isVendor) ...[
+                              const SizedBox(width: 6),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primarySoft,
+                                  borderRadius: BorderRadius.circular(AppRadii.chip),
+                                ),
+                                child: Text(
+                                  l10n.accountRoleVendor,
+                                  style: const TextStyle(color: AppColors.primary, fontSize: 11, fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                        if (subtitle.isNotEmpty) ...[
+                          const SizedBox(height: 2),
+                          Text(subtitle, style: AppTypography.bodyMuted, maxLines: 1, overflow: TextOverflow.ellipsis),
+                        ],
+                      ],
+                    ),
+                  ),
+                  if (isRealAccount)
+                    TextButton(onPressed: _signOut, child: Text(l10n.accountSignOut))
+                  else
+                    TextButton(onPressed: _openSignIn, child: Text(l10n.accountSignIn)),
+                ],
+              ),
             ),
-          _AccountRow(
-            icon: Icons.language_outlined,
-            label: l10n.accountLanguage,
-            trailing: _languageName(l10n, LocaleScope.of(context).value),
-            onTap: () => _pickLanguage(context, l10n),
-          ),
-          _AccountRow(icon: Icons.info_outline, label: l10n.accountAbout, trailing: 'v1.0.0'),
-        ],
+            const SizedBox(height: AppSpacing.xl),
+            ValueListenableBuilder<String?>(
+              valueListenable: CityController.instance,
+              builder: (context, _, _) => _AccountRow(
+                icon: Icons.location_on_outlined,
+                label: CityController.instance.city?.nameFor(lang) ?? l10n.cityChoose,
+                trailing: l10n.accountChange,
+                onTap: _pickCity,
+              ),
+            ),
+            _AccountRow(
+              icon: Icons.receipt_long_outlined,
+              label: l10n.accountOrderHistory,
+              trailing: l10n.accountView,
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const OrdersScreen())),
+            ),
+            if (isVendor) ...[
+              _AccountRow(
+                icon: Icons.handshake_outlined,
+                label: l10n.accountB2B,
+                trailing: l10n.homeBulkCta,
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const BulkMarketScreen())),
+              ),
+              _AccountRow(
+                icon: Icons.storefront_outlined,
+                label: l10n.accountMyProducts,
+                trailing: l10n.accountManage,
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => VendorDashboardScreen(vendorId: claims!.vendorId!)),
+                ),
+              ),
+            ] else
+              _AccountRow(
+                icon: Icons.storefront_outlined,
+                label: l10n.accountOwnBusiness,
+                trailing: l10n.accountApply,
+                onTap: () async {
+                  await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const VendorApplyScreen()));
+                  _refresh();
+                },
+              ),
+            _AccountRow(
+              icon: Icons.language_outlined,
+              label: l10n.accountLanguage,
+              trailing: _languageName(l10n, LocaleScope.of(context).value),
+              onTap: () => _pickLanguage(context, l10n),
+            ),
+            _AccountRow(
+              icon: Icons.support_agent_outlined,
+              label: l10n.accountHelp,
+              trailing: '',
+              onTap: () => RootShell.tabRequests.value = RootShell.servicesTab,
+            ),
+            _AccountRow(
+              icon: Icons.info_outline,
+              label: l10n.accountAbout,
+              trailing: 'v$_appVersion',
+              onTap: () => _showAbout(l10n),
+            ),
+            if (isRealAccount && !isVendor) ...[
+              const SizedBox(height: AppSpacing.lg),
+              Center(
+                child: TextButton(
+                  onPressed: () => _deleteAccount(l10n),
+                  style: TextButton.styleFrom(foregroundColor: AppColors.warning),
+                  child: Text(l10n.accountDelete),
+                ),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }
@@ -183,12 +340,6 @@ class _AccountScreenState extends State<AccountScreen> {
       builder: (context) => _LanguageSheet(l10n: l10n, current: localeController.value),
     );
     if (chosen != null) await localeController.setLocale(chosen);
-  }
-
-  String _subtitle(AppLocalizations l10n, User? user, bool isRealAccount) {
-    if (user == null) return l10n.accountAnonymousUnavailable;
-    if (isRealAccount) return user.email ?? user.phoneNumber ?? l10n.accountSignedIn;
-    return l10n.accountBrowsingAnonymously(user.uid.substring(0, 8));
   }
 
   String _roleLabel(AppLocalizations l10n, AuthClaims? claims, bool isRealAccount) {
@@ -299,7 +450,11 @@ class _AccountRow extends StatelessWidget {
                 Icon(icon, size: 20, color: AppColors.ink900),
                 const SizedBox(width: AppSpacing.md),
                 Expanded(child: Text(label, style: AppTypography.body)),
-                Text(trailing, style: AppTypography.bodyMuted),
+                if (trailing.isNotEmpty) Text(trailing, style: AppTypography.bodyMuted),
+                if (onTap != null) ...[
+                  const SizedBox(width: 4),
+                  const Icon(Icons.chevron_right, size: 18, color: AppColors.ink400),
+                ],
               ],
             ),
           ),
