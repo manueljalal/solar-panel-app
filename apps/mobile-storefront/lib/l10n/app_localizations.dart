@@ -2517,6 +2517,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Start course'**
   String get learnStartCourse;
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get profileTitle;
+
+  /// No description provided for @profileDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Your details'**
+  String get profileDetails;
+
+  /// No description provided for @profileEmailOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Email (optional)'**
+  String get profileEmailOptional;
+
+  /// No description provided for @profileEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Used for receipts and to sign in'**
+  String get profileEmailHint;
+
+  /// No description provided for @profilePhoneVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified phone'**
+  String get profilePhoneVerified;
+
+  /// No description provided for @profilePhoneNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your phone is your verified sign-in number and can\'t be changed here.'**
+  String get profilePhoneNote;
+
+  /// No description provided for @profileSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get profileSecurity;
+
+  /// No description provided for @profileChangePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get profileChangePassword;
+
+  /// No description provided for @profileSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile saved.'**
+  String get profileSaved;
+
+  /// No description provided for @profileSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save your profile. Try again.'**
+  String get profileSaveFailed;
+
+  /// No description provided for @passwordCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get passwordCurrent;
+
+  /// No description provided for @passwordNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get passwordNew;
+
+  /// No description provided for @passwordConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm new password'**
+  String get passwordConfirm;
+
+  /// No description provided for @passwordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords don\'t match.'**
+  String get passwordMismatch;
+
+  /// No description provided for @passwordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your current password.'**
+  String get passwordRequired;
+
+  /// No description provided for @passwordChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed.'**
+  String get passwordChanged;
+
+  /// No description provided for @passwordChangeFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t change your password. Try again.'**
+  String get passwordChangeFailed;
 }
 
 class _AppLocalizationsDelegate

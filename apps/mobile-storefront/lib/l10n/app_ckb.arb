@@ -520,5 +520,22 @@
   },
   "learnLockedTitle": "خولی پریمیۆم",
   "learnLockedBody": "خولە پارەدارەکان بەم زووانە دێن. ئێستا دەتوانیت ئەڵقەی یەکەم بێبەرامبەر ببینیت.",
-  "learnStartCourse": "دەستپێکردنی خول"
+  "learnStartCourse": "دەستپێکردنی خول",
+  "profileTitle": "دەستکاریکردنی پرۆفایل",
+  "profileDetails": "زانیارییەکانت",
+  "profileEmailOptional": "ئیمەیڵ (دڵخوازانە)",
+  "profileEmailHint": "بۆ پسوڵە و چوونەژوورەوە بەکاردێت",
+  "profilePhoneVerified": "ژمارەی پشتڕاستکراوە",
+  "profilePhoneNote": "ژمارەکەت ژمارەی پشتڕاستکراوی چوونەژوورەوەیە و لێرە ناگۆڕدرێت.",
+  "profileSecurity": "ئاسایش",
+  "profileChangePassword": "گۆڕینی وشەی نهێنی",
+  "profileSaved": "پرۆفایل پاشەکەوت کرا.",
+  "profileSaveFailed": "نەتوانرا پرۆفایلەکەت پاشەکەوت بکرێت. دووبارە هەوڵبدەرەوە.",
+  "passwordCurrent": "وشەی نهێنی ئێستا",
+  "passwordNew": "وشەی نهێنی نوێ",
+  "passwordConfirm": "دووپاتکردنەوەی وشەی نهێنی نوێ",
+  "passwordMismatch": "وشە نهێنییەکان یەک ناگرنەوە.",
+  "passwordRequired": "وشەی نهێنی ئێستا بنووسە.",
+  "passwordChanged": "وشەی نهێنی گۆڕدرا.",
+  "passwordChangeFailed": "نەتوانرا وشەی نهێنی بگۆڕدرێت. دووبارە هەوڵبدەرەوە."
 }

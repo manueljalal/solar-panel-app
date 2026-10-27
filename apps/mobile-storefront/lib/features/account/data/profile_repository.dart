@@ -27,8 +27,16 @@ class ProfileRepository {
     );
   }
 
-  Future<void> updateName(String name) =>
-      _functions.httpsCallable('auth-updateMyProfile').call({'name': name});
+  /// Only the fields passed are changed. [email] '' clears it.
+  Future<void> update({String? name, String? username, String? email}) =>
+      _functions.httpsCallable('auth-updateMyProfile').call({
+        'name': ?name,
+        'username': ?username,
+        'email': ?email,
+      });
+
+  Future<void> changePassword({required String current, required String next}) =>
+      _functions.httpsCallable('auth-changePassword').call({'currentPassword': current, 'newPassword': next});
 
   Future<void> deleteMyAccount() => _functions.httpsCallable('auth-deleteMyAccount').call();
 }

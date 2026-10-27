@@ -1343,4 +1343,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get learnStartCourse => 'Start course';
+
+  @override
+  String get profileTitle => 'Edit profile';
+
+  @override
+  String get profileDetails => 'Your details';
+
+  @override
+  String get profileEmailOptional => 'Email (optional)';
+
+  @override
+  String get profileEmailHint => 'Used for receipts and to sign in';
+
+  @override
+  String get profilePhoneVerified => 'Verified phone';
+
+  @override
+  String get profilePhoneNote =>
+      'Your phone is your verified sign-in number and can\'t be changed here.';
+
+  @override
+  String get profileSecurity => 'Security';
+
+  @override
+  String get profileChangePassword => 'Change password';
+
+  @override
+  String get profileSaved => 'Profile saved.';
+
+  @override
+  String get profileSaveFailed => 'Couldn\'t save your profile. Try again.';
+
+  @override
+  String get passwordCurrent => 'Current password';
+
+  @override
+  String get passwordNew => 'New password';
+
+  @override
+  String get passwordConfirm => 'Confirm new password';
+
+  @override
+  String get passwordMismatch => 'Passwords don\'t match.';
+
+  @override
+  String get passwordRequired => 'Enter your current password.';
+
+  @override
+  String get passwordChanged => 'Password changed.';
+
+  @override
+  String get passwordChangeFailed =>
+      'Couldn\'t change your password. Try again.';
 }

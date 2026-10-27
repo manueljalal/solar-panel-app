@@ -1340,4 +1340,56 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get learnStartCourse => 'ابدأ الدورة';
+
+  @override
+  String get profileTitle => 'تعديل الملف الشخصي';
+
+  @override
+  String get profileDetails => 'بياناتك';
+
+  @override
+  String get profileEmailOptional => 'البريد الإلكتروني (اختياري)';
+
+  @override
+  String get profileEmailHint => 'يُستخدم للإيصالات وتسجيل الدخول';
+
+  @override
+  String get profilePhoneVerified => 'هاتف موثّق';
+
+  @override
+  String get profilePhoneNote =>
+      'هاتفك هو رقم الدخول الموثّق ولا يمكن تغييره هنا.';
+
+  @override
+  String get profileSecurity => 'الأمان';
+
+  @override
+  String get profileChangePassword => 'تغيير كلمة المرور';
+
+  @override
+  String get profileSaved => 'تم حفظ الملف الشخصي.';
+
+  @override
+  String get profileSaveFailed => 'تعذّر حفظ ملفك. حاول مجدداً.';
+
+  @override
+  String get passwordCurrent => 'كلمة المرور الحالية';
+
+  @override
+  String get passwordNew => 'كلمة المرور الجديدة';
+
+  @override
+  String get passwordConfirm => 'تأكيد كلمة المرور الجديدة';
+
+  @override
+  String get passwordMismatch => 'كلمتا المرور غير متطابقتين.';
+
+  @override
+  String get passwordRequired => 'أدخل كلمة المرور الحالية.';
+
+  @override
+  String get passwordChanged => 'تم تغيير كلمة المرور.';
+
+  @override
+  String get passwordChangeFailed => 'تعذّر تغيير كلمة المرور. حاول مجدداً.';
 }

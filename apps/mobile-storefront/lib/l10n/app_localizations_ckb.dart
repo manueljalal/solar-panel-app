@@ -1355,4 +1355,58 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get learnStartCourse => 'دەستپێکردنی خول';
+
+  @override
+  String get profileTitle => 'دەستکاریکردنی پرۆفایل';
+
+  @override
+  String get profileDetails => 'زانیارییەکانت';
+
+  @override
+  String get profileEmailOptional => 'ئیمەیڵ (دڵخوازانە)';
+
+  @override
+  String get profileEmailHint => 'بۆ پسوڵە و چوونەژوورەوە بەکاردێت';
+
+  @override
+  String get profilePhoneVerified => 'ژمارەی پشتڕاستکراوە';
+
+  @override
+  String get profilePhoneNote =>
+      'ژمارەکەت ژمارەی پشتڕاستکراوی چوونەژوورەوەیە و لێرە ناگۆڕدرێت.';
+
+  @override
+  String get profileSecurity => 'ئاسایش';
+
+  @override
+  String get profileChangePassword => 'گۆڕینی وشەی نهێنی';
+
+  @override
+  String get profileSaved => 'پرۆفایل پاشەکەوت کرا.';
+
+  @override
+  String get profileSaveFailed =>
+      'نەتوانرا پرۆفایلەکەت پاشەکەوت بکرێت. دووبارە هەوڵبدەرەوە.';
+
+  @override
+  String get passwordCurrent => 'وشەی نهێنی ئێستا';
+
+  @override
+  String get passwordNew => 'وشەی نهێنی نوێ';
+
+  @override
+  String get passwordConfirm => 'دووپاتکردنەوەی وشەی نهێنی نوێ';
+
+  @override
+  String get passwordMismatch => 'وشە نهێنییەکان یەک ناگرنەوە.';
+
+  @override
+  String get passwordRequired => 'وشەی نهێنی ئێستا بنووسە.';
+
+  @override
+  String get passwordChanged => 'وشەی نهێنی گۆڕدرا.';
+
+  @override
+  String get passwordChangeFailed =>
+      'نەتوانرا وشەی نهێنی بگۆڕدرێت. دووبارە هەوڵبدەرەوە.';
 }

@@ -520,5 +520,22 @@
   },
   "learnLockedTitle": "دورة مميزة",
   "learnLockedBody": "الدورات المدفوعة قادمة قريباً. يمكنك مشاهدة الحلقة الأولى مجاناً الآن.",
-  "learnStartCourse": "ابدأ الدورة"
+  "learnStartCourse": "ابدأ الدورة",
+  "profileTitle": "تعديل الملف الشخصي",
+  "profileDetails": "بياناتك",
+  "profileEmailOptional": "البريد الإلكتروني (اختياري)",
+  "profileEmailHint": "يُستخدم للإيصالات وتسجيل الدخول",
+  "profilePhoneVerified": "هاتف موثّق",
+  "profilePhoneNote": "هاتفك هو رقم الدخول الموثّق ولا يمكن تغييره هنا.",
+  "profileSecurity": "الأمان",
+  "profileChangePassword": "تغيير كلمة المرور",
+  "profileSaved": "تم حفظ الملف الشخصي.",
+  "profileSaveFailed": "تعذّر حفظ ملفك. حاول مجدداً.",
+  "passwordCurrent": "كلمة المرور الحالية",
+  "passwordNew": "كلمة المرور الجديدة",
+  "passwordConfirm": "تأكيد كلمة المرور الجديدة",
+  "passwordMismatch": "كلمتا المرور غير متطابقتين.",
+  "passwordRequired": "أدخل كلمة المرور الحالية.",
+  "passwordChanged": "تم تغيير كلمة المرور.",
+  "passwordChangeFailed": "تعذّر تغيير كلمة المرور. حاول مجدداً."
 }

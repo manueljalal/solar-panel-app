@@ -601,5 +601,22 @@
   },
   "learnLockedTitle": "Premium course",
   "learnLockedBody": "Paid courses are coming soon. You can watch the first episode for free now.",
-  "learnStartCourse": "Start course"
+  "learnStartCourse": "Start course",
+  "profileTitle": "Edit profile",
+  "profileDetails": "Your details",
+  "profileEmailOptional": "Email (optional)",
+  "profileEmailHint": "Used for receipts and to sign in",
+  "profilePhoneVerified": "Verified phone",
+  "profilePhoneNote": "Your phone is your verified sign-in number and can't be changed here.",
+  "profileSecurity": "Security",
+  "profileChangePassword": "Change password",
+  "profileSaved": "Profile saved.",
+  "profileSaveFailed": "Couldn't save your profile. Try again.",
+  "passwordCurrent": "Current password",
+  "passwordNew": "New password",
+  "passwordConfirm": "Confirm new password",
+  "passwordMismatch": "Passwords don't match.",
+  "passwordRequired": "Enter your current password.",
+  "passwordChanged": "Password changed.",
+  "passwordChangeFailed": "Couldn't change your password. Try again."
 }

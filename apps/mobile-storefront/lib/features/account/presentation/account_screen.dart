@@ -22,6 +22,7 @@ import '../../orders/presentation/orders_screen.dart';
 import '../../vendor/presentation/vendor_apply_screen.dart';
 import '../../vendor/presentation/vendor_dashboard_screen.dart';
 import '../data/profile_repository.dart';
+import 'edit_profile_screen.dart';
 import 'sign_in_screen.dart';
 import 'sign_up_screen.dart';
 
@@ -123,36 +124,13 @@ class _AccountScreenState extends State<AccountScreen> {
     if (picked != null && picked.isNotEmpty) await CityController.instance.set(picked);
   }
 
-  Future<void> _editProfile(AppLocalizations l10n) async {
-    final controller = TextEditingController(text: _profile?.name ?? '');
-    final name = await showDialog<String>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.accountEditProfile),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          maxLength: 80,
-          decoration: InputDecoration(labelText: l10n.accountYourName),
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.orderKeep)),
-          TextButton(onPressed: () => Navigator.of(ctx).pop(controller.text.trim()), child: Text(l10n.accountSave)),
-        ],
-      ),
+  Future<void> _editProfile() async {
+    final profile = _profile;
+    if (profile == null) return;
+    final saved = await Navigator.of(context).push<bool>(
+      MaterialPageRoute(builder: (_) => EditProfileScreen(profile: profile, repository: _profiles)),
     );
-    controller.dispose();
-    if (name == null || name.isEmpty || name == _profile?.name || !mounted) return;
-    final messenger = ScaffoldMessenger.of(context);
-    try {
-      await _profiles.updateName(name);
-      messenger.showSnackBar(SnackBar(content: Text(l10n.accountSaved)));
-      _refresh();
-    } on FirebaseFunctionsException catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text(friendlyFunctionError(e, l10n.orderActionFailed))));
-    } catch (_) {
-      messenger.showSnackBar(SnackBar(content: Text(l10n.orderActionFailed)));
-    }
+    if (saved == true) _refresh();
   }
 
   void _showAbout(AppLocalizations l10n) {
@@ -388,7 +366,7 @@ class _AccountScreenState extends State<AccountScreen> {
               ],
             ),
           ),
-          TextButton(onPressed: () => _editProfile(l10n), child: Text(l10n.accountEditProfile)),
+          TextButton(onPressed: _profile == null ? null : _editProfile, child: Text(l10n.accountEditProfile)),
         ],
       ),
     );
