@@ -11,7 +11,9 @@ import { cleanDocId, cleanLocalized, type LocalizedText } from "../shared/valida
 /// written only through these super_admin callables. The video itself is
 /// uploaded by the admin browser directly to Storage (too large for a
 /// callable payload) and then verified + published here.
-const MAX_ITEMS = 50;
+/// Each item is a video "episode"; it may belong to a course (courses/{id})
+/// with an episode number, or stand alone (courseId null) as a quick video.
+const MAX_ITEMS = 300;
 
 interface LearnInput {
   title: LocalizedText;
@@ -22,6 +24,27 @@ interface LearnInput {
   thumbnailUrl?: string | null;
   /** Video length in seconds, read by the admin browser. */
   durationSec?: number | null;
+  /** Course this episode belongs to; null/"" = a standalone video. */
+  courseId?: string | null;
+  /** 1-based position in its course. */
+  episodeNumber?: number | null;
+}
+
+async function cleanCourseId(value: unknown): Promise<string | null> {
+  if (value === undefined || value === null || value === "") return null;
+  const id = cleanDocId(value, "courseId");
+  if (!(await db.collection("courses").doc(id).get()).exists) {
+    throw new HttpsError("invalid-argument", "That course doesn't exist.");
+  }
+  return id;
+}
+
+function cleanEpisodeNumber(value: unknown): number | null {
+  if (value === undefined || value === null) return null;
+  if (typeof value !== "number" || !Number.isInteger(value) || value < 1 || value > 999) {
+    throw new HttpsError("invalid-argument", "Episode number must be 1–999.");
+  }
+  return value;
 }
 
 function cleanThumbnail(value: unknown): string | null {
@@ -48,6 +71,8 @@ export const createLearnItem = onCall<LearnInput>({ region: "us-central1", memor
   assertVideoPath(videoPath);
   const thumbnailUrl = cleanThumbnail(request.data?.thumbnailUrl);
   const durationSec = cleanDuration(request.data?.durationSec);
+  const courseId = await cleanCourseId(request.data?.courseId);
+  const episodeNumber = cleanEpisodeNumber(request.data?.episodeNumber);
 
   // Each uploaded file may back exactly one item.
   const taken = await db.collection("learnItems").where("videoPath", "==", videoPath).limit(1).get();
@@ -69,6 +94,8 @@ export const createLearnItem = onCall<LearnInput>({ region: "us-central1", memor
     videoUrl,
     thumbnailUrl,
     durationSec,
+    courseId,
+    episodeNumber,
     createdAt: FieldValue.serverTimestamp(),
     updatedAt: FieldValue.serverTimestamp(),
     createdBy: uid,
@@ -89,6 +116,8 @@ export const updateLearnItem = onCall<Partial<LearnInput> & { learnItemId: strin
     if (request.data.title !== undefined) {
       patch.title = cleanLocalized(request.data.title, "Title", { max: 120 });
     }
+    if (request.data.courseId !== undefined) patch.courseId = await cleanCourseId(request.data.courseId);
+    if (request.data.episodeNumber !== undefined) patch.episodeNumber = cleanEpisodeNumber(request.data.episodeNumber);
     if (request.data.description !== undefined) {
       patch.description = cleanLocalized(request.data.description, "Description", { max: 2000, multiline: true });
     }

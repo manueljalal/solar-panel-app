@@ -569,5 +569,37 @@
   "accountSectionPreferences": "Preferences",
   "accountSectionSupport": "Help",
   "accountCity": "City",
-  "accountNotSet": "Not set"
+  "accountNotSet": "Not set",
+  "learnCourses": "Courses",
+  "learnQuickVideos": "Quick videos",
+  "learnEpisodes": "{count, plural, one {1 episode} other {{count} episodes}}",
+  "@learnEpisodes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "learnMinutes": "{count} min",
+  "@learnMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "learnFree": "Free",
+  "learnPremium": "Premium",
+  "learnFreePreview": "Free preview",
+  "learnEpisodeN": "Episode {number}",
+  "@learnEpisodeN": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "learnLockedTitle": "Premium course",
+  "learnLockedBody": "Paid courses are coming soon. You can watch the first episode for free now.",
+  "learnStartCourse": "Start course"
 }

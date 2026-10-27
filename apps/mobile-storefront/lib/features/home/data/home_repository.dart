@@ -54,7 +54,7 @@ class HomeRepository {
   /// Promo carousel slides, oldest first (the order the admin added them).
   /// The admin tool caps this at 5; the limit here is a second guard.
   Future<List<HomeBanner>> fetchBanners() async {
-    final snapshot = await _db.collection('banners').limit(5).get();
+    final snapshot = await _db.collection('banners').limit(20).get();
     final docs = snapshot.docs.toList()
       ..sort((a, b) {
         final ta = a.data()['createdAt'];
@@ -64,7 +64,7 @@ class HomeRepository {
       });
     return docs
         .map((d) => HomeBanner.fromFirestore(d.id, d.data()))
-        .where((b) => b.imageUrl.isNotEmpty)
+        .where((b) => b.imageUrl.isNotEmpty && b.placement == 'home')
         .toList();
   }
 

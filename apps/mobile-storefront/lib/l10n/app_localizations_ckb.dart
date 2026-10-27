@@ -1309,4 +1309,50 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get accountNotSet => 'دیاری نەکراوە';
+
+  @override
+  String get learnCourses => 'خولەکان';
+
+  @override
+  String get learnQuickVideos => 'ڤیدیۆی کورت';
+
+  @override
+  String learnEpisodes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ئەڵقە',
+      one: '1 ئەڵقە',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String learnMinutes(int count) {
+    return '$count خولەک';
+  }
+
+  @override
+  String get learnFree => 'بێبەرامبەر';
+
+  @override
+  String get learnPremium => 'پریمیۆم';
+
+  @override
+  String get learnFreePreview => 'پێشبینینی بێبەرامبەر';
+
+  @override
+  String learnEpisodeN(int number) {
+    return 'ئەڵقەی $number';
+  }
+
+  @override
+  String get learnLockedTitle => 'خولی پریمیۆم';
+
+  @override
+  String get learnLockedBody =>
+      'خولە پارەدارەکان بەم زووانە دێن. ئێستا دەتوانیت ئەڵقەی یەکەم بێبەرامبەر ببینیت.';
+
+  @override
+  String get learnStartCourse => 'دەستپێکردنی خول';
 }

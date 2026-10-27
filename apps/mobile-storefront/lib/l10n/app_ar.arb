@@ -488,5 +488,37 @@
   "accountSectionPreferences": "التفضيلات",
   "accountSectionSupport": "المساعدة",
   "accountCity": "المدينة",
-  "accountNotSet": "غير محدد"
+  "accountNotSet": "غير محدد",
+  "learnCourses": "الدورات",
+  "learnQuickVideos": "فيديوهات قصيرة",
+  "learnEpisodes": "{count, plural, one {حلقة واحدة} other {{count} حلقات}}",
+  "@learnEpisodes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "learnMinutes": "{count} دقيقة",
+  "@learnMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "learnFree": "مجاني",
+  "learnPremium": "مميز",
+  "learnFreePreview": "معاينة مجانية",
+  "learnEpisodeN": "الحلقة {number}",
+  "@learnEpisodeN": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "learnLockedTitle": "دورة مميزة",
+  "learnLockedBody": "الدورات المدفوعة قادمة قريباً. يمكنك مشاهدة الحلقة الأولى مجاناً الآن.",
+  "learnStartCourse": "ابدأ الدورة"
 }

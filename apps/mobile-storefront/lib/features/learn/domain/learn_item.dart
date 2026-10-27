@@ -2,7 +2,16 @@
 /// managed by the super admin: a title and description in Kurdish, Arabic
 /// and English, plus an MP4 video.
 class LearnItem {
-  const LearnItem({required this.id, required this.titles, required this.descriptions, required this.videoUrl, this.thumbnailUrl, this.durationSec});
+  const LearnItem({
+    required this.id,
+    required this.titles,
+    required this.descriptions,
+    required this.videoUrl,
+    this.thumbnailUrl,
+    this.durationSec,
+    this.courseId,
+    this.episodeNumber,
+  });
 
   factory LearnItem.fromFirestore(String id, Map<String, dynamic> data) {
     return LearnItem(
@@ -12,6 +21,8 @@ class LearnItem {
       videoUrl: data['videoUrl'] as String? ?? '',
       thumbnailUrl: data['thumbnailUrl'] as String?,
       durationSec: (data['durationSec'] as num?)?.toInt(),
+      courseId: data['courseId'] as String?,
+      episodeNumber: (data['episodeNumber'] as num?)?.toInt(),
     );
   }
 
@@ -21,6 +32,11 @@ class LearnItem {
   final String videoUrl;
   final String? thumbnailUrl;
   final int? durationSec;
+
+  /// The course this video is an episode of (null = standalone video) and
+  /// its 1-based position in that course.
+  final String? courseId;
+  final int? episodeNumber;
 
   /// "4:32" / "1:02:09" — null when the length isn't known.
   String? get durationLabel {

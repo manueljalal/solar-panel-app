@@ -8,6 +8,7 @@ class HomeBanner {
     required this.imageUrl,
     required this.titles,
     this.overlay,
+    this.placement = 'home',
   });
 
   factory HomeBanner.fromFirestore(String id, Map<String, dynamic> data) {
@@ -16,6 +17,7 @@ class HomeBanner {
       id: id,
       imageUrl: data['imageUrl'] as String? ?? '',
       overlay: _parseHex(data['overlayColor']),
+      placement: data['placement'] as String? ?? 'home',
       titles: {
         if (raw is Map)
           for (final k in const ['ku', 'ar', 'en'])
@@ -25,6 +27,10 @@ class HomeBanner {
   }
 
   final String id;
+
+  /// 'home' (Home carousel; also banners saved before this field existed)
+  /// or 'learn' (Learn tab).
+  final String placement;
 
   /// Admin-chosen shade behind the headline; null = no overlay.
   final Color? overlay;

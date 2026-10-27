@@ -488,5 +488,37 @@
   "accountSectionPreferences": "هەڵبژاردەکان",
   "accountSectionSupport": "یارمەتی",
   "accountCity": "شار",
-  "accountNotSet": "دیاری نەکراوە"
+  "accountNotSet": "دیاری نەکراوە",
+  "learnCourses": "خولەکان",
+  "learnQuickVideos": "ڤیدیۆی کورت",
+  "learnEpisodes": "{count, plural, one {1 ئەڵقە} other {{count} ئەڵقە}}",
+  "@learnEpisodes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "learnMinutes": "{count} خولەک",
+  "@learnMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "learnFree": "بێبەرامبەر",
+  "learnPremium": "پریمیۆم",
+  "learnFreePreview": "پێشبینینی بێبەرامبەر",
+  "learnEpisodeN": "ئەڵقەی {number}",
+  "@learnEpisodeN": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "learnLockedTitle": "خولی پریمیۆم",
+  "learnLockedBody": "خولە پارەدارەکان بەم زووانە دێن. ئێستا دەتوانیت ئەڵقەی یەکەم بێبەرامبەر ببینیت.",
+  "learnStartCourse": "دەستپێکردنی خول"
 }

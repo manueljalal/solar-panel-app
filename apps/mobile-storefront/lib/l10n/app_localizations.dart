@@ -2451,6 +2451,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not set'**
   String get accountNotSet;
+
+  /// No description provided for @learnCourses.
+  ///
+  /// In en, this message translates to:
+  /// **'Courses'**
+  String get learnCourses;
+
+  /// No description provided for @learnQuickVideos.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick videos'**
+  String get learnQuickVideos;
+
+  /// No description provided for @learnEpisodes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one {1 episode} other {{count} episodes}}'**
+  String learnEpisodes(int count);
+
+  /// No description provided for @learnMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} min'**
+  String learnMinutes(int count);
+
+  /// No description provided for @learnFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get learnFree;
+
+  /// No description provided for @learnPremium.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium'**
+  String get learnPremium;
+
+  /// No description provided for @learnFreePreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Free preview'**
+  String get learnFreePreview;
+
+  /// No description provided for @learnEpisodeN.
+  ///
+  /// In en, this message translates to:
+  /// **'Episode {number}'**
+  String learnEpisodeN(int number);
+
+  /// No description provided for @learnLockedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium course'**
+  String get learnLockedTitle;
+
+  /// No description provided for @learnLockedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid courses are coming soon. You can watch the first episode for free now.'**
+  String get learnLockedBody;
+
+  /// No description provided for @learnStartCourse.
+  ///
+  /// In en, this message translates to:
+  /// **'Start course'**
+  String get learnStartCourse;
 }
 
 class _AppLocalizationsDelegate

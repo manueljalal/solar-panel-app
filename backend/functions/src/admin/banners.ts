@@ -3,14 +3,16 @@ import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../shared/firebase";
 import { requireRole } from "../shared/auth/require_role";
 import { isOwnedImageUrl } from "../shared/images/store_image";
-import { cleanDocId, cleanLocalized, type LocalizedText } from "../shared/validation/sanitize";
+import { cleanDocId, cleanEnum, cleanLocalized, type LocalizedText } from "../shared/validation/sanitize";
 
-/// banners/{id} -> { imageUrl, title?: { ku, ar, en }, createdAt }. The
-/// mobile home carousel reads this collection directly (public read in
-/// Firestore rules); only a super_admin can change it, through these
-/// callables. At most MAX_BANNERS exist at any time — enforced here, inside
+/// banners/{id} -> { imageUrl, title?: { ku, ar, en }, placement, createdAt }.
+/// placement is "home" (the Home carousel; also any banner saved before the
+/// field existed) or "learn" (the Learn tab). The app reads this collection
+/// directly (public read); only a super_admin can change it, through these
+/// callables. At most MAX_BANNERS exist per placement — enforced here, inside
 /// a transaction, not just in the admin UI.
 const MAX_BANNERS = 5;
+const PLACEMENTS = ["home", "learn"] as const;
 
 /// Optional overlay shade behind the headline, as #RRGGBB. null = none.
 function cleanOverlay(value: unknown): string | null {
@@ -27,6 +29,8 @@ interface BannerInput {
   imageUrl: string;
   /** Optional headline shown over the image — all three languages or none. */
   title?: LocalizedText | null;
+  /** Where it shows: "home" (default) or "learn". */
+  placement?: (typeof PLACEMENTS)[number];
 }
 
 export const createBanner = onCall<BannerInput>({ region: "us-central1" }, async (request) => {
@@ -37,19 +41,23 @@ export const createBanner = onCall<BannerInput>({ region: "us-central1" }, async
   }
   const title = cleanLocalized(request.data?.title, "Banner title", { max: 80, optional: true });
   const overlayColor = cleanOverlay(request.data?.overlayColor);
+  const placement = cleanEnum(request.data?.placement ?? "home", PLACEMENTS, "placement");
 
   const ref = db.collection("banners").doc();
   await db.runTransaction(async (tx) => {
     // The transaction re-runs if another banner is created concurrently, so
     // two simultaneous requests can't both slip past the limit.
-    const existing = await tx.get(db.collection("banners").limit(MAX_BANNERS));
-    if (existing.size >= MAX_BANNERS) {
-      throw new HttpsError("failed-precondition", `You can have at most ${MAX_BANNERS} banners. Delete one first.`);
+    // Old banners have no placement field and count as "home".
+    const all = await tx.get(db.collection("banners"));
+    const same = all.docs.filter((d) => (d.data().placement ?? "home") === placement).length;
+    if (same >= MAX_BANNERS) {
+      throw new HttpsError("failed-precondition", `You can have at most ${MAX_BANNERS} ${placement} banners. Delete one first.`);
     }
     tx.set(ref, {
       imageUrl,
       title,
       overlayColor,
+      placement,
       createdAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),
       createdBy: uid,
@@ -74,6 +82,9 @@ export const updateBanner = onCall<BannerInput & { bannerId: string }>({ region:
     patch.title = cleanLocalized(request.data.title, "Banner title", { max: 80, optional: true });
   }
 
+  if (request.data?.placement !== undefined) {
+    patch.placement = cleanEnum(request.data.placement, PLACEMENTS, "placement");
+  }
   if (request.data && "overlayColor" in request.data) {
     patch.overlayColor = cleanOverlay(request.data.overlayColor);
   }

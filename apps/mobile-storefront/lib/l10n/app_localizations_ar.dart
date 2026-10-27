@@ -1294,4 +1294,50 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accountNotSet => 'غير محدد';
+
+  @override
+  String get learnCourses => 'الدورات';
+
+  @override
+  String get learnQuickVideos => 'فيديوهات قصيرة';
+
+  @override
+  String learnEpisodes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count حلقات',
+      one: 'حلقة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String learnMinutes(int count) {
+    return '$count دقيقة';
+  }
+
+  @override
+  String get learnFree => 'مجاني';
+
+  @override
+  String get learnPremium => 'مميز';
+
+  @override
+  String get learnFreePreview => 'معاينة مجانية';
+
+  @override
+  String learnEpisodeN(int number) {
+    return 'الحلقة $number';
+  }
+
+  @override
+  String get learnLockedTitle => 'دورة مميزة';
+
+  @override
+  String get learnLockedBody =>
+      'الدورات المدفوعة قادمة قريباً. يمكنك مشاهدة الحلقة الأولى مجاناً الآن.';
+
+  @override
+  String get learnStartCourse => 'ابدأ الدورة';
 }

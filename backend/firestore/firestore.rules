@@ -115,6 +115,14 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // courses/{id} — Learn courses (episodes are learnItems with courseId).
+    // Public read; written only through admin-createCourse/updateCourse/
+    // deleteCourse.
+    match /courses/{courseId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
     // config/support — call-center phone/WhatsApp/hours shown in the app.
     // Public read; written only by admin-updateSupportConfig.
     match /config/{docId} {

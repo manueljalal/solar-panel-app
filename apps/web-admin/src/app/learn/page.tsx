@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { httpsCallable } from "firebase/functions";
 import { collection, onSnapshot } from "firebase/firestore";
 import { ref as storageRef, uploadBytesResumable, deleteObject, type UploadTask } from "firebase/storage";
@@ -9,6 +9,7 @@ import { AuthedPage } from "@/components/authed_page";
 import { uploadImage } from "@/lib/images";
 import { ImageField } from "@/components/image_field";
 import { readVideoMeta } from "@/lib/video_meta";
+import { CourseManager, type CourseRow } from "@/components/course_manager";
 
 interface Localized {
   ku: string;
@@ -22,6 +23,8 @@ interface LearnItem {
   description: Localized;
   videoUrl: string;
   thumbnailUrl: string | null;
+  courseId: string | null;
+  episodeNumber: number | null;
   createdMs: number;
 }
 
@@ -43,6 +46,8 @@ type Payload = {
   videoPath: string;
   thumbnailUrl?: string | null;
   durationSec?: number | null;
+  courseId?: string | null;
+  episodeNumber?: number | null;
 };
 const createLearnItem = httpsCallable<Payload, { learnItemId: string }>(functions, "admin-createLearnItem");
 const updateLearnItem = httpsCallable<Partial<Payload> & { learnItemId: string }, { ok: true }>(
@@ -102,6 +107,10 @@ export default function LearnPage() {
   const [busyId, setBusyId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [fileKey, setFileKey] = useState(0);
+  const [courses, setCourses] = useState<CourseRow[]>([]);
+  const [courseId, setCourseId] = useState("");
+  const [episode, setEpisode] = useState("");
+  const onCourses = useCallback((c: CourseRow[]) => setCourses(c), []);
   const task = useRef<UploadTask | null>(null);
 
   useEffect(() => {
@@ -117,6 +126,8 @@ export default function LearnPage() {
             description: l(data.description),
             videoUrl: (data.videoUrl as string) ?? "",
             thumbnailUrl: (data.thumbnailUrl as string | null) ?? null,
+            courseId: (data.courseId as string | null) ?? null,
+            episodeNumber: (data.episodeNumber as number | null) ?? null,
             createdMs: data.createdAt?.toMillis?.() ?? 0,
           };
         });
@@ -135,6 +146,8 @@ export default function LearnPage() {
     setVideo(null);
     setCover(item?.thumbnailUrl ?? null);
     setCoverTouched(false);
+    setCourseId(item?.courseId ?? "");
+    setEpisode(item?.episodeNumber ? String(item.episodeNumber) : "");
     setFileKey((k) => k + 1);
     setError(null);
   }
@@ -187,6 +200,9 @@ export default function LearnPage() {
     const problem = validateLocalized(t, "title") ?? validateLocalized(d, "description");
     if (problem) return setError(problem);
     if (!editing && !video) return setError("Add a video (MP4, up to 50 MB).");
+    const episodeNumber = courseId ? Number.parseInt(episode, 10) || null : null;
+    if (courseId && !episodeNumber) return setError("Give the episode a number (1, 2, 3…).");
+    const placement = { courseId: courseId || null, episodeNumber };
 
     setSaving(true);
     setError(null);
@@ -213,11 +229,12 @@ export default function LearnPage() {
           learnItemId: editing.id,
           title: t,
           description: d,
+          ...placement,
           // Cover is sent when it changed, or when a new video replaces the old one.
           ...(uploadedPath ? { videoPath: uploadedPath, thumbnailUrl, durationSec } : coverTouched ? { thumbnailUrl } : {}),
         });
       } else {
-        await createLearnItem({ title: t, description: d, videoPath: uploadedPath!, thumbnailUrl, durationSec });
+        await createLearnItem({ title: t, description: d, videoPath: uploadedPath!, thumbnailUrl, durationSec, ...placement });
       }
       closeForm();
     } catch (err) {
@@ -242,22 +259,73 @@ export default function LearnPage() {
     }
   }
 
+  const episodeCounts = useMemo(() => {
+    const c: Record<string, number> = {};
+    for (const i of items ?? []) if (i.courseId) c[i.courseId] = (c[i.courseId] ?? 0) + 1;
+    return c;
+  }, [items]);
+  const courseName = useMemo(() => Object.fromEntries(courses.map((c) => [c.id, c.title.en])), [courses]);
+  // Grouped by course (in course order), episodes in number order, then quick videos.
+  const sortedItems = useMemo(() => {
+    const rank = Object.fromEntries(courses.map((c, i) => [c.id, i]));
+    return [...(items ?? [])].sort((a, b) => {
+      const ra = a.courseId ? rank[a.courseId] ?? 9999 : 10_000;
+      const rb = b.courseId ? rank[b.courseId] ?? 9999 : 10_000;
+      if (ra !== rb) return ra - rb;
+      if (a.courseId) return (a.episodeNumber ?? 999) - (b.episodeNumber ?? 999);
+      return b.createdMs - a.createdMs;
+    });
+  }, [items, courses]);
+
   return (
     <AuthedPage>
       <div className="content">
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-          <h1 style={{ fontSize: 20, marginBottom: 4 }}>Learn</h1>
-          <button className="btn btn-primary" disabled={formOpen} onClick={() => openForm()}>
-            Add learn item
+          <h1 className="page-title">Learn</h1>
+        </div>
+        <p className="muted" style={{ marginBottom: 24 }}>
+          The app&apos;s Learn tab: courses made of episodes, plus standalone quick videos. Banners for the Learn tab are
+          managed under Banners → Learn screen.
+        </p>
+
+        <CourseManager episodeCounts={episodeCounts} onCourses={onCourses} />
+
+        <div className="section-title">
+          Videos
+          <button className="btn btn-primary btn-sm" disabled={formOpen} onClick={() => openForm()}>
+            Add video
           </button>
         </div>
-        <p className="muted" style={{ marginBottom: 20 }}>
-          Videos shown in the mobile app&apos;s Learn tab, newest first. Each has a title and description in Kurdish, Arabic and English.
-        </p>
 
         {formOpen && (
           <form className="card stack" onSubmit={onSubmit} style={{ marginBottom: 24 }}>
-            <div style={{ fontWeight: 600 }}>{editing ? "Edit learn item" : "Add learn item"}</div>
+            <div style={{ fontWeight: 600 }}>{editing ? "Edit video" : "Add video"}</div>
+            <div className="form-grid">
+              <div className="field">
+                <label htmlFor="learn-course">Course</label>
+                <select id="learn-course" value={courseId} onChange={(e) => setCourseId(e.target.value)}>
+                  <option value="">None — standalone quick video</option>
+                  {courses.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.title.en}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="field">
+                <label htmlFor="learn-episode">Episode number</label>
+                <input
+                  id="learn-episode"
+                  type="number"
+                  min={1}
+                  max={999}
+                  disabled={!courseId}
+                  placeholder={courseId ? "1" : "—"}
+                  value={episode}
+                  onChange={(e) => setEpisode(e.target.value)}
+                />
+              </div>
+            </div>
 
             <div style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-600)" }}>Title</div>
             {LANGS.map((l) => (
@@ -324,7 +392,7 @@ export default function LearnPage() {
             {error && <p className="error-text">{error}</p>}
             <div style={{ display: "flex", gap: 8 }}>
               <button className="btn btn-primary" type="submit" disabled={saving}>
-                {saving ? (progress !== null && progress < 100 ? `Uploading ${progress}%…` : "Saving…") : editing ? "Save changes" : "Add learn item"}
+                {saving ? (progress !== null && progress < 100 ? `Uploading ${progress}%…` : "Saving…") : editing ? "Save changes" : "Add video"}
               </button>
               <button className="btn btn-ghost" type="button" onClick={closeForm}>
                 Cancel
@@ -340,10 +408,10 @@ export default function LearnPage() {
         ) : items === null ? (
           <p className="muted">Loading…</p>
         ) : items.length === 0 ? (
-          <div className="empty-state">No learn items yet — the mobile Learn tab stays empty until you add one.</div>
+          <div className="empty-state">No videos yet — the mobile Learn tab stays empty until you add one.</div>
         ) : (
           <div>
-            {items.map((item) => (
+            {sortedItems.map((item) => (
               <div className="app-row" key={item.id}>
                 {item.thumbnailUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -363,6 +431,11 @@ export default function LearnPage() {
                 )}
                 <div style={{ flex: 1 }}>
                   <div className="app-row-title">{item.title.en}</div>
+                  <div className="app-row-meta">
+                    {item.courseId
+                      ? `${courseName[item.courseId] ?? "Unknown course"} · Episode ${item.episodeNumber ?? "?"}`
+                      : "Quick video (no course)"}
+                  </div>
                   <div className="app-row-meta" dir="rtl" style={{ textAlign: "left" }}>
                     {item.title.ku} · {item.title.ar}
                   </div>

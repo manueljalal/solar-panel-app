@@ -18,8 +18,13 @@ interface Banner {
   imageUrl: string;
   title: Title | null;
   overlayColor: string | null;
+  /** Where it shows in the app; banners saved before this existed are "home". */
+  placement: Placement;
   createdMs: number;
 }
+
+type Placement = "home" | "learn";
+const PLACEMENT_LABEL: Record<Placement, string> = { home: "Home", learn: "Learn" };
 
 const MAX_BANNERS = 5;
 const BANNER_ASPECT = 2; // width / height — matches the mobile carousel
@@ -28,7 +33,10 @@ const ARABIC_SCRIPT = /\p{Script=Arabic}/u;
 const LATIN = /\p{Script=Latin}/u;
 const EMPTY: Title = { ku: "", ar: "", en: "" };
 
-const createBanner = httpsCallable<{ imageUrl: string; title: Title | null; overlayColor: string | null }, { bannerId: string }>(
+const createBanner = httpsCallable<
+  { imageUrl: string; title: Title | null; overlayColor: string | null; placement: Placement },
+  { bannerId: string }
+>(
   functions,
   "admin-createBanner",
 );
@@ -64,6 +72,7 @@ export default function BannersPage() {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [title, setTitle] = useState<Title>(EMPTY);
   const [overlay, setOverlay] = useState<string | null>(null); // null = no overlay
+  const [placement, setPlacement] = useState<Placement>("home"); // which carousel is being managed
   const [formKey, setFormKey] = useState(0);
   const [saving, setSaving] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
@@ -80,6 +89,7 @@ export default function BannersPage() {
             id: d.id,
             imageUrl: (data.imageUrl as string) ?? "",
             overlayColor: typeof data.overlayColor === "string" ? data.overlayColor : null,
+            placement: (data.placement === "learn" ? "learn" : "home") as Placement,
             title: t ? { ku: t.ku ?? "", ar: t.ar ?? "", en: t.en ?? "" } : null,
             createdMs: data.createdAt?.toMillis?.() ?? 0,
           };
@@ -91,7 +101,8 @@ export default function BannersPage() {
     );
   }, []);
 
-  const full = (banners?.length ?? 0) >= MAX_BANNERS;
+  const shown = (banners ?? []).filter((b) => b.placement === placement);
+  const full = shown.length >= MAX_BANNERS;
 
   function openForm(banner?: Banner) {
     setAdding(true);
@@ -134,7 +145,7 @@ export default function BannersPage() {
     try {
       const titleOrNull = filled === 3 ? t : null;
       if (editingId) await updateBanner({ bannerId: editingId, imageUrl, title: titleOrNull, overlayColor: overlay });
-      else await createBanner({ imageUrl, title: titleOrNull, overlayColor: overlay });
+      else await createBanner({ imageUrl, title: titleOrNull, overlayColor: overlay, placement });
       closeForm();
     } catch (err) {
       setError(friendlyError(err));
@@ -165,15 +176,30 @@ export default function BannersPage() {
             Add banner
           </button>
         </div>
-        <p className="muted" style={{ marginBottom: 20 }}>
-          These slides appear in the mobile app&apos;s home carousel, in the order they were added.{" "}
-          {banners ? `${banners.length} of ${MAX_BANNERS} used.` : ""}
+        <p className="muted" style={{ marginBottom: 16 }}>
+          Slides for the app&apos;s carousels, in the order they were added. Pick which screen you&apos;re managing.{" "}
+          {banners ? `${shown.length} of ${MAX_BANNERS} ${PLACEMENT_LABEL[placement]} banners used.` : ""}
           {full ? " Delete one to add another." : ""}
         </p>
+        <div className="tabs" style={{ marginBottom: 20 }}>
+          {(["home", "learn"] as const).map((p) => (
+            <button
+              key={p}
+              className={`tab ${placement === p ? "active" : ""}`}
+              disabled={adding}
+              onClick={() => setPlacement(p)}
+            >
+              {PLACEMENT_LABEL[p]} screen
+              <span className="tab-count">{(banners ?? []).filter((b) => b.placement === p).length}</span>
+            </button>
+          ))}
+        </div>
 
         {adding && (
           <form className="card stack" onSubmit={onSubmit} style={{ marginBottom: 24 }}>
-            <div style={{ fontWeight: 600 }}>{editingId ? "Edit banner" : "Add banner"}</div>
+            <div style={{ fontWeight: 600 }}>
+              {editingId ? "Edit banner" : "Add banner"} · {PLACEMENT_LABEL[placement]} screen
+            </div>
             <ImageField
               key={formKey}
               id="banner-image"
@@ -248,11 +274,13 @@ export default function BannersPage() {
           <p className="error-text">{loadError}</p>
         ) : banners === null ? (
           <p className="muted">Loading…</p>
-        ) : banners.length === 0 ? (
-          <div className="empty-state">No banners yet — the mobile home screen shows no carousel until you add one.</div>
+        ) : shown.length === 0 ? (
+          <div className="empty-state">
+            No {PLACEMENT_LABEL[placement]} banners yet — that screen shows no carousel until you add one.
+          </div>
         ) : (
           <div>
-            {banners.map((b, i) => (
+            {shown.map((b, i) => (
               <div className="app-row" key={b.id}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
