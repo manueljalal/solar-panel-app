@@ -1409,4 +1409,27 @@ class AppLocalizationsCkb extends AppLocalizations {
   @override
   String get passwordChangeFailed =>
       'نەتوانرا وشەی نهێنی بگۆڕدرێت. دووبارە هەوڵبدەرەوە.';
+
+  @override
+  String get profilePersonalInfo => 'زانیاریی کەسی';
+
+  @override
+  String get profileLoginSecurity => 'چوونەژوورەوە و ئاسایش';
+
+  @override
+  String get profileAdd => 'زیادکردن';
+
+  @override
+  String get profileNameHelp => 'فرۆشیاران و تیمەکەمان بەم ناوە بانگت دەکەن.';
+
+  @override
+  String get profileUsernameHelp =>
+      'دەتوانیت بە ناوی بەکارهێنەر بچیتە ژوورەوە. 3–20 پیتی بچووک، ژمارە یان _.';
+
+  @override
+  String get profileEmailHelp =>
+      'دڵخوازانە. بۆ پسوڵە بەکاردێت و دەتوانیت پێی بچیتە ژوورەوە.';
+
+  @override
+  String get profileRemoveEmail => 'لابردنی ئیمەیڵ';
 }

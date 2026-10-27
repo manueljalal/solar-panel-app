@@ -537,5 +537,12 @@
   "passwordMismatch": "وشە نهێنییەکان یەک ناگرنەوە.",
   "passwordRequired": "وشەی نهێنی ئێستا بنووسە.",
   "passwordChanged": "وشەی نهێنی گۆڕدرا.",
-  "passwordChangeFailed": "نەتوانرا وشەی نهێنی بگۆڕدرێت. دووبارە هەوڵبدەرەوە."
+  "passwordChangeFailed": "نەتوانرا وشەی نهێنی بگۆڕدرێت. دووبارە هەوڵبدەرەوە.",
+  "profilePersonalInfo": "زانیاریی کەسی",
+  "profileLoginSecurity": "چوونەژوورەوە و ئاسایش",
+  "profileAdd": "زیادکردن",
+  "profileNameHelp": "فرۆشیاران و تیمەکەمان بەم ناوە بانگت دەکەن.",
+  "profileUsernameHelp": "دەتوانیت بە ناوی بەکارهێنەر بچیتە ژوورەوە. 3–20 پیتی بچووک، ژمارە یان _.",
+  "profileEmailHelp": "دڵخوازانە. بۆ پسوڵە بەکاردێت و دەتوانیت پێی بچیتە ژوورەوە.",
+  "profileRemoveEmail": "لابردنی ئیمەیڵ"
 }

@@ -537,5 +537,12 @@
   "passwordMismatch": "كلمتا المرور غير متطابقتين.",
   "passwordRequired": "أدخل كلمة المرور الحالية.",
   "passwordChanged": "تم تغيير كلمة المرور.",
-  "passwordChangeFailed": "تعذّر تغيير كلمة المرور. حاول مجدداً."
+  "passwordChangeFailed": "تعذّر تغيير كلمة المرور. حاول مجدداً.",
+  "profilePersonalInfo": "المعلومات الشخصية",
+  "profileLoginSecurity": "تسجيل الدخول والأمان",
+  "profileAdd": "إضافة",
+  "profileNameHelp": "هكذا سيخاطبك البائعون وفريقنا.",
+  "profileUsernameHelp": "يمكنك تسجيل الدخول باسم المستخدم. 3–20 حرفاً صغيراً أو رقماً أو شرطة سفلية.",
+  "profileEmailHelp": "اختياري. يُستخدم للإيصالات ويمكنك تسجيل الدخول به.",
+  "profileRemoveEmail": "إزالة البريد"
 }

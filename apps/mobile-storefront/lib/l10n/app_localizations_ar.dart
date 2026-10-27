@@ -1392,4 +1392,27 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get passwordChangeFailed => 'تعذّر تغيير كلمة المرور. حاول مجدداً.';
+
+  @override
+  String get profilePersonalInfo => 'المعلومات الشخصية';
+
+  @override
+  String get profileLoginSecurity => 'تسجيل الدخول والأمان';
+
+  @override
+  String get profileAdd => 'إضافة';
+
+  @override
+  String get profileNameHelp => 'هكذا سيخاطبك البائعون وفريقنا.';
+
+  @override
+  String get profileUsernameHelp =>
+      'يمكنك تسجيل الدخول باسم المستخدم. 3–20 حرفاً صغيراً أو رقماً أو شرطة سفلية.';
+
+  @override
+  String get profileEmailHelp =>
+      'اختياري. يُستخدم للإيصالات ويمكنك تسجيل الدخول به.';
+
+  @override
+  String get profileRemoveEmail => 'إزالة البريد';
 }

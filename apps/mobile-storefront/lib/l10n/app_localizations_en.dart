@@ -1396,4 +1396,28 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get passwordChangeFailed =>
       'Couldn\'t change your password. Try again.';
+
+  @override
+  String get profilePersonalInfo => 'Personal info';
+
+  @override
+  String get profileLoginSecurity => 'Login & security';
+
+  @override
+  String get profileAdd => 'Add';
+
+  @override
+  String get profileNameHelp =>
+      'This is how sellers and our team will address you.';
+
+  @override
+  String get profileUsernameHelp =>
+      'You can sign in with your username. 3–20 lowercase letters, numbers or underscores.';
+
+  @override
+  String get profileEmailHelp =>
+      'Optional. Used for receipts, and you can sign in with it.';
+
+  @override
+  String get profileRemoveEmail => 'Remove email';
 }

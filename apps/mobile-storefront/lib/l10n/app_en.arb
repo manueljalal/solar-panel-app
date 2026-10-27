@@ -618,5 +618,12 @@
   "passwordMismatch": "Passwords don't match.",
   "passwordRequired": "Enter your current password.",
   "passwordChanged": "Password changed.",
-  "passwordChangeFailed": "Couldn't change your password. Try again."
+  "passwordChangeFailed": "Couldn't change your password. Try again.",
+  "profilePersonalInfo": "Personal info",
+  "profileLoginSecurity": "Login & security",
+  "profileAdd": "Add",
+  "profileNameHelp": "This is how sellers and our team will address you.",
+  "profileUsernameHelp": "You can sign in with your username. 3–20 lowercase letters, numbers or underscores.",
+  "profileEmailHelp": "Optional. Used for receipts, and you can sign in with it.",
+  "profileRemoveEmail": "Remove email"
 }

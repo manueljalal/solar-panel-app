@@ -2619,6 +2619,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t change your password. Try again.'**
   String get passwordChangeFailed;
+
+  /// No description provided for @profilePersonalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal info'**
+  String get profilePersonalInfo;
+
+  /// No description provided for @profileLoginSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Login & security'**
+  String get profileLoginSecurity;
+
+  /// No description provided for @profileAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get profileAdd;
+
+  /// No description provided for @profileNameHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'This is how sellers and our team will address you.'**
+  String get profileNameHelp;
+
+  /// No description provided for @profileUsernameHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'You can sign in with your username. 3–20 lowercase letters, numbers or underscores.'**
+  String get profileUsernameHelp;
+
+  /// No description provided for @profileEmailHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. Used for receipts, and you can sign in with it.'**
+  String get profileEmailHelp;
+
+  /// No description provided for @profileRemoveEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove email'**
+  String get profileRemoveEmail;
 }
 
 class _AppLocalizationsDelegate
