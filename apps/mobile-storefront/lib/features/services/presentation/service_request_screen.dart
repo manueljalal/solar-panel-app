@@ -1,6 +1,7 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../core/address/address_book.dart';
 import '../../../core/auth/friendly_function_error.dart';
 import '../../../core/city/city_controller.dart';
 import '../../../core/theme/app_colors.dart';
@@ -40,6 +41,31 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
   bool get _cleaning => widget.type == ServiceType.cleaning;
 
   @override
+  void initState() {
+    super.initState();
+    _prefill();
+  }
+
+  /// Start from the saved address (set at sign-up / last order or booking).
+  Future<void> _prefill() async {
+    final saved = await AddressBook.instance.load();
+    if (saved == null || !mounted || _location != null) return;
+    setState(() {
+      _location = saved.location;
+      if (_address.text.trim().isEmpty) _address.text = saved.line.isNotEmpty ? saved.line : saved.location.address;
+      _cityId ??= _cityFrom(saved.location.address);
+    });
+  }
+
+  String? _cityFrom(String address) {
+    for (final part in address.split(',')) {
+      final c = matchIraqCity(part);
+      if (c != null) return c.id;
+    }
+    return null;
+  }
+
+  @override
   void dispose() {
     _address.dispose();
     _size.dispose();
@@ -55,7 +81,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
     setState(() {
       _location = picked;
       if (_address.text.trim().isEmpty) _address.text = picked.address;
-      _cityId ??= matchIraqCity(picked.address.split(',').first)?.id;
+      _cityId ??= _cityFrom(picked.address);
       _error = null;
     });
   }
@@ -95,6 +121,7 @@ class _ServiceRequestScreenState extends State<ServiceRequestScreen> {
         systemSizeKw: _cleaning ? null : size,
         note: _note.text.trim(),
       );
+      AddressBook.instance.remember(location, _address.text.trim());
       if (!mounted) return;
       Navigator.of(context).pop(true);
     } on FirebaseFunctionsException catch (e) {

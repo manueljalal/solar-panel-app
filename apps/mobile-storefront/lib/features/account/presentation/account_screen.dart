@@ -22,6 +22,8 @@ import '../../orders/presentation/orders_screen.dart';
 import '../../vendor/presentation/vendor_apply_screen.dart';
 import '../../vendor/presentation/vendor_dashboard_screen.dart';
 import '../data/profile_repository.dart';
+import '../../../core/address/address_book.dart';
+import 'delivery_address_screen.dart';
 import 'edit_profile_screen.dart';
 import 'sign_in_screen.dart';
 import 'sign_up_screen.dart';
@@ -96,6 +98,7 @@ class _AccountScreenState extends State<AccountScreen> {
         }
       }
     }
+    if (_isRealAccount) AddressBook.instance.load(refresh: true);
     if (!mounted) return;
     setState(() {
       _claims = claims;
@@ -104,6 +107,8 @@ class _AccountScreenState extends State<AccountScreen> {
     });
   }
 
+  String _short(String s) => s.length > 22 ? '${s.substring(0, 22)}…' : s;
+
   Future<void> _push(Widget screen) async {
     await Navigator.of(context).push(MaterialPageRoute(builder: (_) => screen));
     _refresh();
@@ -111,6 +116,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   Future<void> _signOut() async {
     await _repo.signOut();
+    AddressBook.instance.clear();
     await _repo.ensureSignedIn(); // drop back to a fresh anonymous session
     setState(() {
       _profile = null;
@@ -259,6 +265,16 @@ class _AccountScreenState extends State<AccountScreen> {
             ]),
             _SectionTitle(l10n.accountSectionPreferences),
             _Section(children: [
+              if (isRealAccount)
+                ValueListenableBuilder<SavedAddress?>(
+                  valueListenable: AddressBook.instance,
+                  builder: (context, saved, _) => _Row(
+                    icon: Icons.home_outlined,
+                    label: l10n.addressTitle,
+                    value: saved == null ? l10n.addressNone : _short(saved.line.isNotEmpty ? saved.line : saved.location.address),
+                    onTap: () => _push(const DeliveryAddressScreen()),
+                  ),
+                ),
               ValueListenableBuilder<String?>(
                 valueListenable: CityController.instance,
                 builder: (context, _, _) => _Row(

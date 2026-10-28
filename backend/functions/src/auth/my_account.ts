@@ -26,6 +26,7 @@ export const getMyProfile = onCall({ region: "us-central1" }, async (request) =>
     phone: d.phone ?? "",
     email: d.email ?? "",
     location: d.location ?? null,
+    addressLine: d.addressLine ?? "",
   };
 });
 
@@ -36,6 +37,8 @@ interface UpdateProfileInput {
   /** Optional contact / sign-in email; "" clears it. Must not belong to another account. */
   email?: string;
   location?: { latitude: number; longitude: number; address?: string } | null;
+  /** Street / building / landmark for deliveries, kept with [location]. */
+  addressLine?: string;
 }
 
 /// Edit the caller's own profile. The phone is not editable here — it is
@@ -65,6 +68,8 @@ export const updateMyProfile = onCall<UpdateProfileInput>({ region: "us-central1
       update.email = email;
     }
   }
+
+  if (data.addressLine !== undefined) update.addressLine = cleanText(data.addressLine, "addressLine", { max: 300 });
 
   const loc = data.location;
   if (loc !== undefined) {

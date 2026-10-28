@@ -49,5 +49,7 @@
 	<string>Solary uses your location to pin your business address on the map when you apply as a vendor.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Choose a photo of your company to include with your vendor application.</string>
+	<key>GMSApiKey</key>
+	<string>$(GOOGLE_MAPS_API_KEY)</string>
 </dict>
 </plist>

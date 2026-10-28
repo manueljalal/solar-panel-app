@@ -1432,4 +1432,17 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get profileRemoveEmail => 'لابردنی ئیمەیڵ';
+
+  @override
+  String get addressTitle => 'ناونیشانی گەیاندن';
+
+  @override
+  String get addressNone => 'دیاری نەکراوە';
+
+  @override
+  String get addressHelp =>
+      'بە شێوەی ئۆتۆماتیکی لە کاتی داواکاری و خزمەتگوزاری بەکاردێت. هەموو جارێک دەتوانیت بیگۆڕیت.';
+
+  @override
+  String get addressSaved => 'ناونیشان پاشەکەوت کرا.';
 }

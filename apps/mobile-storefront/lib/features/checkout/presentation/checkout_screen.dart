@@ -2,6 +2,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import '../../../core/address/address_book.dart';
 import '../../../core/auth/friendly_function_error.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -41,6 +42,22 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   bool get _hasAccount => _user != null && !_user!.isAnonymous;
 
   @override
+  void initState() {
+    super.initState();
+    _prefill();
+  }
+
+  /// Start from the saved delivery address (set at sign-up / last order).
+  Future<void> _prefill() async {
+    final saved = await AddressBook.instance.load();
+    if (saved == null || !mounted || _location != null) return;
+    setState(() {
+      _location = saved.location;
+      if (_address.text.trim().isEmpty) _address.text = saved.line.isNotEmpty ? saved.line : saved.location.address;
+    });
+  }
+
+  @override
   void dispose() {
     _address.dispose();
     _note.dispose();
@@ -78,6 +95,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         note: _note.text.trim(),
       );
       cart.clear();
+      // Next time this is the default address.
+      AddressBook.instance.remember(location, _address.text.trim());
       if (!mounted) return;
       await Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const _OrderPlacedScreen()));
     } on FirebaseFunctionsException catch (e) {
@@ -126,7 +145,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             label: l10n.accountSignIn,
             onPressed: () async {
               await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SignInScreen()));
-              if (mounted) setState(() {});
+              if (!mounted) return;
+              setState(() {});
+              _prefill();
             },
           ),
         ],

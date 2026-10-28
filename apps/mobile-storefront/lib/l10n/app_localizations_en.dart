@@ -1420,4 +1420,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileRemoveEmail => 'Remove email';
+
+  @override
+  String get addressTitle => 'Delivery address';
+
+  @override
+  String get addressNone => 'Not set';
+
+  @override
+  String get addressHelp =>
+      'Used automatically at checkout and when booking a service. You can still change it each time.';
+
+  @override
+  String get addressSaved => 'Address saved.';
 }

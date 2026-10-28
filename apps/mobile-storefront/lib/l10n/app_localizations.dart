@@ -2661,6 +2661,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove email'**
   String get profileRemoveEmail;
+
+  /// No description provided for @addressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery address'**
+  String get addressTitle;
+
+  /// No description provided for @addressNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get addressNone;
+
+  /// No description provided for @addressHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Used automatically at checkout and when booking a service. You can still change it each time.'**
+  String get addressHelp;
+
+  /// No description provided for @addressSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Address saved.'**
+  String get addressSaved;
 }
 
 class _AppLocalizationsDelegate

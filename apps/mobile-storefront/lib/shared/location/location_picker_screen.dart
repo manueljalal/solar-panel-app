@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as gmaps;
 import 'package:latlong2/latlong.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/theme/app_typography.dart';
 import '../../l10n/app_localizations.dart';
+import 'maps_config.dart';
 import 'picked_location.dart';
 
 // Erbil, Iraq — reasonable default center when no GPS fix / no initial
@@ -14,13 +16,15 @@ import 'picked_location.dart';
 // assumption (see HomeAppBar's location label).
 const _defaultCenter = LatLng(36.1911, 44.0092);
 
-/// Pick a location on a real OpenStreetMap map — tap/drag to place a pin,
-/// or tap "Use my location" to center on a GPS fix. On confirm, reverse-
-/// geocodes the pin to a human-readable address via the `geocoding`
-/// package (platform-native geocoder, not a paid API) and returns a
-/// PickedLocation. Uses OpenStreetMap tiles (via flutter_map), not Google
-/// Maps — no API key or billing account required, which matters for a
-/// marketplace targeting Iraq where Google's own data is already patchy.
+/// Pick a location on a map — drag the map under the fixed pin, or tap "Use
+/// my location" to center on a GPS fix. On confirm, reverse-geocodes the pin
+/// to a readable address via the `geocoding` package (platform geocoder)
+/// and returns a PickedLocation.
+///
+/// Uses Google Maps when an API key is configured (see MapsConfig), and
+/// falls back to OpenStreetMap tiles otherwise. OSM's public tile server
+/// isn't meant for production apps, so the key should be added before
+/// launch.
 class LocationPickerScreen extends StatefulWidget {
   const LocationPickerScreen({super.key, this.initial});
 
@@ -32,6 +36,30 @@ class LocationPickerScreen extends StatefulWidget {
 
 class _LocationPickerScreenState extends State<LocationPickerScreen> {
   late final _mapController = MapController();
+  gmaps.GoogleMapController? _google;
+  bool? _useGoogle; // null while checking
+
+  @override
+  void initState() {
+    super.initState();
+    MapsConfig.isGoogleConfigured().then((v) {
+      if (mounted) setState(() => _useGoogle = v);
+    });
+  }
+
+  void _moveTo(LatLng target) {
+    if (_useGoogle == true) {
+      _google?.animateCamera(
+        gmaps.CameraUpdate.newLatLngZoom(
+          gmaps.LatLng(target.latitude, target.longitude),
+          16,
+        ),
+      );
+    } else {
+      _mapController.move(target, 16);
+    }
+  }
+
   late LatLng _center = widget.initial != null
       ? LatLng(widget.initial!.latitude, widget.initial!.longitude)
       : _defaultCenter;
@@ -82,7 +110,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
         _center = target;
         _locating = false;
       });
-      _mapController.move(target, 16);
+      _moveTo(target);
     } catch (e) {
       if (!mounted) return;
       setState(() {
@@ -154,23 +182,40 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
       ),
       body: Stack(
         children: [
-          FlutterMap(
-            mapController: _mapController,
-            options: MapOptions(
-              initialCenter: _center,
-              initialZoom: 13,
-              onTap: (_, point) => setState(() => _center = point),
-              onPositionChanged: (position, hasGesture) {
-                if (hasGesture) setState(() => _center = position.center);
-              },
-            ),
-            children: [
-              TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.solary.solary_marketplace',
+          if (_useGoogle == null)
+            const Center(child: CircularProgressIndicator())
+          else if (_useGoogle!)
+            gmaps.GoogleMap(
+              initialCameraPosition: gmaps.CameraPosition(
+                target: gmaps.LatLng(_center.latitude, _center.longitude),
+                zoom: widget.initial != null ? 16 : 13,
               ),
-            ],
-          ),
+              onMapCreated: (c) => _google = c,
+              onCameraMove: (pos) =>
+                  _center = LatLng(pos.target.latitude, pos.target.longitude),
+              myLocationButtonEnabled: false,
+              zoomControlsEnabled: false,
+              mapToolbarEnabled: false,
+              compassEnabled: false,
+            )
+          else
+            FlutterMap(
+              mapController: _mapController,
+              options: MapOptions(
+                initialCenter: _center,
+                initialZoom: 13,
+                onTap: (_, point) => setState(() => _center = point),
+                onPositionChanged: (position, hasGesture) {
+                  if (hasGesture) setState(() => _center = position.center);
+                },
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  userAgentPackageName: 'com.solary.solary_marketplace',
+                ),
+              ],
+            ),
           // Fixed center-screen pin — the map pans under it (onPositionChanged
           // tracks the center), which is the standard "drag the map, not the
           // pin" pattern for a single-point picker.

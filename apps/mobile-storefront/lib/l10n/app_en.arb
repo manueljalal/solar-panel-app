@@ -625,5 +625,9 @@
   "profileNameHelp": "This is how sellers and our team will address you.",
   "profileUsernameHelp": "You can sign in with your username. 3–20 lowercase letters, numbers or underscores.",
   "profileEmailHelp": "Optional. Used for receipts, and you can sign in with it.",
-  "profileRemoveEmail": "Remove email"
+  "profileRemoveEmail": "Remove email",
+  "addressTitle": "Delivery address",
+  "addressNone": "Not set",
+  "addressHelp": "Used automatically at checkout and when booking a service. You can still change it each time.",
+  "addressSaved": "Address saved."
 }

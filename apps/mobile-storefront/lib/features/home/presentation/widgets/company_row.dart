@@ -6,7 +6,7 @@ import '../../../../shared/widgets/placeholder_image.dart';
 import '../../domain/home_company.dart';
 import '../company_store_screen.dart';
 
-/// Compact company directory: round logos with the name underneath — the
+/// Compact company directory: rounded-square logos with the name underneath — the
 /// same look as the bulk marketplace's company row. HomeScreen passes live
 /// Firestore data once it has loaded. Tapping a company opens its store.
 class CompanyRow extends StatelessWidget {
@@ -51,7 +51,7 @@ class _CompanyTile extends StatelessWidget {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
+                borderRadius: BorderRadius.circular(16),
                 color: AppColors.surface,
                 border: Border.all(color: AppColors.line),
               ),

@@ -39,7 +39,7 @@ class CompanyRowSkeleton extends StatelessWidget {
           width: 68,
           child: Column(
             children: [
-              _Bone(width: 60, height: 60, radius: 30),
+              _Bone(width: 60, height: 60, radius: 16),
               SizedBox(height: 8),
               _Bone(width: 48, height: 11),
             ],

@@ -55,6 +55,7 @@ dependencies:
   go_router: ^14.6.1
   shared_preferences: ^2.5.5
   flutter_map: ^8.3.2
+  google_maps_flutter: ^2.10.0
   latlong2: ^0.10.1
   geolocator: ^14.1.1
   geocoding: ^5.0.0

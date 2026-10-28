@@ -75,6 +75,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           username: username ?? p.username,
           phone: p.phone,
           email: email ?? p.email,
+          location: p.location,
+          addressLine: p.addressLine,
         );
 
     return PopScope(

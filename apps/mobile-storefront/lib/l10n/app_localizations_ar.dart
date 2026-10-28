@@ -1415,4 +1415,17 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profileRemoveEmail => 'إزالة البريد';
+
+  @override
+  String get addressTitle => 'عنوان التوصيل';
+
+  @override
+  String get addressNone => 'غير محدد';
+
+  @override
+  String get addressHelp =>
+      'يُستخدم تلقائياً عند الطلب وحجز الخدمات. يمكنك تغييره في كل مرة.';
+
+  @override
+  String get addressSaved => 'تم حفظ العنوان.';
 }

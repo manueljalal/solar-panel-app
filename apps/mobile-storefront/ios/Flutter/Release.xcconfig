@@ -1,2 +1,5 @@
 #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
 #include "Generated.xcconfig"
+// Google Maps key (not committed). Create MapsKey.xcconfig with:
+//   GOOGLE_MAPS_API_KEY = AIza...
+#include? "MapsKey.xcconfig"
