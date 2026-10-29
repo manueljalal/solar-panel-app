@@ -36,10 +36,10 @@ class CompanyRowSkeleton extends StatelessWidget {
         itemCount: 5,
         separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.lg),
         itemBuilder: (_, _) => const SizedBox(
-          width: 68,
+          width: 92,
           child: Column(
             children: [
-              _Bone(width: 60, height: 60, radius: 16),
+              _Bone(width: 92, height: 62, radius: 16),
               SizedBox(height: 8),
               _Bone(width: 48, height: 11),
             ],
