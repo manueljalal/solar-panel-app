@@ -109,17 +109,50 @@ Manager (`firebase functions:secrets:set NAME`): `SMTP_USER`, `SMTP_PASS`,
 
 Hosting sites: `solary-admin-dev`, `solary-vendor-dev`.
 
+## Security & reliability measures in place
+
+- Deny-by-default Firestore and Storage rules; every write goes through a
+  callable that validates input and takes identity from the auth token.
+- Rate limits (Firestore sliding window, `shared/rate_limit.ts`) on sign-in
+  (per IP + per-account lockout after 10 failures / 15 min), sign-up, OTP,
+  set-password, orders, quote and service requests, uploads, B2B posts,
+  vendor applications. OTP codes lock after 5 wrong tries and expire.
+- Idempotent checkout (per-checkout `requestId`), transactional order
+  state machine (`shared/order_rules.ts`), transactional username changes.
+- Global `maxInstances: 20` cost cap; TTL cleanup of throwaway records.
+- Security headers on both portals (CSP, HSTS, frame-ancestors none, ...).
+- Composite indexes for every list query (`firestore.indexes.json`).
+- CI: `.github/workflows/ci.yml` (functions tests, portal builds, Flutter
+  analyze + tests).
+
+## Release builds
+
+- Android signing: `apps/mobile-storefront/android/key.properties`
+  (`storeFile`, `storePassword`, `keyAlias`, `keyPassword`; git-ignored).
+- Google Maps keys: `ios/Flutter/MapsKey.xcconfig`
+  (`GOOGLE_MAPS_API_KEY = ...`) and `android/local.properties`
+  (`MAPS_API_KEY=...`); both git-ignored.
+- Build with obfuscation:
+  `flutter build appbundle --obfuscate --split-debug-info=build/symbols`
+  and `flutter build ipa --obfuscate --split-debug-info=build/symbols`.
+
 ## Before a public launch
 
-These need decisions or accounts from the owner, so they are not done in code:
+These need accounts or decisions from the owner:
 
-- **Map tiles.** The location picker uses `tile.openstreetmap.org`, whose
-  usage policy doesn't allow production apps. Switch to a tile provider with
-  an API key (MapTiler, Stadia, Mapbox, …) in
-  `apps/mobile-storefront/lib/shared/location/location_picker_screen.dart`.
-- **App Check.** Not enabled; callables currently accept requests from any
-  client. Enable it in the Firebase console and in the apps.
-- **Production project.** Everything runs on a dev project shared with an
-  older app. Create a dedicated production Firebase project and hosting
-  sites before launch.
-- **Online payments.** Checkout is cash on delivery only.
+- **Production Firebase project.** Everything runs on a dev project shared
+  with an older app; move to a dedicated project before real customers.
+- **Google Maps key** in Solary's own Cloud project (the current key
+  belongs to another project and bills it).
+- **App Check** (Firebase console + DeviceCheck/App Attest, Play
+  Integrity), then enforce it on callables.
+- **Crash reporting / analytics** (Crashlytics) and **push notifications**
+  (needs an APNs key from the Apple Developer account).
+- **Firestore backups** (point-in-time recovery + scheduled backups) and
+  billing budget alerts.
+- **Legal review** of /privacy and /terms; native-speaker review of the
+  Arabic and Sorani text.
+- **Paid courses**: payment provider, and moving episode playback behind a
+  server check (video URLs are currently public).
+- **Next.js 14 → 16** upgrade for the portals (build-time advisories only;
+  the portals are static exports).
