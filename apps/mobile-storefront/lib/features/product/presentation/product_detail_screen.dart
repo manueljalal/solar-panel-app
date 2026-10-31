@@ -38,6 +38,7 @@ class ProductDetailScreen extends StatelessWidget {
                   children: [
                     ProductImageHeader(
                       imageUrl: product.imageUrl,
+                      productId: product.id,
                       onBack: () => Navigator.of(context).maybePop(),
                     ),
                     Padding(

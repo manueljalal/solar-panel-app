@@ -548,5 +548,8 @@
   "addressTitle": "عنوان التوصيل",
   "addressNone": "غير محدد",
   "addressHelp": "يُستخدم تلقائياً عند الطلب وحجز الخدمات. يمكنك تغييره في كل مرة.",
-  "addressSaved": "تم حفظ العنوان."
+  "addressSaved": "تم حفظ العنوان.",
+  "ratingNew": "جديد",
+  "accountFavorites": "المفضلة",
+  "favoritesEmpty": "اضغط ♡ على منتج لحفظه هنا."
 }

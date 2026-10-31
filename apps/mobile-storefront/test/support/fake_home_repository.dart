@@ -29,6 +29,10 @@ class FakeHomeRepository implements HomeRepository {
   Future<List<HomeProduct>> fetchProducts({String? categoryId}) async => homeProducts;
 
   @override
+  Future<List<HomeProduct>> fetchProductsByIds(List<String> ids) async =>
+      homeProducts.where((p) => ids.contains(p.id)).toList();
+
+  @override
   Future<List<HomeProduct>> fetchProductsByVendor(HomeCompany vendor) async =>
       homeProducts.where((p) => p.vendor == vendor.name).toList();
 }

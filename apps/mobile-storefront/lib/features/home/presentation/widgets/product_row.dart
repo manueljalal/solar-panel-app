@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/favorites/favorites_controller.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -6,6 +7,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/placeholder_image.dart';
 import '../../../product/presentation/product_detail_screen.dart';
 import '../../domain/home_product.dart';
+import '../../../../shared/rating.dart';
 
 /// Dense list-style row (not a card in a grid) — image, spec/brand
 /// eyebrow, title, vendor, then a rating+sold line baked directly into
@@ -92,7 +94,7 @@ class ProductRow extends StatelessWidget {
                         ),
                         const SizedBox(width: 2),
                         Text(
-                          '${product.rating}',
+                          ratingLabel(context, product.rating),
                           style: AppTypography.bodyMuted.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
@@ -112,10 +114,16 @@ class ProductRow extends StatelessWidget {
                           style: AppTypography.bodyMuted,
                         ),
                         const Spacer(),
-                        const Icon(
-                          Icons.favorite_border,
-                          size: 17,
-                          color: AppColors.ink400,
+                        ValueListenableBuilder<Set<String>>(
+                          valueListenable: FavoritesController.instance,
+                          builder: (context, favs, _) => GestureDetector(
+                            onTap: () => FavoritesController.instance.toggle(product.id),
+                            child: Icon(
+                              favs.contains(product.id) ? Icons.favorite : Icons.favorite_border,
+                              size: 19,
+                              color: favs.contains(product.id) ? AppColors.accent : AppColors.ink400,
+                            ),
+                          ),
                         ),
                       ],
                     ),

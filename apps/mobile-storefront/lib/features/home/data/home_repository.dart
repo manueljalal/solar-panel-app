@@ -119,6 +119,21 @@ class HomeRepository {
     return products;
   }
 
+  /// Specific products (e.g. the shopper's favourites), in the given order.
+  /// Products that no longer exist or whose seller isn't approved are left out.
+  Future<List<HomeProduct>> fetchProductsByIds(List<String> ids) async {
+    if (ids.isEmpty) return [];
+    final docs = <QueryDocumentSnapshot<Map<String, dynamic>>>[];
+    for (var i = 0; i < ids.length; i += 30) {
+      final chunk = ids.sublist(i, i + 30 > ids.length ? ids.length : i + 30);
+      final snap = await _db.collection('products').where(FieldPath.documentId, whereIn: chunk).get();
+      docs.addAll(snap.docs);
+    }
+    final products = await _withVendorNames(docs);
+    final order = {for (var i = 0; i < ids.length; i++) ids[i]: i};
+    return products..sort((a, b) => (order[a.id] ?? 0).compareTo(order[b.id] ?? 0));
+  }
+
   Future<List<HomeProduct>> _withVendorNames(
     List<QueryDocumentSnapshot<Map<String, dynamic>>> docs,
   ) async {

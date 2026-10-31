@@ -1428,4 +1428,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get addressSaved => 'تم حفظ العنوان.';
+
+  @override
+  String get ratingNew => 'جديد';
+
+  @override
+  String get accountFavorites => 'المفضلة';
+
+  @override
+  String get favoritesEmpty => 'اضغط ♡ على منتج لحفظه هنا.';
 }

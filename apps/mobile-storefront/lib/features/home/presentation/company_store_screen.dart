@@ -8,6 +8,7 @@ import '../data/home_repository.dart';
 import '../domain/home_company.dart';
 import '../domain/home_product.dart';
 import 'widgets/product_tile.dart';
+import '../../../shared/rating.dart';
 
 /// A company's own store: its logo/name/city/rating on top and every
 /// product that vendor sells below. Reached by tapping a tile in the home
@@ -169,7 +170,7 @@ class _CompanyStoreScreenState extends State<CompanyStoreScreen> {
                                 ),
                                 const SizedBox(width: 2),
                                 Text(
-                                  '${company.rating}',
+                                  ratingLabel(context, company.rating),
                                   style: AppTypography.bodyMuted,
                                 ),
                               ],

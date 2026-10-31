@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import '../../../../core/favorites/favorites_controller.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../shared/widgets/placeholder_image.dart';
 
-/// Full-width product photo with a back button and favorite/share actions
+/// Full-width product photo with a back button and the favourite toggle
 /// floating over it — the top of the product detail screen.
 class ProductImageHeader extends StatelessWidget {
-  const ProductImageHeader({super.key, required this.imageUrl, required this.onBack});
+  const ProductImageHeader({super.key, required this.imageUrl, required this.onBack, this.productId = ''});
 
   final String imageUrl;
+  final String productId;
   final VoidCallback onBack;
 
   @override
@@ -28,13 +30,15 @@ class ProductImageHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _RoundIconButton(icon: Icons.arrow_back, onTap: onBack),
-                Row(
-                  children: [
-                    _RoundIconButton(icon: Icons.favorite_border, onTap: () {}),
-                    const SizedBox(width: 8),
-                    _RoundIconButton(icon: Icons.ios_share, onTap: () {}),
-                  ],
-                ),
+                if (productId.isNotEmpty)
+                  ValueListenableBuilder<Set<String>>(
+                    valueListenable: FavoritesController.instance,
+                    builder: (context, favs, _) => _RoundIconButton(
+                      icon: favs.contains(productId) ? Icons.favorite : Icons.favorite_border,
+                      color: favs.contains(productId) ? AppColors.accent : null,
+                      onTap: () => FavoritesController.instance.toggle(productId),
+                    ),
+                  ),
               ],
             ),
           ),
@@ -45,10 +49,11 @@ class ProductImageHeader extends StatelessWidget {
 }
 
 class _RoundIconButton extends StatelessWidget {
-  const _RoundIconButton({required this.icon, required this.onTap});
+  const _RoundIconButton({required this.icon, required this.onTap, this.color});
 
   final IconData icon;
   final VoidCallback onTap;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +67,7 @@ class _RoundIconButton extends StatelessWidget {
         child: SizedBox(
           width: 38,
           height: 38,
-          child: Icon(icon, size: 19, color: AppColors.ink900),
+          child: Icon(icon, size: 19, color: color ?? AppColors.ink900),
         ),
       ),
     );

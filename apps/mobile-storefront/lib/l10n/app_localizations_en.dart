@@ -1433,4 +1433,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addressSaved => 'Address saved.';
+
+  @override
+  String get ratingNew => 'New';
+
+  @override
+  String get accountFavorites => 'Favourites';
+
+  @override
+  String get favoritesEmpty => 'Tap ♡ on a product to save it here.';
 }

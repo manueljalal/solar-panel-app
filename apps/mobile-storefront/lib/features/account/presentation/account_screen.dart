@@ -25,6 +25,7 @@ import '../data/profile_repository.dart';
 import '../../../core/address/address_book.dart';
 import 'delivery_address_screen.dart';
 import 'edit_profile_screen.dart';
+import 'favorites_screen.dart';
 import 'sign_in_screen.dart';
 import 'sign_up_screen.dart';
 
@@ -235,6 +236,11 @@ class _AccountScreenState extends State<AccountScreen> {
                 icon: Icons.receipt_long_outlined,
                 label: l10n.accountOrderHistory,
                 onTap: () => _push(const OrdersScreen()),
+              ),
+              _Row(
+                icon: Icons.favorite_border,
+                label: l10n.accountFavorites,
+                onTap: () => _push(const FavoritesScreen()),
               ),
               _Row(
                 icon: Icons.handyman_outlined,

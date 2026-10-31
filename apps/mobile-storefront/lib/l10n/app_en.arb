@@ -629,5 +629,8 @@
   "addressTitle": "Delivery address",
   "addressNone": "Not set",
   "addressHelp": "Used automatically at checkout and when booking a service. You can still change it each time.",
-  "addressSaved": "Address saved."
+  "addressSaved": "Address saved.",
+  "ratingNew": "New",
+  "accountFavorites": "Favourites",
+  "favoritesEmpty": "Tap ♡ on a product to save it here."
 }

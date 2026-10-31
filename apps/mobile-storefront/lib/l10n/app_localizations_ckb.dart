@@ -1445,4 +1445,13 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get addressSaved => 'ناونیشان پاشەکەوت کرا.';
+
+  @override
+  String get ratingNew => 'نوێ';
+
+  @override
+  String get accountFavorites => 'دڵخوازەکان';
+
+  @override
+  String get favoritesEmpty => '♡ لەسەر بەرهەمێک دابگرە بۆ پاشەکەوتکردنی لێرە.';
 }

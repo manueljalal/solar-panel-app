@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../shared/rating.dart';
 
 /// The "sold by X · ★ rating" line under the product title — tapping it
 /// will eventually open the vendor's storefront page.
@@ -23,7 +24,7 @@ class ProductVendorRow extends StatelessWidget {
           const Spacer(),
           const Icon(Icons.star, size: 14, color: AppColors.accent),
           const SizedBox(width: 3),
-          Text('$rating', style: AppTypography.bodyMuted.copyWith(fontWeight: FontWeight.w700)),
+          Text(ratingLabel(context, rating), style: AppTypography.bodyMuted.copyWith(fontWeight: FontWeight.w700)),
           const SizedBox(width: 4),
           Text('($sold)', style: AppTypography.bodyMuted),
         ],

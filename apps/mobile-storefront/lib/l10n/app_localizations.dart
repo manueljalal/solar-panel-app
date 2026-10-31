@@ -2685,6 +2685,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Address saved.'**
   String get addressSaved;
+
+  /// No description provided for @ratingNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get ratingNew;
+
+  /// No description provided for @accountFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favourites'**
+  String get accountFavorites;
+
+  /// No description provided for @favoritesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap ♡ on a product to save it here.'**
+  String get favoritesEmpty;
 }
 
 class _AppLocalizationsDelegate

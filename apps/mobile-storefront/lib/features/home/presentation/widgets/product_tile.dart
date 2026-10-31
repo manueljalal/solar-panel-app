@@ -6,6 +6,7 @@ import '../../../../shared/bidi.dart';
 import '../../../../shared/widgets/placeholder_image.dart';
 import '../../../product/presentation/product_detail_screen.dart';
 import '../../domain/home_product.dart';
+import '../../../../shared/rating.dart';
 
 /// Grid tile for Best sellers — same plain look as the bulk marketplace: a
 /// square photo with a hairline border, then title, price, and one muted
@@ -86,7 +87,7 @@ class ProductTile extends StatelessWidget {
               const Icon(Icons.star, size: 12, color: AppColors.accent),
               const SizedBox(width: 2),
               Text(
-                '${product.rating}',
+                ratingLabel(context, product.rating),
                 style: AppTypography.bodyMuted.copyWith(fontSize: 12),
               ),
             ],

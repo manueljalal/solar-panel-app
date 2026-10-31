@@ -8,6 +8,16 @@ val mapsApiKey: String = Properties().run {
     getProperty("MAPS_API_KEY", "")
 }
 
+// Release signing: android/key.properties (not committed) with
+//   storeFile=/path/to/upload-keystore.jks
+//   storePassword=...   keyAlias=upload   keyPassword=...
+// Without it, release builds fall back to the debug key (fine for local
+// testing, rejected by the Play Store).
+val keystoreProperties = Properties().apply {
+    val file = rootProject.file("key.properties")
+    if (file.exists()) file.inputStream().use { load(it) }
+}
+
 plugins {
     id("com.android.application")
     // START: FlutterFire Configuration
@@ -44,11 +54,23 @@ android {
         manifestPlaceholders["mapsApiKey"] = mapsApiKey
     }
 
+    signingConfigs {
+        if (keystoreProperties.getProperty("storeFile") != null) {
+            create("release") {
+                storeFile = file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = if (keystoreProperties.getProperty("storeFile") != null)
+                signingConfigs.getByName("release")
+            else
+                signingConfigs.getByName("debug")
         }
     }
 }
