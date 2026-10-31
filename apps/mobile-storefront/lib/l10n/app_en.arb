@@ -632,5 +632,9 @@
   "addressSaved": "Address saved.",
   "ratingNew": "New",
   "accountFavorites": "Favourites",
-  "favoritesEmpty": "Tap ♡ on a product to save it here."
+  "favoritesEmpty": "Tap ♡ on a product to save it here.",
+  "legalPrivacy": "Privacy policy",
+  "legalTerms": "Terms of use",
+  "legalAgree": "By creating an account you agree to the",
+  "legalAnd": "and"
 }

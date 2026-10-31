@@ -551,5 +551,9 @@
   "addressSaved": "تم حفظ العنوان.",
   "ratingNew": "جديد",
   "accountFavorites": "المفضلة",
-  "favoritesEmpty": "اضغط ♡ على منتج لحفظه هنا."
+  "favoritesEmpty": "اضغط ♡ على منتج لحفظه هنا.",
+  "legalPrivacy": "سياسة الخصوصية",
+  "legalTerms": "شروط الاستخدام",
+  "legalAgree": "بإنشاء حساب فإنك توافق على",
+  "legalAnd": "و"
 }

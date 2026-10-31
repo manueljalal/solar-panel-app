@@ -4,6 +4,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import '../../../core/auth/auth_repository.dart';
 import '../../../core/auth/friendly_function_error.dart';
+import '../../../core/legal_links.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
@@ -307,6 +308,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
                         ),
                 ),
+              ),
+              const SizedBox(height: AppSpacing.md),
+              // Consent line required for store review: links to the legal pages.
+              Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text('${l10n.legalAgree} ', style: AppTypography.bodyMuted.copyWith(fontSize: 12.5)),
+                  GestureDetector(
+                    onTap: () => LegalLinks.open(LegalLinks.terms),
+                    child: Text(l10n.legalTerms, style: AppTypography.link.copyWith(fontSize: 12.5)),
+                  ),
+                  Text(' ${l10n.legalAnd} ', style: AppTypography.bodyMuted.copyWith(fontSize: 12.5)),
+                  GestureDetector(
+                    onTap: () => LegalLinks.open(LegalLinks.privacy),
+                    child: Text(l10n.legalPrivacy, style: AppTypography.link.copyWith(fontSize: 12.5)),
+                  ),
+                ],
               ),
               if (!_codeSent) ...[
                 const SizedBox(height: AppSpacing.lg),

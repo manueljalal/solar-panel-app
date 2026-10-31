@@ -6,6 +6,7 @@ import '../../../core/auth/auth_claims.dart';
 import '../../../core/auth/auth_repository.dart';
 import '../../../core/auth/friendly_function_error.dart';
 import '../../../core/city/city_controller.dart';
+import '../../../core/legal_links.dart';
 import '../../../core/l10n/locale_controller.dart';
 import '../../../core/l10n/locale_scope.dart';
 import '../../../core/navigation/root_shell.dart';
@@ -167,6 +168,14 @@ class _AccountScreenState extends State<AccountScreen> {
               Text(l10n.aboutCompany, style: AppTypography.bodyMuted),
               const SizedBox(height: 2),
               Text('info@quadcores.com', style: AppTypography.bodyMuted),
+              const SizedBox(height: AppSpacing.md),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(onPressed: () => LegalLinks.open(LegalLinks.privacy), child: Text(l10n.legalPrivacy)),
+                  TextButton(onPressed: () => LegalLinks.open(LegalLinks.terms), child: Text(l10n.legalTerms)),
+                ],
+              ),
             ],
           ),
         ),

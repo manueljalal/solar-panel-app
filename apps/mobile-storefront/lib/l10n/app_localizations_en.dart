@@ -1442,4 +1442,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get favoritesEmpty => 'Tap ♡ on a product to save it here.';
+
+  @override
+  String get legalPrivacy => 'Privacy policy';
+
+  @override
+  String get legalTerms => 'Terms of use';
+
+  @override
+  String get legalAgree => 'By creating an account you agree to the';
+
+  @override
+  String get legalAnd => 'and';
 }

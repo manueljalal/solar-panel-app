@@ -2703,6 +2703,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap ♡ on a product to save it here.'**
   String get favoritesEmpty;
+
+  /// No description provided for @legalPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get legalPrivacy;
+
+  /// No description provided for @legalTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of use'**
+  String get legalTerms;
+
+  /// No description provided for @legalAgree.
+  ///
+  /// In en, this message translates to:
+  /// **'By creating an account you agree to the'**
+  String get legalAgree;
+
+  /// No description provided for @legalAnd.
+  ///
+  /// In en, this message translates to:
+  /// **'and'**
+  String get legalAnd;
 }
 
 class _AppLocalizationsDelegate

@@ -1454,4 +1454,16 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get favoritesEmpty => '♡ لەسەر بەرهەمێک دابگرە بۆ پاشەکەوتکردنی لێرە.';
+
+  @override
+  String get legalPrivacy => 'سیاسەتی تایبەتمەندی';
+
+  @override
+  String get legalTerms => 'مەرجەکانی بەکارهێنان';
+
+  @override
+  String get legalAgree => 'بە دروستکردنی هەژمار ڕازی دەبیت بە';
+
+  @override
+  String get legalAnd => 'و';
 }

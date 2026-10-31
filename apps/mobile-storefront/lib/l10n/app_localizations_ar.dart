@@ -1437,4 +1437,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get favoritesEmpty => 'اضغط ♡ على منتج لحفظه هنا.';
+
+  @override
+  String get legalPrivacy => 'سياسة الخصوصية';
+
+  @override
+  String get legalTerms => 'شروط الاستخدام';
+
+  @override
+  String get legalAgree => 'بإنشاء حساب فإنك توافق على';
+
+  @override
+  String get legalAnd => 'و';
 }
