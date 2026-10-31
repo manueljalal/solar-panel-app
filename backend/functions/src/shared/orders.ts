@@ -2,25 +2,15 @@ import { HttpsError } from "firebase-functions/v2/https";
 import { FieldValue, Timestamp, type DocumentSnapshot } from "firebase-admin/firestore";
 import { db } from "./firebase";
 
-/// Order lifecycle (cash on delivery):
-///   placed -> confirmed -> out_for_delivery -> delivered
-/// and cancelled from placed (customer, vendor or admin) or confirmed
-/// (vendor or admin). Delivered and cancelled are final.
-export const ORDER_STATUSES = ["placed", "confirmed", "out_for_delivery", "delivered", "cancelled"] as const;
-export type OrderStatus = (typeof ORDER_STATUSES)[number];
+import { ORDER_STATUSES, transitionError, type OrderStatus } from "./order_rules";
+
+export { ORDER_STATUSES, type OrderStatus };
 
 export type OrderActor =
   | { role: "customer"; uid: string }
   | { role: "vendor"; uid: string; vendorId: string }
   | { role: "super_admin"; uid: string };
 
-const NEXT: Record<OrderStatus, OrderStatus[]> = {
-  placed: ["confirmed", "cancelled"],
-  confirmed: ["out_for_delivery", "cancelled"],
-  out_for_delivery: ["delivered"],
-  delivered: [],
-  cancelled: [],
-};
 
 export interface OrderItem {
   productId: string;
@@ -80,13 +70,9 @@ export async function transitionOrder(
     if (actor.role === "customer" && order.uid !== actor.uid) throw new HttpsError("not-found", "Order not found.");
     if (actor.role === "vendor" && order.vendorId !== actor.vendorId) throw new HttpsError("not-found", "Order not found.");
 
-    const current = order.status as OrderStatus;
-    if (!NEXT[current].includes(next)) {
-      throw new HttpsError("failed-precondition", `An order that is '${current}' can't become '${next}'.`);
-    }
-    // Customers may only cancel, and only before the vendor confirms.
-    if (actor.role === "customer" && !(next === "cancelled" && current === "placed")) {
-      throw new HttpsError("permission-denied", "This order can no longer be cancelled from the app.");
+    const problem = transitionError(order.status as OrderStatus, next, actor.role);
+    if (problem) {
+      throw new HttpsError(problem.startsWith("An order") ? "failed-precondition" : "permission-denied", problem);
     }
 
     const update: Record<string, unknown> = {

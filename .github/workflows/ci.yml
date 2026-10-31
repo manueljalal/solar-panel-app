@@ -1,0 +1,58 @@
+# Runs every check on each push and pull request: backend type-check +
+# unit tests, both web portals' type-check + production build, and the
+# Flutter app's analyzer + tests. Deploys stay manual (see README).
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend-and-web:
+    runs-on: ubuntu-latest
+    env:
+      # Firebase web config — public by design (it ships to every browser).
+      NEXT_PUBLIC_FIREBASE_API_KEY: "AIzaSyAkFEc7hZuGxLbQX6CdzxQAAzn-acIrmC8"
+      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: "flutter-firebase-connect-ec83e.firebaseapp.com"
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: "flutter-firebase-connect-ec83e"
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: "flutter-firebase-connect-ec83e.firebasestorage.app"
+      NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: "603525561386"
+      NEXT_PUBLIC_FIREBASE_APP_ID: "1:603525561386:web:42ac37eba796be04801753"
+      NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: "G-7JENXM44Y8"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Functions — type-check and unit tests
+        run: npm test --workspace=backend/functions
+      - name: Admin portal — type-check and build
+        run: |
+          npx tsc --noEmit -p apps/web-admin
+          npm run build --workspace=apps/web-admin
+      - name: Vendor portal — type-check and build
+        run: |
+          npx tsc --noEmit -p apps/web-vendor
+          npm run build --workspace=apps/web-vendor
+
+  mobile:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/mobile-storefront
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze --no-fatal-infos
+      - run: flutter test

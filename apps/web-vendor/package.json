@@ -9,15 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@solary/ui-web": "*",
+    "firebase": "^13.1.0",
     "next": "^14.2.0",
     "react": "^18.3.0",
-    "react-dom": "^18.3.0",
-    "firebase": "^10.12.0",
-    "@solary/ui-web": "*"
+    "react-dom": "^18.3.0"
   },
   "devDependencies": {
-    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0",
     "@types/react": "^18.3.0",
-    "@types/node": "^20.0.0"
+    "typescript": "^5.4.0"
   }
 }
