@@ -7,7 +7,7 @@ import { serializeOrder, transitionOrder } from "../../shared/orders";
 /// sort, so no composite index is needed.
 export const listMyOrders = onCall({ region: "us-central1" }, async (request) => {
   if (!request.auth) throw new HttpsError("unauthenticated", "Sign in required.");
-  const snap = await db.collection("orders").where("uid", "==", request.auth.uid).limit(200).get();
+  const snap = await db.collection("orders").where("uid", "==", request.auth.uid).orderBy("createdAt", "desc").limit(100).get();
   const orders = snap.docs.map((d) => serializeOrder(d)).sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));
   return { orders };
 });

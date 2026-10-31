@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/foundation.dart';
 import '../../../shared/location/picked_location.dart';
@@ -17,10 +19,13 @@ class OrdersRepository {
   /// is kept alive in the tab stack knows to reload.
   static final changes = ValueNotifier<int>(0);
 
+  /// [requestId] must stay the same for retries of one checkout, so the
+  /// server can return the existing orders instead of creating duplicates.
   Future<List<String>> placeOrder({
     required List<CartItem> items,
     required String address,
     required PickedLocation location,
+    required String requestId,
     String note = '',
   }) async {
     final result = await _functions.httpsCallable('storefront-placeOrder').call({
@@ -30,6 +35,7 @@ class OrdersRepository {
       'address': address,
       'location': location.toJson(),
       'note': note,
+      'requestId': requestId,
     });
     changes.value++;
     return [for (final id in ((result.data as Map)['orderIds'] as List? ?? const [])) id as String];
@@ -45,4 +51,10 @@ class OrdersRepository {
     await _functions.httpsCallable('storefront-cancelMyOrder').call({'orderId': orderId});
     changes.value++;
   }
+}
+
+/// Random 32-char hex id (128 bits) for idempotent requests.
+String newRequestId() {
+  final r = Random.secure();
+  return List.generate(16, (_) => r.nextInt(256).toRadixString(16).padLeft(2, '0')).join();
 }

@@ -4,6 +4,7 @@ import { db, auth } from "../shared/firebase";
 import { consumePhoneOtp } from "../shared/auth/verify_otp";
 import { normalizeUsername } from "../shared/auth/password";
 import { resolveAccountUids } from "../shared/auth/resolve_account";
+import { LIMITS, clientIp, enforceRateLimit } from "../shared/rate_limit";
 
 interface StepUpInput {
   username: string;
@@ -17,6 +18,7 @@ interface StepUpInput {
 /// correct code, this device is added to knownDeviceIds permanently —
 /// future signIns from it won't need OTP again — and a token is issued.
 export const signInOtpStepUp = onCall<StepUpInput>({ region: "us-central1" }, async (request) => {
+    await enforceRateLimit(`stepup:${clientIp(request)}`, 30, 15 * LIMITS.MINUTE);
   const username = normalizeUsername(request.data?.username ?? "");
   const otp = request.data?.otp?.trim();
   const deviceId = request.data?.deviceId?.trim();

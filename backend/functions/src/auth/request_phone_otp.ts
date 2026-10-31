@@ -3,6 +3,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import * as crypto from "crypto";
 import { db } from "../shared/firebase";
 import { sendWhatsAppOtp, whatsappAccessToken } from "../shared/whatsapp/send_otp";
+import { LIMITS, clientIp, enforceRateLimit } from "../shared/rate_limit";
 
 interface RequestOtpInput {
   phone: string; // E.164, e.g. "+9647501234567"
@@ -44,6 +45,7 @@ const E164_PATTERN = /^\+[1-9]\d{6,14}$/;
 export const requestPhoneOtp = onCall<RequestOtpInput>(
   { region: "us-central1", secrets: [whatsappAccessToken] },
   async (request) => {
+    await enforceRateLimit(`otp-ip:${clientIp(request)}`, 20, LIMITS.HOUR);
     const phone = request.data?.phone?.trim();
     const deviceId = request.data?.deviceId?.trim() || null;
     if (!phone || !E164_PATTERN.test(phone)) {

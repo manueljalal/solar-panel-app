@@ -3,6 +3,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../shared/firebase";
 import { isOwnedImageUrl } from "../shared/images/store_image";
 import { cleanEmail, cleanEnum, cleanText } from "../shared/validation/sanitize";
+import { LIMITS, clientIp, enforceRateLimit } from "../shared/rate_limit";
 
 interface PickedLocationInput {
   latitude: number;
@@ -30,6 +31,7 @@ const E164_PATTERN = /^\+[1-9]\d{6,14}$/;
 /// client writing it directly — uid comes from the verified auth token,
 /// never a client-supplied field.
 export const submitApplication = onCall<SubmitApplicationInput>({ region: "us-central1" }, async (request) => {
+    await enforceRateLimit(`apply:${request.auth?.uid ?? clientIp(request)}`, 5, LIMITS.DAY);
   if (!request.auth) {
     throw new HttpsError("unauthenticated", "Sign in required.");
   }

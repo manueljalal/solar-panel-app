@@ -35,6 +35,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final _address = TextEditingController();
   final _note = TextEditingController();
   PickedLocation? _location;
+  // One id per checkout: a retry after a timeout reuses it, so the server
+  // never creates the same orders twice.
+  final String _requestId = newRequestId();
   bool _submitting = false;
   String? _error;
 
@@ -93,6 +96,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         address: _address.text.trim(),
         location: location,
         note: _note.text.trim(),
+        requestId: _requestId,
       );
       cart.clear();
       // Next time this is the default address.

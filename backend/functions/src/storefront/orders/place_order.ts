@@ -6,12 +6,16 @@ import { cleanDocId, cleanText } from "../../shared/validation/sanitize";
 import { smtpPass, smtpUser } from "../../shared/mail/send_mail";
 import { sendNewOrderEmail } from "../../shared/mail/order_emails";
 import type { OrderItem } from "../../shared/orders";
+import { LIMITS, clientIp, enforceRateLimit } from "../../shared/rate_limit";
 
 interface PlaceOrderInput {
   items: { productId: string; qty: number }[];
   address: string;
   location?: { latitude: number; longitude: number; address?: string } | null;
   note?: string;
+  /** Unique per checkout attempt (client-generated). A retry or double tap
+   * with the same id returns the orders already created instead of new ones. */
+  requestId?: string;
 }
 
 const MAX_LINES = 50;
@@ -25,6 +29,7 @@ const MAX_QTY = 1000;
 export const placeOrder = onCall<PlaceOrderInput>(
   { region: "us-central1", secrets: [smtpUser, smtpPass] },
   async (request) => {
+    await enforceRateLimit(`order:${request.auth?.uid ?? clientIp(request)}`, 20, LIMITS.HOUR);
     const auth = request.auth;
     if (!auth) throw new HttpsError("unauthenticated", "Sign in required.");
     if (auth.token.firebase?.sign_in_provider === "anonymous") {
@@ -34,6 +39,14 @@ export const placeOrder = onCall<PlaceOrderInput>(
 
     const user = (await db.collection("users").doc(uid).get()).data();
     if (!user?.phone) throw new HttpsError("failed-precondition", "Your account needs a verified phone number.");
+
+    // Idempotency: same requestId -> same orders, never duplicates.
+    const requestId = request.data?.requestId ? cleanDocId(request.data.requestId, "requestId") : null;
+    const idemRef = requestId ? db.collection("orderRequests").doc(`${uid}_${requestId}`) : null;
+    if (idemRef) {
+      const prior = await idemRef.get();
+      if (prior.exists) return { orderIds: prior.data()!.orderIds as string[] };
+    }
 
     const address = cleanText(request.data?.address, "address", { max: 300, min: 3 });
     const note = cleanText(request.data?.note, "note", { max: 500, multiline: true });
@@ -117,7 +130,22 @@ export const placeOrder = onCall<PlaceOrderInput>(
       });
       created.push({ id: ref.id, vendorId: vSnap.id, vendorName: vendor.businessName ?? "", items, totals });
     }
-    await batch.commit();
+    if (idemRef) {
+      // create() fails if a concurrent identical request already committed,
+      // which aborts this whole batch — so only one set of orders exists.
+      batch.create(idemRef, {
+        orderIds: created.map((o) => o.id),
+        createdAt: FieldValue.serverTimestamp(),
+        expireAt: Timestamp.fromMillis(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      });
+    }
+    try {
+      await batch.commit();
+    } catch (e) {
+      const prior = idemRef ? await idemRef.get() : null;
+      if (prior?.exists) return { orderIds: prior.data()!.orderIds as string[] };
+      throw e;
+    }
 
     // Courtesy email to each vendor; never fails the order.
     await Promise.all(

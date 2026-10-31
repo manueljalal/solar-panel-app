@@ -2,6 +2,7 @@ import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../../shared/firebase";
 import { cleanDocId, cleanText } from "../../shared/validation/sanitize";
+import { LIMITS, clientIp, enforceRateLimit } from "../../shared/rate_limit";
 
 interface SubmitQuoteRequestInput {
   productId: string;
@@ -14,6 +15,7 @@ interface SubmitQuoteRequestInput {
 /// product doc, never trusted from the client, so the request lands in that
 /// vendor's inbox (vendor-listQuoteRequests).
 export const submitQuoteRequest = onCall<SubmitQuoteRequestInput>({ region: "us-central1" }, async (request) => {
+    await enforceRateLimit(`quote:${request.auth?.uid ?? clientIp(request)}`, 20, LIMITS.HOUR);
   const auth = request.auth;
   if (!auth) throw new HttpsError("unauthenticated", "Sign in required.");
   if (auth.token.firebase?.sign_in_provider === "anonymous") {

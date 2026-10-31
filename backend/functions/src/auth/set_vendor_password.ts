@@ -3,6 +3,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import { db, auth } from "../shared/firebase";
 import { consumePasswordSetupToken } from "../shared/auth/password_setup_token";
 import { hashPassword, isValidPassword } from "../shared/auth/password";
+import { LIMITS, clientIp, enforceRateLimit } from "../shared/rate_limit";
 
 interface SetVendorPasswordInput {
   token: string; // from the /set-password?token=... link in the approval email
@@ -16,6 +17,7 @@ interface SetVendorPasswordInput {
 /// handling: Firebase Auth itself never gets a password, the hash on
 /// users/{uid} is the only credential store.
 export const setVendorPassword = onCall<SetVendorPasswordInput>({ region: "us-central1" }, async (request) => {
+    await enforceRateLimit(`setpw:${clientIp(request)}`, 20, LIMITS.HOUR);
   const token = request.data?.token?.trim();
   const password = request.data?.password ?? "";
 

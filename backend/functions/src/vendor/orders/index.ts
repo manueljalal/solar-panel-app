@@ -8,7 +8,7 @@ import { ORDER_STATUSES, serializeOrder, transitionOrder } from "../../shared/or
 export const listOrders = onCall<{ status?: string }>({ region: "us-central1" }, async (request) => {
   const { vendorId } = requireVendor(request);
   const status = request.data?.status ? cleanEnum(request.data.status, ORDER_STATUSES, "status") : null;
-  const snap = await db.collection("orders").where("vendorId", "==", vendorId).limit(500).get();
+  const snap = await db.collection("orders").where("vendorId", "==", vendorId).orderBy("createdAt", "desc").limit(300).get();
   const orders = snap.docs
     .map((d) => serializeOrder(d))
     .filter((o) => !status || o.status === status)

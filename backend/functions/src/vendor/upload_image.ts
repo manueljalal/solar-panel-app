@@ -1,6 +1,7 @@
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { storeImage } from "../shared/images/store_image";
 import { cleanEnum } from "../shared/validation/sanitize";
+import { LIMITS, clientIp, enforceRateLimit } from "../shared/rate_limit";
 
 interface UploadImageInput {
   purpose: "company-logo" | "product" | "category" | "banner" | "learn";
@@ -15,6 +16,7 @@ interface UploadImageInput {
 export const uploadImage = onCall<UploadImageInput>(
   { region: "us-central1", memory: "512MiB" },
   async (request) => {
+    await enforceRateLimit(`upload:${request.auth?.uid ?? clientIp(request)}`, 60, LIMITS.HOUR);
     const auth = request.auth;
     if (!auth) throw new HttpsError("unauthenticated", "Sign in required.");
     if (auth.token.firebase?.sign_in_provider === "anonymous") {

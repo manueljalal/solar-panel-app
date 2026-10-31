@@ -8,7 +8,7 @@ import { QUOTE_STATUSES, serializeQuote } from "../shared/quotes";
 /// Quote requests shoppers sent for this vendor's products, newest first.
 export const listQuoteRequests = onCall({ region: "us-central1" }, async (request) => {
   const { vendorId } = requireVendor(request);
-  const snap = await db.collection("quoteRequests").where("vendorId", "==", vendorId).limit(500).get();
+  const snap = await db.collection("quoteRequests").where("vendorId", "==", vendorId).orderBy("createdAt", "desc").limit(300).get();
   const requests = snap.docs.map(serializeQuote).sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));
   return { requests };
 });

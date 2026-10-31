@@ -15,8 +15,9 @@ const FEED_LIMIT = 100;
 type Kind = "listings" | "requests";
 
 /// Reads the newest posts and filters in memory (status / country /
-/// owner). A single-field createdAt order needs no composite index, and
-/// the feed is capped at 100 — revisit with indexes if volume outgrows it.
+/// owner). Indexed queries (status+createdAt, vendorId+createdAt — see
+/// firestore.indexes.json): the open feed is the newest 100 open posts, and
+/// "mine" is the caller's own newest 200 regardless of everyone else's.
 function makeLister(collection: string, openStatus: string, kind: Kind) {
   return onCall<ListInput>({ region: "us-central1" }, async (request) => {
     const me = await requireBulkVendor(request);
@@ -24,7 +25,10 @@ function makeLister(collection: string, openStatus: string, kind: Kind) {
       request.data?.country === undefined ? undefined : cleanEnum(request.data.country, COUNTRIES, "country");
     const mine = request.data?.mine === true;
 
-    const snap = await db.collection(collection).orderBy("createdAt", "desc").limit(FEED_LIMIT).get();
+    const base = db.collection(collection);
+    const snap = mine
+      ? await base.where("vendorId", "==", me.vendorId).orderBy("createdAt", "desc").limit(200).get()
+      : await base.where("status", "==", openStatus).orderBy("createdAt", "desc").limit(FEED_LIMIT).get();
     const rows = snap.docs
       .map((d) => {
         const data = d.data();

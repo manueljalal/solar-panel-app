@@ -8,7 +8,7 @@ import { serializeServiceRequest } from "../shared/services";
 /// Service jobs an admin assigned to this vendor, newest first.
 export const listServiceJobs = onCall({ region: "us-central1" }, async (request) => {
   const { vendorId } = requireVendor(request);
-  const snap = await db.collection("serviceRequests").where("vendorId", "==", vendorId).limit(300).get();
+  const snap = await db.collection("serviceRequests").where("vendorId", "==", vendorId).orderBy("createdAt", "desc").limit(300).get();
   const jobs = snap.docs
     .map((d) => serializeServiceRequest(d, { forStaff: true }))
     .sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));

@@ -4,6 +4,7 @@ import { db } from "../shared/firebase";
 import { cleanMultilingual, cleanPrice, cleanText, primaryText, type MultilingualText } from "../shared/validation/sanitize";
 import { isOwnedImageUrl } from "../shared/images/store_image";
 import { cleanCategoryId, cleanQuantity, requireBulkVendor } from "./shared";
+import { LIMITS, clientIp, enforceRateLimit } from "../shared/rate_limit";
 
 interface TierInput {
   minQty: number;
@@ -27,6 +28,7 @@ const MAX_TIERS = 5;
 /// quantity-tier pricing (e.g. 100+ units = $X, 500+ = $Y). Visible only
 /// to other approved vendors via bulk-listListings.
 export const createListing = onCall<CreateListingInput>({ region: "us-central1" }, async (request) => {
+    await enforceRateLimit(`bulk-post:${request.auth?.uid ?? clientIp(request)}`, 30, LIMITS.DAY);
   const me = await requireBulkVendor(request);
 
   const titleI18n = cleanMultilingual(request.data?.title, "title", { max: 120 });

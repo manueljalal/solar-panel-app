@@ -4,6 +4,10 @@ import { FieldValue } from "firebase-admin/firestore";
 import { db, auth } from "../shared/firebase";
 import { verifyPassword, normalizeUsername } from "../shared/auth/password";
 import { resolveAccountUids } from "../shared/auth/resolve_account";
+import { LIMITS, addHit, clearHits, clientIp, enforceRateLimit, recentHits } from "../shared/rate_limit";
+
+const MAX_FAILED_SIGNINS = 10; // per account identifier, per 15 minutes
+const FAILED_WINDOW = 15 * LIMITS.MINUTE;
 
 interface SignInInput {
   username: string;
@@ -32,6 +36,14 @@ export const signIn = onCall<SignInInput>({ region: "us-central1" }, async (requ
   // "just don't send a device id".
   if (!deviceId) {
     throw new HttpsError("invalid-argument", "deviceId is required.");
+  }
+
+  // Brute-force protection: one IP can't hammer sign-in, and an account
+  // identifier stops accepting passwords after repeated failures.
+  await enforceRateLimit(`signin-ip:${clientIp(request)}`, 60, 15 * LIMITS.MINUTE, "Too many sign-in attempts. Try again in a few minutes.");
+  const failKey = `signin-fail:${username}`;
+  if ((await recentHits(failKey, FAILED_WINDOW)) >= MAX_FAILED_SIGNINS) {
+    throw new HttpsError("resource-exhausted", "Too many incorrect attempts. Try again in 15 minutes.");
   }
 
   // `username` may also be the vendor's application email — see
@@ -63,8 +75,10 @@ export const signIn = onCall<SignInInput>({ region: "us-central1" }, async (requ
     });
     // Same message whether the account is unknown or the password is
     // wrong — don't reveal which.
+    await addHit(failKey, FAILED_WINDOW);
     throw new HttpsError("permission-denied", "Incorrect username or password.");
   }
+  await clearHits(failKey);
 
   const knownDeviceIds = (user.knownDeviceIds ?? []) as string[];
   if (!knownDeviceIds.includes(deviceId)) {

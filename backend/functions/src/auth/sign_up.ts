@@ -6,6 +6,7 @@ import { consumePhoneOtp } from "../shared/auth/verify_otp";
 import { hashPassword, isValidPassword, isValidUsername, normalizeUsername } from "../shared/auth/password";
 import { logger } from "firebase-functions";
 import { findPhoneAccount, isUsernameAvailable, removeOrphanAccount } from "../shared/auth/signup_checks";
+import { LIMITS, clientIp, enforceRateLimit } from "../shared/rate_limit";
 
 interface PickedLocationInput {
   latitude: number;
@@ -34,6 +35,7 @@ const E164_PATTERN = /^\+[1-9]\d{6,14}$/;
 /// user (we mint custom tokens instead, the same mechanism the phone-only
 /// flow already uses), since the credential check is entirely our own.
 export const signUp = onCall<SignUpInput>({ region: "us-central1" }, async (request) => {
+    await enforceRateLimit(`signup:${clientIp(request)}`, 10, LIMITS.HOUR);
   const name = request.data?.name?.trim();
   const username = normalizeUsername(request.data?.username ?? "");
   const password = request.data?.password ?? "";

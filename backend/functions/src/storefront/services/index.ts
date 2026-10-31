@@ -3,6 +3,7 @@ import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import { db } from "../../shared/firebase";
 import { cleanDocId, cleanEnum, cleanText } from "../../shared/validation/sanitize";
 import { SERVICE_TYPES, serializeServiceRequest } from "../../shared/services";
+import { LIMITS, clientIp, enforceRateLimit } from "../../shared/rate_limit";
 
 interface RequestServiceInput {
   type: (typeof SERVICE_TYPES)[number];
@@ -26,6 +27,7 @@ function optionalPositive(v: unknown, field: string, max: number): number | null
 /// Customer books an installation or panel cleaning. Needs a real account
 /// (the team calls the verified phone to confirm).
 export const requestService = onCall<RequestServiceInput>({ region: "us-central1" }, async (request) => {
+    await enforceRateLimit(`service:${request.auth?.uid ?? clientIp(request)}`, 10, LIMITS.HOUR);
   const auth = request.auth;
   if (!auth) throw new HttpsError("unauthenticated", "Sign in required.");
   if (auth.token.firebase?.sign_in_provider === "anonymous") {
@@ -87,7 +89,7 @@ export const requestService = onCall<RequestServiceInput>({ region: "us-central1
 
 export const listMyServiceRequests = onCall({ region: "us-central1" }, async (request) => {
   if (!request.auth) throw new HttpsError("unauthenticated", "Sign in required.");
-  const snap = await db.collection("serviceRequests").where("uid", "==", request.auth.uid).limit(100).get();
+  const snap = await db.collection("serviceRequests").where("uid", "==", request.auth.uid).orderBy("createdAt", "desc").limit(100).get();
   const requests = snap.docs
     .map((d) => serializeServiceRequest(d))
     .sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));
