@@ -6,7 +6,7 @@ import 'support/fake_home_repository.dart';
 
 void main() {
   testWidgets('Apply banner renders with photo background, no overflow', (tester) async {
-    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository()));
+    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository(), showSplash: false));
     await tester.pumpAndSettle();
 
     await tester.scrollUntilVisible(

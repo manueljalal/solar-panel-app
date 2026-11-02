@@ -9,6 +9,7 @@ import 'core/l10n/framework_locale_fallback.dart';
 import 'core/l10n/locale_controller.dart';
 import 'core/l10n/locale_scope.dart';
 import 'core/navigation/root_shell.dart';
+import 'core/splash/splash_overlay.dart';
 import 'core/theme/app_theme.dart';
 import 'features/cart/data/cart_controller.dart';
 import 'features/cart/data/cart_scope.dart';
@@ -36,9 +37,12 @@ void main() async {
 /// of hitting real Firestore (see test/support/fake_home_repository.dart);
 /// production code never passes it.
 class SolaryMarketplaceApp extends StatefulWidget {
-  const SolaryMarketplaceApp({super.key, this.homeRepository});
+  const SolaryMarketplaceApp({super.key, this.homeRepository, this.showSplash = true});
 
   final HomeRepository? homeRepository;
+
+  /// The launch animation; tests turn it off so it doesn't cover the UI.
+  final bool showSplash;
 
   @override
   State<SolaryMarketplaceApp> createState() => _SolaryMarketplaceAppState();
@@ -85,6 +89,9 @@ class _SolaryMarketplaceAppState extends State<SolaryMarketplaceApp> {
               // direction, while AppLocalizations still serves real ckb text
               // everywhere in the actual UI.
               home: RootShell(homeRepository: widget.homeRepository),
+              builder: widget.showSplash
+                  ? (context, child) => SplashOverlay(child: child!)
+                  : null,
             );
           },
         ),

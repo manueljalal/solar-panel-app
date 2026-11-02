@@ -7,7 +7,7 @@ import 'support/finders.dart';
 
 void main() {
   testWidgets('App opens straight to the marketplace home, no login wall', (tester) async {
-    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository()));
+    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository(), showSplash: false));
     await tester.pumpAndSettle();
 
     expect(find.text('Solary'), findsOneWidget);

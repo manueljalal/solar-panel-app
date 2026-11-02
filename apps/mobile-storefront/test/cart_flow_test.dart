@@ -23,7 +23,7 @@ void main() {
     };
     addTearDown(() => FlutterError.onError = originalOnError);
 
-    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository()));
+    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository(), showSplash: false));
     await tester.pumpAndSettle();
 
     // Navigate into a product and add it to cart.

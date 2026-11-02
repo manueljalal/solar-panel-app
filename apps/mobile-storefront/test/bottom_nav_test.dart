@@ -13,7 +13,7 @@ void main() {
     };
     addTearDown(() => FlutterError.onError = originalOnError);
 
-    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository()));
+    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository(), showSplash: false));
     await tester.pumpAndSettle();
 
     // Home is the default tab.

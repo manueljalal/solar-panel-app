@@ -6,7 +6,7 @@ import 'support/finders.dart';
 
 void main() {
   testWidgets('Featured masonry and product grid render with no overflow', (tester) async {
-    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository()));
+    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository(), showSplash: false));
     await tester.pumpAndSettle();
 
     await scrollHomeTo(tester, find.text('Featured'));

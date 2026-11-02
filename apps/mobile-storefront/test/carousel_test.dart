@@ -6,7 +6,7 @@ import 'support/fake_home_repository.dart';
 
 void main() {
   testWidgets('Banner carousel shows all 3 slides on swipe', (tester) async {
-    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository(withBanners: true)));
+    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository(withBanners: true), showSplash: false));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('Zero down payment on residential kits'), findsOneWidget);

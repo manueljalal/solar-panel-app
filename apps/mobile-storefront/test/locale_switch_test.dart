@@ -26,7 +26,7 @@ void main() {
       };
       addTearDown(() => FlutterError.onError = originalOnError);
 
-      await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository()));
+      await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository(), showSplash: false));
       await tester.pumpAndSettle();
 
       final context = tester.element(find.byType(RootShell));

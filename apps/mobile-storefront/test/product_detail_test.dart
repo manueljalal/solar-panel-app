@@ -7,7 +7,7 @@ import 'support/finders.dart';
 
 void main() {
   testWidgets('Tapping a product tile opens its detail screen', (tester) async {
-    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository()));
+    await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository(), showSplash: false));
     await tester.pumpAndSettle();
 
     // First seeded product: Tiger Neo Mono Panel.
