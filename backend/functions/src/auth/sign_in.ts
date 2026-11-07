@@ -5,9 +5,8 @@ import { db, auth } from "../shared/firebase";
 import { verifyPassword, normalizeUsername } from "../shared/auth/password";
 import { resolveAccountUids } from "../shared/auth/resolve_account";
 import { LIMITS, addHit, clearHits, clientIp, enforceRateLimit, recentHits } from "../shared/rate_limit";
+import { cleanDeviceId, FAILED_WINDOW, MAX_FAILED_SIGNINS } from "../shared/auth/sign_in_guard";
 
-const MAX_FAILED_SIGNINS = 10; // per account identifier, per 15 minutes
-const FAILED_WINDOW = 15 * LIMITS.MINUTE;
 
 interface SignInInput {
   username: string;
@@ -26,7 +25,7 @@ interface SignInInput {
 export const signIn = onCall<SignInInput>({ region: "us-central1" }, async (request) => {
   const username = normalizeUsername(request.data?.username ?? "");
   const password = request.data?.password ?? "";
-  const deviceId = request.data?.deviceId?.trim() || null;
+  const deviceId = cleanDeviceId(request.data?.deviceId);
 
   if (!username || !password) {
     throw new HttpsError("invalid-argument", "username and password are required.");

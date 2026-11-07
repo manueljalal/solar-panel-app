@@ -19,23 +19,27 @@ function hashOtp(otp: string, phone: string): string {
 export async function consumePhoneOtp(phone: string, otp: string): Promise<void> {
   const otpRef = db.collection("phoneOtps").doc(phone);
 
-  await db.runTransaction(async (tx) => {
+  // The transaction RETURNS its verdict instead of throwing: throwing inside
+  // runTransaction aborts it, which silently discarded the attempts counter
+  // update (and the deletes below) — wrong guesses were never counted, so
+  // the 5-attempt lock never engaged. Writes commit first, then we throw.
+  const verdict = await db.runTransaction(async (tx): Promise<HttpsError | null> => {
     const snap = await tx.get(otpRef);
     if (!snap.exists) {
-      throw new HttpsError("not-found", "No code was requested for this number.");
+      return new HttpsError("not-found", "No code was requested for this number.");
     }
 
     const data = snap.data()!;
     const expiresAt = data.expiresAt?.toMillis?.() ?? 0;
     if (Date.now() > expiresAt) {
       tx.delete(otpRef);
-      throw new HttpsError("deadline-exceeded", "That code has expired. Request a new one.");
+      return new HttpsError("deadline-exceeded", "That code has expired. Request a new one.");
     }
 
     const attempts = (data.attempts ?? 0) as number;
     if (attempts >= MAX_ATTEMPTS) {
       tx.delete(otpRef);
-      throw new HttpsError("resource-exhausted", "Too many incorrect attempts. Request a new code.");
+      return new HttpsError("resource-exhausted", "Too many incorrect attempts. Request a new code.");
     }
 
     const expectedHash = Buffer.from(data.hash as string, "hex");
@@ -46,10 +50,15 @@ export async function consumePhoneOtp(phone: string, otp: string): Promise<void>
     const matches = expectedHash.length === actualHash.length && crypto.timingSafeEqual(expectedHash, actualHash);
 
     if (!matches) {
-      tx.update(otpRef, { attempts: attempts + 1 });
-      throw new HttpsError("permission-denied", "Incorrect code.");
+      // The last allowed wrong guess kills the code outright.
+      if (attempts + 1 >= MAX_ATTEMPTS) tx.delete(otpRef);
+      else tx.update(otpRef, { attempts: attempts + 1 });
+      return new HttpsError("permission-denied", "Incorrect code.");
     }
 
     tx.delete(otpRef);
+    return null;
   });
+
+  if (verdict) throw verdict;
 }

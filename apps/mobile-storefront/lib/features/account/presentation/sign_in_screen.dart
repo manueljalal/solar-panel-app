@@ -142,7 +142,11 @@ class _SignInScreenState extends State<SignInScreen> {
       _error = null;
     });
     try {
-      await _repository.signInOtpStepUp(username: _usernameController.text.trim(), otp: otp);
+      await _repository.signInOtpStepUp(
+        username: _usernameController.text.trim(),
+        password: _passwordController.text,
+        otp: otp,
+      );
       if (!mounted) return;
       Navigator.of(context).pop();
     } on FirebaseFunctionsException catch (e) {

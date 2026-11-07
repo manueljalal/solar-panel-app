@@ -150,12 +150,6 @@ class AuthRepository {
       // See sign_in.ts's comment on why the phone number is encoded in
       // the message string rather than HttpsError's `details` param —
       // `details` doesn't reliably survive the callable HTTP transport.
-      // TEMP diagnostic — remove once step-up detection is confirmed
-      // working across a real device: logs the exact code/message this
-      // SDK/platform combination actually delivers, since that's been
-      // the repeated point of failure here.
-      // ignore: avoid_print
-      print('[signIn] FirebaseFunctionsException code=${e.code} message=${e.message} details=${e.details}');
       final message = e.message ?? '';
       if (message.startsWith('step-up-required:')) {
         throw StepUpRequired(message.substring('step-up-required:'.length));
@@ -166,12 +160,13 @@ class AuthRepository {
 
   /// Completes the step-up signIn demands for an unrecognized device —
   /// call requestPhoneOtp(phone-on-file) first, then this with the code.
-  /// On success this device is remembered permanently; future signIns
-  /// from it won't need OTP again.
-  Future<User> signInOtpStepUp({required String username, required String otp}) async {
+  /// The password is sent again: the backend re-checks it, so a new device
+  /// always needs both the password and the code. On success this device
+  /// is remembered permanently; future signIns from it won't need OTP again.
+  Future<User> signInOtpStepUp({required String username, required String password, required String otp}) async {
     final deviceId = await getDeviceId();
     final callable = _functions.httpsCallable('auth-signInOtpStepUp');
-    final result = await callable.call({'username': username, 'otp': otp, 'deviceId': deviceId});
+    final result = await callable.call({'username': username, 'password': password, 'otp': otp, 'deviceId': deviceId});
     final customToken = result.data['customToken'] as String;
     final credential = await _auth.signInWithCustomToken(customToken);
     return credential.user!;

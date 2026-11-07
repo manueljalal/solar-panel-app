@@ -7,6 +7,8 @@ import { hashPassword, isValidPassword, isValidUsername, normalizeUsername } fro
 import { logger } from "firebase-functions";
 import { findPhoneAccount, isUsernameAvailable, removeOrphanAccount } from "../shared/auth/signup_checks";
 import { LIMITS, clientIp, enforceRateLimit } from "../shared/rate_limit";
+import { cleanText } from "../shared/validation/sanitize";
+import { cleanDeviceId } from "../shared/auth/sign_in_guard";
 
 interface PickedLocationInput {
   latitude: number;
@@ -26,6 +28,20 @@ interface SignUpInput {
 
 const E164_PATTERN = /^\+[1-9]\d{6,14}$/;
 
+/// The picked map location, or null. Stored on the profile as-is, so it is
+/// rebuilt from checked fields rather than trusting the client's object.
+function cleanLocation(raw: unknown): { latitude: number; longitude: number; address: string } | null {
+  if (raw === undefined || raw === null) return null;
+  const { latitude, longitude, address } = raw as Partial<PickedLocationInput>;
+  if (
+    typeof latitude !== "number" || typeof longitude !== "number" ||
+    !(latitude >= -90 && latitude <= 90) || !(longitude >= -180 && longitude <= 180)
+  ) {
+    throw new HttpsError("invalid-argument", "location is invalid.");
+  }
+  return { latitude, longitude, address: cleanText(address, "address", { max: 300 }) };
+}
+
 /// Real registration: name + username + password + phone, with the phone
 /// number proven via a WhatsApp-delivered OTP (requestPhoneOtp must have
 /// been called first) in the SAME request as setting the password — so a
@@ -36,15 +52,14 @@ const E164_PATTERN = /^\+[1-9]\d{6,14}$/;
 /// flow already uses), since the credential check is entirely our own.
 export const signUp = onCall<SignUpInput>({ region: "us-central1" }, async (request) => {
     await enforceRateLimit(`signup:${clientIp(request)}`, 10, LIMITS.HOUR);
-  const name = request.data?.name?.trim();
+  const name = cleanText(request.data?.name, "name", { max: 80, min: 1 });
   const username = normalizeUsername(request.data?.username ?? "");
   const password = request.data?.password ?? "";
   const phone = request.data?.phone?.trim();
   const otp = request.data?.otp?.trim();
-  const location = request.data?.location ?? null;
-  const deviceId = request.data?.deviceId?.trim() || null;
+  const location = cleanLocation(request.data?.location);
+  const deviceId = cleanDeviceId(request.data?.deviceId);
 
-  if (!name) throw new HttpsError("invalid-argument", "name is required.");
   if (!isValidUsername(username)) {
     throw new HttpsError(
       "invalid-argument",

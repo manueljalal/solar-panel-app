@@ -20,7 +20,7 @@ export function isValidUsername(username: string): boolean {
   return USERNAME_PATTERN.test(username);
 }
 
-// Strict complexity: 8+ chars, at least one uppercase, one lowercase, one
+// Strict complexity: 8-128 chars, at least one uppercase, one lowercase, one
 // digit, one symbol. Enforced server-side — this is the real boundary;
 // any client-side check is just fast feedback, never trusted alone.
 const HAS_UPPER = /[A-Z]/;
@@ -31,6 +31,7 @@ const HAS_SYMBOL = /[^A-Za-z0-9]/;
 export function isValidPassword(password: string): boolean {
   return (
     password.length >= 8 &&
+    password.length <= 128 &&
     HAS_UPPER.test(password) &&
     HAS_LOWER.test(password) &&
     HAS_DIGIT.test(password) &&

@@ -44,7 +44,7 @@ const signInFn = httpsCallable<{ username: string; password: string; deviceId: s
   functions,
   "auth-signIn",
 );
-const stepUpFn = httpsCallable<{ username: string; otp: string; deviceId: string }, { customToken: string }>(
+const stepUpFn = httpsCallable<{ username: string; password: string; otp: string; deviceId: string }, { customToken: string }>(
   functions,
   "auth-signInOtpStepUp",
 );
@@ -146,6 +146,7 @@ export function AuthCard({
     try {
       const res = await stepUpFn({
         username: username.trim().toLowerCase(),
+        password,
         otp: otp.trim(),
         deviceId: getDeviceId(),
       });
