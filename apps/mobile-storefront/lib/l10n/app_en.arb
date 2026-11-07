@@ -196,25 +196,6 @@
   },
   "searchPrompt": "Search for panels, brands, or vendors.",
   "wattageCalculatorScreenTitle": "Wattage calculator",
-  "wattageCalculatorIntro": "Answer two questions and we'll estimate the system size and panel count your home needs.",
-  "dailyUsageTitle": "Average daily electricity use",
-  "dailyUsageSubtitle": "How much power your home uses per day",
-  "unitKwh": "kWh",
-  "peakSunlightTitle": "Peak sunlight hours",
-  "peakSunlightSubtitle": "Average hours of strong daylight on your roof",
-  "unitHours": "h",
-  "recommendedSystem": "RECOMMENDED SYSTEM",
-  "panelEstimate": "{count} panels · {wattage}W each",
-  "@panelEstimate": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      },
-      "wattage": {
-        "type": "int"
-      }
-    }
-  },
   "seeMatchingPanels": "See matching panels",
   "wattageDisclaimer": "Estimate only — a vendor will confirm exact sizing after a site visit.",
   "ordersTitle": "Orders",
@@ -636,5 +617,32 @@
   "legalPrivacy": "Privacy policy",
   "legalTerms": "Terms of use",
   "legalAgree": "By creating an account you agree to the",
-  "legalAnd": "and"
+  "legalAnd": "and",
+  "calcOnGrid": "On-grid",
+  "calcHybrid": "Hybrid",
+  "calcOffGrid": "Off-grid",
+  "calcOnGridTitle": "On-grid solar calculator",
+  "calcOnGridSubtitle": "Size a solar system that works alongside the grid",
+  "calcHybridTitle": "Hybrid system calculator",
+  "calcHybridSubtitle": "Size a system that combines the grid with battery storage",
+  "calcOffGridTitle": "Off-grid system calculator",
+  "calcOffGridSubtitle": "Size a standalone system that runs on panels and batteries only",
+  "calcBatteryOption": "Battery option",
+  "calcIncludeBattery": "Include battery",
+  "calcPhase": "Phase",
+  "calcSinglePhase": "Single phase",
+  "calcThreePhase": "Three phase",
+  "calcLoadEntry": "Load entry",
+  "calcAmps": "Amps (A)",
+  "calcLoad": "Load",
+  "calcDayLoad": "Day load",
+  "calcNightLoad": "Night load",
+  "calcNightHours": "Night hours",
+  "calcCalculate": "Calculate",
+  "calcEnterLoad": "Enter your load first",
+  "calcResults": "Your system",
+  "calcPanels": "Solar panels",
+  "calcInverter": "Inverter",
+  "calcBatteries": "Batteries",
+  "calcDailyProduction": "Daily production"
 }

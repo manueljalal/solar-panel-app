@@ -892,60 +892,6 @@ abstract class AppLocalizations {
   /// **'Wattage calculator'**
   String get wattageCalculatorScreenTitle;
 
-  /// No description provided for @wattageCalculatorIntro.
-  ///
-  /// In en, this message translates to:
-  /// **'Answer two questions and we\'ll estimate the system size and panel count your home needs.'**
-  String get wattageCalculatorIntro;
-
-  /// No description provided for @dailyUsageTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Average daily electricity use'**
-  String get dailyUsageTitle;
-
-  /// No description provided for @dailyUsageSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'How much power your home uses per day'**
-  String get dailyUsageSubtitle;
-
-  /// No description provided for @unitKwh.
-  ///
-  /// In en, this message translates to:
-  /// **'kWh'**
-  String get unitKwh;
-
-  /// No description provided for @peakSunlightTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Peak sunlight hours'**
-  String get peakSunlightTitle;
-
-  /// No description provided for @peakSunlightSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Average hours of strong daylight on your roof'**
-  String get peakSunlightSubtitle;
-
-  /// No description provided for @unitHours.
-  ///
-  /// In en, this message translates to:
-  /// **'h'**
-  String get unitHours;
-
-  /// No description provided for @recommendedSystem.
-  ///
-  /// In en, this message translates to:
-  /// **'RECOMMENDED SYSTEM'**
-  String get recommendedSystem;
-
-  /// No description provided for @panelEstimate.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} panels · {wattage}W each'**
-  String panelEstimate(int count, int wattage);
-
   /// No description provided for @seeMatchingPanels.
   ///
   /// In en, this message translates to:
@@ -2727,6 +2673,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'and'**
   String get legalAnd;
+
+  /// No description provided for @calcOnGrid.
+  ///
+  /// In en, this message translates to:
+  /// **'On-grid'**
+  String get calcOnGrid;
+
+  /// No description provided for @calcHybrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Hybrid'**
+  String get calcHybrid;
+
+  /// No description provided for @calcOffGrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Off-grid'**
+  String get calcOffGrid;
+
+  /// No description provided for @calcOnGridTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'On-grid solar calculator'**
+  String get calcOnGridTitle;
+
+  /// No description provided for @calcOnGridSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Size a solar system that works alongside the grid'**
+  String get calcOnGridSubtitle;
+
+  /// No description provided for @calcHybridTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Hybrid system calculator'**
+  String get calcHybridTitle;
+
+  /// No description provided for @calcHybridSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Size a system that combines the grid with battery storage'**
+  String get calcHybridSubtitle;
+
+  /// No description provided for @calcOffGridTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Off-grid system calculator'**
+  String get calcOffGridTitle;
+
+  /// No description provided for @calcOffGridSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Size a standalone system that runs on panels and batteries only'**
+  String get calcOffGridSubtitle;
+
+  /// No description provided for @calcBatteryOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery option'**
+  String get calcBatteryOption;
+
+  /// No description provided for @calcIncludeBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Include battery'**
+  String get calcIncludeBattery;
+
+  /// No description provided for @calcPhase.
+  ///
+  /// In en, this message translates to:
+  /// **'Phase'**
+  String get calcPhase;
+
+  /// No description provided for @calcSinglePhase.
+  ///
+  /// In en, this message translates to:
+  /// **'Single phase'**
+  String get calcSinglePhase;
+
+  /// No description provided for @calcThreePhase.
+  ///
+  /// In en, this message translates to:
+  /// **'Three phase'**
+  String get calcThreePhase;
+
+  /// No description provided for @calcLoadEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Load entry'**
+  String get calcLoadEntry;
+
+  /// No description provided for @calcAmps.
+  ///
+  /// In en, this message translates to:
+  /// **'Amps (A)'**
+  String get calcAmps;
+
+  /// No description provided for @calcLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Load'**
+  String get calcLoad;
+
+  /// No description provided for @calcDayLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Day load'**
+  String get calcDayLoad;
+
+  /// No description provided for @calcNightLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Night load'**
+  String get calcNightLoad;
+
+  /// No description provided for @calcNightHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Night hours'**
+  String get calcNightHours;
+
+  /// No description provided for @calcCalculate.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate'**
+  String get calcCalculate;
+
+  /// No description provided for @calcEnterLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your load first'**
+  String get calcEnterLoad;
+
+  /// No description provided for @calcResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Your system'**
+  String get calcResults;
+
+  /// No description provided for @calcPanels.
+  ///
+  /// In en, this message translates to:
+  /// **'Solar panels'**
+  String get calcPanels;
+
+  /// No description provided for @calcInverter.
+  ///
+  /// In en, this message translates to:
+  /// **'Inverter'**
+  String get calcInverter;
+
+  /// No description provided for @calcBatteries.
+  ///
+  /// In en, this message translates to:
+  /// **'Batteries'**
+  String get calcBatteries;
+
+  /// No description provided for @calcDailyProduction.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily production'**
+  String get calcDailyProduction;
 }
 
 class _AppLocalizationsDelegate

@@ -446,37 +446,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wattageCalculatorScreenTitle => 'Wattage calculator';
 
   @override
-  String get wattageCalculatorIntro =>
-      'Answer two questions and we\'ll estimate the system size and panel count your home needs.';
-
-  @override
-  String get dailyUsageTitle => 'Average daily electricity use';
-
-  @override
-  String get dailyUsageSubtitle => 'How much power your home uses per day';
-
-  @override
-  String get unitKwh => 'kWh';
-
-  @override
-  String get peakSunlightTitle => 'Peak sunlight hours';
-
-  @override
-  String get peakSunlightSubtitle =>
-      'Average hours of strong daylight on your roof';
-
-  @override
-  String get unitHours => 'h';
-
-  @override
-  String get recommendedSystem => 'RECOMMENDED SYSTEM';
-
-  @override
-  String panelEstimate(int count, int wattage) {
-    return '$count panels · ${wattage}W each';
-  }
-
-  @override
   String get seeMatchingPanels => 'See matching panels';
 
   @override
@@ -1454,4 +1423,88 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get legalAnd => 'and';
+
+  @override
+  String get calcOnGrid => 'On-grid';
+
+  @override
+  String get calcHybrid => 'Hybrid';
+
+  @override
+  String get calcOffGrid => 'Off-grid';
+
+  @override
+  String get calcOnGridTitle => 'On-grid solar calculator';
+
+  @override
+  String get calcOnGridSubtitle =>
+      'Size a solar system that works alongside the grid';
+
+  @override
+  String get calcHybridTitle => 'Hybrid system calculator';
+
+  @override
+  String get calcHybridSubtitle =>
+      'Size a system that combines the grid with battery storage';
+
+  @override
+  String get calcOffGridTitle => 'Off-grid system calculator';
+
+  @override
+  String get calcOffGridSubtitle =>
+      'Size a standalone system that runs on panels and batteries only';
+
+  @override
+  String get calcBatteryOption => 'Battery option';
+
+  @override
+  String get calcIncludeBattery => 'Include battery';
+
+  @override
+  String get calcPhase => 'Phase';
+
+  @override
+  String get calcSinglePhase => 'Single phase';
+
+  @override
+  String get calcThreePhase => 'Three phase';
+
+  @override
+  String get calcLoadEntry => 'Load entry';
+
+  @override
+  String get calcAmps => 'Amps (A)';
+
+  @override
+  String get calcLoad => 'Load';
+
+  @override
+  String get calcDayLoad => 'Day load';
+
+  @override
+  String get calcNightLoad => 'Night load';
+
+  @override
+  String get calcNightHours => 'Night hours';
+
+  @override
+  String get calcCalculate => 'Calculate';
+
+  @override
+  String get calcEnterLoad => 'Enter your load first';
+
+  @override
+  String get calcResults => 'Your system';
+
+  @override
+  String get calcPanels => 'Solar panels';
+
+  @override
+  String get calcInverter => 'Inverter';
+
+  @override
+  String get calcBatteries => 'Batteries';
+
+  @override
+  String get calcDailyProduction => 'Daily production';
 }

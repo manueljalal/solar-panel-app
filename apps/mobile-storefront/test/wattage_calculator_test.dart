@@ -5,7 +5,7 @@ import 'package:solary_marketplace/main.dart';
 import 'support/fake_home_repository.dart';
 
 void main() {
-  testWidgets('Wattage calculator opens from Home and updates live as inputs change', (tester) async {
+  testWidgets('Calculator opens from Home and sizes an on-grid and a hybrid system', (tester) async {
     final originalOnError = FlutterError.onError;
     FlutterError.onError = (details) {
       if (details.exception is! NetworkImageLoadException) originalOnError?.call(details);
@@ -23,19 +23,21 @@ void main() {
     await tester.tap(find.text('Wattage calculator').first);
     await tester.pumpAndSettle();
 
-    // Default: 12 kWh / 6h -> 2.0 kW, ceil(2000/450) = 5 panels.
-    expect(find.text('2.0 kW'), findsOneWidget);
-    expect(find.text('5 panels · 450W each'), findsOneWidget);
+    // On-grid, 5 kW load.
+    await tester.enterText(find.widgetWithText(TextField, 'Load'), '5');
+    await tester.tap(find.text('Calculate'));
+    await tester.pumpAndSettle();
+    expect(find.text('11 × 585W  ·  6.4 kWp'), findsOneWidget);
+    expect(find.text('Batteries'), findsNothing);
 
-    // Increase daily usage from 12 to 18 kWh (6 taps of +1).
-    final plusButtons = find.byIcon(Icons.add);
-    for (var i = 0; i < 6; i++) {
-      await tester.tap(plusButtons.first);
-      await tester.pump();
-    }
-
-    // 18 kWh / 6h = 3.0 kW, ceil(3000/450) = 7 panels.
-    expect(find.text('3.0 kW'), findsOneWidget);
-    expect(find.text('7 panels · 450W each'), findsOneWidget);
+    // Hybrid adds night load and batteries.
+    await tester.ensureVisible(find.text('Hybrid'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Hybrid'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.widgetWithText(TextField, 'Day load'), '3');
+    await tester.enterText(find.widgetWithText(TextField, 'Night load'), '2');
+    await tester.pumpAndSettle();
+    expect(find.text('5 × 5.1 kWh  ·  25.6 kWh'), findsOneWidget);
   });
 }

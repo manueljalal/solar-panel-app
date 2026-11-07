@@ -451,37 +451,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wattageCalculatorScreenTitle => 'حاسبة الطاقة';
 
   @override
-  String get wattageCalculatorIntro =>
-      'أجب عن سؤالين وسنقدّر حجم النظام وعدد الألواح التي يحتاجها منزلك.';
-
-  @override
-  String get dailyUsageTitle => 'متوسط استهلاك الكهرباء اليومي';
-
-  @override
-  String get dailyUsageSubtitle => 'كمية الطاقة التي يستهلكها منزلك يوميًا';
-
-  @override
-  String get unitKwh => 'ك.و.س';
-
-  @override
-  String get peakSunlightTitle => 'ساعات ذروة أشعة الشمس';
-
-  @override
-  String get peakSunlightSubtitle =>
-      'متوسط ساعات ضوء النهار القوي على سطح منزلك';
-
-  @override
-  String get unitHours => 'س';
-
-  @override
-  String get recommendedSystem => 'النظام الموصى به';
-
-  @override
-  String panelEstimate(int count, int wattage) {
-    return '$count لوحًا · $wattage واط لكل لوح';
-  }
-
-  @override
   String get seeMatchingPanels => 'عرض الألواح المناسبة';
 
   @override
@@ -1449,4 +1418,87 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get legalAnd => 'و';
+
+  @override
+  String get calcOnGrid => 'متصل بالشبكة';
+
+  @override
+  String get calcHybrid => 'هجين';
+
+  @override
+  String get calcOffGrid => 'منفصل عن الشبكة';
+
+  @override
+  String get calcOnGridTitle => 'حاسبة الطاقة الشمسية المتصلة بالشبكة';
+
+  @override
+  String get calcOnGridSubtitle => 'احسب احتياجات نظام شمسي متصل بالشبكة';
+
+  @override
+  String get calcHybridTitle => 'حاسبة النظام الهجين';
+
+  @override
+  String get calcHybridSubtitle =>
+      'احسب نظاماً يجمع بين الشبكة وتخزين البطاريات';
+
+  @override
+  String get calcOffGridTitle => 'حاسبة النظام المنفصل عن الشبكة';
+
+  @override
+  String get calcOffGridSubtitle =>
+      'احسب نظاماً مستقلاً يعمل بالألواح والبطاريات فقط';
+
+  @override
+  String get calcBatteryOption => 'خيار البطارية';
+
+  @override
+  String get calcIncludeBattery => 'تضمين البطارية';
+
+  @override
+  String get calcPhase => 'الطور';
+
+  @override
+  String get calcSinglePhase => 'طور واحد';
+
+  @override
+  String get calcThreePhase => 'ثلاثة أطوار';
+
+  @override
+  String get calcLoadEntry => 'إدخال الحمل';
+
+  @override
+  String get calcAmps => 'أمبير (A)';
+
+  @override
+  String get calcLoad => 'الحمل';
+
+  @override
+  String get calcDayLoad => 'حمل النهار';
+
+  @override
+  String get calcNightLoad => 'حمل الليل';
+
+  @override
+  String get calcNightHours => 'ساعات الليل';
+
+  @override
+  String get calcCalculate => 'احسب';
+
+  @override
+  String get calcEnterLoad => 'أدخل الحمل أولاً';
+
+  @override
+  String get calcResults => 'نظامك';
+
+  @override
+  String get calcPanels => 'الألواح الشمسية';
+
+  @override
+  String get calcInverter => 'العاكس';
+
+  @override
+  String get calcBatteries => 'البطاريات';
+
+  @override
+  String get calcDailyProduction => 'الإنتاج اليومي';
 }

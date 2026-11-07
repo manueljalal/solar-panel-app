@@ -454,37 +454,6 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get wattageCalculatorScreenTitle => 'ژمێرەری وات';
 
   @override
-  String get wattageCalculatorIntro =>
-      'وەڵامی دوو پرسیار بدەوە و ئێمە قەبارەی سیستەم و ژمارەی پانێڵی پێویستی ماڵەکەت دیاری دەکەین.';
-
-  @override
-  String get dailyUsageTitle => 'تێکڕای بەکارهێنانی کارەبای ڕۆژانە';
-
-  @override
-  String get dailyUsageSubtitle => 'چەند وزە ماڵەکەت ڕۆژانە بەکاردەهێنێت';
-
-  @override
-  String get unitKwh => 'کیلۆوات.کاژێر';
-
-  @override
-  String get peakSunlightTitle => 'کاتژمێری لووتکەی تیشکی خۆر';
-
-  @override
-  String get peakSunlightSubtitle =>
-      'تێکڕای کاتژمێرەکانی ڕووناکی بەهێزی خۆر لەسەر باڵەخانەکەت';
-
-  @override
-  String get unitHours => 'کاژێر';
-
-  @override
-  String get recommendedSystem => 'سیستەمی پێشنیارکراو';
-
-  @override
-  String panelEstimate(int count, int wattage) {
-    return '$count پانێڵ · $wattage وات بۆ هەریەکە';
-  }
-
-  @override
   String get seeMatchingPanels => 'پانێڵە گونجاوەکان ببینە';
 
   @override
@@ -1466,4 +1435,88 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get legalAnd => 'و';
+
+  @override
+  String get calcOnGrid => 'بەستراوە بە تۆڕ';
+
+  @override
+  String get calcHybrid => 'تێکەڵ';
+
+  @override
+  String get calcOffGrid => 'جیاکراوە لە تۆڕ';
+
+  @override
+  String get calcOnGridTitle => 'ژمێرەری وزەی خۆری بەستراوە بە تۆڕ';
+
+  @override
+  String get calcOnGridSubtitle =>
+      'پێداویستیەکانی وزەی خۆری بەستراوە بە تۆڕ ژمێرە بکە';
+
+  @override
+  String get calcHybridTitle => 'ژمێرەری سیستەمی تێکەڵ';
+
+  @override
+  String get calcHybridSubtitle =>
+      'سیستەمێک ژمێرە بکە کە تۆڕ و هەڵگرتنی باتری تێکەڵ دەکات';
+
+  @override
+  String get calcOffGridTitle => 'ژمێرەری سیستەمی جیاکراوە لە تۆڕ';
+
+  @override
+  String get calcOffGridSubtitle =>
+      'سیستەمێکی سەربەخۆ ژمێرە بکە کە تەنها بە پانێڵ و باتری کاردەکات';
+
+  @override
+  String get calcBatteryOption => 'هەڵبژاردنی باتری';
+
+  @override
+  String get calcIncludeBattery => 'باتری لەخۆبگرێت';
+
+  @override
+  String get calcPhase => 'فەیز';
+
+  @override
+  String get calcSinglePhase => 'فەیزێک';
+
+  @override
+  String get calcThreePhase => 'سێ فەیز';
+
+  @override
+  String get calcLoadEntry => 'تۆمارکردنی بار';
+
+  @override
+  String get calcAmps => 'ئامپێر (A)';
+
+  @override
+  String get calcLoad => 'بار';
+
+  @override
+  String get calcDayLoad => 'باری ڕۆژ';
+
+  @override
+  String get calcNightLoad => 'باری شەو';
+
+  @override
+  String get calcNightHours => 'کاتژمێرەکانی شەو';
+
+  @override
+  String get calcCalculate => 'ژمێرە بکە';
+
+  @override
+  String get calcEnterLoad => 'سەرەتا بارەکەت بنووسە';
+
+  @override
+  String get calcResults => 'سیستەمەکەت';
+
+  @override
+  String get calcPanels => 'پانێڵی خۆر';
+
+  @override
+  String get calcInverter => 'ئینڤێرتەر';
+
+  @override
+  String get calcBatteries => 'باتری';
+
+  @override
+  String get calcDailyProduction => 'بەرهەمی ڕۆژانە';
 }
