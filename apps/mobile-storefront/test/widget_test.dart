@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:solary_marketplace/shared/widgets/solary_logo.dart';
 
 import 'package:solary_marketplace/main.dart';
 
@@ -10,7 +11,7 @@ void main() {
     await tester.pumpWidget(SolaryMarketplaceApp(homeRepository: FakeHomeRepository(), showSplash: false));
     await tester.pumpAndSettle();
 
-    expect(find.text('Solary'), findsOneWidget);
+    expect(find.byType(SolaryLogo), findsOneWidget);
     expect(find.text('Companies'), findsOneWidget);
 
     // "Best sellers" is further down the main CustomScrollView — scroll it

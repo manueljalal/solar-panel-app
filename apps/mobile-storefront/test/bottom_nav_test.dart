@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:solary_marketplace/shared/widgets/solary_logo.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:solary_marketplace/main.dart';
 
@@ -17,7 +18,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Home is the default tab.
-    expect(find.text('Solary'), findsOneWidget);
+    expect(find.byType(SolaryLogo), findsOneWidget);
 
     await tester.tap(navTab('Learn'));
     await tester.pumpAndSettle();
@@ -43,6 +44,6 @@ void main() {
 
     await tester.tap(navTab('Home'));
     await tester.pumpAndSettle();
-    expect(find.text('Solary'), findsOneWidget);
+    expect(find.byType(SolaryLogo), findsOneWidget);
   });
 }
