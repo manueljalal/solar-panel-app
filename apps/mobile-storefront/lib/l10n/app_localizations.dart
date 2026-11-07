@@ -244,12 +244,6 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get retry;
 
-  /// No description provided for @bestMatch.
-  ///
-  /// In en, this message translates to:
-  /// **'Best match'**
-  String get bestMatch;
-
   /// No description provided for @wattageCalculatorTitle.
   ///
   /// In en, this message translates to:
@@ -2835,6 +2829,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Battery only'**
   String get calcOffGridHint;
+
+  /// No description provided for @sortBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by'**
+  String get sortBy;
+
+  /// No description provided for @sortBestSelling.
+  ///
+  /// In en, this message translates to:
+  /// **'Best selling'**
+  String get sortBestSelling;
+
+  /// No description provided for @sortTopRated.
+  ///
+  /// In en, this message translates to:
+  /// **'Top rated'**
+  String get sortTopRated;
+
+  /// No description provided for @sortPriceLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: low to high'**
+  String get sortPriceLow;
+
+  /// No description provided for @sortPriceHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: high to low'**
+  String get sortPriceHigh;
+
+  /// No description provided for @calcNoPanels.
+  ///
+  /// In en, this message translates to:
+  /// **'No solar panels are listed yet.'**
+  String get calcNoPanels;
 }
 
 class _AppLocalizationsDelegate

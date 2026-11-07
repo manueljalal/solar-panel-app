@@ -38,7 +38,6 @@ class HomeSearchField extends StatelessWidget {
               Expanded(
                 child: Text(l10n.searchHint, style: AppTypography.bodyMuted),
               ),
-              const Icon(Icons.tune, color: AppColors.ink600, size: 20),
             ],
           ),
         ),

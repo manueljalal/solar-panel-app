@@ -10,6 +10,9 @@ import 'home_fixtures.dart';
 /// fixture content, so widget tests render the same deterministic data
 /// regardless of network/Firebase-init state.
 class FakeHomeRepository implements HomeRepository {
+  @override
+  Future<HomeCompany?> fetchCompany(String id) async => null;
+
   FakeHomeRepository({this.withBanners = false});
 
   /// Banners are off by default: the carousel auto-advances on a timer,

@@ -51,6 +51,15 @@ class HomeRepository {
         .toList();
   }
 
+  /// One approved company, for opening its store from elsewhere (e.g. the
+  /// seller line on a product page). Null if it's gone or not approved.
+  Future<HomeCompany?> fetchCompany(String id) async {
+    final doc = await _db.collection('vendors').doc(id).get();
+    final data = doc.data();
+    if (data == null || data['status'] != 'approved') return null;
+    return HomeCompany.fromFirestore(doc.id, data);
+  }
+
   /// Promo carousel slides, oldest first (the order the admin added them).
   /// The admin tool caps this at 5; the limit here is a second guard.
   Future<List<HomeBanner>> fetchBanners() async {

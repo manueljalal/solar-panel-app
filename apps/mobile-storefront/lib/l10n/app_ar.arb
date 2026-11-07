@@ -24,7 +24,6 @@
   "sectionFeatured": "مميز",
   "sectionBestSellers": "الأكثر مبيعًا",
   "seeAll": "عرض الكل",
-  "bestMatch": "الأنسب",
   "wattageCalculatorTitle": "حاسبة الطاقة",
   "wattageCalculatorSubtitle": "سؤالان، ونحدد حجم النظام.",
   "tryIt": "جرّبها",
@@ -573,5 +572,11 @@
   "calcOffGridTitle": "حاسبة النظام المنفصل عن الشبكة",
   "calcOnGridHint": "شمسي + شبكة",
   "calcHybridHint": "شبكة + بطارية",
-  "calcOffGridHint": "بطارية فقط"
+  "calcOffGridHint": "بطارية فقط",
+  "sortBy": "ترتيب حسب",
+  "sortBestSelling": "الأكثر مبيعاً",
+  "sortTopRated": "الأعلى تقييماً",
+  "sortPriceLow": "السعر: من الأقل إلى الأعلى",
+  "sortPriceHigh": "السعر: من الأعلى إلى الأقل",
+  "calcNoPanels": "لا توجد ألواح شمسية معروضة حالياً."
 }

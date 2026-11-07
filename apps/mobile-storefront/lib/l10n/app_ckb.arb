@@ -24,7 +24,6 @@
   "sectionFeatured": "تایبەت",
   "sectionBestSellers": "زۆرترین فرۆشراو",
   "seeAll": "هەمووی ببینە",
-  "bestMatch": "باشترین گونجاو",
   "wattageCalculatorTitle": "ژمێرەری وات",
   "wattageCalculatorSubtitle": "دوو پرسیار، قەبارەی سیستەم دیاری دەکرێت.",
   "tryIt": "تاقی بکەرەوە",
@@ -573,5 +572,11 @@
   "calcOffGridTitle": "ژمێرەری سیستەمی جیاکراوە لە تۆڕ",
   "calcOnGridHint": "خۆر + تۆڕ",
   "calcHybridHint": "تۆڕ + باتری",
-  "calcOffGridHint": "تەنها باتری"
+  "calcOffGridHint": "تەنها باتری",
+  "sortBy": "ڕیزکردن بەپێی",
+  "sortBestSelling": "زۆرترین فرۆشراو",
+  "sortTopRated": "بەرزترین هەڵسەنگاندن",
+  "sortPriceLow": "نرخ: لە کەمەوە بۆ زۆر",
+  "sortPriceHigh": "نرخ: لە زۆرەوە بۆ کەم",
+  "calcNoPanels": "هێشتا هیچ پانێڵێکی خۆر دانەنراوە."
 }

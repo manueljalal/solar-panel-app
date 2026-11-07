@@ -82,9 +82,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retry => 'Retry';
 
   @override
-  String get bestMatch => 'Best match';
-
-  @override
   String get wattageCalculatorTitle => 'Wattage calculator';
 
   @override
@@ -1509,4 +1506,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get calcOffGridHint => 'Battery only';
+
+  @override
+  String get sortBy => 'Sort by';
+
+  @override
+  String get sortBestSelling => 'Best selling';
+
+  @override
+  String get sortTopRated => 'Top rated';
+
+  @override
+  String get sortPriceLow => 'Price: low to high';
+
+  @override
+  String get sortPriceHigh => 'Price: high to low';
+
+  @override
+  String get calcNoPanels => 'No solar panels are listed yet.';
 }

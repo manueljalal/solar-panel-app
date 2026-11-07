@@ -60,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<HomeBanner> _banners = const [];
   List<HomeCategory> _categories = const [];
   String? _selectedCategory; // null = all
+  ProductSort _sort = ProductSort.bestSelling;
   String? _companyCity; // IraqCity id; null = all cities
   bool _companiesFailed = false;
   bool _productsFailed = false;
@@ -175,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final products = _products ?? const <HomeProduct>[];
+    final products = sortProducts(_products ?? const <HomeProduct>[], _sort);
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -247,7 +248,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         l10n.sectionBestSellers,
                         style: AppTypography.sectionTitle,
                       ),
-                      const FilterChipRow(),
+                      SortButton(
+                        value: _sort,
+                        onChanged: (s) => setState(() => _sort = s),
+                      ),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.md),

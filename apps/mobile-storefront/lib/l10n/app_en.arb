@@ -24,7 +24,6 @@
   "learnTeaserSubtitle": "Watch short video guides",
   "homeLoadError": "Couldn't load content. Check your connection.",
   "retry": "Retry",
-  "bestMatch": "Best match",
   "wattageCalculatorTitle": "Wattage calculator",
   "wattageCalculatorSubtitle": "Two questions, sized system.",
   "tryIt": "Try it",
@@ -654,5 +653,11 @@
   "calcOffGridTitle": "Off-grid system calculator",
   "calcOnGridHint": "Solar + grid",
   "calcHybridHint": "Grid + battery",
-  "calcOffGridHint": "Battery only"
+  "calcOffGridHint": "Battery only",
+  "sortBy": "Sort by",
+  "sortBestSelling": "Best selling",
+  "sortTopRated": "Top rated",
+  "sortPriceLow": "Price: low to high",
+  "sortPriceHigh": "Price: high to low",
+  "calcNoPanels": "No solar panels are listed yet."
 }

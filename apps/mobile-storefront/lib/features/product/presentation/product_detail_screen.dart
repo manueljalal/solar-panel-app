@@ -50,7 +50,12 @@ class ProductDetailScreen extends StatelessWidget {
                           const SizedBox(height: 4),
                           Text(product.titleFor(lang), style: AppTypography.h1.copyWith(fontSize: 22)),
                           const SizedBox(height: 8),
-                          ProductVendorRow(vendor: product.vendor, rating: product.rating, sold: product.sold),
+                          ProductVendorRow(
+                            vendorId: product.vendorId,
+                            vendor: product.vendor,
+                            rating: product.rating,
+                            sold: product.sold,
+                          ),
                           const SizedBox(height: AppSpacing.lg),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.baseline,

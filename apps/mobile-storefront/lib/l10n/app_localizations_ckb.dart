@@ -84,9 +84,6 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get retry => 'دووبارە هەوڵبدەرەوە';
 
   @override
-  String get bestMatch => 'باشترین گونجاو';
-
-  @override
   String get wattageCalculatorTitle => 'ژمێرەری وات';
 
   @override
@@ -1521,4 +1518,22 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get calcOffGridHint => 'تەنها باتری';
+
+  @override
+  String get sortBy => 'ڕیزکردن بەپێی';
+
+  @override
+  String get sortBestSelling => 'زۆرترین فرۆشراو';
+
+  @override
+  String get sortTopRated => 'بەرزترین هەڵسەنگاندن';
+
+  @override
+  String get sortPriceLow => 'نرخ: لە کەمەوە بۆ زۆر';
+
+  @override
+  String get sortPriceHigh => 'نرخ: لە زۆرەوە بۆ کەم';
+
+  @override
+  String get calcNoPanels => 'هێشتا هیچ پانێڵێکی خۆر دانەنراوە.';
 }

@@ -7,6 +7,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/solar_sizing.dart';
+import 'matching_panels_screen.dart';
 
 const _sun = Color(0xFFF2B65C);
 const _deep = Color(0xFF0F241C);
@@ -208,7 +209,11 @@ class _WattageCalculatorScreenState extends State<WattageCalculatorScreen> {
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   FilledButton(
-                    onPressed: () => Navigator.of(context).maybePop(),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const MatchingPanelsScreen(targetWattage: SolarSizing.panelWattage),
+                      ),
+                    ),
                     style: FilledButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       padding: const EdgeInsets.symmetric(vertical: 15),

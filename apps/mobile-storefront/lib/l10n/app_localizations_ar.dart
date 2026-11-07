@@ -81,9 +81,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get retry => 'إعادة المحاولة';
 
   @override
-  String get bestMatch => 'الأنسب';
-
-  @override
   String get wattageCalculatorTitle => 'حاسبة الطاقة';
 
   @override
@@ -1503,4 +1500,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get calcOffGridHint => 'بطارية فقط';
+
+  @override
+  String get sortBy => 'ترتيب حسب';
+
+  @override
+  String get sortBestSelling => 'الأكثر مبيعاً';
+
+  @override
+  String get sortTopRated => 'الأعلى تقييماً';
+
+  @override
+  String get sortPriceLow => 'السعر: من الأقل إلى الأعلى';
+
+  @override
+  String get sortPriceHigh => 'السعر: من الأعلى إلى الأقل';
+
+  @override
+  String get calcNoPanels => 'لا توجد ألواح شمسية معروضة حالياً.';
 }
