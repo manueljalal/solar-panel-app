@@ -2686,23 +2686,11 @@ abstract class AppLocalizations {
   /// **'Off-grid'**
   String get calcOffGrid;
 
-  /// No description provided for @calcOnGridTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'On-grid solar calculator'**
-  String get calcOnGridTitle;
-
   /// No description provided for @calcOnGridSubtitle.
   ///
   /// In en, this message translates to:
   /// **'Size a solar system that works alongside the grid'**
   String get calcOnGridSubtitle;
-
-  /// No description provided for @calcHybridTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Hybrid system calculator'**
-  String get calcHybridTitle;
 
   /// No description provided for @calcHybridSubtitle.
   ///
@@ -2710,23 +2698,11 @@ abstract class AppLocalizations {
   /// **'Size a system that combines the grid with battery storage'**
   String get calcHybridSubtitle;
 
-  /// No description provided for @calcOffGridTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Off-grid system calculator'**
-  String get calcOffGridTitle;
-
   /// No description provided for @calcOffGridSubtitle.
   ///
   /// In en, this message translates to:
   /// **'Size a standalone system that runs on panels and batteries only'**
   String get calcOffGridSubtitle;
-
-  /// No description provided for @calcBatteryOption.
-  ///
-  /// In en, this message translates to:
-  /// **'Battery option'**
-  String get calcBatteryOption;
 
   /// No description provided for @calcIncludeBattery.
   ///
@@ -2812,53 +2788,11 @@ abstract class AppLocalizations {
   /// **'Daily production'**
   String get calcDailyProduction;
 
-  /// No description provided for @calcOnGridHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Solar + grid'**
-  String get calcOnGridHint;
-
-  /// No description provided for @calcHybridHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Grid + battery'**
-  String get calcHybridHint;
-
-  /// No description provided for @calcOffGridHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Battery only'**
-  String get calcOffGridHint;
-
-  /// No description provided for @calcConnection.
-  ///
-  /// In en, this message translates to:
-  /// **'Your connection'**
-  String get calcConnection;
-
   /// No description provided for @calcUnit.
   ///
   /// In en, this message translates to:
   /// **'Unit'**
   String get calcUnit;
-
-  /// No description provided for @calcDayLoadHint.
-  ///
-  /// In en, this message translates to:
-  /// **'What runs while the sun is up'**
-  String get calcDayLoadHint;
-
-  /// No description provided for @calcNightLoadHint.
-  ///
-  /// In en, this message translates to:
-  /// **'What runs after sunset'**
-  String get calcNightLoadHint;
-
-  /// No description provided for @calcOnGridLoadHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Your average running load'**
-  String get calcOnGridLoadHint;
 
   /// No description provided for @calcPanelsCount.
   ///

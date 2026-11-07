@@ -1426,27 +1426,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcOffGrid => 'منفصل عن الشبكة';
 
   @override
-  String get calcOnGridTitle => 'حاسبة الطاقة الشمسية المتصلة بالشبكة';
-
-  @override
   String get calcOnGridSubtitle => 'احسب احتياجات نظام شمسي متصل بالشبكة';
-
-  @override
-  String get calcHybridTitle => 'حاسبة النظام الهجين';
 
   @override
   String get calcHybridSubtitle =>
       'احسب نظاماً يجمع بين الشبكة وتخزين البطاريات';
 
   @override
-  String get calcOffGridTitle => 'حاسبة النظام المنفصل عن الشبكة';
-
-  @override
   String get calcOffGridSubtitle =>
       'احسب نظاماً مستقلاً يعمل بالألواح والبطاريات فقط';
-
-  @override
-  String get calcBatteryOption => 'خيار البطارية';
 
   @override
   String get calcIncludeBattery => 'تضمين البطارية';
@@ -1491,28 +1479,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcDailyProduction => 'الإنتاج اليومي';
 
   @override
-  String get calcOnGridHint => 'شمسي + شبكة';
-
-  @override
-  String get calcHybridHint => 'شبكة + بطارية';
-
-  @override
-  String get calcOffGridHint => 'بطارية فقط';
-
-  @override
-  String get calcConnection => 'اتصالك';
-
-  @override
   String get calcUnit => 'الوحدة';
-
-  @override
-  String get calcDayLoadHint => 'ما يعمل أثناء النهار';
-
-  @override
-  String get calcNightLoadHint => 'ما يعمل بعد الغروب';
-
-  @override
-  String get calcOnGridLoadHint => 'متوسط الحمل المستمر';
 
   @override
   String calcPanelsCount(int count, int wattage) {

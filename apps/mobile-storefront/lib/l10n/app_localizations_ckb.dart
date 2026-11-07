@@ -1443,28 +1443,16 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get calcOffGrid => 'جیاکراوە لە تۆڕ';
 
   @override
-  String get calcOnGridTitle => 'ژمێرەری وزەی خۆری بەستراوە بە تۆڕ';
-
-  @override
   String get calcOnGridSubtitle =>
       'پێداویستیەکانی وزەی خۆری بەستراوە بە تۆڕ ژمێرە بکە';
-
-  @override
-  String get calcHybridTitle => 'ژمێرەری سیستەمی تێکەڵ';
 
   @override
   String get calcHybridSubtitle =>
       'سیستەمێک ژمێرە بکە کە تۆڕ و هەڵگرتنی باتری تێکەڵ دەکات';
 
   @override
-  String get calcOffGridTitle => 'ژمێرەری سیستەمی جیاکراوە لە تۆڕ';
-
-  @override
   String get calcOffGridSubtitle =>
       'سیستەمێکی سەربەخۆ ژمێرە بکە کە تەنها بە پانێڵ و باتری کاردەکات';
-
-  @override
-  String get calcBatteryOption => 'هەڵبژاردنی باتری';
 
   @override
   String get calcIncludeBattery => 'باتری لەخۆبگرێت';
@@ -1509,28 +1497,7 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get calcDailyProduction => 'بەرهەمی ڕۆژانە';
 
   @override
-  String get calcOnGridHint => 'خۆر + تۆڕ';
-
-  @override
-  String get calcHybridHint => 'تۆڕ + باتری';
-
-  @override
-  String get calcOffGridHint => 'تەنها باتری';
-
-  @override
-  String get calcConnection => 'پەیوەندییەکەت';
-
-  @override
   String get calcUnit => 'یەکە';
-
-  @override
-  String get calcDayLoadHint => 'ئەوەی کاتی ڕۆژ کاردەکات';
-
-  @override
-  String get calcNightLoadHint => 'ئەوەی دوای خۆرئاوابوون کاردەکات';
-
-  @override
-  String get calcOnGridLoadHint => 'تێکڕای باری بەردەوامت';
 
   @override
   String calcPanelsCount(int count, int wattage) {

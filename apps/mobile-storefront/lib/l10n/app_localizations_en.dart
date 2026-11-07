@@ -1431,28 +1431,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calcOffGrid => 'Off-grid';
 
   @override
-  String get calcOnGridTitle => 'On-grid solar calculator';
-
-  @override
   String get calcOnGridSubtitle =>
       'Size a solar system that works alongside the grid';
-
-  @override
-  String get calcHybridTitle => 'Hybrid system calculator';
 
   @override
   String get calcHybridSubtitle =>
       'Size a system that combines the grid with battery storage';
 
   @override
-  String get calcOffGridTitle => 'Off-grid system calculator';
-
-  @override
   String get calcOffGridSubtitle =>
       'Size a standalone system that runs on panels and batteries only';
-
-  @override
-  String get calcBatteryOption => 'Battery option';
 
   @override
   String get calcIncludeBattery => 'Include battery';
@@ -1497,28 +1485,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calcDailyProduction => 'Daily production';
 
   @override
-  String get calcOnGridHint => 'Solar + grid';
-
-  @override
-  String get calcHybridHint => 'Grid + battery';
-
-  @override
-  String get calcOffGridHint => 'Battery only';
-
-  @override
-  String get calcConnection => 'Your connection';
-
-  @override
   String get calcUnit => 'Unit';
-
-  @override
-  String get calcDayLoadHint => 'What runs while the sun is up';
-
-  @override
-  String get calcNightLoadHint => 'What runs after sunset';
-
-  @override
-  String get calcOnGridLoadHint => 'Your average running load';
 
   @override
   String calcPanelsCount(int count, int wattage) {
