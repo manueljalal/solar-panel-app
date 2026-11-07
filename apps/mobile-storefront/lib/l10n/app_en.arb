@@ -631,17 +631,33 @@
   "calcPhase": "Phase",
   "calcSinglePhase": "Single phase",
   "calcThreePhase": "Three phase",
-  "calcLoadEntry": "Load entry",
   "calcAmps": "Amps (A)",
   "calcLoad": "Load",
   "calcDayLoad": "Day load",
   "calcNightLoad": "Night load",
   "calcNightHours": "Night hours",
-  "calcCalculate": "Calculate",
-  "calcEnterLoad": "Enter your load first",
   "calcResults": "Your system",
   "calcPanels": "Solar panels",
   "calcInverter": "Inverter",
   "calcBatteries": "Batteries",
-  "calcDailyProduction": "Daily production"
+  "calcDailyProduction": "Daily production",
+  "calcOnGridHint": "Solar + grid",
+  "calcHybridHint": "Grid + battery",
+  "calcOffGridHint": "Battery only",
+  "calcConnection": "Your connection",
+  "calcUnit": "Unit",
+  "calcDayLoadHint": "What runs while the sun is up",
+  "calcNightLoadHint": "What runs after sunset",
+  "calcOnGridLoadHint": "Your average running load",
+  "calcPanelsCount": "{count} panels × {wattage} W",
+  "@calcPanelsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "wattage": {
+        "type": "int"
+      }
+    }
+  }
 }

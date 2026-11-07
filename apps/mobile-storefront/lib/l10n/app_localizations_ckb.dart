@@ -1479,9 +1479,6 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get calcThreePhase => 'سێ فەیز';
 
   @override
-  String get calcLoadEntry => 'تۆمارکردنی بار';
-
-  @override
   String get calcAmps => 'ئامپێر (A)';
 
   @override
@@ -1497,12 +1494,6 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get calcNightHours => 'کاتژمێرەکانی شەو';
 
   @override
-  String get calcCalculate => 'ژمێرە بکە';
-
-  @override
-  String get calcEnterLoad => 'سەرەتا بارەکەت بنووسە';
-
-  @override
   String get calcResults => 'سیستەمەکەت';
 
   @override
@@ -1516,4 +1507,33 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get calcDailyProduction => 'بەرهەمی ڕۆژانە';
+
+  @override
+  String get calcOnGridHint => 'خۆر + تۆڕ';
+
+  @override
+  String get calcHybridHint => 'تۆڕ + باتری';
+
+  @override
+  String get calcOffGridHint => 'تەنها باتری';
+
+  @override
+  String get calcConnection => 'پەیوەندییەکەت';
+
+  @override
+  String get calcUnit => 'یەکە';
+
+  @override
+  String get calcDayLoadHint => 'ئەوەی کاتی ڕۆژ کاردەکات';
+
+  @override
+  String get calcNightLoadHint => 'ئەوەی دوای خۆرئاوابوون کاردەکات';
+
+  @override
+  String get calcOnGridLoadHint => 'تێکڕای باری بەردەوامت';
+
+  @override
+  String calcPanelsCount(int count, int wattage) {
+    return '$count پانێڵ × $wattage وات';
+  }
 }

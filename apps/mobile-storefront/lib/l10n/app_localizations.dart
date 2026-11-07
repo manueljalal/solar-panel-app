@@ -2752,12 +2752,6 @@ abstract class AppLocalizations {
   /// **'Three phase'**
   String get calcThreePhase;
 
-  /// No description provided for @calcLoadEntry.
-  ///
-  /// In en, this message translates to:
-  /// **'Load entry'**
-  String get calcLoadEntry;
-
   /// No description provided for @calcAmps.
   ///
   /// In en, this message translates to:
@@ -2788,18 +2782,6 @@ abstract class AppLocalizations {
   /// **'Night hours'**
   String get calcNightHours;
 
-  /// No description provided for @calcCalculate.
-  ///
-  /// In en, this message translates to:
-  /// **'Calculate'**
-  String get calcCalculate;
-
-  /// No description provided for @calcEnterLoad.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your load first'**
-  String get calcEnterLoad;
-
   /// No description provided for @calcResults.
   ///
   /// In en, this message translates to:
@@ -2829,6 +2811,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Daily production'**
   String get calcDailyProduction;
+
+  /// No description provided for @calcOnGridHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Solar + grid'**
+  String get calcOnGridHint;
+
+  /// No description provided for @calcHybridHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Grid + battery'**
+  String get calcHybridHint;
+
+  /// No description provided for @calcOffGridHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery only'**
+  String get calcOffGridHint;
+
+  /// No description provided for @calcConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Your connection'**
+  String get calcConnection;
+
+  /// No description provided for @calcUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get calcUnit;
+
+  /// No description provided for @calcDayLoadHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What runs while the sun is up'**
+  String get calcDayLoadHint;
+
+  /// No description provided for @calcNightLoadHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What runs after sunset'**
+  String get calcNightLoadHint;
+
+  /// No description provided for @calcOnGridLoadHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your average running load'**
+  String get calcOnGridLoadHint;
+
+  /// No description provided for @calcPanelsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} panels × {wattage} W'**
+  String calcPanelsCount(int count, int wattage);
 }
 
 class _AppLocalizationsDelegate

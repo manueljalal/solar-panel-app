@@ -1461,9 +1461,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcThreePhase => 'ثلاثة أطوار';
 
   @override
-  String get calcLoadEntry => 'إدخال الحمل';
-
-  @override
   String get calcAmps => 'أمبير (A)';
 
   @override
@@ -1479,12 +1476,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calcNightHours => 'ساعات الليل';
 
   @override
-  String get calcCalculate => 'احسب';
-
-  @override
-  String get calcEnterLoad => 'أدخل الحمل أولاً';
-
-  @override
   String get calcResults => 'نظامك';
 
   @override
@@ -1498,4 +1489,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get calcDailyProduction => 'الإنتاج اليومي';
+
+  @override
+  String get calcOnGridHint => 'شمسي + شبكة';
+
+  @override
+  String get calcHybridHint => 'شبكة + بطارية';
+
+  @override
+  String get calcOffGridHint => 'بطارية فقط';
+
+  @override
+  String get calcConnection => 'اتصالك';
+
+  @override
+  String get calcUnit => 'الوحدة';
+
+  @override
+  String get calcDayLoadHint => 'ما يعمل أثناء النهار';
+
+  @override
+  String get calcNightLoadHint => 'ما يعمل بعد الغروب';
+
+  @override
+  String get calcOnGridLoadHint => 'متوسط الحمل المستمر';
+
+  @override
+  String calcPanelsCount(int count, int wattage) {
+    return '$count لوح × $wattage واط';
+  }
 }

@@ -1467,9 +1467,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calcThreePhase => 'Three phase';
 
   @override
-  String get calcLoadEntry => 'Load entry';
-
-  @override
   String get calcAmps => 'Amps (A)';
 
   @override
@@ -1485,12 +1482,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calcNightHours => 'Night hours';
 
   @override
-  String get calcCalculate => 'Calculate';
-
-  @override
-  String get calcEnterLoad => 'Enter your load first';
-
-  @override
   String get calcResults => 'Your system';
 
   @override
@@ -1504,4 +1495,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get calcDailyProduction => 'Daily production';
+
+  @override
+  String get calcOnGridHint => 'Solar + grid';
+
+  @override
+  String get calcHybridHint => 'Grid + battery';
+
+  @override
+  String get calcOffGridHint => 'Battery only';
+
+  @override
+  String get calcConnection => 'Your connection';
+
+  @override
+  String get calcUnit => 'Unit';
+
+  @override
+  String get calcDayLoadHint => 'What runs while the sun is up';
+
+  @override
+  String get calcNightLoadHint => 'What runs after sunset';
+
+  @override
+  String get calcOnGridLoadHint => 'Your average running load';
+
+  @override
+  String calcPanelsCount(int count, int wattage) {
+    return '$count panels × $wattage W';
+  }
 }

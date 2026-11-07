@@ -5,7 +5,7 @@ import 'package:solary_marketplace/main.dart';
 import 'support/fake_home_repository.dart';
 
 void main() {
-  testWidgets('Calculator opens from Home and sizes an on-grid and a hybrid system', (tester) async {
+  testWidgets('Calculator opens from Home and sizes on-grid and hybrid systems live', (tester) async {
     final originalOnError = FlutterError.onError;
     FlutterError.onError = (details) {
       if (details.exception is! NetworkImageLoadException) originalOnError?.call(details);
@@ -23,21 +23,23 @@ void main() {
     await tester.tap(find.text('Wattage calculator').first);
     await tester.pumpAndSettle();
 
-    // On-grid, 5 kW load.
-    await tester.enterText(find.widgetWithText(TextField, 'Load'), '5');
-    await tester.tap(find.text('Calculate'));
-    await tester.pumpAndSettle();
-    expect(find.text('11 × 585W  ·  6.4 kWp'), findsOneWidget);
+    // Results are live: the default on-grid 5 kW load is already sized.
+    // 5 × 1.25 = 6.25 kWp → 11 panels.
+    expect(find.text('11 panels × 585 W'), findsOneWidget);
     expect(find.text('Batteries'), findsNothing);
 
-    // Hybrid adds night load and batteries.
-    await tester.ensureVisible(find.text('Hybrid'));
-    await tester.pumpAndSettle();
+    // Hybrid adds the night card (2 kW × 10 h by default) and batteries:
+    // (5 + 20 / 5.5) × 1.25 = 10.8 kWp → 19 panels; 20 kWh / 0.855 → 5 modules.
     await tester.tap(find.text('Hybrid'));
     await tester.pumpAndSettle();
-    await tester.enterText(find.widgetWithText(TextField, 'Day load'), '3');
-    await tester.enterText(find.widgetWithText(TextField, 'Night load'), '2');
+    expect(find.text('Night load'), findsOneWidget);
+    expect(find.text('19 panels × 585 W'), findsOneWidget);
+    expect(find.text('25.6 kWh'), findsOneWidget);
+
+    // Switching the battery off drops the night sizing again.
+    await tester.tap(find.byType(Switch));
     await tester.pumpAndSettle();
-    expect(find.text('5 × 5.1 kWh  ·  25.6 kWh'), findsOneWidget);
+    expect(find.text('Night load'), findsNothing);
+    expect(find.text('11 panels × 585 W'), findsOneWidget);
   });
 }
