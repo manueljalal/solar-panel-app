@@ -1491,4 +1491,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String calcPanelsCount(int count, int wattage) {
     return '$count panels × $wattage W';
   }
+
+  @override
+  String get calcOnGridTitle => 'On-grid solar calculator';
+
+  @override
+  String get calcHybridTitle => 'Hybrid system calculator';
+
+  @override
+  String get calcOffGridTitle => 'Off-grid system calculator';
+
+  @override
+  String get calcOnGridHint => 'Solar + grid';
+
+  @override
+  String get calcHybridHint => 'Grid + battery';
+
+  @override
+  String get calcOffGridHint => 'Battery only';
 }

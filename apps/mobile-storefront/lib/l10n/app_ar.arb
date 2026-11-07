@@ -567,5 +567,11 @@
   "calcBatteries": "البطاريات",
   "calcDailyProduction": "الإنتاج اليومي",
   "calcUnit": "الوحدة",
-  "calcPanelsCount": "{count} لوح × {wattage} واط"
+  "calcPanelsCount": "{count} لوح × {wattage} واط",
+  "calcOnGridTitle": "حاسبة الطاقة الشمسية المتصلة بالشبكة",
+  "calcHybridTitle": "حاسبة النظام الهجين",
+  "calcOffGridTitle": "حاسبة النظام المنفصل عن الشبكة",
+  "calcOnGridHint": "شمسي + شبكة",
+  "calcHybridHint": "شبكة + بطارية",
+  "calcOffGridHint": "بطارية فقط"
 }

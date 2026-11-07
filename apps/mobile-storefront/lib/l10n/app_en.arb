@@ -648,5 +648,11 @@
         "type": "int"
       }
     }
-  }
+  },
+  "calcOnGridTitle": "On-grid solar calculator",
+  "calcHybridTitle": "Hybrid system calculator",
+  "calcOffGridTitle": "Off-grid system calculator",
+  "calcOnGridHint": "Solar + grid",
+  "calcHybridHint": "Grid + battery",
+  "calcOffGridHint": "Battery only"
 }

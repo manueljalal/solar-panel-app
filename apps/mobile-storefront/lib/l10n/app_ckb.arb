@@ -567,5 +567,11 @@
   "calcBatteries": "باتری",
   "calcDailyProduction": "بەرهەمی ڕۆژانە",
   "calcUnit": "یەکە",
-  "calcPanelsCount": "{count} پانێڵ × {wattage} وات"
+  "calcPanelsCount": "{count} پانێڵ × {wattage} وات",
+  "calcOnGridTitle": "ژمێرەری وزەی خۆری بەستراوە بە تۆڕ",
+  "calcHybridTitle": "ژمێرەری سیستەمی تێکەڵ",
+  "calcOffGridTitle": "ژمێرەری سیستەمی جیاکراوە لە تۆڕ",
+  "calcOnGridHint": "خۆر + تۆڕ",
+  "calcHybridHint": "تۆڕ + باتری",
+  "calcOffGridHint": "تەنها باتری"
 }

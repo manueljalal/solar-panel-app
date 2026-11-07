@@ -2799,6 +2799,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} panels × {wattage} W'**
   String calcPanelsCount(int count, int wattage);
+
+  /// No description provided for @calcOnGridTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'On-grid solar calculator'**
+  String get calcOnGridTitle;
+
+  /// No description provided for @calcHybridTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Hybrid system calculator'**
+  String get calcHybridTitle;
+
+  /// No description provided for @calcOffGridTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Off-grid system calculator'**
+  String get calcOffGridTitle;
+
+  /// No description provided for @calcOnGridHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Solar + grid'**
+  String get calcOnGridHint;
+
+  /// No description provided for @calcHybridHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Grid + battery'**
+  String get calcHybridHint;
+
+  /// No description provided for @calcOffGridHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery only'**
+  String get calcOffGridHint;
 }
 
 class _AppLocalizationsDelegate

@@ -1503,4 +1503,22 @@ class AppLocalizationsCkb extends AppLocalizations {
   String calcPanelsCount(int count, int wattage) {
     return '$count پانێڵ × $wattage وات';
   }
+
+  @override
+  String get calcOnGridTitle => 'ژمێرەری وزەی خۆری بەستراوە بە تۆڕ';
+
+  @override
+  String get calcHybridTitle => 'ژمێرەری سیستەمی تێکەڵ';
+
+  @override
+  String get calcOffGridTitle => 'ژمێرەری سیستەمی جیاکراوە لە تۆڕ';
+
+  @override
+  String get calcOnGridHint => 'خۆر + تۆڕ';
+
+  @override
+  String get calcHybridHint => 'تۆڕ + باتری';
+
+  @override
+  String get calcOffGridHint => 'تەنها باتری';
 }

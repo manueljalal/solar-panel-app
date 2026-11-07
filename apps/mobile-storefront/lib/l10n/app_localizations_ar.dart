@@ -1485,4 +1485,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String calcPanelsCount(int count, int wattage) {
     return '$count لوح × $wattage واط';
   }
+
+  @override
+  String get calcOnGridTitle => 'حاسبة الطاقة الشمسية المتصلة بالشبكة';
+
+  @override
+  String get calcHybridTitle => 'حاسبة النظام الهجين';
+
+  @override
+  String get calcOffGridTitle => 'حاسبة النظام المنفصل عن الشبكة';
+
+  @override
+  String get calcOnGridHint => 'شمسي + شبكة';
+
+  @override
+  String get calcHybridHint => 'شبكة + بطارية';
+
+  @override
+  String get calcOffGridHint => 'بطارية فقط';
 }
