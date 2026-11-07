@@ -2296,12 +2296,6 @@ abstract class AppLocalizations {
   /// **'Solary connects you with trusted solar companies across Iraq — panels, batteries, inverters, installation and cleaning.'**
   String get aboutBody;
 
-  /// No description provided for @aboutCompany.
-  ///
-  /// In en, this message translates to:
-  /// **'Solary, a Quadcores product'**
-  String get aboutCompany;
-
   /// No description provided for @aboutVersion.
   ///
   /// In en, this message translates to:

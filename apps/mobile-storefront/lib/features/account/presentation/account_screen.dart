@@ -1,3 +1,4 @@
+import '../../../shared/widgets/solary_logo.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -152,21 +153,12 @@ class _AccountScreenState extends State<AccountScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(16)),
-                child: const Icon(Icons.wb_sunny_outlined, color: Colors.white, size: 30),
-              ),
-              const SizedBox(height: AppSpacing.md),
-              Text('Solary', style: AppTypography.h1.copyWith(fontSize: 22)),
+              const SolaryLogo(height: 40),
               const SizedBox(height: 4),
               Text(l10n.aboutVersion(_appVersion), style: AppTypography.bodyMuted),
               const SizedBox(height: AppSpacing.md),
               Text(l10n.aboutBody, textAlign: TextAlign.center, style: AppTypography.body),
               const SizedBox(height: AppSpacing.md),
-              Text(l10n.aboutCompany, style: AppTypography.bodyMuted),
-              const SizedBox(height: 2),
               Text('info@quadcores.com', style: AppTypography.bodyMuted),
               const SizedBox(height: AppSpacing.md),
               Row(

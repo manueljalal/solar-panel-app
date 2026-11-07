@@ -7,7 +7,7 @@ export function LegalPage({ title, updated, children }: { title: string; updated
       <p className="muted" style={{ marginTop: 0 }}>Last updated: {updated}</p>
       <div className="legal">{children}</div>
       <p className="muted" style={{ marginTop: 40, fontSize: 13 }}>
-        Solary, a Quadcores product · <a className="link" href="mailto:info@quadcores.com">info@quadcores.com</a> ·{" "}
+        Solary · <a className="link" href="mailto:info@quadcores.com">info@quadcores.com</a> ·{" "}
         <a className="link" href="/privacy">Privacy</a> · <a className="link" href="/terms">Terms</a>
       </p>
     </main>

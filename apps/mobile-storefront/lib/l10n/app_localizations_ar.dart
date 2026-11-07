@@ -1211,9 +1211,6 @@ class AppLocalizationsAr extends AppLocalizations {
       'تربطك سولاري بشركات طاقة شمسية موثوقة في جميع أنحاء العراق — ألواح وبطاريات ومحولات وتركيب وتنظيف.';
 
   @override
-  String get aboutCompany => 'سولاري، أحد منتجات Quadcores';
-
-  @override
   String aboutVersion(String version) {
     return 'الإصدار $version';
   }

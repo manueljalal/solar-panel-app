@@ -527,7 +527,6 @@
   "accountDeleted": "Your account was deleted.",
   "accountDeleteFailed": "Couldn't delete your account. Try again.",
   "aboutBody": "Solary connects you with trusted solar companies across Iraq — panels, batteries, inverters, installation and cleaning.",
-  "aboutCompany": "Solary, a Quadcores product",
   "aboutVersion": "Version {version}",
   "@aboutVersion": {
     "placeholders": {

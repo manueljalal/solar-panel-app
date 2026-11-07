@@ -317,7 +317,7 @@ export function AuthCard({
             ))}
           </ul>
         </div>
-        <div className="auth-foot">Solary, a Quadcores product</div>
+        <div className="auth-foot">Solary</div>
       </aside>
 
       <main className="auth-main">

@@ -1226,9 +1226,6 @@ class AppLocalizationsCkb extends AppLocalizations {
       'سۆلاری تۆ بە کۆمپانیا متمانەپێکراوەکانی وزەی خۆر لە سەرانسەری عێراق دەبەستێتەوە — پانێڵ، باتری، ئینڤێرتەر، دامەزراندن و پاککردنەوە.';
 
   @override
-  String get aboutCompany => 'سۆلاری، بەرهەمێکی Quadcores';
-
-  @override
   String aboutVersion(String version) {
     return 'وەشانی $version';
   }

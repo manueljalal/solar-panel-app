@@ -1214,9 +1214,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Solary connects you with trusted solar companies across Iraq — panels, batteries, inverters, installation and cleaning.';
 
   @override
-  String get aboutCompany => 'Solary, a Quadcores product';
-
-  @override
   String aboutVersion(String version) {
     return 'Version $version';
   }

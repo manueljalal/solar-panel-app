@@ -1,7 +1,7 @@
 import { sendMail } from "./send_mail";
 
 const VENDOR_PORTAL_URL = "https://solary-vendor-dev.web.app";
-const COMPANY_FOOTER_NAME = "Solary, a Quadcores product";
+const COMPANY_FOOTER_NAME = "Solary";
 const COMPANY_FOOTER_CONTACT = "info@quadcores.com";
 
 export async function sendVendorApprovedEmail(

@@ -456,7 +456,6 @@
   "accountDeleted": "تم حذف حسابك.",
   "accountDeleteFailed": "تعذّر حذف حسابك. حاول مجدداً.",
   "aboutBody": "تربطك سولاري بشركات طاقة شمسية موثوقة في جميع أنحاء العراق — ألواح وبطاريات ومحولات وتركيب وتنظيف.",
-  "aboutCompany": "سولاري، أحد منتجات Quadcores",
   "aboutVersion": "الإصدار {version}",
   "@aboutVersion": {
     "placeholders": {
