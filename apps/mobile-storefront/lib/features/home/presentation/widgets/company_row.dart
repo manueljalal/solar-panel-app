@@ -3,35 +3,53 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/widgets/placeholder_image.dart';
+import '../../../../shared/widgets/view_all_tile.dart';
 import '../../domain/home_company.dart';
 import '../company_store_screen.dart';
 
 /// Compact company directory: rounded landscape logo tiles with the name underneath — the
 /// same look as the bulk marketplace's company row. HomeScreen passes live
 /// Firestore data once it has loaded. Tapping a company opens its store.
+/// Shows [visible] companies; beyond that the last tile is "View all",
+/// which opens every company in a grid — the row never grows endless.
 class CompanyRow extends StatelessWidget {
   const CompanyRow({super.key, required this.companies});
 
   final List<HomeCompany> companies;
 
   static const height = 92.0;
+  static const visible = 5;
 
   @override
   Widget build(BuildContext context) {
+    final overflow = companies.length > visible + 1;
+    final shown = overflow ? companies.take(visible).toList() : companies;
     return SizedBox(
       height: height,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: companies.length,
+        itemCount: shown.length + (overflow ? 1 : 0),
         separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.lg),
-        itemBuilder: (context, i) => _CompanyTile(company: companies[i]),
+        itemBuilder: (context, i) => i < shown.length
+            ? CompanyTile(company: shown[i])
+            : ViewAllTile(
+                count: companies.length,
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => AllCompaniesScreen(
+                      itemCount: companies.length,
+                      itemBuilder: (context, i) => CompanyTile(company: companies[i]),
+                    ),
+                  ),
+                ),
+              ),
       ),
     );
   }
 }
 
-class _CompanyTile extends StatelessWidget {
-  const _CompanyTile({required this.company});
+class CompanyTile extends StatelessWidget {
+  const CompanyTile({super.key, required this.company});
 
   final HomeCompany company;
 
