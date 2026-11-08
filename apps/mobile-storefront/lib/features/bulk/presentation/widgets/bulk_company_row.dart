@@ -50,8 +50,9 @@ List<BulkCompany> companiesOf(
   return list;
 }
 
-/// Compact company directory: round logos with the name underneath. Tapping
-/// one filters the feed to that company.
+/// Compact company directory: rounded landscape logo tiles with the name
+/// underneath, the same look as Home's Companies row. Tapping one filters
+/// the feed to that company.
 class BulkCompanyRow extends StatelessWidget {
   const BulkCompanyRow({
     super.key,
@@ -67,7 +68,7 @@ class BulkCompanyRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 86,
+      height: 92,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: companies.length,
@@ -79,14 +80,14 @@ class BulkCompanyRow extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppSpacing.md),
             onTap: () => onSelected(selected ? null : c.id),
             child: SizedBox(
-              width: 64,
+              width: 92,
               child: Column(
                 children: [
                   Container(
-                    width: 56,
-                    height: 56,
+                    width: 92,
+                    height: 62,
                     decoration: BoxDecoration(
-                      shape: BoxShape.circle,
+                      borderRadius: BorderRadius.circular(16),
                       color: AppColors.surface,
                       border: Border.all(
                         color: selected ? AppColors.primary : AppColors.line,
@@ -107,7 +108,7 @@ class BulkCompanyRow extends StatelessWidget {
                               style: const TextStyle(
                                 color: AppColors.primary,
                                 fontWeight: FontWeight.w800,
-                                fontSize: 18,
+                                fontSize: 19,
                               ),
                             ),
                           )
@@ -116,16 +117,16 @@ class BulkCompanyRow extends StatelessWidget {
                             fallbackIcon: Icons.storefront_outlined,
                           ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 6),
                   Text(
                     c.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     style: AppTypography.bodyMuted.copyWith(
-                      fontSize: 11.5,
-                      fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                      color: selected ? AppColors.primary : null,
+                      fontSize: 12,
+                      fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+                      color: selected ? AppColors.primary : AppColors.ink900,
                     ),
                   ),
                 ],
