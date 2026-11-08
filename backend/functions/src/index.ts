@@ -7,3 +7,4 @@ export * as vendor from "./vendor";
 export * as bulk from "./bulk";
 export * as storefront from "./storefront";
 export * as auth from "./auth";
+export * as notifications from "./notifications";

@@ -138,6 +138,19 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // notifications/{id} — in-app notifications, written only by Cloud
+    // Functions (backend/functions/src/shared/notify.ts). The owner can read
+    // theirs and mark them read; nothing else about a notification can be
+    // changed from the client, and none can be created or deleted there.
+    match /notifications/{id} {
+      allow read: if isSignedIn() && resource.data.uid == request.auth.uid;
+      allow update: if isSignedIn()
+        && resource.data.uid == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read'])
+        && request.resource.data.read == true;
+      allow create, delete: if false;
+    }
+
     // Default deny
     match /{document=**} {
       allow read, write: if false;

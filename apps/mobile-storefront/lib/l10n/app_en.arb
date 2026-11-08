@@ -659,5 +659,52 @@
   "sortTopRated": "Top rated",
   "sortPriceLow": "Price: low to high",
   "sortPriceHigh": "Price: high to low",
-  "calcNoPanels": "No solar panels are listed yet."
+  "calcNoPanels": "No solar panels are listed yet.",
+  "notificationsTitle": "Notifications",
+  "notificationsEmptyTitle": "No notifications yet",
+  "notificationsEmptyBody": "Updates on your orders, services and quotes will show up here.",
+  "notifOrderConfirmedTitle": "Order confirmed",
+  "notifOrderConfirmedBody": "{vendor} confirmed your order.",
+  "notifOrderShippedTitle": "Order on the way",
+  "notifOrderShippedBody": "Your order from {vendor} is out for delivery.",
+  "notifOrderDeliveredTitle": "Order delivered",
+  "notifOrderDeliveredBody": "Your order from {vendor} was delivered.",
+  "notifOrderCancelledTitle": "Order cancelled",
+  "notifOrderCancelledBody": "Your order from {vendor} was cancelled.",
+  "notifServiceScheduledTitle": "Service scheduled",
+  "notifServiceScheduledBody": "{service} booked for {date}.",
+  "notifServiceScheduledNoDateBody": "{service} has been scheduled.",
+  "notifServiceCompletedTitle": "Service completed",
+  "notifServiceCompletedBody": "{service} is complete.",
+  "notifServiceCancelledTitle": "Service request cancelled",
+  "notifServiceCancelledBody": "Your {service} request was cancelled.",
+  "notifQuoteTitle": "Quote request answered",
+  "notifQuoteBody": "{vendor} will contact you about {product}.",
+  "timeJustNow": "Just now",
+  "timeMinutesAgo": "{n} min ago",
+  "@timeMinutesAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "timeHoursAgo": "{n} h ago",
+  "@timeHoursAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "timeDaysAgo": "{n} d ago",
+  "@timeDaysAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "companiesViewAll": "View all",
+  "companiesAllTitle": "All companies"
 }

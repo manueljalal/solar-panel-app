@@ -1524,4 +1524,107 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get calcNoPanels => 'No solar panels are listed yet.';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String get notificationsEmptyTitle => 'No notifications yet';
+
+  @override
+  String get notificationsEmptyBody =>
+      'Updates on your orders, services and quotes will show up here.';
+
+  @override
+  String get notifOrderConfirmedTitle => 'Order confirmed';
+
+  @override
+  String notifOrderConfirmedBody(Object vendor) {
+    return '$vendor confirmed your order.';
+  }
+
+  @override
+  String get notifOrderShippedTitle => 'Order on the way';
+
+  @override
+  String notifOrderShippedBody(Object vendor) {
+    return 'Your order from $vendor is out for delivery.';
+  }
+
+  @override
+  String get notifOrderDeliveredTitle => 'Order delivered';
+
+  @override
+  String notifOrderDeliveredBody(Object vendor) {
+    return 'Your order from $vendor was delivered.';
+  }
+
+  @override
+  String get notifOrderCancelledTitle => 'Order cancelled';
+
+  @override
+  String notifOrderCancelledBody(Object vendor) {
+    return 'Your order from $vendor was cancelled.';
+  }
+
+  @override
+  String get notifServiceScheduledTitle => 'Service scheduled';
+
+  @override
+  String notifServiceScheduledBody(Object date, Object service) {
+    return '$service booked for $date.';
+  }
+
+  @override
+  String notifServiceScheduledNoDateBody(Object service) {
+    return '$service has been scheduled.';
+  }
+
+  @override
+  String get notifServiceCompletedTitle => 'Service completed';
+
+  @override
+  String notifServiceCompletedBody(Object service) {
+    return '$service is complete.';
+  }
+
+  @override
+  String get notifServiceCancelledTitle => 'Service request cancelled';
+
+  @override
+  String notifServiceCancelledBody(Object service) {
+    return 'Your $service request was cancelled.';
+  }
+
+  @override
+  String get notifQuoteTitle => 'Quote request answered';
+
+  @override
+  String notifQuoteBody(Object product, Object vendor) {
+    return '$vendor will contact you about $product.';
+  }
+
+  @override
+  String get timeJustNow => 'Just now';
+
+  @override
+  String timeMinutesAgo(int n) {
+    return '$n min ago';
+  }
+
+  @override
+  String timeHoursAgo(int n) {
+    return '$n h ago';
+  }
+
+  @override
+  String timeDaysAgo(int n) {
+    return '$n d ago';
+  }
+
+  @override
+  String get companiesViewAll => 'View all';
+
+  @override
+  String get companiesAllTitle => 'All companies';
 }

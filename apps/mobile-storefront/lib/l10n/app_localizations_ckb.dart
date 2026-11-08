@@ -1536,4 +1536,108 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get calcNoPanels => 'هێشتا هیچ پانێڵێکی خۆر دانەنراوە.';
+
+  @override
+  String get notificationsTitle => 'ئاگادارکردنەوەکان';
+
+  @override
+  String get notificationsEmptyTitle => 'هێشتا هیچ ئاگادارکردنەوەیەک نییە';
+
+  @override
+  String get notificationsEmptyBody =>
+      'نوێکارییەکانی داواکاری و خزمەتگوزاری و نرخەکانت لێرە دەردەکەون.';
+
+  @override
+  String get notifOrderConfirmedTitle => 'داواکاری پشتڕاستکرایەوە';
+
+  @override
+  String notifOrderConfirmedBody(Object vendor) {
+    return '$vendor داواکارییەکەتی پشتڕاستکردەوە.';
+  }
+
+  @override
+  String get notifOrderShippedTitle => 'داواکاری لە ڕێگایە';
+
+  @override
+  String notifOrderShippedBody(Object vendor) {
+    return 'داواکارییەکەت لە $vendor لە ڕێگای گەیاندنە.';
+  }
+
+  @override
+  String get notifOrderDeliveredTitle => 'داواکاری گەیەندرا';
+
+  @override
+  String notifOrderDeliveredBody(Object vendor) {
+    return 'داواکارییەکەت لە $vendor گەیەندرا.';
+  }
+
+  @override
+  String get notifOrderCancelledTitle => 'داواکاری هەڵوەشێندرایەوە';
+
+  @override
+  String notifOrderCancelledBody(Object vendor) {
+    return 'داواکارییەکەت لە $vendor هەڵوەشێندرایەوە.';
+  }
+
+  @override
+  String get notifServiceScheduledTitle => 'کاتی خزمەتگوزاری دیاریکرا';
+
+  @override
+  String notifServiceScheduledBody(Object date, Object service) {
+    return 'کاتی $service بۆ $date دیاریکرا.';
+  }
+
+  @override
+  String notifServiceScheduledNoDateBody(Object service) {
+    return 'کاتی $service دیاریکرا.';
+  }
+
+  @override
+  String get notifServiceCompletedTitle => 'خزمەتگوزاری تەواو بوو';
+
+  @override
+  String notifServiceCompletedBody(Object service) {
+    return '$service تەواو بوو.';
+  }
+
+  @override
+  String get notifServiceCancelledTitle =>
+      'داواکاری خزمەتگوزاری هەڵوەشێندرایەوە';
+
+  @override
+  String notifServiceCancelledBody(Object service) {
+    return 'داواکاری $service هەڵوەشێندرایەوە.';
+  }
+
+  @override
+  String get notifQuoteTitle => 'وەڵامی داواکاری نرخ درایەوە';
+
+  @override
+  String notifQuoteBody(Object product, Object vendor) {
+    return '$vendor سەبارەت بە $product پەیوەندیت پێوە دەکات.';
+  }
+
+  @override
+  String get timeJustNow => 'ئێستا';
+
+  @override
+  String timeMinutesAgo(int n) {
+    return '$n خولەک لەمەوبەر';
+  }
+
+  @override
+  String timeHoursAgo(int n) {
+    return '$n کاتژمێر لەمەوبەر';
+  }
+
+  @override
+  String timeDaysAgo(int n) {
+    return '$n ڕۆژ لەمەوبەر';
+  }
+
+  @override
+  String get companiesViewAll => 'هەمووی ببینە';
+
+  @override
+  String get companiesAllTitle => 'هەموو کۆمپانیاکان';
 }

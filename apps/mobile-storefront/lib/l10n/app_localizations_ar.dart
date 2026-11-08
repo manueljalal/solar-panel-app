@@ -1518,4 +1518,107 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get calcNoPanels => 'لا توجد ألواح شمسية معروضة حالياً.';
+
+  @override
+  String get notificationsTitle => 'الإشعارات';
+
+  @override
+  String get notificationsEmptyTitle => 'لا توجد إشعارات بعد';
+
+  @override
+  String get notificationsEmptyBody =>
+      'ستظهر هنا تحديثات طلباتك وخدماتك وعروض الأسعار.';
+
+  @override
+  String get notifOrderConfirmedTitle => 'تم تأكيد الطلب';
+
+  @override
+  String notifOrderConfirmedBody(Object vendor) {
+    return 'أكّد $vendor طلبك.';
+  }
+
+  @override
+  String get notifOrderShippedTitle => 'الطلب في الطريق';
+
+  @override
+  String notifOrderShippedBody(Object vendor) {
+    return 'طلبك من $vendor في طريقه إليك.';
+  }
+
+  @override
+  String get notifOrderDeliveredTitle => 'تم توصيل الطلب';
+
+  @override
+  String notifOrderDeliveredBody(Object vendor) {
+    return 'تم توصيل طلبك من $vendor.';
+  }
+
+  @override
+  String get notifOrderCancelledTitle => 'تم إلغاء الطلب';
+
+  @override
+  String notifOrderCancelledBody(Object vendor) {
+    return 'تم إلغاء طلبك من $vendor.';
+  }
+
+  @override
+  String get notifServiceScheduledTitle => 'تم تحديد موعد الخدمة';
+
+  @override
+  String notifServiceScheduledBody(Object date, Object service) {
+    return 'تم حجز $service في $date.';
+  }
+
+  @override
+  String notifServiceScheduledNoDateBody(Object service) {
+    return 'تمت جدولة $service.';
+  }
+
+  @override
+  String get notifServiceCompletedTitle => 'اكتملت الخدمة';
+
+  @override
+  String notifServiceCompletedBody(Object service) {
+    return 'اكتملت $service.';
+  }
+
+  @override
+  String get notifServiceCancelledTitle => 'تم إلغاء طلب الخدمة';
+
+  @override
+  String notifServiceCancelledBody(Object service) {
+    return 'تم إلغاء طلب $service.';
+  }
+
+  @override
+  String get notifQuoteTitle => 'تم الرد على طلب السعر';
+
+  @override
+  String notifQuoteBody(Object product, Object vendor) {
+    return 'سيتواصل معك $vendor بخصوص $product.';
+  }
+
+  @override
+  String get timeJustNow => 'الآن';
+
+  @override
+  String timeMinutesAgo(int n) {
+    return 'منذ $n د';
+  }
+
+  @override
+  String timeHoursAgo(int n) {
+    return 'منذ $n س';
+  }
+
+  @override
+  String timeDaysAgo(int n) {
+    return 'منذ $n يوم';
+  }
+
+  @override
+  String get companiesViewAll => 'عرض الكل';
+
+  @override
+  String get companiesAllTitle => 'كل الشركات';
 }

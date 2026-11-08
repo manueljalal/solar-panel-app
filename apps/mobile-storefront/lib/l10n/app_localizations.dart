@@ -2865,6 +2865,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No solar panels are listed yet.'**
   String get calcNoPanels;
+
+  /// No description provided for @notificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsTitle;
+
+  /// No description provided for @notificationsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet'**
+  String get notificationsEmptyTitle;
+
+  /// No description provided for @notificationsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Updates on your orders, services and quotes will show up here.'**
+  String get notificationsEmptyBody;
+
+  /// No description provided for @notifOrderConfirmedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Order confirmed'**
+  String get notifOrderConfirmedTitle;
+
+  /// No description provided for @notifOrderConfirmedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{vendor} confirmed your order.'**
+  String notifOrderConfirmedBody(Object vendor);
+
+  /// No description provided for @notifOrderShippedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Order on the way'**
+  String get notifOrderShippedTitle;
+
+  /// No description provided for @notifOrderShippedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your order from {vendor} is out for delivery.'**
+  String notifOrderShippedBody(Object vendor);
+
+  /// No description provided for @notifOrderDeliveredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Order delivered'**
+  String get notifOrderDeliveredTitle;
+
+  /// No description provided for @notifOrderDeliveredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your order from {vendor} was delivered.'**
+  String notifOrderDeliveredBody(Object vendor);
+
+  /// No description provided for @notifOrderCancelledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Order cancelled'**
+  String get notifOrderCancelledTitle;
+
+  /// No description provided for @notifOrderCancelledBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your order from {vendor} was cancelled.'**
+  String notifOrderCancelledBody(Object vendor);
+
+  /// No description provided for @notifServiceScheduledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Service scheduled'**
+  String get notifServiceScheduledTitle;
+
+  /// No description provided for @notifServiceScheduledBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{service} booked for {date}.'**
+  String notifServiceScheduledBody(Object date, Object service);
+
+  /// No description provided for @notifServiceScheduledNoDateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{service} has been scheduled.'**
+  String notifServiceScheduledNoDateBody(Object service);
+
+  /// No description provided for @notifServiceCompletedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Service completed'**
+  String get notifServiceCompletedTitle;
+
+  /// No description provided for @notifServiceCompletedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{service} is complete.'**
+  String notifServiceCompletedBody(Object service);
+
+  /// No description provided for @notifServiceCancelledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Service request cancelled'**
+  String get notifServiceCancelledTitle;
+
+  /// No description provided for @notifServiceCancelledBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your {service} request was cancelled.'**
+  String notifServiceCancelledBody(Object service);
+
+  /// No description provided for @notifQuoteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quote request answered'**
+  String get notifQuoteTitle;
+
+  /// No description provided for @notifQuoteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{vendor} will contact you about {product}.'**
+  String notifQuoteBody(Object product, Object vendor);
+
+  /// No description provided for @timeJustNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get timeJustNow;
+
+  /// No description provided for @timeMinutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min ago'**
+  String timeMinutesAgo(int n);
+
+  /// No description provided for @timeHoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} h ago'**
+  String timeHoursAgo(int n);
+
+  /// No description provided for @timeDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} d ago'**
+  String timeDaysAgo(int n);
+
+  /// No description provided for @companiesViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View all'**
+  String get companiesViewAll;
+
+  /// No description provided for @companiesAllTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'All companies'**
+  String get companiesAllTitle;
 }
 
 class _AppLocalizationsDelegate
