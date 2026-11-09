@@ -11,3 +11,4 @@ export * from "./platform";
 export * from "./delete_account";
 export * from "./services";
 export * from "./courses";
+export * from "./calculator";

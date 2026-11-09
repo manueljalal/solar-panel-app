@@ -195,7 +195,6 @@
   },
   "searchPrompt": "Search for panels, brands, or vendors.",
   "wattageCalculatorScreenTitle": "Wattage calculator",
-  "seeMatchingPanels": "See matching panels",
   "wattageDisclaimer": "Estimate only — a vendor will confirm exact sizing after a site visit.",
   "ordersTitle": "Orders",
   "ordersEmptyTitle": "No orders yet",
@@ -659,7 +658,6 @@
   "sortTopRated": "Top rated",
   "sortPriceLow": "Price: low to high",
   "sortPriceHigh": "Price: high to low",
-  "calcNoPanels": "No solar panels are listed yet.",
   "notificationsTitle": "Notifications",
   "notificationsEmptyTitle": "No notifications yet",
   "notificationsEmptyBody": "Updates on your orders, services and quotes will show up here.",
@@ -706,5 +704,8 @@
     }
   },
   "companiesViewAll": "View all",
-  "companiesAllTitle": "All companies"
+  "companiesAllTitle": "All companies",
+  "calcPackagesTitle": "Recommended packages",
+  "calcAddPackage": "Add package to cart",
+  "calcPackageAdded": "Package added to your cart."
 }

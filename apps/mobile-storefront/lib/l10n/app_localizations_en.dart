@@ -443,9 +443,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wattageCalculatorScreenTitle => 'Wattage calculator';
 
   @override
-  String get seeMatchingPanels => 'See matching panels';
-
-  @override
   String get wattageDisclaimer =>
       'Estimate only — a vendor will confirm exact sizing after a site visit.';
 
@@ -1523,9 +1520,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sortPriceHigh => 'Price: high to low';
 
   @override
-  String get calcNoPanels => 'No solar panels are listed yet.';
-
-  @override
   String get notificationsTitle => 'Notifications';
 
   @override
@@ -1627,4 +1621,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get companiesAllTitle => 'All companies';
+
+  @override
+  String get calcPackagesTitle => 'Recommended packages';
+
+  @override
+  String get calcAddPackage => 'Add package to cart';
+
+  @override
+  String get calcPackageAdded => 'Package added to your cart.';
 }

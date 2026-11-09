@@ -131,7 +131,6 @@
   "searchNoResults": "لا توجد نتائج لـ \"{query}\"",
   "searchPrompt": "ابحث عن الألواح أو العلامات التجارية أو البائعين.",
   "wattageCalculatorScreenTitle": "حاسبة الطاقة",
-  "seeMatchingPanels": "عرض الألواح المناسبة",
   "wattageDisclaimer": "تقدير فقط — سيؤكد البائع الحجم الدقيق بعد زيارة الموقع.",
   "ordersTitle": "الطلبات",
   "ordersEmptyTitle": "لا توجد طلبات بعد",
@@ -578,7 +577,6 @@
   "sortTopRated": "الأعلى تقييماً",
   "sortPriceLow": "السعر: من الأقل إلى الأعلى",
   "sortPriceHigh": "السعر: من الأعلى إلى الأقل",
-  "calcNoPanels": "لا توجد ألواح شمسية معروضة حالياً.",
   "notificationsTitle": "الإشعارات",
   "notificationsEmptyTitle": "لا توجد إشعارات بعد",
   "notificationsEmptyBody": "ستظهر هنا تحديثات طلباتك وخدماتك وعروض الأسعار.",
@@ -604,5 +602,8 @@
   "timeHoursAgo": "منذ {n} س",
   "timeDaysAgo": "منذ {n} يوم",
   "companiesViewAll": "عرض الكل",
-  "companiesAllTitle": "كل الشركات"
+  "companiesAllTitle": "كل الشركات",
+  "calcPackagesTitle": "الباقات المقترحة",
+  "calcAddPackage": "أضف الباقة إلى السلة",
+  "calcPackageAdded": "تمت إضافة الباقة إلى سلتك."
 }

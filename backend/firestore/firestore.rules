@@ -138,6 +138,15 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // packages/{id} — ready-made systems the calculator recommends, built
+    // by admins from real products (backend/functions/src/admin/
+    // calculator.ts). Shoppers see active ones; the admin console sees all.
+    // Written only through admin-savePackage / admin-deletePackage.
+    match /packages/{id} {
+      allow read: if resource.data.active == true || role() == 'super_admin';
+      allow write: if false;
+    }
+
     // notifications/{id} — in-app notifications, written only by Cloud
     // Functions (backend/functions/src/shared/notify.ts). The owner can read
     // theirs and mark them read; nothing else about a notification can be

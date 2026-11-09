@@ -131,7 +131,6 @@
   "searchNoResults": "هیچ ئەنجامێک نەدۆزرایەوە بۆ \"{query}\"",
   "searchPrompt": "بگەڕێ بۆ پانێڵ، براند یان فرۆشیار.",
   "wattageCalculatorScreenTitle": "ژمێرەری وات",
-  "seeMatchingPanels": "پانێڵە گونجاوەکان ببینە",
   "wattageDisclaimer": "تەنها خەمڵاندنێکە — فرۆشیار قەبارەی وردی دیاری دەکات دوای سەردانی شوێنەکە.",
   "ordersTitle": "داواکارییەکان",
   "ordersEmptyTitle": "هێشتا هیچ داواکارییەک نییە",
@@ -578,7 +577,6 @@
   "sortTopRated": "بەرزترین هەڵسەنگاندن",
   "sortPriceLow": "نرخ: لە کەمەوە بۆ زۆر",
   "sortPriceHigh": "نرخ: لە زۆرەوە بۆ کەم",
-  "calcNoPanels": "هێشتا هیچ پانێڵێکی خۆر دانەنراوە.",
   "notificationsTitle": "ئاگادارکردنەوەکان",
   "notificationsEmptyTitle": "هێشتا هیچ ئاگادارکردنەوەیەک نییە",
   "notificationsEmptyBody": "نوێکارییەکانی داواکاری و خزمەتگوزاری و نرخەکانت لێرە دەردەکەون.",
@@ -604,5 +602,8 @@
   "timeHoursAgo": "{n} کاتژمێر لەمەوبەر",
   "timeDaysAgo": "{n} ڕۆژ لەمەوبەر",
   "companiesViewAll": "هەمووی ببینە",
-  "companiesAllTitle": "هەموو کۆمپانیاکان"
+  "companiesAllTitle": "هەموو کۆمپانیاکان",
+  "calcPackagesTitle": "پاکێجە پێشنیارکراوەکان",
+  "calcAddPackage": "پاکێجەکە بخەرە سەبەتە",
+  "calcPackageAdded": "پاکێجەکە خرایە سەبەتەکەت."
 }

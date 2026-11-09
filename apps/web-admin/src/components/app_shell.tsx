@@ -34,6 +34,7 @@ const SECTIONS: { title?: string; items: { href: string; label: string; badge?: 
       { href: "/categories", label: "Categories" },
       { href: "/banners", label: "Banners" },
       { href: "/learn", label: "Learn" },
+      { href: "/calculator", label: "Calculator" },
       { href: "/settings", label: "Settings" },
     ],
   },

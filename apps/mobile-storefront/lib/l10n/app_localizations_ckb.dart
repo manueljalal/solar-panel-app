@@ -451,9 +451,6 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get wattageCalculatorScreenTitle => 'ژمێرەری وات';
 
   @override
-  String get seeMatchingPanels => 'پانێڵە گونجاوەکان ببینە';
-
-  @override
   String get wattageDisclaimer =>
       'تەنها خەمڵاندنێکە — فرۆشیار قەبارەی وردی دیاری دەکات دوای سەردانی شوێنەکە.';
 
@@ -1535,9 +1532,6 @@ class AppLocalizationsCkb extends AppLocalizations {
   String get sortPriceHigh => 'نرخ: لە زۆرەوە بۆ کەم';
 
   @override
-  String get calcNoPanels => 'هێشتا هیچ پانێڵێکی خۆر دانەنراوە.';
-
-  @override
   String get notificationsTitle => 'ئاگادارکردنەوەکان';
 
   @override
@@ -1640,4 +1634,13 @@ class AppLocalizationsCkb extends AppLocalizations {
 
   @override
   String get companiesAllTitle => 'هەموو کۆمپانیاکان';
+
+  @override
+  String get calcPackagesTitle => 'پاکێجە پێشنیارکراوەکان';
+
+  @override
+  String get calcAddPackage => 'پاکێجەکە بخەرە سەبەتە';
+
+  @override
+  String get calcPackageAdded => 'پاکێجەکە خرایە سەبەتەکەت.';
 }

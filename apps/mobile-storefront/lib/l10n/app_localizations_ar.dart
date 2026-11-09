@@ -448,9 +448,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wattageCalculatorScreenTitle => 'حاسبة الطاقة';
 
   @override
-  String get seeMatchingPanels => 'عرض الألواح المناسبة';
-
-  @override
   String get wattageDisclaimer =>
       'تقدير فقط — سيؤكد البائع الحجم الدقيق بعد زيارة الموقع.';
 
@@ -1517,9 +1514,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sortPriceHigh => 'السعر: من الأعلى إلى الأقل';
 
   @override
-  String get calcNoPanels => 'لا توجد ألواح شمسية معروضة حالياً.';
-
-  @override
   String get notificationsTitle => 'الإشعارات';
 
   @override
@@ -1621,4 +1615,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get companiesAllTitle => 'كل الشركات';
+
+  @override
+  String get calcPackagesTitle => 'الباقات المقترحة';
+
+  @override
+  String get calcAddPackage => 'أضف الباقة إلى السلة';
+
+  @override
+  String get calcPackageAdded => 'تمت إضافة الباقة إلى سلتك.';
 }

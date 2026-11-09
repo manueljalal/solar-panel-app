@@ -886,12 +886,6 @@ abstract class AppLocalizations {
   /// **'Wattage calculator'**
   String get wattageCalculatorScreenTitle;
 
-  /// No description provided for @seeMatchingPanels.
-  ///
-  /// In en, this message translates to:
-  /// **'See matching panels'**
-  String get seeMatchingPanels;
-
   /// No description provided for @wattageDisclaimer.
   ///
   /// In en, this message translates to:
@@ -2860,12 +2854,6 @@ abstract class AppLocalizations {
   /// **'Price: high to low'**
   String get sortPriceHigh;
 
-  /// No description provided for @calcNoPanels.
-  ///
-  /// In en, this message translates to:
-  /// **'No solar panels are listed yet.'**
-  String get calcNoPanels;
-
   /// No description provided for @notificationsTitle.
   ///
   /// In en, this message translates to:
@@ -3021,6 +3009,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All companies'**
   String get companiesAllTitle;
+
+  /// No description provided for @calcPackagesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended packages'**
+  String get calcPackagesTitle;
+
+  /// No description provided for @calcAddPackage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add package to cart'**
+  String get calcAddPackage;
+
+  /// No description provided for @calcPackageAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Package added to your cart.'**
+  String get calcPackageAdded;
 }
 
 class _AppLocalizationsDelegate

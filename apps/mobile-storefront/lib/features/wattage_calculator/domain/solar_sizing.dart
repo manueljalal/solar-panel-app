@@ -52,24 +52,64 @@ class SizingResult {
   final double dailyProductionKwh;
 }
 
-/// Rule-of-thumb sizing for Iraq, the way installers quote it:
+/// The sizing assumptions. Admins set them in the console (config/calculator,
+/// written by admin-updateCalculatorSettings); [defaults] is used until then
+/// or if they can't be loaded.
+class SizingConfig {
+  const SizingConfig({
+    required this.panelWattage,
+    required this.batteryModuleKwh,
+    required this.peakSunHours,
+    required this.lossMarginPercent,
+    required this.batteryUsablePercent,
+    required this.performancePercent,
+  });
+
+  static const defaults = SizingConfig(
+    panelWattage: 585,
+    batteryModuleKwh: 5.12,
+    peakSunHours: 5.5,
+    lossMarginPercent: 25,
+    batteryUsablePercent: 85.5, // 90% depth of discharge × 95% efficiency
+    performancePercent: 80,
+  );
+
+  factory SizingConfig.fromMap(Map<String, dynamic>? d) {
+    double v(String key, double fallback) {
+      final x = d?[key];
+      return x is num && x > 0 ? x.toDouble() : fallback;
+    }
+
+    const f = defaults;
+    return SizingConfig(
+      panelWattage: v('panelWattage', f.panelWattage.toDouble()).round(),
+      batteryModuleKwh: v('batteryModuleKwh', f.batteryModuleKwh),
+      peakSunHours: v('peakSunHours', f.peakSunHours),
+      lossMarginPercent: d?['lossMarginPercent'] is num ? (d!['lossMarginPercent'] as num).toDouble() : f.lossMarginPercent,
+      batteryUsablePercent: v('batteryUsablePercent', f.batteryUsablePercent),
+      performancePercent: v('performancePercent', f.performancePercent),
+    );
+  }
+
+  final int panelWattage;
+  final double batteryModuleKwh;
+  final double peakSunHours;
+  final double lossMarginPercent;
+  final double batteryUsablePercent;
+  final double performancePercent;
+}
+
+/// Rule-of-thumb sizing, the way installers quote it:
 ///
 /// * The array must carry the daytime load directly and, when there are
-///   batteries, also recharge what the night used — within Iraq's ~5.5
-///   peak sun hours — with 25% headroom for heat, dust and wiring losses.
-/// * The inverter covers the larger of the day and night loads with 25%
-///   headroom, rounded up to a size that is actually sold for that phase.
-/// * Batteries are 5.12 kWh lithium (LiFePO4) modules, 90% usable, 95%
-///   round-trip efficient, sized for one night.
+///   batteries, also recharge what the night used — within the peak sun
+///   hours — plus a loss margin for heat, dust and wiring.
+/// * The inverter covers the larger of the day and night loads plus the
+///   same margin, rounded up to a size that is actually sold for that phase.
+/// * Batteries are modules of a fixed size, of which only the usable share
+///   counts, sized for one night.
 class SolarSizing {
   SolarSizing._();
-
-  static const panelWattage = 585;
-  static const batteryModuleKwh = 5.12;
-  static const peakSunHours = 5.5;
-  static const _headroom = 1.25;
-  static const _batteryUsable = 0.9 * 0.95;
-  static const _performanceRatio = 0.8;
 
   static const _singlePhaseInverters = [3.0, 4, 5, 6, 8, 10, 12];
   static const _threePhaseInverters = [5.0, 6, 8, 10, 12, 15, 20, 25, 30, 40, 50, 60, 80, 100];
@@ -81,27 +121,28 @@ class SolarSizing {
         Phase.three => math.sqrt(3) * 400 * amps / 1000,
       };
 
-  static SizingResult calculate(SizingInput input) {
+  static SizingResult calculate(SizingInput input, [SizingConfig config = SizingConfig.defaults]) {
     final battery = input.hasBattery;
     final nightKwh = battery ? input.nightLoadKw * input.nightHours : 0.0;
+    final headroom = 1 + config.lossMarginPercent / 100;
 
-    final arrayKwp = (input.dayLoadKw + nightKwh / peakSunHours) * _headroom;
-    final panelCount = arrayKwp <= 0 ? 0 : (arrayKwp * 1000 / panelWattage).ceil();
-    final installedKwp = panelCount * panelWattage / 1000;
+    final arrayKwp = (input.dayLoadKw + nightKwh / config.peakSunHours) * headroom;
+    final panelCount = arrayKwp <= 0 ? 0 : (arrayKwp * 1000 / config.panelWattage).ceil();
+    final installedKwp = panelCount * config.panelWattage / 1000;
 
     final peakLoad = battery ? math.max(input.dayLoadKw, input.nightLoadKw) : input.dayLoadKw;
-    final inverterKw = peakLoad <= 0 ? 0.0 : _inverterSize(peakLoad * _headroom, input.phase);
+    final inverterKw = peakLoad <= 0 ? 0.0 : _inverterSize(peakLoad * headroom, input.phase);
 
-    final batteryKwhNeeded = nightKwh / _batteryUsable;
-    final batteryCount = batteryKwhNeeded <= 0 ? 0 : (batteryKwhNeeded / batteryModuleKwh).ceil();
+    final batteryKwhNeeded = nightKwh / (config.batteryUsablePercent / 100);
+    final batteryCount = batteryKwhNeeded <= 0 ? 0 : (batteryKwhNeeded / config.batteryModuleKwh).ceil();
 
     return SizingResult(
       panelCount: panelCount,
       arrayKwp: installedKwp,
       inverterKw: inverterKw,
       batteryCount: batteryCount,
-      batteryKwh: batteryCount * batteryModuleKwh,
-      dailyProductionKwh: installedKwp * peakSunHours * _performanceRatio,
+      batteryKwh: batteryCount * config.batteryModuleKwh,
+      dailyProductionKwh: installedKwp * config.peakSunHours * config.performancePercent / 100,
     );
   }
 

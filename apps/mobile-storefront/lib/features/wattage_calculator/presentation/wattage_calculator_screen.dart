@@ -1,13 +1,16 @@
 import 'dart:math' as math;
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../shared/money.dart';
+import '../../cart/data/cart_scope.dart';
+import '../data/calculator_repository.dart';
 import '../domain/solar_sizing.dart';
-import 'matching_panels_screen.dart';
 
 const _sun = Color(0xFFF2B65C);
 const _deep = Color(0xFF0F241C);
@@ -35,6 +38,23 @@ class _WattageCalculatorScreenState extends State<WattageCalculatorScreen> {
   double _day = 5;
   double _night = 2;
   double _hours = 10;
+
+  // Admin-set sizing assumptions and packages; defaults / none until loaded.
+  SizingConfig _config = SizingConfig.defaults;
+  List<PackageOffer> _offers = const [];
+
+  @override
+  void initState() {
+    super.initState();
+    if (Firebase.apps.isEmpty) return; // widget tests
+    final repo = CalculatorRepository();
+    repo.fetchConfig().then((c) {
+      if (mounted) setState(() => _config = c);
+    }).catchError((_) {});
+    repo.fetchOffers().then((o) {
+      if (mounted) setState(() => _offers = o);
+    }).catchError((_) {});
+  }
 
   bool get _battery => switch (_type) {
         SystemType.onGrid => false,
@@ -73,7 +93,7 @@ class _WattageCalculatorScreenState extends State<WattageCalculatorScreen> {
         nightLoadKw: _kw(_night),
         nightHours: _hours,
         withBattery: _withBattery,
-      ));
+      ), _config);
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +208,7 @@ class _WattageCalculatorScreenState extends State<WattageCalculatorScreen> {
                       ),
                       _ResultRow(
                         label: l10n.calcPanels,
-                        value: l10n.calcPanelsCount(result.panelCount, SolarSizing.panelWattage),
+                        value: l10n.calcPanelsCount(result.panelCount, _config.panelWattage),
                       ),
                       _ResultRow(
                         label: l10n.calcInverter,
@@ -199,7 +219,7 @@ class _WattageCalculatorScreenState extends State<WattageCalculatorScreen> {
                         _ResultRow(
                           label: l10n.calcBatteries,
                           value: '${_n(result.batteryKwh)} kWh',
-                          detail: '${result.batteryCount} × ${SolarSizing.batteryModuleKwh.toStringAsFixed(2)} kWh',
+                          detail: '${result.batteryCount} × ${_n(_config.batteryModuleKwh)} kWh',
                         ),
                       _ResultRow(
                         label: l10n.calcDailyProduction,
@@ -207,20 +227,14 @@ class _WattageCalculatorScreenState extends State<WattageCalculatorScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.lg),
-                  FilledButton(
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const MatchingPanelsScreen(targetWattage: SolarSizing.panelWattage),
-                      ),
-                    ),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.chip)),
-                    ),
-                    child: Text(l10n.seeMatchingPanels, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
-                  ),
+                  for (final (i, offer) in recommendPackages(_offers, _type, result.inverterKw).indexed) ...[
+                    SizedBox(height: i == 0 ? AppSpacing.xl : AppSpacing.md),
+                    if (i == 0) ...[
+                      Text(l10n.calcPackagesTitle, style: AppTypography.sectionTitle),
+                      const SizedBox(height: AppSpacing.sm),
+                    ],
+                    _PackageCard(offer: offer),
+                  ],
                   const SizedBox(height: AppSpacing.md),
                   Text(
                     l10n.wattageDisclaimer,
@@ -237,7 +251,99 @@ class _WattageCalculatorScreenState extends State<WattageCalculatorScreen> {
     );
   }
 
+  static String _n(double v) => v == v.roundToDouble() ? v.toStringAsFixed(0) : v.toStringAsFixed(v * 10 == (v * 10).roundToDouble() ? 1 : 2);
+}
+
+/// One admin-built package: what's in it, the total, and one tap to put
+/// every item in the cart.
+class _PackageCard extends StatelessWidget {
+  const _PackageCard({required this.offer});
+
+  final PackageOffer offer;
+
   static String _n(double v) => v == v.roundToDouble() ? v.toStringAsFixed(0) : v.toStringAsFixed(1);
+
+  void _addAll(BuildContext context) {
+    final cart = CartScope.of(context);
+    for (final line in offer.lines) {
+      cart.add(line.product, quantity: line.qty);
+    }
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(AppLocalizations.of(context).calcPackageAdded)));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final lang = Localizations.localeOf(context).languageCode;
+    final p = offer.package;
+    return _Group(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          child: Row(
+            children: [
+              Expanded(child: Text(p.nameFor(lang), style: AppTypography.cardTitle.copyWith(fontSize: 16))),
+              Text(
+                [
+                  '${_n(p.sizeKw)} kW',
+                  if (p.batteryKwh != null && p.batteryKwh! > 0) '${_n(p.batteryKwh!)} kWh',
+                ].join(' · '),
+                textDirection: TextDirection.ltr,
+                style: AppTypography.bodyMuted.copyWith(fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            children: [
+              for (final line in offer.lines)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 3),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 40,
+                        child: Text('${line.qty} ×', textDirection: TextDirection.ltr, style: AppTypography.body.copyWith(fontWeight: FontWeight.w700)),
+                      ),
+                      Expanded(child: Text(line.product.titleFor(lang), style: AppTypography.body)),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  formatTotals(offer.totals),
+                  style: AppTypography.cardTitle.copyWith(fontSize: 16, color: AppColors.primary),
+                ),
+              ),
+              FilledButton(
+                onPressed: offer.inStock ? () => _addAll(context) : null,
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.chip)),
+                ),
+                child: Text(
+                  offer.inStock ? l10n.calcAddPackage : l10n.outOfStock,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 // ── Header ──────────────────────────────────────────────────────────────
