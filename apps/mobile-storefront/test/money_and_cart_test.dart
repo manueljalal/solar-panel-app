@@ -4,7 +4,7 @@ import 'package:solary_marketplace/features/home/domain/home_product.dart';
 import 'package:solary_marketplace/shared/money.dart';
 
 // Strip the invisible left-to-right isolate marks formatMoney adds.
-String plain(String s) => s.replaceAll(RegExp('[⁦⁩]'), '');
+String plain(String s) => s.replaceAll(RegExp('[\u2066\u2069]'), '');
 
 HomeProduct product(String id, String title, double price, String currency) => HomeProduct(
       id: id,
