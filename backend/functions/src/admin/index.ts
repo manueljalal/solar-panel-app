@@ -12,3 +12,4 @@ export * from "./delete_account";
 export * from "./services";
 export * from "./courses";
 export * from "./calculator";
+export * from "./announcements";

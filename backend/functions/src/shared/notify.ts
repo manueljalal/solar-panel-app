@@ -1,7 +1,7 @@
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import { db } from "./firebase";
 
-export type NotificationType = "order_status" | "service_status" | "quote_status";
+export type NotificationType = "order_status" | "service_status" | "quote_status" | "announcement";
 
 const KEEP_FOR_MS = 90 * 24 * 60 * 60 * 1000;
 

@@ -33,6 +33,7 @@ const SECTIONS: { title?: string; items: { href: string; label: string; badge?: 
     items: [
       { href: "/categories", label: "Categories" },
       { href: "/banners", label: "Banners" },
+      { href: "/announcements", label: "Announcements" },
       { href: "/learn", label: "Learn" },
       { href: "/calculator", label: "Calculator" },
       { href: "/settings", label: "Settings" },

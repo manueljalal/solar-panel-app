@@ -121,6 +121,17 @@ class _Empty extends StatelessWidget {
         _ => (Icons.event_busy_outlined, l10n.notifServiceCancelledTitle, l10n.notifServiceCancelledBody(service)),
       };
       return (icon: icon, title: title, body: body, opens: const ServicesScreen());
+    case 'announcement':
+      // Written by the super admin in all three languages; show the reader's.
+      final code = Localizations.localeOf(context).languageCode;
+      final key = code == 'ckb' ? 'ku' : code;
+      String pick(String field) {
+        final m = n.params[field];
+        if (m is! Map) return '';
+        final v = m[key] ?? m['en'];
+        return v?.toString() ?? '';
+      }
+      return (icon: Icons.campaign_outlined, title: pick('title'), body: pick('body'), opens: null);
     default:
       return (
         icon: Icons.request_quote_outlined,
