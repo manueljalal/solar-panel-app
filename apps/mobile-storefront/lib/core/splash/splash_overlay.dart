@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../shared/widgets/solary_logo.dart';
 
 /// Launch animation shown over the app on cold start. The native launch
-/// screen is plain white, so this picks up seamlessly: the four pieces of
-/// the Solary mark fly in from their corners, the wordmark slides out from
+/// screen is plain white, so this picks up seamlessly: the eight leaves of
+/// the Solary mark sweep in one after another, the wordmark slides out from
 /// behind the mark, then the whole splash fades away to reveal the app,
 /// which has been building (and loading Home) underneath the whole time.
 class SplashOverlay extends StatefulWidget {
@@ -60,8 +60,8 @@ class _SplashOverlayState extends State<SplashOverlay>
 
   Widget _frame(double t) {
     const markSize = 64.0;
-    const gap = 16.0;
-    const wordWidth = 150.0;
+    const gap = markSize * SolaryWordmark.gap;
+    const wordWidth = markSize * SolaryWordmark.widthToMark;
 
     // Timeline (fractions of 2.3s).
     final shift = _phase(t, 0.36, 0.60); // mark slides left, word emerges
@@ -76,11 +76,15 @@ class _SplashOverlayState extends State<SplashOverlay>
       child: Align(
         alignment: AlignmentDirectional.centerStart,
         widthFactor: shift,
+        heightFactor: 1,
         child: Opacity(
           opacity: shift,
           child: Transform.translate(
             offset: Offset(-24 * (1 - shift), 0),
-            child: const SolaryWordmark(width: wordWidth),
+            child: const Padding(
+              padding: EdgeInsets.only(top: markSize * SolaryWordmark.drop),
+              child: SolaryWordmark(width: wordWidth),
+            ),
           ),
         ),
       ),
@@ -100,6 +104,7 @@ class _SplashOverlayState extends State<SplashOverlay>
                 textDirection: TextDirection.ltr,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     mark,
                     SizedBox(width: gap * shift),
